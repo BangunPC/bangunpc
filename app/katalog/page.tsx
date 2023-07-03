@@ -1,8 +1,12 @@
+import Image from "next/image";
+
+import katalog from "/public/katalog_banner.png";
+
 export default function Katalog() {
     return (
-        <div className="flex min-h-screen w-full">
-            <asid
-                className="sticky top-16 h-[calc(100vh-theme(spacing.16))] w-56 overflow-y-auto bg-white shadow-md m-4 rounded-xl">
+        <div className="flex min-h-screen mx-auto w-full max-w-[860px] px-2 md:px-0">
+            <aside
+                className="md:block hidden sticky top-16 h-[calc(100vh-theme(spacing.16))] w-56 overflow-y-auto bg-white shadow-md m-4 rounded-xl">
                 <div className="bg-orange-500 w-full h-4">
                 </div>
                 <div className="m-4">
@@ -53,10 +57,80 @@ export default function Katalog() {
                         </div>
                     </div>
                 </div>
-            </asid>
+            </aside>
 
-            <main className="mt-16 flex-1 bg-yellow-200">
-                <p>content</p>
+            <main className="flex-1 my-4">
+                <Image src={katalog.src} className="object-scale-down rounded-xl shadow-xl" width={katalog.width} height={katalog.height}/>
+                <section className="flex flex-col mt-4">
+                    <div className="flex flex-row justify-between">
+                        <span className="text-xl">Casing PC</span>
+                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                           Lihat Lainnya
+                        </a>
+                    </div>
+                    <div className="flex flex-row mt-4">
+                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                    </div>
+                </section>
+                <section className="flex flex-col mt-4">
+                    <div className="flex flex-row justify-between">
+                        <span className="text-xl">Motherboard</span>
+                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                           Lihat Lainnya
+                        </a>
+                    </div>
+                    <div className="flex flex-row mt-4">
+                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                    </div>
+                </section>
+                <section className="flex flex-col mt-4">
+                    <div className="flex flex-row justify-between">
+                        <span className="text-xl">CPU</span>
+                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                           Lihat Lainnya
+                        </a>
+                    </div>
+                    <div className="flex flex-row mt-4">
+                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                    </div>
+                </section>
+                <section className="flex flex-col mt-4">
+                    <div className="flex flex-row justify-between">
+                        <span className="text-xl">GPU</span>
+                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                           Lihat Lainnya
+                        </a>
+                    </div>
+                    <div className="flex flex-row mt-4">
+                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                    </div>
+                </section>
+                <section className="flex flex-col mt-4">
+                    <div className="flex flex-row justify-between">
+                        <span className="text-xl">Power Supply Unit (PSU)</span>
+                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                           Lihat Lainnya
+                        </a>
+                    </div>
+                    <div className="flex flex-row mt-4">
+                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                    </div>
+                </section>
             </main>
         </div>
     )

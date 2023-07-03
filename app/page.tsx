@@ -1,7 +1,5 @@
 import Image from "next/image";
-import jumbotronBg from "/public/Jumbotron.png"
 import jumbotronComputer from "/public/Jumbotron_Computer.png"
-import {cleanURL} from "next/dist/server/future/route-modules/app-route/helpers/clean-url";
 import React from "react";
 
 export default function Home() {
@@ -31,7 +29,8 @@ export default function Home() {
             {/*TODO(damywise): make the header into component*/}
             <section className="flex flex-col mb-12 w-full">
                 <div className="flex px-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 stroke-orange-400 mr-4" width="24"
+                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 stroke-orange-400 mr-4"
+                         width="24"
                          height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="true"
                          strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -41,13 +40,17 @@ export default function Home() {
                     Flash Deals
                     </span>
                 </div>
-                <div>
-                    Content
+                <div className="flex flex-row mt-4">
+                    <div className="flex-1 mx-4 h-72 bg-white shadow-lg rounded-lg"></div>
+                    <div className="flex-1 mr-4 h-72 bg-white shadow-lg rounded-lg"></div>
+                    <div className="flex-1 mr-4 h-72 bg-white shadow-lg rounded-lg"></div>
+                    <div className="flex-1 mr-4 h-72 bg-white shadow-lg rounded-lg"></div>
                 </div>
             </section>
             <section className="flex flex-col mb-12 w-full">
                 <div className="flex px-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 stroke-orange-400 mr-4" width="24"
+                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 stroke-orange-400 mr-4"
+                         width="24"
                          height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="true"
                          strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -57,8 +60,56 @@ export default function Home() {
                     Kategori PC
                     </span>
                 </div>
-                <div>
-                    Content
+                <div className="flex flex-row mt-4 mx-12">
+                    <div className="mr-4 w-64 h-60 bg-blue-600 rounded-lg"></div>
+                    <div className="flex flex-col w-full justify-between">
+                        <div className="flex flex-row justify-between">
+                            <span className="text-xl">Pake PC Murah Berkualitas</span>
+                            <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                                Lihat Lainnya
+                            </a>
+                        </div>
+                        <div className="flex flex-row mt-4">
+                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-row mt-4 mx-12">
+                    <div className="mr-4 w-64 h-60 bg-blue-600 rounded-lg"></div>
+                    <div className="flex flex-col w-full justify-between">
+                        <div className="flex flex-row justify-between">
+                            <span className="text-xl">Pake PC Murah Berkualitas</span>
+                            <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                                Lihat Lainnya
+                            </a>
+                        </div>
+                        <div className="flex flex-row mt-4">
+                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-row mt-4 mx-12">
+                    <div className="mr-4 w-64 h-60 bg-blue-600 rounded-lg"></div>
+                    <div className="flex flex-col w-full justify-between">
+                        <div className="flex flex-row justify-between">
+                            <span className="text-xl">Pake PC Murah Berkualitas</span>
+                            <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                                Lihat Lainnya
+                            </a>
+                        </div>
+                        <div className="flex flex-row mt-4">
+                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </>
