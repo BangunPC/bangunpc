@@ -99,18 +99,18 @@ export default function RootLayout(props: {
                                 </span>
                             </button>
                             <div className="flex flex-row justify-center">
-                                <button
+                                <a
                                     className="bg-transparent hover:bg-orange-200 active:bg-orange-500 transition-colors flex flex-row py-2 px-3 mx-2 rounded-md">
-                                    Kategori
-                                </button>
-                                <button
+                                    Beranda
+                                </a>
+                                <a href="/katalog"
                                     className="bg-transparent hover:bg-orange-200 active:bg-orange-500 transition-colors flex flex-row py-2 px-3 mx-2 rounded-md">
                                     Katalog
-                                </button>
-                                <button
+                                </a>
+                                <a
                                     className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-2 px-3 mx-2 rounded-md text-white">
                                     Simulasi Rakit PC
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>

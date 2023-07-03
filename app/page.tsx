@@ -31,8 +31,8 @@ export default function Home() {
             {/*TODO(damywise): make the header into component*/}
             <section className="flex flex-col mb-12 w-full">
                 <div className="flex px-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 mr-4" width="24"
-                         height="24" viewBox="0 0 24 24" strokeWidth="0" stroke="currentColor" fill={true}
+                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 stroke-orange-400 mr-4" width="24"
+                         height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="true"
                          strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path>
@@ -47,8 +47,8 @@ export default function Home() {
             </section>
             <section className="flex flex-col mb-12 w-full">
                 <div className="flex px-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 mr-4" width="24"
-                         height="24" viewBox="0 0 24 24" strokeWidth="0" stroke="currentColor" fill={true}
+                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 stroke-orange-400 mr-4" width="24"
+                         height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="true"
                          strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path>
