@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import katalog from "/public/katalog_banner.webp";
+import Link from "next/link";
 
 export default function Katalog() {
     return (
@@ -69,9 +70,9 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">Casing PC</span>
-                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#" className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex flex-row mt-4">
                         <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
@@ -83,9 +84,9 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">Motherboard</span>
-                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#"  className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex flex-row mt-4">
                         <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
@@ -97,9 +98,9 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">CPU</span>
-                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#"  className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex flex-row mt-4">
                         <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
@@ -111,9 +112,9 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">GPU</span>
-                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#"  className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex flex-row mt-4">
                         <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
@@ -125,9 +126,9 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">Power Supply Unit (PSU)</span>
-                        <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#"  className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex flex-row mt-4">
                         <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>

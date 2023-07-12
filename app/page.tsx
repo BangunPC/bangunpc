@@ -20,7 +20,7 @@ export default function Home() {
                                 dan <span className="font-bold text-orange-400">MURAH</span>
                             </p>
                             <button
-                                className="w-fit mx-16 my-4 bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-2 px-3 mx-2 rounded-md text-white">
+                                className="w-fit mx-16 my-4 bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white">
                                 Buat Sekarang
                             </button>
                         </div>
@@ -65,7 +65,7 @@ export default function Home() {
                     <div className="flex flex-col w-full justify-between">
                         <div className="flex flex-row justify-between">
                             <span className="text-xl">Paket PC Murah Berkualitas</span>
-                            <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                            <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                                 Lihat Lainnya
                             </a>
                         </div>
