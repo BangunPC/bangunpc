@@ -137,9 +137,9 @@ export default function RootLayout(props: {
                         <section className="flex flex-col w-full justify-start md:py-0 pt-12">
                             <span className="font-bold">About Us</span>
                             <br/>
-                            <Link href="">Portfolio</Link>
-                            <Link href="">Careers</Link>
-                            <Link href="">Contact Us</Link>
+                            <Link href="#">Portfolio</Link>
+                            <Link href="#">Careers</Link>
+                            <Link href="#">Contact Us</Link>
                         </section>
                         <section className="flex flex-col w-full justify-start md:py-0 pt-12">
                             <span className="font-bold">Contact Us</span>
