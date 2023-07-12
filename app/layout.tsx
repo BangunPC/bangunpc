@@ -51,7 +51,7 @@ export default function RootLayout(props: {
                             <div className="flex flex-row">
 
                                 <button
-                                    className={iconButtonClassname}>
+                                    className={iconButtonClassname} aria-label="account">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          className="m-auto"
                                          width="24" height="24" viewBox="0 0 24 24" strokeWidth="2"
@@ -63,7 +63,7 @@ export default function RootLayout(props: {
                                     </svg>
                                 </button>
                                 <button
-                                    className={iconButtonClassname}>
+                                    className={iconButtonClassname} aria-label="cart">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          className="m-auto"
                                          width="24" height="24"
@@ -103,15 +103,15 @@ export default function RootLayout(props: {
                             </button>
                             <div className="flex flex-row justify-center">
                                 <Link href="/"
-                                    className="bg-transparent hover:bg-orange-200 active:bg-orange-500 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md">
+                                      className="bg-transparent hover:bg-orange-200 active:bg-orange-500 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md">
                                     Beranda
                                 </Link>
                                 <Link href="/katalog"
-                                   className="bg-transparent hover:bg-orange-200 active:bg-orange-500 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md">
+                                      className="bg-transparent hover:bg-orange-200 active:bg-orange-500 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md">
                                     Katalog
                                 </Link>
                                 <Link href="/simulasi"
-                                    className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white">
+                                      className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white">
                                     Simulasi Rakit PC
                                 </Link>
                             </div>
@@ -150,7 +150,7 @@ export default function RootLayout(props: {
                             +62 895-3430-86057
                         </section>
                         <section className="flex flex-row align-bottom mt-auto md:py-0 pt-12">
-                            <button className={iconButtonClassname}>
+                            <button className={iconButtonClassname} aria-label="instagram">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      className="m-auto text-gray-700" width="24" height="24"
                                      viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
@@ -162,7 +162,7 @@ export default function RootLayout(props: {
                                     <path d="M16.5 7.5l0 .01"></path>
                                 </svg>
                             </button>
-                            <button className={iconButtonClassname}>
+                            <button className={iconButtonClassname} aria-label="twitter">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      className="m-auto text-gray-700" width="24" height="24"
                                      viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
@@ -172,7 +172,7 @@ export default function RootLayout(props: {
                                         d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z"></path>
                                 </svg>
                             </button>
-                            <button className={iconButtonClassname}>
+                            <button className={iconButtonClassname} aria-label="linkedin">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      className="m-auto text-gray-700" width="24" height="24"
                                      viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
