@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import katalog from "/public/katalog_banner.png";
+import katalog from "/public/katalog_banner.webp";
 
 export default function Katalog() {
     return (

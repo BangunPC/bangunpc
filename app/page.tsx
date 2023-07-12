@@ -1,12 +1,12 @@
 import Image from "next/image";
-import jumbotronComputer from "/public/Jumbotron_Computer.png"
+import jumbotronComputer from "/public/Jumbotron_Computer.webp"
 import React from "react";
 
 export default function Home() {
     return (
         <>
             <section className="flex w-full h-full py-12 mb-12"
-                     style={{backgroundImage: `url('/Jumbotron.png')`, backgroundSize: 'cover'}}>
+                     style={{backgroundImage: `url('/Jumbotron.webp')`, backgroundSize: 'cover'}}>
                 <div className="w-full">
                     <div className="flex flex-wrap justify-center align-middle">
                         <Image className="md:w-2/5 m-auto object-scale-down" src={jumbotronComputer.src}

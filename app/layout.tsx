@@ -29,7 +29,7 @@ export default function RootLayout(props: {
                         {/*top*/}
                         <div className="flex flex-row mt-2 mb-6">
                             <Link href="/">
-                                <Image src="/bangunpc.png" width={28} height={28} className="m-2 mr-8" alt="logo"/>
+                                <Image src="/bangunpc.webp" width={28} height={28} className="m-2 mr-8" alt="logo"/>
                             </Link>
                             <form action="/search" className="w-full mx-4">
                                 <div className="flex border border-gray-500 rounded-full">
