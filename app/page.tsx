@@ -1,6 +1,7 @@
 import Image from "next/image";
 import jumbotronComputer from "/public/Jumbotron_Computer.webp"
 import React from "react";
+import Link from "next/link";
 
 export default function Home() {
     return (
@@ -10,9 +11,9 @@ export default function Home() {
                 <div className="w-full">
                     <div className="flex flex-wrap justify-center align-middle">
                         <Image className="md:w-2/5 m-auto object-scale-down" src={jumbotronComputer.src}
-                               width={jumbotronComputer.width}
-                               height={jumbotronComputer.width}
-                               alt="jumbotron"/>
+                               width={320}
+                               height={320}
+                               alt="computer"/>
                         <div className="md:w-1/2 w-2/3 m-auto text-white flex flex-col">
                             <p className="text-5xl font-light leading-snug">
                                 Rakit <span className="font-bold">PC</span> impianmu <br/>
@@ -65,9 +66,10 @@ export default function Home() {
                     <div className="flex flex-col w-full justify-between">
                         <div className="flex flex-row justify-between">
                             <span className="text-xl">Paket PC Murah Berkualitas</span>
-                            <a className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                            <Link href="#"
+                                  className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                                 Lihat Lainnya
-                            </a>
+                            </Link>
                         </div>
                         <div className="flex flex-row mt-4">
                             <div className="flex-1 mr-4 aspect-[2/3] bg-blue-600 rounded-lg"></div>
