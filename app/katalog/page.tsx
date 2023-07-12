@@ -70,7 +70,7 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">Casing PC</span>
-                        <Link href="#" className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#" className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
                         </Link>
                     </div>
@@ -84,7 +84,7 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">Motherboard</span>
-                        <Link href="#"  className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#"  className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
                         </Link>
                     </div>
@@ -98,7 +98,7 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">CPU</span>
-                        <Link href="#"  className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#"  className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
                         </Link>
                     </div>
@@ -112,7 +112,7 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">GPU</span>
-                        <Link href="#"  className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#"  className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
                         </Link>
                     </div>
@@ -126,7 +126,7 @@ export default function Katalog() {
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">Power Supply Unit (PSU)</span>
-                        <Link href="#"  className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
+                        <Link href="#"  className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                             Lihat Lainnya
                         </Link>
                     </div>
