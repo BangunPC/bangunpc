@@ -2,10 +2,11 @@ import './globals.css'
 import {Inter} from 'next/font/google'
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const inter = Inter({subsets: ['latin']})
 
-const iconButtonClassname = "bg-blue-50 hover:bg-blue-200 active:bg-blue-300 transition-colors w-12 h-12 rounded-full mx-4"
+const iconButtonClassname = "bg-blue-50 hover:bg-blue-200 active:bg-blue-300 active:scale-90 transition-all w-12 h-12 rounded-full mx-4"
 
 export const metadata = {
     title: 'BangunPC',
@@ -27,7 +28,9 @@ export default function RootLayout(props: {
                     <div className="flex flex-col w-full" id="top-bar">
                         {/*top*/}
                         <div className="flex flex-row mt-2 mb-6">
-                            <Image src="/bangunpc.png" width={28} height={28} className="m-2 mr-8"/>
+                            <Link href="/">
+                                <Image src="/bangunpc.png" width={28} height={28} className="m-2 mr-8"/>
+                            </Link>
                             <form action="/search" className="w-full mx-4">
                                 <div className="flex border border-gray-500 rounded-full">
                                     <span className="m-auto p-3">
@@ -78,7 +81,7 @@ export default function RootLayout(props: {
                         {/*bottom*/}
                         <div className="flex flex-wrap justify-between px-24">
                             <button
-                                className="bg-blue-50 hover:bg-blue-200 active:bg-blue-300 transition-colors flex flex-row py-2 px-3 rounded-md">
+                                className="bg-blue-50 hover:bg-blue-200 active:bg-blue-300 active:scale-90 transition-all flex flex-row py-2 px-3 rounded-md">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      className="m-auto text-gray-700"
                                      width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
@@ -99,18 +102,18 @@ export default function RootLayout(props: {
                                 </span>
                             </button>
                             <div className="flex flex-row justify-center">
-                                <a
-                                    className="bg-transparent hover:bg-orange-200 active:bg-orange-500 transition-colors flex flex-row py-2 px-3 mx-2 rounded-md">
+                                <Link href="/"
+                                    className="bg-transparent hover:bg-orange-200 active:bg-orange-500 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md">
                                     Beranda
-                                </a>
-                                <a href="/katalog"
-                                    className="bg-transparent hover:bg-orange-200 active:bg-orange-500 transition-colors flex flex-row py-2 px-3 mx-2 rounded-md">
+                                </Link>
+                                <Link href="/katalog"
+                                   className="bg-transparent hover:bg-orange-200 active:bg-orange-500 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md">
                                     Katalog
-                                </a>
-                                <a
-                                    className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-2 px-3 mx-2 rounded-md text-white">
+                                </Link>
+                                <Link href="/simulasi"
+                                    className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white">
                                     Simulasi Rakit PC
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

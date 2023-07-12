@@ -69,10 +69,10 @@ export default function Katalog() {
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">
-                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
                     </div>
                 </section>
                 <section className="flex flex-col mt-4">
@@ -83,10 +83,10 @@ export default function Katalog() {
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">
-                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
                     </div>
                 </section>
                 <section className="flex flex-col mt-4">
@@ -97,10 +97,10 @@ export default function Katalog() {
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">
-                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
                     </div>
                 </section>
                 <section className="flex flex-col mt-4">
@@ -111,10 +111,10 @@ export default function Katalog() {
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">
-                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
                     </div>
                 </section>
                 <section className="flex flex-col mt-4">
@@ -125,10 +125,10 @@ export default function Katalog() {
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">
-                        <div className="sm:block hidden flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                        <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                        <div className="sm:block hidden flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                        <div className="flex-1 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
                     </div>
                 </section>
             </main>

@@ -41,10 +41,10 @@ export default function Home() {
                     </span>
                 </div>
                 <div className="flex flex-row mt-4">
-                    <div className="flex-1 mx-4 h-72 bg-white shadow-lg rounded-lg"></div>
-                    <div className="flex-1 mr-4 h-72 bg-white shadow-lg rounded-lg"></div>
-                    <div className="flex-1 mr-4 h-72 bg-white shadow-lg rounded-lg"></div>
-                    <div className="flex-1 mr-4 h-72 bg-white shadow-lg rounded-lg"></div>
+                    <div className="flex-1 mx-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                    <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                    <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                    <div className="flex-1 mr-4 aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
                 </div>
             </section>
             <section className="flex flex-col mb-12 w-full">
@@ -61,53 +61,19 @@ export default function Home() {
                     </span>
                 </div>
                 <div className="flex flex-row mt-4 mx-12">
-                    <div className="mr-4 w-64 h-60 bg-blue-600 rounded-lg"></div>
                     <div className="flex flex-col w-full justify-between">
                         <div className="flex flex-row justify-between">
-                            <span className="text-xl">Pake PC Murah Berkualitas</span>
+                            <span className="text-xl">Paket PC Murah Berkualitas</span>
                             <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                                 Lihat Lainnya
                             </a>
                         </div>
                         <div className="flex flex-row mt-4">
-                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                            <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-row mt-4 mx-12">
-                    <div className="mr-4 w-64 h-60 bg-blue-600 rounded-lg"></div>
-                    <div className="flex flex-col w-full justify-between">
-                        <div className="flex flex-row justify-between">
-                            <span className="text-xl">Pake PC Murah Berkualitas</span>
-                            <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
-                                Lihat Lainnya
-                            </a>
-                        </div>
-                        <div className="flex flex-row mt-4">
-                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                            <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-row mt-4 mx-12">
-                    <div className="mr-4 w-64 h-60 bg-blue-600 rounded-lg"></div>
-                    <div className="flex flex-col w-full justify-between">
-                        <div className="flex flex-row justify-between">
-                            <span className="text-xl">Pake PC Murah Berkualitas</span>
-                            <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
-                                Lihat Lainnya
-                            </a>
-                        </div>
-                        <div className="flex flex-row mt-4">
-                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                            <div className="flex-1 mr-4 h-48 bg-white shadow-lg rounded-lg"></div>
-                            <div className="flex-1 h-48 bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mr-4 aspect-[2/3] bg-blue-600 rounded-lg"></div>
+                            <div className="flex-1 mr-4 mt-auto aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mr-4 mt-auto aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mr-4 mt-auto aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
+                            <div className="flex-1 mt-auto aspect-[3/4] bg-white shadow-lg rounded-lg"></div>
                         </div>
                     </div>
                 </div>
