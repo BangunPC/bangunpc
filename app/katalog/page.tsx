@@ -33,7 +33,8 @@ export default function Katalog() {
                                     <label htmlFor="kondisi-baru" className="ml-2">Baru</label>
                                 </div>
                                 <div className="flex">
-                                    <input type={"checkbox"} value="Secondhand" name="kondisi-second" id="kondisi-second"/>
+                                    <input type={"checkbox"} value="Secondhand" name="kondisi-second"
+                                           id="kondisi-second"/>
                                     <label htmlFor="kondisi-second" className="ml-2">Secondhand</label>
                                 </div>
                             </div>
@@ -42,15 +43,18 @@ export default function Katalog() {
                             <span className="font-semibold">Ketersediaan :</span>
                             <div className="ml-2">
                                 <div className="flex">
-                                    <input type={"checkbox"} value="Segera" name="ketersediaan-segera" id="ketersediaan-segera"/>
+                                    <input type={"checkbox"} value="Segera" name="ketersediaan-segera"
+                                           id="ketersediaan-segera"/>
                                     <label htmlFor="ketersediaan-segera" className="ml-2">Segera</label>
                                 </div>
                                 <div className="flex">
-                                    <input type={"checkbox"} value="Tersedia" name="ketersediaan-tersedia" id="ketersediaan-tersedia"/>
+                                    <input type={"checkbox"} value="Tersedia" name="ketersediaan-tersedia"
+                                           id="ketersediaan-tersedia"/>
                                     <label htmlFor="ketersediaan-tersedia" className="ml-2">Tersedia</label>
                                 </div>
                                 <div className="flex">
-                                    <input type={"checkbox"} value="Habis" name="ketersediaan-habis" id="ketersediaan-habis"/>
+                                    <input type={"checkbox"} value="Habis" name="ketersediaan-habis"
+                                           id="ketersediaan-habis"/>
                                     <label htmlFor="ketersediaan-habis" className="ml-2">Habis</label>
                                 </div>
                             </div>
@@ -60,12 +64,13 @@ export default function Katalog() {
             </aside>
 
             <main className="flex-1 my-4">
-                <Image src={katalog.src} className="object-scale-down rounded-xl shadow-xl" width={katalog.width} height={katalog.height}/>
+                <Image src={katalog.src} className="object-scale-down rounded-xl shadow-xl" width={katalog.width}
+                       height={katalog.height} alt="katalog"/>
                 <section className="flex flex-col mt-4">
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">Casing PC</span>
                         <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
-                           Lihat Lainnya
+                            Lihat Lainnya
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">
@@ -79,7 +84,7 @@ export default function Katalog() {
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">Motherboard</span>
                         <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
-                           Lihat Lainnya
+                            Lihat Lainnya
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">
@@ -93,7 +98,7 @@ export default function Katalog() {
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">CPU</span>
                         <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
-                           Lihat Lainnya
+                            Lihat Lainnya
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">
@@ -107,7 +112,7 @@ export default function Katalog() {
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">GPU</span>
                         <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
-                           Lihat Lainnya
+                            Lihat Lainnya
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">
@@ -121,7 +126,7 @@ export default function Katalog() {
                     <div className="flex flex-row justify-between">
                         <span className="text-xl">Power Supply Unit (PSU)</span>
                         <a className="bg-orange-400 hover:bg-orange-500 active:bg-orange-700 transition-colors flex flex-row py-1 px-3 mx-2 rounded-md text-white">
-                           Lihat Lainnya
+                            Lihat Lainnya
                         </a>
                     </div>
                     <div className="flex flex-row mt-4">

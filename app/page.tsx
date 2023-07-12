@@ -11,7 +11,8 @@ export default function Home() {
                     <div className="flex flex-wrap justify-center align-middle">
                         <Image className="md:w-2/5 m-auto object-scale-down" src={jumbotronComputer.src}
                                width={jumbotronComputer.width}
-                               height={jumbotronComputer.width}/>
+                               height={jumbotronComputer.width}
+                               alt="jumbotron"/>
                         <div className="md:w-1/2 w-2/3 m-auto text-white flex flex-col">
                             <p className="text-5xl font-light leading-snug">
                                 Rakit <span className="font-bold">PC</span> impianmu <br/>
