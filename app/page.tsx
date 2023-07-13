@@ -20,10 +20,20 @@ export default function Home() {
                                 dengan <span className="font-bold text-orange-400">MUDAH</span> <br/>
                                 dan <span className="font-bold text-orange-400">MURAH</span>
                             </p>
-                            <button
-                                className="w-fit mx-16 my-4 bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white">
+                            <Link href="/simulasi"
+                                  className="w-fit mx-16 my-4 bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white">
                                 Buat Sekarang
-                            </button>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     className="ml-2" width="24" height="24"
+                                     viewBox="0 0 24 24" strokeWidth="1.4" stroke="currentColor" fill="none"
+                                     strokeLinecap="round" strokeLinejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path
+                                        d="M11.414 10l-7.383 7.418a2.091 2.091 0 0 0 0 2.967a2.11 2.11 0 0 0 2.976 0l7.407 -7.385"></path>
+                                    <path
+                                        d="M18.121 15.293l2.586 -2.586a1 1 0 0 0 0 -1.414l-7.586 -7.586a1 1 0 0 0 -1.414 0l-2.586 2.586a1 1 0 0 0 0 1.414l7.586 7.586a1 1 0 0 0 1.414 0z"></path>
+                                </svg>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -69,6 +79,15 @@ export default function Home() {
                             <Link href="#"
                                   className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-1 px-3 mx-2 rounded-md text-white">
                                 Lihat Lainnya
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     className="ml-1" width="24" height="24"
+                                     viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
+                                     strokeLinecap="round" strokeLinejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M5 12l14 0"></path>
+                                    <path d="M15 16l4 -4"></path>
+                                    <path d="M15 8l4 4"></path>
+                                </svg>
                             </Link>
                         </div>
                         <div className="flex flex-row mt-4">

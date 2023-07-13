@@ -18,6 +18,12 @@ export default function RootLayout(props: {
 }) {
     return (
         <html lang="en">
+        <head>
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+            <link rel="manifest" href="/site.webmanifest"/>
+        </head>
         <body className={inter.className}>
 
         <main className="flex flex-col items-center justify-between">
@@ -112,7 +118,19 @@ export default function RootLayout(props: {
                                 </Link>
                                 <Link href="/simulasi"
                                       className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white">
-                                    Simulasi Rakit PC
+                                    Simulasi
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         className="ml-2" width="24" height="24"
+                                         viewBox="0 0 24 24" strokeWidth="1.4" stroke="currentColor" fill="none"
+                                         strokeLinecap="round" strokeLinejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M3 5h6v14h-6z"></path>
+                                        <path d="M12 9h10v7h-10z"></path>
+                                        <path d="M14 19h6"></path>
+                                        <path d="M17 16v3"></path>
+                                        <path d="M6 13v.01"></path>
+                                        <path d="M6 16v.01"></path>
+                                    </svg>
                                 </Link>
                             </div>
                         </div>
@@ -131,15 +149,15 @@ export default function RootLayout(props: {
                             </span>
                             <br/>
                             <span>
-                                Membantumu untuk merakit PC sesuai kebutuhan
+                                Membantumu merakit PC sesuai kebutuhan
                             </span>
                         </section>
                         <section className="flex flex-col w-full justify-start md:py-0 pt-12">
                             <span className="font-bold">About Us</span>
                             <br/>
-                            <Link href="#">Portfolio</Link>
-                            <Link href="#">Careers</Link>
-                            <Link href="#">Contact Us</Link>
+                            <Link href="#" className="text-blue-400">Portfolio</Link>
+                            <Link href="#" className="text-blue-400">Careers</Link>
+                            <Link href="#" className="text-blue-400">Contact Us</Link>
                         </section>
                         <section className="flex flex-col w-full justify-start md:py-0 pt-12">
                             <span className="font-bold">Contact Us</span>
@@ -149,48 +167,48 @@ export default function RootLayout(props: {
                             <br/>
                             +62 895-3430-86057
                         </section>
-                        <section className="flex flex-row align-bottom mt-auto md:py-0 pt-12">
-                            <button className={iconButtonClassname} aria-label="instagram">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     className="m-auto text-gray-700" width="24" height="24"
-                                     viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
-                                     strokeLinecap="round" strokeLinejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path
-                                        d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
-                                    <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-                                    <path d="M16.5 7.5l0 .01"></path>
-                                </svg>
-                            </button>
-                            <button className={iconButtonClassname} aria-label="twitter">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     className="m-auto text-gray-700" width="24" height="24"
-                                     viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
-                                     strokeLinecap="round" strokeLinejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path
-                                        d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z"></path>
-                                </svg>
-                            </button>
-                            <button className={iconButtonClassname} aria-label="linkedin">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     className="m-auto text-gray-700" width="24" height="24"
-                                     viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
-                                     strokeLinecap="round" strokeLinejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path
-                                        d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-                                    <path d="M8 11l0 5"></path>
-                                    <path d="M8 8l0 .01"></path>
-                                    <path d="M12 16l0 -5"></path>
-                                    <path d="M16 16v-3a2 2 0 0 0 -4 0"></path>
-                                </svg>
-                            </button>
-                        </section>
                     </div>
-                    <div className="my-12 border-t border-t-white"/>
-                    <section className="m-12 text-center" id="copyright">
-                        Copyright © 2023 BangunPC All Rights Reserved.
+                    <div className="mb-6 mt-12 border-t border-t-gray-500"/>
+                    <section className="flex flex-row align-bottom justify-center">
+                        <button className={iconButtonClassname} aria-label="instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 className="m-auto text-gray-700" width="24" height="24"
+                                 viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
+                                 strokeLinecap="round" strokeLinejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path
+                                    d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
+                                <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                                <path d="M16.5 7.5l0 .01"></path>
+                            </svg>
+                        </button>
+                        <button className={iconButtonClassname} aria-label="twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 className="m-auto text-gray-700" width="24" height="24"
+                                 viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
+                                 strokeLinecap="round" strokeLinejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path
+                                    d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z"></path>
+                            </svg>
+                        </button>
+                        <button className={iconButtonClassname} aria-label="linkedin">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 className="m-auto text-gray-700" width="24" height="24"
+                                 viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
+                                 strokeLinecap="round" strokeLinejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path
+                                    d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+                                <path d="M8 11l0 5"></path>
+                                <path d="M8 8l0 .01"></path>
+                                <path d="M12 16l0 -5"></path>
+                                <path d="M16 16v-3a2 2 0 0 0 -4 0"></path>
+                            </svg>
+                        </button>
+                    </section>
+                    <section className="mb-12 mt-4 font-light text-xs text-center" id="copyright">
+                        ©2023 BangunPC. All rights reserved.
                     </section>
                 </footer>
             </section>
