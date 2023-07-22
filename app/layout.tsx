@@ -3,15 +3,21 @@ import { Inter } from 'next/font/google'
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Head from 'next/head';
+import { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] })
 
 const iconButtonClassname = "flex bg-blue-50 hover:bg-blue-200 active:bg-blue-300 active:scale-90 transition-all w-12 h-12 rounded-full mx-4"
 
-export const metadata = {
+export const metadata: Metadata = {
     title: 'BangunPC',
     description: 'Semua kebutuhan PC Anda disini',
+    icons: [
+        { rel: "apple-touch-icon", sizes: "180x180", url: "/apple-touch-icon.png" },
+        { rel: "icon", sizes: "32x32", url: "/favicon-32x32.png" },
+        { rel: "icon", sizes: "16x16", url: "/favicon-16x16.png" },
+        { rel: "manifest", url: "/site.webmanifest" },
+    ]
 }
 
 export default function RootLayout(props: {
@@ -19,13 +25,12 @@ export default function RootLayout(props: {
 }) {
     return (
         <html lang="en">
-            <Head>
-                <title>BangunPC</title>
+            <head>
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
                 <link rel="manifest" href="/site.webmanifest" />
-            </Head>
+            </head>
             <body className={inter.className}>
                 <main className="flex flex-col items-center justify-between">
                     <header className="flex flex-col w-full bg-white shadow-xl shadow-gray-100">
