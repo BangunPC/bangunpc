@@ -135,11 +135,11 @@ export default function RootLayout(props: {
                                         Katalog
                                     </Link>
                                     <Link href="/simulasi"
-                                        className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white">
+                                        className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white font-semibold">
                                         Simulasi
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             className="ml-2" width="24" height="24"
-                                            viewBox="0 0 24 24" strokeWidth="1.4" stroke="currentColor" fill="none"
+                                            viewBox="0 0 24 24" strokeWidth="1.7" stroke="currentColor" fill="none"
                                             strokeLinecap="round" strokeLinejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M3 5h6v14h-6z"></path>
