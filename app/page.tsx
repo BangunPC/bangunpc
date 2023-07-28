@@ -65,7 +65,10 @@ export default function Home() {
                         Flash Deals
                     </span>
                 </div>
-                <FlashDealsCarousel slidesToShow={3} slidesToScroll={2} className="hidden md:block" />
+                {/* Note: items in carousel must be exactly or more than the biggest slidesToShow */}
+                <FlashDealsCarousel slidesToShow={5} slidesToScroll={3} className="hidden xl:block" />
+                <FlashDealsCarousel slidesToShow={4} slidesToScroll={3} className="hidden lg:block xl:hidden" />
+                <FlashDealsCarousel slidesToShow={3} slidesToScroll={2} className="hidden md:block lg:hidden" />
                 <FlashDealsCarousel slidesToShow={2} slidesToScroll={2} className="block md:hidden" />
             </section>
             {/* Kategori PC */}
@@ -107,7 +110,7 @@ export default function Home() {
                                         </svg>
                                     </Link>
                                 </div>
-                                <div className="flex flex-row mt-4 w-80 sm:w-96 md:w-[30rem] lg:w-[43rem] xl:w-[55rem] overflow-auto">
+                                <div className="flex flex-row mt-4 w-80 sm:w-96 md:w-[30rem] lg:w-[43rem] xl:w-[55rem] py-1 overflow-auto">
                                     <ItemCard name={"Ini PC 1"} stars={2} price={10000000} discountPercent={4} />
                                     <ItemCard name={"INI PC YANG KEDUA"} stars={4} price={2000000} discountPercent={23} />
                                     <ItemCard name={"This is the third PC"} stars={5} price={3000000} discountPercent={3} />
