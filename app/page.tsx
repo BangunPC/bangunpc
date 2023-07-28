@@ -21,12 +21,12 @@ export default function Home() {
             <section className="flex w-full h-full py-12 mb-12"
                 style={{ backgroundImage: `url('/Jumbotron.webp')`, backgroundSize: 'cover' }}>
                 <div className="w-full">
-                    <div className="flex flex-wrap justify-center align-middle">
+                    <div className="flex flex-wrap justify-center align-middle ">
                         <Image className="flex-1 md:w-2/5 m-auto object-scale-down" src={jumbotronComputer.src}
                             width={320}
                             height={320}
                             alt="computer" />
-                        <div className="flex-1 md:w-1/2 w-2/3 m-auto text-center md:text-left text-white flex flex-col">
+                        <div className="flex-1 md:w-1/2 w-2/3 m-auto text-center md:text-left text-white flex flex-col items-center md:items-start">
                             <p className="text-5xl font-light leading-snug">
                                 Rakit <span className="font-bold">PC</span> impianmu <br />
                                 dengan <span className="font-bold text-orange-400">MUDAH</span> <br />
