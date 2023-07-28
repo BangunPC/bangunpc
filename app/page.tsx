@@ -65,10 +65,11 @@ export default function Home() {
                         Flash Deals
                     </span>
                 </div>
-                <FlashDealsCarousel />
+                <FlashDealsCarousel slidesToShow={3} slidesToScroll={2} className="hidden md:block" />
+                <FlashDealsCarousel slidesToShow={2} slidesToScroll={2} className="block md:hidden" />
             </section>
             {/* Kategori PC */}
-            <section className="flex flex-col mb-12 w-full">
+            <section className="flex flex-col mb-12">
                 <div className="flex px-12">
                     <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 stroke-orange-400 mr-4"
                         width="24"
@@ -106,7 +107,7 @@ export default function Home() {
                                         </svg>
                                     </Link>
                                 </div>
-                                <div className="flex flex-row mt-4 w-auto md:w-[30rem] lg:w-[43rem] xl:w-[55rem] overflow-auto">
+                                <div className="flex flex-row mt-4 w-80 sm:w-96 md:w-[30rem] lg:w-[43rem] xl:w-[55rem] overflow-auto">
                                     <ItemCard name={"Ini PC 1"} stars={2} price={10000000} discountPercent={4} />
                                     <ItemCard name={"INI PC YANG KEDUA"} stars={4} price={2000000} discountPercent={23} />
                                     <ItemCard name={"This is the third PC"} stars={5} price={3000000} discountPercent={3} />
