@@ -23,8 +23,8 @@ export default function Build() {
                                 performance
                             </header>
                             <main>
+                                [games|apps|render|compile]
                                 <div className="grid grid-cols-2 grid-rows-2 gap-4">
-
                                     {games.map((text) => {
                                         return (
                                             <>
