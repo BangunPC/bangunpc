@@ -26,6 +26,18 @@ export default function RootLayout(props: {
     return (
         <html lang="en">
             <head>
+                {/* google  */}
+                <meta itemProp="name" content="BangunPC - Build Your Computer"/>
+                <meta itemProp="description" content="Membantu anda untuk merakit PC sesuai kebutuhan yang anda inginkan."/>
+                <meta itemProp="image" content="/favicon-32x32.png"/>
+
+                {/* facebook  */}
+                <meta property="og:url" content="https://bangunpc.pages.dev/"/>
+                <meta property="og:type" content="website"/>
+                <meta property="og:title" content="BangunPC - Build Your Computer"/>
+                <meta property="og:description" content="Membantu anda untuk merakit PC sesuai kebutuhan yang anda inginkan."/>
+                <meta property="og:image" content="/favicon-32x32.png"/>
+
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
