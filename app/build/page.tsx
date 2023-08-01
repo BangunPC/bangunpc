@@ -12,7 +12,7 @@ export default function Build() {
     return (
         <>
             <center className="absolute flex z-50 w-screen h-screen backdrop-blur-md">
-                <section className="flex flex-col m-auto w-[38rem] h-[32rem] bg-slate-100 bg-opacity-80 rounded-lg p-6 shadow-xl">
+                <section className="flex flex-col m-auto w-[38rem] h-[40rem] bg-slate-100 bg-opacity-80 rounded-lg p-6 shadow-xl">
                     <header className="flex flex-col mb-4">
                         <span className="font-semibold text-4xl">Build your PC</span>
                         <span className="font-semibold">Select your chipset and budget</span>
@@ -23,7 +23,13 @@ export default function Build() {
                                 performance
                             </header>
                             <main>
-                                [games|apps|render|compile]
+                                <div className="content flex flex-row rounded-md p-1 bg-slate-900 text-white gap-1 w-80">
+                                    <button className="flex-1 rounded-md hover:bg-slate-600 transition-colors bg-slate-700">Games</button>
+                                    <button className="flex-1 rounded-md hover:bg-slate-600 transition-colors text-gray-500">Apps</button>
+                                    <button className="flex-1 rounded-md hover:bg-slate-600 transition-colors text-gray-500">Render</button>
+                                    <button className="flex-1 rounded-md hover:bg-slate-600 transition-colors text-gray-500">Compile</button>
+                                </div>
+                                <br />
                                 <div className="grid grid-cols-2 grid-rows-2 gap-4">
                                     {games.map((text) => {
                                         return (
@@ -40,7 +46,11 @@ export default function Build() {
                                 <div>
                                     <span className="text-xs italic font-semibold">Resolution</span>
                                     <br />
-                                    [HD|FHD|4K]
+                                    <div className="content flex flex-row rounded-md p-1 bg-slate-900 text-white gap-1 w-48">
+                                        <button className="flex-1 rounded-md hover:bg-slate-600 transition-colors bg-slate-700">HD</button>
+                                        <button className="flex-1 rounded-md hover:bg-slate-600 transition-colors text-gray-500">FHD</button>
+                                        <button className="flex-1 rounded-md hover:bg-slate-600 transition-colors text-gray-500">4K</button>
+                                    </div>
                                 </div>
                             </main>
                         </section>
@@ -50,7 +60,11 @@ export default function Build() {
                                     chipset
                                 </header>
                                 <main>
-                                    [AMD|Intel]
+
+                                    <div className="content flex flex-row rounded-md p-1 bg-slate-900 text-white gap-1 w-36">
+                                        <button className="flex-1 rounded-md hover:bg-slate-600 transition-colors bg-slate-700">AMD</button>
+                                        <button className="flex-1 rounded-md hover:bg-slate-600 transition-colors text-gray-500">Intel</button>
+                                    </div>
                                 </main>
                             </section>
                             <section>
