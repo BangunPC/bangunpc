@@ -80,7 +80,7 @@ export default function RootLayout(props: {
                                                 <input type="text" className="w-full px-4 py-2"
                                                     placeholder="Cari PC-mu..." />
                                                 <div className="border border-r-0 border-b-0 border-t-0 border-l-gray-500 p-3 px-6">
-                                                    Kategorii
+                                                    Kategori
                                                 </div>
                                             </div>
                                         </div>
