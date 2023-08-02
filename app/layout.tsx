@@ -30,6 +30,7 @@ export default function RootLayout(props: {
                 <meta itemProp="name" content="BangunPC - Build Your Computer"/>
                 <meta itemProp="description" content="Membantu anda untuk merakit PC sesuai kebutuhan yang anda inginkan."/>
                 <meta itemProp="image" content="/favicon-32x32.png"/>
+                <meta name="google-site-verification" content="gq5gsij68Np-CJw0vlhvo8ULCJgLuT-1078RclhZ8bg" />
 
                 {/* facebook  */}
                 <meta property="og:url" content="https://bangunpc.pages.dev/"/>
