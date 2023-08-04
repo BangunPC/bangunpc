@@ -9,23 +9,33 @@ const inter = Inter({ subsets: ['latin'] })
 
 const iconButtonClassname = "flex bg-blue-50 hover:bg-blue-200 active:bg-blue-300 active:scale-90 transition-all w-12 h-12 rounded-full mx-4"
 
-export const metadata: Metadata = {
-    title: 'BangunPC',
-    description: 'Semua kebutuhan PC Anda disini',
-    icons: [
-        { rel: "apple-touch-icon", sizes: "180x180", url: "/apple-touch-icon.png" },
-        { rel: "icon", sizes: "32x32", url: "/favicon-32x32.png" },
-        { rel: "icon", sizes: "16x16", url: "/favicon-16x16.png" },
-        { rel: "manifest", url: "/site.webmanifest" },
-    ]
-}
-
 export default function RootLayout(props: {
     children: React.ReactNode
 }) {
     return (
         <html lang="en">
             <head>
+                {/* google  */}
+                <title>BangunPC — Find Parts, Components, Builds, and More</title>
+                <meta name="title" content="BangunPC — Find Parts, Components, Builds, and More" />
+                <meta name="description" content="Selamat datang di BangunPC, platform untuk penggemar PC! Kami ada untuk membantu Anda menemukan komponen PC dari platform belanja terpercaya. Manfaatkan fitur-fitur kami seperti simulasi rakit PC manual dan katalog komponen lengkap. Kami juga menyediakan panduan mudah untuk pemula agar Anda bisa merakit PC sendiri. Bergabunglah dengan BangunPC dan wujudkan PC impian Anda sekarang!" />
+                <meta itemProp="image" content="/bangunpc_nologo.png"/>
+                <meta name="google-site-verification" content="gq5gsij68Np-CJw0vlhvo8ULCJgLuT-1078RclhZ8bg" />
+
+                {/* facebook  */}
+                <meta property="og:url" content="https://bangunpc.pages.dev/"/>
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="BangunPC — Find Parts, Components, Builds, and More" />
+                <meta property="og:description" content="Selamat datang di BangunPC, platform untuk penggemar PC! Kami ada untuk membantu Anda menemukan komponen PC dari platform belanja terpercaya. Manfaatkan fitur-fitur kami seperti simulasi rakit PC manual dan katalog komponen lengkap. Kami juga menyediakan panduan mudah untuk pemula agar Anda bisa merakit PC sendiri. Bergabunglah dengan BangunPC dan wujudkan PC impian Anda sekarang!" />
+                <meta property="og:image" content="/bangunpc_nologo.png"/>
+
+                {/* twitter  */}
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content="https://metatags.io" />
+                <meta property="twitter:title" content="BangunPC — Find Parts, Components, Builds, and More" />
+                <meta property="twitter:description" content="Selamat datang di BangunPC, platform untuk penggemar PC! Kami ada untuk membantu Anda menemukan komponen PC dari platform belanja terpercaya. Manfaatkan fitur-fitur kami seperti simulasi rakit PC manual dan katalog komponen lengkap. Kami juga menyediakan panduan mudah untuk pemula agar Anda bisa merakit PC sendiri. Bergabunglah dengan BangunPC dan wujudkan PC impian Anda sekarang!" />
+                <meta property="twitter:image" content="https://bangunpc.pages.dev/bangunpc_nologo.png" />
+
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
