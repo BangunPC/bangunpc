@@ -20,7 +20,9 @@ export default function RootLayout(props: {
                 <meta name="title" content="BangunPC — Find Parts, Components, Builds, and More" />
                 <meta name="description" content="Selamat datang di BangunPC, platform untuk penggemar PC! Kami ada untuk membantu Anda menemukan komponen PC dari platform belanja terpercaya. Manfaatkan fitur-fitur kami seperti simulasi rakit PC manual dan katalog komponen lengkap. Kami juga menyediakan panduan mudah untuk pemula agar Anda bisa merakit PC sendiri. Bergabunglah dengan BangunPC dan wujudkan PC impian Anda sekarang!" />
                 <meta itemProp="image" content="/bangunpc_nologo.png"/>
+                
                 <meta name="google-site-verification" content="gq5gsij68Np-CJw0vlhvo8ULCJgLuT-1078RclhZ8bg" />
+                <meta name="google-site-verification" content="ifJaJUY0Nt_TqMoIcEVAWwaJLLKugipdlfKJu4dAQK8" />
 
                 {/* facebook  */}
                 <meta property="og:url" content="https://bangunpc.pages.dev/"/>
