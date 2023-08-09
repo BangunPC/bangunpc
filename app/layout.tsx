@@ -134,6 +134,10 @@ export default function RootLayout(props: {
                                         className="bg-transparent hover:bg-orange-200 active:bg-orange-500 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md">
                                         Katalog
                                     </Link>
+                                    <Link href="/build"
+                                        className="bg-transparent hover:bg-orange-200 active:bg-orange-500 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md">
+                                        Prebuilt
+                                    </Link>
                                     <Link href="/simulasi"
                                         className="bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-2 px-3 mx-2 rounded-md text-white">
                                         Simulasi
