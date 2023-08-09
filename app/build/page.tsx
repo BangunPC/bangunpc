@@ -1,7 +1,7 @@
 'use client'
 
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { URLSearchParams } from "url"
 
 export default function Build() {
 
@@ -53,7 +53,7 @@ export default function Build() {
 
     function updateParamValue(key: string, value: string) {
         console.log('replacing...')
-        const url = new URL(`http://localhost:3001${pathname}?${params}`)
+        const url = new URL(`http://localhost:3000${pathname}?${params}`)
         const { searchParams } = url
         searchParams.set(key, value)
         router.replace(url.href)
@@ -73,14 +73,18 @@ export default function Build() {
 
     return (
         <>
-            {!continueBuild ? <center className="absolute flex z-50 w-screen h-screen backdrop-blur-md">
-                <section className="flex flex-col m-auto w-[39rem] h-[34rem] bg-slate-100 bg-opacity-80 rounded-lg p-6 shadow-xl">
-                    <header className="flex flex-col mb-4">
-                        <span className="font-semibold text-4xl">Build your PC</span>
-                        <span className="font-semibold">Select your chipset and budget</span>
-                    </header>
-                    <main className="flex flex-row justify-between">
-                        <section className="w-full mx-auto bg-slate-200 rounded-lg p-4 shadow-sm">
+        <Dialog open={continueBuild!=='true'}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>
+                        Build your PC
+                    </DialogTitle>
+                    <DialogDescription>
+                        Select your chipset and budget
+                    </DialogDescription>
+                </DialogHeader>
+                <main className="flex flex-row justify-between">
+                        <section className="w-full mx-auto bg-border border-1 rounded-lg p-4 shadow-sm">
                             <header className={titleTextClass}>
                                 performance
                             </header>
@@ -109,12 +113,12 @@ export default function Build() {
                                 <div>
                                     <span className="text-xs italic font-semibold">Resolution</span>
                                     <br />
-                                    <div className="content flex flex-row rounded-md p-1 bg-slate-900 text-white gap-1 w-48">
+                                    <div className="content flex flex-row rounded-md p-1 bg-muted gap-1 w-48">
                                         {
                                             resolutions.map((text, index) => {
                                                 return (
                                                     <>
-                                                        <button onClick={() => updateParamValue('res', text)} className={"flex-1 rounded-md hover:bg-slate-600 " + (text === resolution ? "bg-slate-700" : "text-gray-500")}>{text}</button>
+                                                        <button onClick={() => updateParamValue('res', text)} className={"flex-1 rounded-md hover:bg-background" + (text === resolution ? "text-foreground bg-background" : "text-muted-foreground")}>{text}</button>
                                                     </>
                                                 )
                                             })
@@ -129,12 +133,12 @@ export default function Build() {
                                     chipset
                                 </header>
                                 <main>
-                                    <div className="content flex flex-row rounded-md p-1 bg-slate-900 text-white gap-1 w-36">
+                                    <div className="content flex flex-row w-40 rounded-md p-1 bg-muted text-white gap-1">
                                         {
                                             chipsets.map((text, index) => {
                                                 return (
                                                     <>
-                                                        <button onClick={() => updateParamValue('chipset', text)} className={"flex-1 rounded-md hover:bg-slate-600 " + (text === chipset ? "bg-slate-700" : "")} >{text}</button>
+                                                        <button onClick={() => updateParamValue('chipset', text)} className={"flex-1 rounded-md hover:bg-background " + (text === chipset ? "text-foreground bg-background" : "text-muted-foreground")} >{text}</button>
                                                     </>
                                                 )
                                             })
@@ -148,15 +152,15 @@ export default function Build() {
                                     budget
                                 </header>
                                 <main>
-                                    <div className="flex flex-row text-white w-40 h-10 bg-slate-900 rounded-md">
-                                        <button onClick={() => previousBudget()} className="w-full bg-slate-600 hover:bg-slate-500 rounded-l-md" aria-label="previous budget">
+                                    <div className="flex flex-row text-background w-40 h-10 bg-muted rounded-md">
+                                        <button onClick={() => previousBudget()} className="w-full bg-muted-foreground hover:bg-secondary-foreground rounded-l-md" aria-label="previous budget">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="m-auto" width={24} height={24} viewBox="0 0 24 24" stroke-width={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                 <path d="M15 6l-6 6l6 6"></path>
                                             </svg>
                                         </button>
-                                        <span className="w-80 my-auto">${budget + (budget == "3000" ? "+" : "")}</span>
-                                        <button onClick={() => nextBudget()} className="w-full bg-slate-600 hover:bg-slate-500 rounded-r-md" aria-label="next budget">
+                                        <span className="w-80 my-auto text-center text-foreground">${budget + (budget == "3000" ? "+" : "")}</span>
+                                        <button onClick={() => nextBudget()} className="w-full bg-muted-foreground hover:bg-secondary-foreground rounded-r-md" aria-label="next budget">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="m-auto" width={24} height={24} viewBox="0 0 24 24" stroke-width={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                 <path d="M9 6l6 6l-6 6"></path>
@@ -171,9 +175,8 @@ export default function Build() {
                             </button>
                         </div>
                     </main>
-                </section>
-            </center> : null}
-
+            </DialogContent>
+        </Dialog>
         </>
     )
 }
