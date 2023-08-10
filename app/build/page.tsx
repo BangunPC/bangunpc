@@ -73,7 +73,11 @@ export default function Build() {
 
     return (
         <>
-        <Dialog open={continueBuild!=='true'}>
+        <Dialog open={continueBuild!=='true'} onOpenChange={(open) => {
+            if (!open) {
+                updateParamValue('continue', 'true')
+            }
+        }}>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>
@@ -118,7 +122,7 @@ export default function Build() {
                                             resolutions.map((text, index) => {
                                                 return (
                                                     <>
-                                                        <button onClick={() => updateParamValue('res', text)} className={"flex-1 rounded-md hover:bg-background" + (text === resolution ? "text-foreground bg-background" : "text-muted-foreground")}>{text}</button>
+                                                        <button onClick={() => updateParamValue('res', text)} className={"flex-1 rounded-md hover:bg-background " + (text === resolution ? "text-foreground bg-background" : "text-muted-foreground")}>{text}</button>
                                                     </>
                                                 )
                                             })
@@ -133,7 +137,7 @@ export default function Build() {
                                     chipset
                                 </header>
                                 <main>
-                                    <div className="content flex flex-row w-40 rounded-md p-1 bg-muted text-white gap-1">
+                                    <div className="content flex flex-row w-40 rounded-md p-1 bg-muted gap-1">
                                         {
                                             chipsets.map((text, index) => {
                                                 return (
