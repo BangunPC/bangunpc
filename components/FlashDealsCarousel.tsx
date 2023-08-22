@@ -2,8 +2,6 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import StarRating from './StarRating';
-import Image from 'next/image';
 import ItemCard from './ItemCard';
 import { block } from 'million/react';
 
