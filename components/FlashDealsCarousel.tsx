@@ -38,7 +38,13 @@ const SamplePrevArrow = block((props: any) => {
     )
 })
 
-const FlashDealsCarousel: React.FC = block(() => {
+type Carousel = {
+    slidesToShow: number;
+    slidesToScroll: number;
+    className: string;
+}
+
+const FlashDealsCarousel: React.FC<Carousel> = block((props) => {
     const carouselItemIds = [
         212211,
         // Add more carousel items as needed
@@ -57,11 +63,11 @@ const FlashDealsCarousel: React.FC = block(() => {
     ];
 
     return (
-        <>
+        <div className={props.className}>
             <Slider
                 dots={false}
                 infinite={true}
-                slidesToShow={3}
+                slidesToShow={props.slidesToShow}
                 slidesToScroll={2}
                 autoplay={true}
                 nextArrow={<SampleNextArrow />}
@@ -75,7 +81,7 @@ const FlashDealsCarousel: React.FC = block(() => {
                     );
                 })}
             </Slider>
-        </>
+        </div>
     );
 });
 
