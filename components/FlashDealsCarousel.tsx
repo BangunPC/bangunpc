@@ -1,13 +1,11 @@
 'use client';
-import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import StarRating from './StarRating';
-import Image from 'next/image';
 import ItemCard from './ItemCard';
+import { block } from 'million/react';
 
-const SampleNextArrow = (props: any) => {
+const SampleNextArrow = block((props: any) => {
     const { onClick } = props
     return (
         <div className='z-10 absolute top-1/2 right-2' onClick={onClick}>
@@ -22,8 +20,8 @@ const SampleNextArrow = (props: any) => {
             </button>
         </div>
     )
-}
-const SamplePrevArrow = (props: any) => {
+})
+const SamplePrevArrow = block((props: any) => {
     const { onClick } = props
     return (
         <div className='z-10 absolute top-1/2 left-2' onClick={onClick}>
@@ -38,15 +36,15 @@ const SamplePrevArrow = (props: any) => {
             </button>
         </div>
     )
-}
+})
 
-interface Carousel {
+type Carousel = {
     slidesToShow: number;
     slidesToScroll: number;
     className: string;
 }
 
-const FlashDealsCarousel: React.FC<Carousel> = (props) => {
+const FlashDealsCarousel: React.FC<Carousel> = block((props) => {
     const carouselItemIds = [
         212211,
         // Add more carousel items as needed
@@ -85,6 +83,6 @@ const FlashDealsCarousel: React.FC<Carousel> = (props) => {
             </Slider>
         </div>
     );
-};
+});
 
 export default FlashDealsCarousel;
