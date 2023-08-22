@@ -32,12 +32,12 @@ export default function Home() {
             <section className="flex w-full h-full py-12 mb-12"
                 style={{ backgroundImage: `url('/Jumbotron.webp')`, backgroundSize: 'cover' }}>
                 <div className="w-full">
-                    <div className="flex flex-wrap justify-center align-middle">
+                    <div className="flex flex-wrap justify-center align-middle ">
                         <Image className="flex-1 md:w-2/5 m-auto object-scale-down" src={jumbotronComputer.src}
                             width={320}
                             height={320}
                             alt="computer" />
-                        <div className="flex-1 md:w-1/2 w-2/3 m-auto text-center md:text-left text-white flex flex-col">
+                        <div className="flex-1 md:w-1/2 w-2/3 m-auto text-center md:text-left text-white flex flex-col items-center md:items-start">
                             <p className="text-5xl font-light leading-snug">
                                 Rakit <span className="font-bold">PC</span> impianmu <br />
                                 dengan <span className="font-bold text-orange-400">MUDAH</span> <br />
@@ -76,10 +76,14 @@ export default function Home() {
                         Flash Deals
                     </span>
                 </div>
-                <FlashDealsCarousel />
+                {/* Note: items in carousel must be exactly or more than the biggest slidesToShow */}
+                <FlashDealsCarousel slidesToShow={5} slidesToScroll={3} className="hidden xl:block" />
+                <FlashDealsCarousel slidesToShow={4} slidesToScroll={3} className="hidden lg:block xl:hidden" />
+                <FlashDealsCarousel slidesToShow={3} slidesToScroll={2} className="hidden md:block lg:hidden" />
+                <FlashDealsCarousel slidesToShow={2} slidesToScroll={2} className="block md:hidden" />
             </section>
             {/* Kategori PC */}
-            <section className="flex flex-col mb-12 w-full">
+            <section className="flex flex-col mb-12">
                 <div className="flex px-12">
                     <svg xmlns="http://www.w3.org/2000/svg" className="fill-orange-400 stroke-orange-400 mr-4"
                         width="24"
@@ -117,7 +121,7 @@ export default function Home() {
                                         </svg>
                                     </Link>
                                 </div>
-                                <div className="flex flex-row mt-4 w-auto md:w-[30rem] lg:w-[43rem] xl:w-[55rem] overflow-auto">
+                                <div className="flex flex-row mt-4 w-80 sm:w-96 md:w-[30rem] lg:w-[43rem] xl:w-[55rem] py-1 overflow-auto">
                                     <ItemCard name={"Ini PC 1"} stars={2} price={10000000} discountPercent={4} />
                                     <ItemCard name={"INI PC YANG KEDUA"} stars={4} price={2000000} discountPercent={23} />
                                     <ItemCard name={"This is the third PC"} stars={5} price={3000000} discountPercent={3} />
