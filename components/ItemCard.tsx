@@ -1,16 +1,18 @@
-import Image from "next/image";
-import StarRating from "./StarRating";
+'use client'
+import Image from "next/image"
+import StarRating from "./StarRating"
+import { block } from "million/react"
 
-const ItemCard = (props: { name: string; stars: number; price: number; discountPercent: number; }) => {
-    const { name, stars, price, discountPercent } = props;
+const ItemCard = (props: { name: string, stars: number, price: number, discountPercent: number }) => {
+    const { name, stars, price, discountPercent } = props
 
-    const priceBeforeDiscount = price / (1 - discountPercent / 100);
+    const priceBeforeDiscount = price / (1 - discountPercent / 100)
 
     return (
         <div className="flex-1 h-full px-2">
             <div className="flex flex-col bg-white shadow-md rounded-lg w-full h-full">
                 <header className='relative h-full aspect-square rounded-md bg-slate-50 m-1'>
-                    <div className='z-10 absolute top-1 left-1 rounded-md bg-orange-600 text-white bg-opacity- w-fit px-2 text-sm'>{discountPercent}% Off</div>
+                    <div className='z-10 absolute top-1 left-1 rounded-md bg-orange-600 text-white w-fit px-2 text-sm'>{discountPercent}% Off</div>
                     <Image src={''} alt={''} className="object-cover" />
                 </header>
                 <main className='flex flex-col p-4'>
@@ -36,7 +38,7 @@ const ItemCard = (props: { name: string; stars: number; price: number; discountP
                 </main>
             </div>
         </div>
-    );
+    )
 }
 
-export default ItemCard;
+export default ItemCard

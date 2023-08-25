@@ -1,11 +1,11 @@
-'use client';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import ItemCard from './ItemCard';
-import { block } from 'million/react';
+'use client'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import ItemCard from './ItemCard'
 
-const SampleNextArrow = block((props: any) => {
+
+const SampleNextArrow = (props: any) => {
     const { onClick } = props
     return (
         <div className='z-10 absolute top-1/2 right-2' onClick={onClick}>
@@ -20,8 +20,8 @@ const SampleNextArrow = block((props: any) => {
             </button>
         </div>
     )
-})
-const SamplePrevArrow = block((props: any) => {
+}
+const SamplePrevArrow = (props: any) => {
     const { onClick } = props
     return (
         <div className='z-10 absolute top-1/2 left-2' onClick={onClick}>
@@ -36,19 +36,19 @@ const SamplePrevArrow = block((props: any) => {
             </button>
         </div>
     )
-})
-
-type Carousel = {
-    slidesToShow: number;
-    slidesToScroll: number;
-    className: string;
 }
 
-const FlashDealsCarousel: React.FC<Carousel> = block((props) => {
+type Carousel = {
+    slidesToShow: number
+    slidesToScroll: number
+    className: string
+}
+
+const FlashDealsCarousel: React.FC<Carousel> = (props) => {
     const carouselItemIds = [
         212211,
         // Add more carousel items as needed
-    ];
+    ]
 
     // get image, name, star, price
 
@@ -60,7 +60,7 @@ const FlashDealsCarousel: React.FC<Carousel> = block((props) => {
         { name: "AMD Ryzen 3 3200G - Radeon Vega 8 - RAM 12 GB - SSD 320GB", stars: 3, price: 400000, discountPercent: 54, },
         { name: "AMD Ryzen 3 3200G - Radeon Vega 8 - RAM 8 GB - SSD 120GB", stars: 2.5, price: 700000, discountPercent: 32, },
         { name: "AMD Ryzen 3 3200G - Radeon Vega 8 - RAM 2 GB - SSD 240GB", stars: 5, price: 100000, discountPercent: 12, },
-    ];
+    ]
 
     return (
         <div className={props.className}>
@@ -78,11 +78,11 @@ const FlashDealsCarousel: React.FC<Carousel> = block((props) => {
                         <div key={index} className='p-1'>
                             <ItemCard {...item} />
                         </div>
-                    );
+                    )
                 })}
             </Slider>
         </div>
-    );
-});
+    )
+}
 
-export default FlashDealsCarousel;
+export default FlashDealsCarousel
