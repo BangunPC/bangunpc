@@ -1,9 +1,9 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Metadata } from 'next';
+import React from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { Metadata } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,15 +19,15 @@ export default function RootLayout(props: {
                 <title>BangunPC — Find Parts, Components, Builds, and More</title>
                 <meta name="title" content="BangunPC — Find Parts, Components, Builds, and More" />
                 <meta name="description" content="Selamat datang di BangunPC, platform untuk penggemar PC! Kami ada untuk membantu Anda menemukan komponen PC dari platform belanja terpercaya. Manfaatkan fitur-fitur kami seperti simulasi rakit PC manual dan katalog komponen lengkap. Kami juga menyediakan panduan mudah untuk pemula agar Anda bisa merakit PC sendiri. Bergabunglah dengan BangunPC dan wujudkan PC impian Anda sekarang!" />
-                <meta itemProp="image" content="/bangunpc_nologo.png"/>
+                <meta itemProp="image" content="/bangunpc_nologo.png" />
                 <meta name="google-site-verification" content="gq5gsij68Np-CJw0vlhvo8ULCJgLuT-1078RclhZ8bg" />
 
                 {/* facebook  */}
-                <meta property="og:url" content="https://bangunpc.pages.dev/"/>
+                <meta property="og:url" content="https://bangunpc.pages.dev/" />
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content="BangunPC — Find Parts, Components, Builds, and More" />
                 <meta property="og:description" content="Selamat datang di BangunPC, platform untuk penggemar PC! Kami ada untuk membantu Anda menemukan komponen PC dari platform belanja terpercaya. Manfaatkan fitur-fitur kami seperti simulasi rakit PC manual dan katalog komponen lengkap. Kami juga menyediakan panduan mudah untuk pemula agar Anda bisa merakit PC sendiri. Bergabunglah dengan BangunPC dan wujudkan PC impian Anda sekarang!" />
-                <meta property="og:image" content="/bangunpc_nologo.png"/>
+                <meta property="og:image" content="/bangunpc_nologo.png" />
 
                 {/* twitter  */}
                 <meta property="twitter:card" content="summary_large_image" />
@@ -232,13 +232,10 @@ export default function RootLayout(props: {
                                     </svg>
                                 </button>
                                 <button className={iconButtonClassname} aria-label="twitter">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        className="m-auto text-gray-700" width="24" height="24"
-                                        viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
-                                        strokeLinecap="round" strokeLinejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="m-auto text-gray-700" width="24" height="24" viewBox="0 0 24 24" stroke-width={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path
-                                            d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z"></path>
+                                        <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                                        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
                                     </svg>
                                 </button>
                                 <button className={iconButtonClassname} aria-label="linkedin">
