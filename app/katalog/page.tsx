@@ -20,8 +20,8 @@ export default function Katalog() {
     const categories = [
         // { id: "brands", label: "Brands" },
         // { id: "casing_fans", label: "Casing Fans" },
-        // { id: "casings", label: "Casings" },
-        // { id: "cpu_coolers", label: "CPU Coolers" },
+        { id: "casings", label: "Casings" },
+        { id: "cpu_coolers", label: "CPU Coolers" },
         // { id: "cpu_integrated_gpus", label: "CPU Integrated GPUs" },
         // { id: "cpu_sockets", label: "CPU Sockets" },
         { id: "cpus", label: "CPUs" },
