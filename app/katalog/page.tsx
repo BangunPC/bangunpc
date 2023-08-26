@@ -69,7 +69,7 @@ export default function Katalog() {
     const [sort, setSort] = useState('price-low')
 
     return (
-        <div className="flex min-h-screen mx-auto w-full px-2 md:px-0">
+        <div className="flex min-h-screen mx-auto px-2 md:px-0 max-w-screen-xl">
             <aside
                 className="md:block hidden sticky top-0 h-min w-40 overflow-y-auto bg-card shadow-md ml-1 mr-2 mt-4 rounded-xl">
                 <div className="bg-orange-500 w-full h-4">
@@ -159,7 +159,7 @@ export default function Katalog() {
             </aside>
 
             <main className="flex-1 my-4">
-                <Image src={katalog.src} className="object-scale-down rounded-xl shadow-xl" width={katalog.width}
+                <Image src={katalog.src} className="max-h-58 object-scale-down rounded-xl shadow-xl" width={katalog.width}
                     height={katalog.height} alt="katalog" />
                 <div className="h-2" />
                 <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
