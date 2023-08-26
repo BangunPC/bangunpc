@@ -38,8 +38,8 @@ export default function Katalog() {
         { id: "power_supplies", label: "Power Supplies" },
         // { id: "product_details", label: "Product Details" },
         // { id: "products", label: "Products" },
-        // { id: "thermal_pastes", label: "Thermal Pastes" },
-        // { id: "wireless_network_cards", label: "Wireless Network Cards" }
+        { id: "thermal_pastes", label: "Thermal Pastes" },
+        { id: "wireless_network_cards", label: "Wireless Network Cards" }
     ]
 
     const items = [
