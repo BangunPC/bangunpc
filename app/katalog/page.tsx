@@ -71,7 +71,7 @@ export default function Katalog() {
     return (
         <div className="flex min-h-screen mx-auto w-full px-2 md:px-0">
             <aside
-                className="md:block sticky top-0 h-min w-40 overflow-y-auto bg-card shadow-md ml-1 mr-2 mt-4 rounded-xl">
+                className="md:block hidden sticky top-0 h-min w-40 overflow-y-auto bg-card shadow-md ml-1 mr-2 mt-4 rounded-xl">
                 <div className="bg-orange-500 w-full h-4">
                 </div>
                 <div className="m-1">
@@ -162,7 +162,7 @@ export default function Katalog() {
                 <Image src={katalog.src} className="object-scale-down rounded-xl shadow-xl" width={katalog.width}
                     height={katalog.height} alt="katalog" />
                 <div className="h-2" />
-                <div className="grid grid-cols-4 lg:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
                     <For each={items.filter((item) => selectedItems.includes(item.category)).sort((a, b) => sort === 'price-low' ? a.price - b.price : b.price - a.price,)}>
                         {(item, index) => (
                             <CatalogueItemCard key={'item-' + index} name={item.name} price={item.price} />
