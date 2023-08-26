@@ -12,12 +12,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
-import ItemCard from "@/components/ItemCard";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import CatalogueItemCard from "@/components/CatalogueItemCard";
 import { For } from "million/react";
-
 
 export default function Katalog() {
 
@@ -55,7 +51,20 @@ export default function Katalog() {
         { category: 'internal_storages', name: 'Storage Samsung 970 EVO Plus 1TB NVMe M.2 SSD', price: 3000000 },
     ]
 
-    const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
+    const [selectedItems, setSelectedItems] = useState<Array<string>>([
+        'power_supplies',
+        'cpus',
+        'gpus',
+        'motherboards',
+        'memories',
+        'internal_storages',
+    ]);
+
+    function handleCatalogueCategoryChange(item: { id: string; label: string; }): void {
+        console.log('test')
+        const newSelectedItems = selectedItems.includes(item.id) ? selectedItems.filter((id) => id !== item.id) : [...selectedItems, item.id];
+        return setSelectedItems(newSelectedItems)
+    }
 
     return (
         <div className="flex min-h-screen mx-auto w-full px-2 md:px-0">
@@ -68,35 +77,43 @@ export default function Katalog() {
                         Filter
                     </span>
                     <div className="flex flex-col ml-0.5">
+                        <section className="mb-4">
+                            <header>
+                                <span className="font-semibold">Urutkan:</span>
+                            </header>
+                            <main>
+                                <div className="text-sm">
+                                    <Select>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Harga terendah" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="new">Terbaru</SelectItem>
+                                            <SelectItem value="price-low">Harga terendah</SelectItem>
+                                            <SelectItem value="price-high">Harga tertinggi</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </main>
+                        </section>
                         <div className="mb-4 grid grid-flow-row gap-2">
                             <span className="font-semibold">Kategori</span>
-                            <ScrollArea className="w-full h-48 text-sm">
-                                <For each={categories}>
-                                    {(item) => (
-                                        <div key={item.id}>
-                                            <Checkbox id={item.id} value={item.id} checked={selectedItems.includes(item.id)} onChange={() => setSelectedItems(!selectedItems.includes(item.id) ? [...selectedItems, item.id] : selectedItems.filter((id) => id !== item.id))} />
-                                            <label className="ml-2" htmlFor={item.id}>{item.label}</label>
-                                        </div>
-                                    )}
-                                </For>
+                            <ScrollArea className="w-full text-sm">
+                                {categories.map((item) => (
+                                    <div key={'cateogry-' + item.id}>
+                                        <Checkbox
+                                            id={item.id}
+                                            value={item.id}
+                                            checked={selectedItems.includes(item.id)}
+                                            onClick={() => handleCatalogueCategoryChange(item)}
+                                        />
+                                        <label className="ml-2" htmlFor={item.id}>{item.label}</label>
+                                    </div>
+                                ))}
                             </ScrollArea>
 
                         </div>
-                        <div className="mb-4">
-                            <span className="font-semibold">Urutkan:</span>
-                            <div className="text-sm">
-                                <Select>
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Harga terendah" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="new">Terbaru</SelectItem>
-                                        <SelectItem value="price-low">Harga terendah</SelectItem>
-                                        <SelectItem value="price-high">Harga tertinggi</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                        </div>
+
 
                         {/* <div className="mb-4">
                             <span className="font-semibold">Kompatibel dengan :</span>
@@ -145,10 +162,10 @@ export default function Katalog() {
                     height={katalog.height} alt="katalog" />
                 <div className="h-2" />
                 <div className="grid grid-cols-4 lg:grid-cols-5 gap-2">
-                    <For each={items}>
-                      {(item, index) => (
-                        <CatalogueItemCard key={'item-' + index} name={item.name} price={item.price} />
-                      )}
+                    <For each={items.filter((item) => selectedItems.includes(item.category))}>
+                        {(item, index) => (
+                            <CatalogueItemCard key={'item-' + index} name={item.name} price={item.price} />
+                        )}
                     </For>
                 </div>
                 {/* <section className="flex flex-col mt-4">
