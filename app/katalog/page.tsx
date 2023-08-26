@@ -90,7 +90,6 @@ export default function Katalog() {
                                             <SelectValue placeholder="Harga terendah" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="new">Terbaru</SelectItem>
                                             <SelectItem value="price-low">Harga terendah</SelectItem>
                                             <SelectItem value="price-high">Harga tertinggi</SelectItem>
                                         </SelectContent>
