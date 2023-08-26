@@ -18,28 +18,28 @@ import { For } from "million/react";
 export default function Katalog() {
 
     const categories = [
-        { id: "brands", label: "Brands" },
-        { id: "casing_fans", label: "Casing Fans" },
-        { id: "casings", label: "Casings" },
-        { id: "cpu_coolers", label: "CPU Coolers" },
-        { id: "cpu_integrated_gpus", label: "CPU Integrated GPUs" },
-        { id: "cpu_sockets", label: "CPU Sockets" },
+        // { id: "brands", label: "Brands" },
+        // { id: "casing_fans", label: "Casing Fans" },
+        // { id: "casings", label: "Casings" },
+        // { id: "cpu_coolers", label: "CPU Coolers" },
+        // { id: "cpu_integrated_gpus", label: "CPU Integrated GPUs" },
+        // { id: "cpu_sockets", label: "CPU Sockets" },
         { id: "cpus", label: "CPUs" },
-        { id: "gpu_chipsets", label: "GPU Chipsets" },
+        // { id: "gpu_chipsets", label: "GPU Chipsets" },
         { id: "gpus", label: "GPUs" },
         { id: "internal_storages", label: "Internal Storages" },
         { id: "memories", label: "Memories" },
-        { id: "memory_sockets", label: "Memory Sockets" },
-        { id: "motherboard_chipsets", label: "Motherboard Chipsets" },
-        { id: "motherboard_code_name", label: "Motherboard Code Name" },
-        { id: "motherboard_form_factors", label: "Motherboard Form Factors" },
+        // { id: "memory_sockets", label: "Memory Sockets" },
+        // { id: "motherboard_chipsets", label: "Motherboard Chipsets" },
+        // { id: "motherboard_code_name", label: "Motherboard Code Name" },
+        // { id: "motherboard_form_factors", label: "Motherboard Form Factors" },
         { id: "motherboards", label: "Motherboards" },
-        { id: "pc_builds", label: "PC Builds" },
+        // { id: "pc_builds", label: "PC Builds" },
         { id: "power_supplies", label: "Power Supplies" },
-        { id: "product_details", label: "Product Details" },
-        { id: "products", label: "Products" },
-        { id: "thermal_pastes", label: "Thermal Pastes" },
-        { id: "wireless_network_cards", label: "Wireless Network Cards" }
+        // { id: "product_details", label: "Product Details" },
+        // { id: "products", label: "Products" },
+        // { id: "thermal_pastes", label: "Thermal Pastes" },
+        // { id: "wireless_network_cards", label: "Wireless Network Cards" }
     ]
 
     const items = [
