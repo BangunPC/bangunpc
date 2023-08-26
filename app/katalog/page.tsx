@@ -66,6 +66,8 @@ export default function Katalog() {
         return setSelectedItems(newSelectedItems)
     }
 
+    const [sort, setSort] = useState('price-low')
+
     return (
         <div className="flex min-h-screen mx-auto w-full px-2 md:px-0">
             <aside
@@ -83,7 +85,7 @@ export default function Katalog() {
                             </header>
                             <main>
                                 <div className="text-sm">
-                                    <Select>
+                                    <Select onValueChange={(e) => setSort(e)}>
                                         <SelectTrigger className="w-full">
                                             <SelectValue placeholder="Harga terendah" />
                                         </SelectTrigger>
@@ -98,7 +100,7 @@ export default function Katalog() {
                         </section>
                         <div className="mb-4 grid grid-flow-row gap-2">
                             <span className="font-semibold">Kategori</span>
-                            <ScrollArea className="w-full text-sm">
+                            <ScrollArea className="w-full h- text-sm">
                                 {categories.map((item) => (
                                     <div key={'cateogry-' + item.id}>
                                         <Checkbox
@@ -162,7 +164,7 @@ export default function Katalog() {
                     height={katalog.height} alt="katalog" />
                 <div className="h-2" />
                 <div className="grid grid-cols-4 lg:grid-cols-5 gap-2">
-                    <For each={items.filter((item) => selectedItems.includes(item.category))}>
+                    <For each={items.filter((item) => selectedItems.includes(item.category)).sort((a, b) => sort === 'price-low' ? a.price - b.price : b.price - a.price,)}>
                         {(item, index) => (
                             <CatalogueItemCard key={'item-' + index} name={item.name} price={item.price} />
                         )}
