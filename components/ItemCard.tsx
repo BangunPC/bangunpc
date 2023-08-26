@@ -3,7 +3,7 @@ import Image from "next/image"
 import StarRating from "./StarRating"
 import { block } from "million/react"
 
-const ItemCard = (props: { name: string, stars: number, price: number, discountPercent: number }) => {
+const ItemCard = block((props: { name: string, stars: number, price: number, discountPercent: number }) => {
     const { name, stars, price, discountPercent } = props
 
     const priceBeforeDiscount = price / (1 - discountPercent / 100)
@@ -39,6 +39,6 @@ const ItemCard = (props: { name: string, stars: number, price: number, discountP
             </div>
         </div>
     )
-}
+})
 
 export default ItemCard

@@ -2,13 +2,14 @@
 import React from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
+import { block } from "million/react";
 
 type Props = {
     name: string;
     price: number;
 }
 
-const CatalogueItemCard: React.FC<Props> = (props) => {
+const CatalogueItemCard: React.FC<Props> = block((props) => {
     const { name, price } = props
 
     return (
@@ -54,6 +55,6 @@ const CatalogueItemCard: React.FC<Props> = (props) => {
             </CardContent>
         </Card>
     );
-};
+});
 
 export default CatalogueItemCard;

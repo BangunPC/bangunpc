@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 
 const StarRating = (props: { rating: number }) => {
