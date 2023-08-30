@@ -1,12 +1,12 @@
-import Image from "next/image";
+import { Metadata } from "next"
+import React from "react"
+import Link from "next/link"
+import Image from "next/image"
+import { supabase } from "@/lib/supabase"
+import FlashDealsCarousel from "@/components/FlashDealsCarousel"
+import ItemCard from "@/components/ItemCard"
 import jumbotronComputer from "/public/Jumbotron_Computer.webp"
 import kerehore from "/public/kategori_kerehore.png"
-import React from "react";
-import Link from "next/link";
-import FlashDealsCarousel from "@/components/FlashDealsCarousel";
-import { supabase } from "@/lib/supabase";
-import ItemCard from "@/components/ItemCard";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: 'BangunPC — Find Parts, Components, Builds, and More',
@@ -24,7 +24,7 @@ export default function Home() {
         "kerehore.png",
         "mending.png",
         "sulthan.png",
-    ].map((image) => supabase.storage.from('website-images').getPublicUrl('category/' + image));
+    ].map((image) => supabase.storage.from('website-images').getPublicUrl('category/' + image))
 
 
     return (

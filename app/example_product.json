@@ -1,0 +1,295 @@
+{
+    "product": [
+        {
+            "id": 1,
+            "name": "Product 1"
+        },
+        {
+            "id": 2,
+            "name": "Product 2"
+        },
+        {
+            "id": 3,
+            "name": "Product 3"
+        },
+        {
+            "id": 4,
+            "name": "Product 4"
+        },
+        {
+            "id": 5,
+            "name": "Product 5"
+        },
+        {
+            "id": 6,
+            "name": "Product 6"
+        },
+        {
+            "id": 7,
+            "name": "Product 7"
+        },
+        {
+            "id": 8,
+            "name": "Product 8"
+        },
+        {
+            "id": 9,
+            "name": "Product 9"
+        },
+        {
+            "id": 10,
+            "name": "Product 10"
+        },
+        {
+            "id": 11,
+            "name": "Product 11"
+        },
+        {
+            "id": 12,
+            "name": "Product 12"
+        },
+        {
+            "id": 13,
+            "name": "Product 13"
+        },
+        {
+            "id": 14,
+            "name": "Product 14"
+        },
+        {
+            "id": 15,
+            "name": "Product 15"
+        },
+        {
+            "id": 16,
+            "name": "Product 16"
+        },
+        {
+            "id": 17,
+            "name": "Product 17"
+        },
+        {
+            "id": 18,
+            "name": "Product 18"
+        }
+    ],
+    "brands": [
+        {
+            "id": 1,
+            "name": "Brand 1"
+        },
+        {
+            "id": 2,
+            "name": "Brand 2"
+        }
+    ],
+    "casing_fans": [
+        {
+            "id": 1,
+            "product_id": 1,
+            "color": "Red",
+            "size_mm": 120,
+            "speed_rpm": 1500,
+            "noise_level": "Low"
+        },
+        {
+            "id": 2,
+            "product_id": 2,
+            "color": "Blue",
+            "size_mm": 140,
+            "speed_rpm": 1800,
+            "noise_level": "Medium"
+        }
+        
+    ],
+    "casings": [
+        {
+            "id": 1,
+            "product_id": 3,
+            "color": "Black",
+            "fan_slots": 3,
+            "gpu_max_mm": 350,
+            "storage_slots": "2",
+            "type": "ATX"
+        },
+        {
+            "id": 2,
+            "product_id": 4,
+            "color": "White",
+            "fan_slots": 4,
+            "gpu_max_mm": 320,
+            "storage_slots": "3",
+            "type": "Micro ATX"
+        }
+    ],
+    "cpu_coolers": [
+        {
+            "id": 1,
+            "type": "Air",
+            "color": "Silver",
+            "cpu_socket_support": "AM4",
+            "radiator_size_mm": null,
+            "fan_rpm": 2000
+        },
+        {
+            "id": 2,
+            "type": "Liquid",
+            "color": "Black",
+            "cpu_socket_support": "LGA1151",
+            "radiator_size_mm": 240,
+            "fan_rpm": 1800
+        }
+    ],
+    "cpu_integrated_gpus": [
+        {
+            "id": 1,
+            "name": "Integrated GPU 1"
+        },
+        {
+            "id": 2,
+            "name": "Integrated GPU 2"
+        }
+    ],
+    "cpu_sockets": [
+        {
+            "id": 1,
+            "socket_name": "AM4",
+            "introduction_year": "2016"
+        },
+        {
+            "id": 2,
+            "socket_name": "LGA1151",
+            "introduction_year": "2015"
+        }
+    ],
+    "cpus": [
+        {
+            "id": 1,
+            "product_id": 5,
+            "core_count": 6,
+            "core_clock_ghz": 3.6,
+            "boost_clock_ghz": 4.2,
+            "tdp": 65,
+            "cpu_socket_id": 1,
+            "integrated_gpu_id": 1
+        },
+        {
+            "id": 2,
+            "product_id": 6,
+            "core_count": 8,
+            "core_clock_ghz": 3.8,
+            "boost_clock_ghz": 4.5,
+            "tdp": 95,
+            "cpu_socket_id": 2,
+            "integrated_gpu_id": 2
+        }
+    ],
+    "gpu_chipsets": [
+        {
+            "id": 1,
+            "name": "Chipset 1"
+        },
+        {
+            "id": 2,
+            "name": "Chipset 2"
+        }
+    ],
+    "gpus": [
+        {
+            "id": 1,
+            "product_id": 7,
+            "chipset": "Chipset 1",
+            "color": "Black",
+            "core_clock_mhz": 1500,
+            "boost_clock_mhz": 1800,
+            "vram_gb": 8,
+            "length_mm": 280,
+            "tdp_watt": 200
+        },
+        {
+            "id": 2,
+            "product_id": 8,
+            "chipset": "Chipset 2",
+            "color": "White",
+            "core_clock_mhz": 1600,
+            "boost_clock_mhz": 2000,
+            "vram_gb": 12,
+            "length_mm": 300,
+            "tdp_watt": 250
+        }
+    ],
+    "internal_storage": [
+        {
+            "id": 1,
+            "product_id": 9,
+            "capacity_gb": 500,
+            "type": "SSD"
+        },
+        {
+            "id": 2,
+            "product_id": 10,
+            "capacity_gb": 1000,
+            "type": "HDD"
+        }
+    ],
+    "memory_modules": [
+        {
+            "id": 1,
+            "product_id": 11,
+            "capacity_gb": 8,
+            "speed_mhz": 3200,
+            "type": "DDR4"
+        },
+        {
+            "id": 2,
+            "product_id": 12,
+            "capacity_gb": 16,
+            "speed_mhz": 3600,
+            "type": "DDR4"
+        }
+    ],
+    "motherboards": [
+        {
+            "id": 1,
+            "product_id": 13,
+            "cpu_socket_id": 1,
+            "memory_slots": 4,
+            "form_factor": "ATX"
+        },
+        {
+            "id": 2,
+            "product_id": 14,
+            "cpu_socket_id": 2,
+            "memory_slots": 2,
+            "form_factor": "Micro ATX"
+        }
+    ],
+    "power_supplies": [
+        {
+            "id": 1,
+            "product_id": 15,
+            "wattage": 650,
+            "efficiency_rating": "80 Plus Gold"
+        },
+        {
+            "id": 2,
+            "product_id": 16,
+            "wattage": 750,
+            "efficiency_rating": "80 Plus Platinum"
+        }
+    ],
+    "storage_devices": [
+        {
+            "id": 1,
+            "product_id": 17,
+            "capacity_gb": 1000,
+            "type": "SSD"
+        },
+        {
+            "id": 2,
+            "product_id": 18,
+            "capacity_gb": 2000,
+            "type": "HDD"
+        }
+    ]
+}

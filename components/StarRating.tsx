@@ -1,9 +1,10 @@
-import React from 'react';
+'use client'
+import React from 'react'
 
 const StarRating = (props: { rating: number }) => {
-    const { rating } = props;
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
+    const { rating } = props
+    const fullStars = Math.floor(rating)
+    const hasHalfStar = rating % 1 !== 0
 
     return (
         <div className="flex mx-auto w-full items-center text-yellow-400">
@@ -28,7 +29,7 @@ const StarRating = (props: { rating: number }) => {
                 </svg>
             ))}
         </div>
-    );
-};
+    )
+}
 
-export default StarRating;
+export default StarRating
