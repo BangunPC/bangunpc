@@ -3,7 +3,8 @@ import { Inter } from 'next/font/google'
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Metadata } from 'next'
+
+export const runtime = 'edge';
 
 const inter = Inter({ subsets: ['latin'] })
 
