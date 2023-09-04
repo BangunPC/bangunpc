@@ -14,6 +14,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
 import CatalogueItemCard from "@/components/CatalogueItemCard";
 import { For } from "million/react";
+import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 
 export default function Katalog() {
 
@@ -159,8 +160,12 @@ export default function Katalog() {
             </aside>
 
             <main className="flex-1 my-4">
-                <Image src={katalog.src} className="max-h-58 object-scale-down rounded-xl shadow-xl" width={katalog.width}
-                    height={katalog.height} alt="katalog" />
+                <div className="w-96 mx-auto">
+                    <AspectRatio ratio={katalog.width / katalog.height}>
+                        <Image src={katalog.src} className=" object-scale-down rounded-xl shadow-xl" width={katalog.width}
+                            height={katalog.height} alt="katalog" />
+                    </AspectRatio>
+                </div>
                 <div className="h-2" />
                 <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
                     <For each={items.filter((item) => selectedItems.includes(item.category)).sort((a, b) => sort === 'price-low' ? a.price - b.price : b.price - a.price,)}>
