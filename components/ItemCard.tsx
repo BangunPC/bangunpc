@@ -28,7 +28,7 @@ const ItemCard = block((props: { name: string, stars: number, price: number, dis
                             </span>
                         </div>
                         <button aria-label="increment item" className="hover:bg-orange-500 hover:scale-110 hover:text-white active:text-white active:scale-90 active:bg-orange-500 hover:border-none transition-all flex justify-center w-10 h-10 border rounded-md">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="m-auto" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="m-auto" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M12 5l0 14"></path>
                                 <path d="M5 12l14 0"></path>

@@ -11,7 +11,7 @@ const SampleNextArrow = block((props: any) => {
     return (
         <div className='z-10 absolute top-1/2 right-2' onClick={onClick}>
             <button aria-label='next' className='rounded-full text-orange-600 hover:text-orange-700 hover:scale-110 active:text-orange-800 active:scale-90 transition-all'>
-                <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" stroke-width={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0 -18"></path>
                     <path d="M16 12l-4 -4"></path>
@@ -27,7 +27,7 @@ const SamplePrevArrow = block((props: any) => {
     return (
         <div className='z-10 absolute top-1/2 left-2' onClick={onClick}>
             <button aria-label='previous' className='rounded-full text-orange-600 hover:text-orange-700 hover:scale-110 active:text-orange-800 active:scale-90 transition-all'>
-                <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" stroke-width={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M12 21a9 9 0 1 0 0 -18a9 9 0 0 0 0 18"></path>
                     <path d="M8 12l4 4"></path>

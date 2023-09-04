@@ -41,9 +41,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             width={375}
             height={375}
             src={
-              supabase.storage
-                .from("product-images")
-                .getPublicUrl(decodeURI(item.image_path)).data.publicUrl
+              "https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/" +
+              item.image_path
             }
           />
           <span className="text-lg font-bold">
