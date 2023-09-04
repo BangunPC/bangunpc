@@ -30,8 +30,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const items = test.data as Product[];
 
-  console.log(decodeURI(items[0].image_path));
-
   return (
     <div>
       {items.map((item) => (
