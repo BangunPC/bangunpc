@@ -31,9 +31,11 @@ type ProductType = {
 
 export default function Katalog() {
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
 
   useEffect(() => {
     async function getProducts() {
+      setLoadingProducts(true);
       setProducts(
         (
           await supabase
@@ -42,6 +44,7 @@ export default function Katalog() {
             .select("*")
         ).data as ProductType[]
       );
+      setLoadingProducts(false);
     }
 
     getProducts();
@@ -225,13 +228,15 @@ export default function Katalog() {
           </AspectRatio>
         </div>
         <div className="h-2" />
+        {loadingProducts && (
+          <div className="m-auto text-center">Loading...</div>
+        )}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
           <For each={products}>
             {(item, index) => (
               <CatalogueItemCard
                 key={"item-" + index}
-                name={item.product_name}
-                price={item.price}
+                {...item}
               />
             )}
           </For>

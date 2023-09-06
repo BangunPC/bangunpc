@@ -19,6 +19,7 @@ type Product = {
   price: number;
   url: string;
   stock: number;
+  category: string;
 };
 
 export default async function Page({ params }: { params: { slug: string } }) {
