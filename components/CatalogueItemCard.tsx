@@ -46,8 +46,8 @@ const CatalogueItemCard: React.FC<Props> = block((props) => {
         <CardHeader>
           <AspectRatio ratio={1 / 1}>
             <Image
-            width={200}
-            height={200}
+            width={400}
+            height={400}
               src={
                 "https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/" +
                 image_path
