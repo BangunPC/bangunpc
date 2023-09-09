@@ -31,7 +31,7 @@ type ProductType = {
 
 export default function Katalog() {
   const [products, setProducts] = useState<ProductType[]>([]);
-  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   useEffect(() => {
     async function getProducts() {
@@ -228,15 +228,34 @@ export default function Katalog() {
           </AspectRatio>
         </div>
         <div className="h-2" />
-        {loadingProducts && (
-          <div className="m-auto text-center">Loading...</div>
-        )}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
+          {loadingProducts && (
+            <For each={Array(8).fill({
+              brand_name: "Loading...",
+              category: "Loading...",
+              image_path: "Loading...",
+              price: 0,
+              product_detail_id: 0,
+              product_name: "Loading...",
+              slug: "Loading...",
+              stock: 0,
+              url: "Loading...",
+            })}>
+              {(item, index) => (
+                <CatalogueItemCard
+                  key={"item-" + index}
+                  {...item}
+                  shimmer={true}
+                />
+              )}
+            </For>
+          )}
           <For each={products}>
             {(item, index) => (
               <CatalogueItemCard
                 key={"item-" + index}
                 {...item}
+                shimmer={loadingProducts}
               />
             )}
           </For>

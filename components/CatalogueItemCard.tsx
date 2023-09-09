@@ -13,6 +13,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 type Props = {
+  shimmer: boolean;
+
   product_detail_id: number;
   slug: string;
   product_name: string;
@@ -26,6 +28,8 @@ type Props = {
 
 const CatalogueItemCard: React.FC<Props> = block((props) => {
   const {
+    shimmer,
+
     product_detail_id,
     slug,
     product_name,
@@ -37,47 +41,80 @@ const CatalogueItemCard: React.FC<Props> = block((props) => {
     category,
   } = props;
 
+  console.log(shimmer);
+
   return (
-    <Link href={"/detail/" + slug + "/"}>
-      <Card className="shadow-lg">
-        <span className="m-2 text-xs font-semibold w-fit text-start">
-          {category}
-        </span>
+    <Link aria-disabled href={shimmer ? "" : "/detail/" + slug + "/"}>
+      <Card className={"shadow-lg "}>
+        {shimmer ? (
+          <div className="m-2 text-xs font-semibold w-fit rounded-md bg-gray-200 text-transparent text-start">
+            kategori_mothbd
+          </div>
+        ) : (
+          <div className="m-2 text-xs font-semibold w-fit text-start">
+            {category}
+          </div>
+        )}
         <CardHeader>
-          <AspectRatio ratio={1 / 1}>
-            <Image
-            width={400}
-            height={400}
-              src={
-                "https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/" +
-                image_path
-              }
-              alt={product_name}
-            />
-          </AspectRatio>
+          {shimmer ? (
+            <AspectRatio ratio={1 / 1}>
+              <div className="w-full h-full bg-gray-200 rounded-md"></div>
+            </AspectRatio>
+          ) : (
+            <AspectRatio ratio={1 / 1}>
+              <Image
+                width={400}
+                height={400}
+                src={
+                  "https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/" +
+                  image_path
+                }
+                alt={product_name}
+              />
+            </AspectRatio>
+          )}
         </CardHeader>
         <CardContent className="p-2 flex flex-col">
           <div className="flex flex-row justify-between">
-            <div className="w-fit text-xs font-semibold rounded-md bg-amber-700 text-input py-1 px-2">
-              {brand_name}
-            </div>
+            {shimmer ? (
+              <div className="w-fit text-xs font-semibold rounded-md bg-gray-200 text-transparent py-1 px-2">
+                TST
+              </div>
+            ) : (
+              <div className="w-fit text-xs font-semibold rounded-md bg-amber-700 text-input py-1 px-2">
+                {brand_name}
+              </div>
+            )}
           </div>
           <div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <span className="text-sm line-clamp-2 text-start text-ellipsis">
-                    {product_name}
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent>{product_name}</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            {shimmer ? (
+              <>
+                <div className="mt-1 w-40 h-4 text-sm line-clamp-2 text-start text-ellipsis rounded-md bg-gray-200 text-transparent "></div>
+                <div className="mt-1 w-1/2 h-4 text-sm line-clamp-2 text-start text-ellipsis rounded-md bg-gray-200 text-transparent "></div>
+              </>
+            ) : (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <span className="text-sm line-clamp-2 text-start text-ellipsis">
+                      {product_name}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>{product_name}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
           </div>
           <div className="h-12 flex flex-col my-2 w-full">
-            <span className="w-full text-sm font-bold">
-              Rp{price.toLocaleString("id-ID")}
-            </span>
+            {shimmer ? (
+              <div className="w-24 text-sm font-bold rounded-md bg-gray-200 text-transparent">
+                Rp
+              </div>
+            ) : (
+              <span className="w-full text-sm font-bold">
+                Rp{price.toLocaleString("id-ID")}
+              </span>
+            )}
             <div className="w-full flex justify-between">
               <AspectRatio ratio={1} className="w-10 h-10 ml-auto">
                 <button
