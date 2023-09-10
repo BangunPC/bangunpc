@@ -9,7 +9,7 @@ import jumbotronComputer from "/public/Jumbotron_Computer.webp";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 export default function HomePage() {
-  const categoryImages = ["kerehore.png", "mending.png", "sulthan.png"].map(
+  const categoryImages = ["kerehore.webp", "mending.webp", "sulthan.webp"].map(
     (image) =>
       supabase.storage.from("website-images").getPublicUrl("category/" + image)
   );
