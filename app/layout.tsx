@@ -20,7 +20,7 @@ export default function RootLayout(props: {
                 <title>BangunPC — Find Parts, Components, Builds, and More</title>
                 <meta name="title" content="BangunPC — Find Parts, Components, Builds, and More" />
                 <meta name="description" content="Selamat datang di BangunPC, platform untuk penggemar PC! Kami ada untuk membantu Anda menemukan komponen PC dari platform belanja terpercaya. Manfaatkan fitur-fitur kami seperti simulasi rakit PC manual dan katalog komponen lengkap. Kami juga menyediakan panduan mudah untuk pemula agar Anda bisa merakit PC sendiri. Bergabunglah dengan BangunPC dan wujudkan PC impian Anda sekarang!" />
-                <meta itemProp="image" content="/bangunpc_nologo.png" />
+                <meta itemProp="image" content="/bangunpc_nologo.webp" />
                 <meta name="google-site-verification" content="gq5gsij68Np-CJw0vlhvo8ULCJgLuT-1078RclhZ8bg" />
 
                 {/* facebook  */}
@@ -28,14 +28,14 @@ export default function RootLayout(props: {
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content="BangunPC — Find Parts, Components, Builds, and More" />
                 <meta property="og:description" content="Selamat datang di BangunPC, platform untuk penggemar PC! Kami ada untuk membantu Anda menemukan komponen PC dari platform belanja terpercaya. Manfaatkan fitur-fitur kami seperti simulasi rakit PC manual dan katalog komponen lengkap. Kami juga menyediakan panduan mudah untuk pemula agar Anda bisa merakit PC sendiri. Bergabunglah dengan BangunPC dan wujudkan PC impian Anda sekarang!" />
-                <meta property="og:image" content="/bangunpc_nologo.png" />
+                <meta property="og:image" content="/bangunpc_nologo.webp" />
 
                 {/* twitter  */}
                 <meta property="twitter:card" content="summary_large_image" />
                 <meta property="twitter:url" content="https://metatags.io" />
                 <meta property="twitter:title" content="BangunPC — Find Parts, Components, Builds, and More" />
                 <meta property="twitter:description" content="Selamat datang di BangunPC, platform untuk penggemar PC! Kami ada untuk membantu Anda menemukan komponen PC dari platform belanja terpercaya. Manfaatkan fitur-fitur kami seperti simulasi rakit PC manual dan katalog komponen lengkap. Kami juga menyediakan panduan mudah untuk pemula agar Anda bisa merakit PC sendiri. Bergabunglah dengan BangunPC dan wujudkan PC impian Anda sekarang!" />
-                <meta property="twitter:image" content="https://bangunpc.pages.dev/bangunpc_nologo.png" />
+                <meta property="twitter:image" content="https://bangunpc.pages.dev/bangunpc_nologo.webp" />
 
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -44,7 +44,7 @@ export default function RootLayout(props: {
             </head>
             <body className={inter.className}>
                 <main className="flex flex-col items-center justify-between">
-                    <header className="flex flex-col w-full bg-white shadow-xl shadow-gray-100">
+                    <header className="flex flex-col w-full bg-white shadow-2xl shadow-gray-100 ">
                         <div className="w-full h-8 bg-[#3e3e3e]"></div>
                         <nav className="p-4">
                             <div className="flex flex-col w-full" id="top-bar">

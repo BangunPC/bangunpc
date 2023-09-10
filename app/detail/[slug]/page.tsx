@@ -1,8 +1,8 @@
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 import Link from "next/link";
-import tokopediaLogo from "/public/tokopedia_icon.png";
-import tokopediaText from "/public/tokopedia_text.png";
+import tokopediaLogo from "/public/tokopedia_icon.webp";
+import tokopediaText from "/public/tokopedia_text.webp";
 import {
   Tooltip,
   TooltipContent,

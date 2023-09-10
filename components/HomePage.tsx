@@ -6,7 +6,6 @@ import { supabase } from "@/lib/supabase";
 import FlashDealsCarousel from "@/components/FlashDealsCarousel";
 import ItemCard from "@/components/ItemCard";
 import jumbotronComputer from "/public/Jumbotron_Computer.webp";
-import kerehore from "/public/kategori_kerehore.png";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 export default function HomePage() {
@@ -142,8 +141,8 @@ export default function HomePage() {
                 <Image
                   alt="kategori"
                   src={image.data.publicUrl}
-                  width={kerehore.width}
-                  height={kerehore.height}
+                  width={356}
+                  height={473}
                   className="rounded-lg object-scale-down"
                 ></Image>
               </div>
