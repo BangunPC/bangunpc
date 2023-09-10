@@ -55,7 +55,7 @@ const CatalogueItemCard: React.FC<Props> = block((props) => {
             {category}
           </div>
         )}
-        <CardHeader>
+        <CardHeader className="p-2">
           {shimmer ? (
             <AspectRatio ratio={1 / 1}>
               <div className="w-full h-full bg-gray-200 rounded-md"></div>
