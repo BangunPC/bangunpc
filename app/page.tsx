@@ -24,57 +24,59 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <section
-        className="flex w-full h-screen py-12 mb-12"
-        style={{
-          backgroundImage: `url('/Jumbotron.webp')`,
-          backgroundSize: "cover",
-        }}
-      >
-        <div className="w-full m-auto">
-          <div className="jumbotron-image flex flex-wrap justify-center align-middle ">
-            <Image
-              className="flex-1 md:w-2/5 object-scale-down"
-              src={jumbotronComputer.src}
-              width={320}
-              height={320}
-              alt="computer"
-            />
-            <div className="jumbotron-text flex-1 md:w-1/2 w-2/3 text-center md:text-left text-white flex flex-col items-center md:items-start">
-              <p className="text-5xl font-light leading-snug">
-                Rakit <span className="font-bold">PC</span> impianmu <br />
-                dengan <span className="font-bold text-orange-400">
-                  MUDAH
-                </span>{" "}
-                <br />
-                dan <span className="font-bold text-orange-400">MURAH</span>
-              </p>
-              <Link
-                href="/simulasi"
-                className="w-fit text-2xl my-4 bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-3 px-8 mx-2 rounded-md text-white"
-              >
-                Buat Sekarang
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="ml-2"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.4"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+      <div className="w-full p-2">
+        <section
+          className="flex w-full h-screen py-12 mb-12 rounded-3xl"
+          style={{
+            backgroundImage: `url('/Jumbotron.webp')`,
+            backgroundSize: "cover",
+          }}
+        >
+          <div className="w-full m-auto">
+            <div className="jumbotron-image flex flex-wrap justify-center align-middle ">
+              <Image
+                className="flex-1 md:w-2/5 object-scale-down"
+                src={jumbotronComputer.src}
+                width={320}
+                height={320}
+                alt="computer"
+              />
+              <div className="jumbotron-text flex-1 md:w-1/2 w-2/3 text-center md:text-left text-white flex flex-col items-center md:items-start">
+                <p className="text-5xl font-light leading-snug">
+                  Rakit <span className="font-bold">PC</span> impianmu <br />
+                  dengan <span className="font-bold text-orange-400">
+                    MUDAH
+                  </span>{" "}
+                  <br />
+                  dan <span className="font-bold text-orange-400">MURAH</span>
+                </p>
+                <Link
+                  href="/simulasi"
+                  className="w-fit text-2xl my-4 bg-orange-500 hover:bg-orange-700 active:bg-orange-800 active:scale-90 transition-all flex flex-row py-3 px-8 mx-2 rounded-md text-white"
                 >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M11.414 10l-7.383 7.418a2.091 2.091 0 0 0 0 2.967a2.11 2.11 0 0 0 2.976 0l7.407 -7.385"></path>
-                  <path d="M18.121 15.293l2.586 -2.586a1 1 0 0 0 0 -1.414l-7.586 -7.586a1 1 0 0 0 -1.414 0l-2.586 2.586a1 1 0 0 0 0 1.414l7.586 7.586a1 1 0 0 0 1.414 0z"></path>
-                </svg>
-              </Link>
+                  Buat Sekarang
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="ml-2"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.4"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M11.414 10l-7.383 7.418a2.091 2.091 0 0 0 0 2.967a2.11 2.11 0 0 0 2.976 0l7.407 -7.385"></path>
+                    <path d="M18.121 15.293l2.586 -2.586a1 1 0 0 0 0 -1.414l-7.586 -7.586a1 1 0 0 0 -1.414 0l-2.586 2.586a1 1 0 0 0 0 1.414l7.586 7.586a1 1 0 0 0 1.414 0z"></path>
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
       {/*TODO(damywise): make the header into component*/}
       {/* Flash deals */}
       <section className="flex flex-col mb-12 w-full overflow-hidden">
