@@ -1,4 +1,3 @@
-import image from "@astrojs/image";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -10,7 +9,7 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: cloudflare(),
+  adapter: cloudflare({ mode: "directory" }),
   site: config.site.base_url ? config.site.base_url : "http://examplesite.com",
   base: config.site.base_path ? config.site.base_path : "/",
   trailingSlash: config.site.trailing_slash ? "always" : "never",
@@ -21,9 +20,6 @@ export default defineConfig({
       config: {
         applyBaseStyles: false,
       },
-    }),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
     }),
     mdx(),
   ],
