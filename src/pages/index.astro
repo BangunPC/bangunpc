@@ -1,0 +1,42 @@
+---
+import { Image } from "@astrojs/image/components";
+import Base from "@layouts/Base.astro";
+
+const commonButton = "rounded-lg px-6 py-2 transition duration-200 rounded-lg hover:scale-[1.05]"
+const filledButton = ["bg-primary", "text-white"];
+const outlinedButton = ["border-primary", "border-[3px]", "text-primary"];
+---
+
+<Base>
+  <section class="section bg-[#ECEEF5]">
+    <div class="container">
+      <div class="flex flex-row items-center">
+        <div class="flex m-auto w-[420px] lg:flex-1 flex-col justify-evenly gap-4">
+          <span class="font-4 text-5xl font-bold leading-snug text-black">
+            <span>Rakit PC impianmu dengan</span>
+            <span class="text-primary">MUDAH</span> dan <span class="text-primary">MURAH</span>.
+          </span>
+          Rekomendasi komponen yang berkualitas tinggi dengan harga terjangkau.
+          <div class="flex flex-row">
+            <a href="/simulasi" class=`${commonButton} ${filledButton.join(' ')}`>
+              Rakit Sekarang
+            </a>
+            <div class="w-4"></div>
+            <a href="/katalog" class={`${commonButton} ${outlinedButton.join(' ')} ${filledButton.map((e) => `hover:${e} `).join(' ')}`}>
+              Cari komponen PC
+            </a>
+          </div>
+        </div>
+        <div class="hidden md:flex flex-1">
+          <Image
+            class="w-full transition duration-300 group-hover:scale-[1.03]"
+            src='images/home-page/1-components-2x.webp'
+            alt='PC Components Bannet'
+            width={454*2}
+            height={450*2}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
