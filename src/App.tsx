@@ -323,7 +323,7 @@ console.log(generatedItems);
 const App: React.FC = () => {
     return (
         <BrowserRouter>
-            <GitHubBanner />
+            {/* <GitHubBanner /> */}
             <ConfigProvider theme={RefineThemes.Blue}>
                 <Refine
                     dataProvider={dataProvider(supabaseClient)}
