@@ -268,14 +268,15 @@ const authProvider: AuthBindings = {
 };
 
 const items = [
-    "v_all_product_list",
-    "v_detail_casing",
-    "v_detail_cpu",
-    "v_detail_gpu",
-    "v_detail_internal_storage",
-    "v_detail_memory",
-    "v_detail_motherboard",
-    "v_detail_psu",
+    "copy_v_all_product_list",
+    // "v_all_product_list",
+    // "v_detail_casing",
+    // "v_detail_cpu",
+    // "v_detail_gpu",
+    // "v_detail_internal_storage",
+    // "v_detail_memory",
+    // "v_detail_motherboard",
+    // "v_detail_psu",
     // "cpus",
     // "cpu_sockets",
     // "cpu_coolers",

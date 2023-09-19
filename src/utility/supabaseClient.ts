@@ -6,7 +6,7 @@ const SUPABASE_KEY =
 
 export const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
     db: {
-        schema: "product",
+        schema: "public",
     },
     auth: {
         persistSession: true,
