@@ -1,0 +1,16 @@
+ 1008  npm create qwik@latest 
+ 1009  npm run qwik add cloudflare
+ 1010  npm run qwik add cloudflare-pages\n
+ 1011  npm run start
+ 1012  npm start
+ 1013  npm start
+ 1014  npm run qwik add tailwind\n
+ 1015  npm install @supabase/supabase-js supabase-auth-helpers-qwik\n
+ 1016  git init
+ 1017  git checkout
+ 1018  git branch
+ 1019  git branch qwik
+ 1020  git branch --help
+ 1021  history
+ 1022  npm install @supabase/supabase-js supabase-auth-helpers-qwik\n
+ 1023  history
