@@ -1,0 +1,16 @@
+.wrap {
+  flex-shrink: 0;
+  height: min-content; /* 1274px */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: end;
+  overflow: hidden;
+  flex: 1 0 0px;
+  position: relative;
+  padding: 0px 0px 0px 0px;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-radius: 0px 0px 0px 0px;
+}

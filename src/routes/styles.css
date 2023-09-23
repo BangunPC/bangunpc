@@ -23,13 +23,17 @@ body {
   background: var(--qwik-dark-background);
   color: var(--qwik-dark-text);
   overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+  line-height: inherit;
+  box-sizing: border-box;
 }
 
 /* HEADINGS ------------------------------------- */
 h1,
 h2,
 h3 {
-  color: white;
+  color: black;
   margin: 0;
 }
 
@@ -125,7 +129,7 @@ button {
   background: var(--qwik-light-blue);
   border: none;
   border-radius: 8px;
-  color: white;
+  color: black;
   cursor: pointer;
   font-size: 0.8rem;
   padding: 15px 20px;
