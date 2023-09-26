@@ -32,7 +32,8 @@ const headersItems = [
       <DocumentText width="24" height="24" class="inline-block fill-black" />
     ),
     title: "Blog",
-    href: "https://static-bangunpc.pages.dev/artikel/",
+    // href: "https://static-bangunpc.pages.dev/artikel/",
+    href: "/blog",
   },
 ];
 

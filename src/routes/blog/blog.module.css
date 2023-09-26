@@ -1,0 +1,105 @@
+/* Responsive typography */
+
+
+@media (min-width: 576px) {
+    html {
+        font-size: 19px;
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 21px;
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 22px;
+    }
+}
+
+/* Medium-like typography */
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h1 {
+    font-size: 2.48832em;
+    margin-bottom: 0.35466em;
+}
+
+h2 {
+    font-size: 2.074em;
+    margin-bottom: 0.39216em;
+}
+
+h3 {
+    font-size: 1.728em;
+    margin-bottom: 0.43478em;
+}
+
+h4 {
+    font-size: 1.44em;
+    margin-bottom: 0.45833em;
+}
+
+h5 {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+}
+
+h6 {
+    font-size: 1em;
+    margin-bottom: 0.55556em;
+}
+
+p {
+    margin-bottom: 1.3em;
+    line-height: 1.5rem;
+}
+
+ul,
+ol {
+    padding-left: 1em;
+    margin-bottom: 1.3em;
+    line-height: 1.5rem;
+}
+
+ul {
+    list-style: disc outside;
+}
+
+ol {
+    list-style: decimal outside;
+}
+
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+code {
+    font-family: 'Courier New', monospace;
+    background-color: #f9f9f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
