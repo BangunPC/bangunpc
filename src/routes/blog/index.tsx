@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
+import './blog.module.css';
 
 export const useBlog = routeLoader$(async () => {
   const modules = import.meta.glob('/src/blog/*.mdx', { eager: true })
