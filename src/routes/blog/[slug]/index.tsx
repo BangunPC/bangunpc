@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$, useLocation } from "@builder.io/qwik-city";
+import { DocumentHead, routeLoader$, useLocation } from "@builder.io/qwik-city";
 import styles from "./blog.module.css";
 
 export const useBlog = routeLoader$(async () => {
@@ -64,3 +64,18 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = ({ resolveValue, params }) => {
+  const slug = params.slug;
+  const metas = resolveValue(useFrontmatter);
+  const meta: Post = metas.get(slug);
+  return {
+    title: meta.title,
+    meta: [
+      {
+        name: "description",
+        content: meta.description,
+      },
+    ],
+  };
+};
