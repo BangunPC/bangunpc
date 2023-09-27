@@ -72,7 +72,7 @@ html {
 
 .mdx p {
     margin-bottom: 1.3em;
-    line-height: 2rem;
+    line-height: 150%;
     
 }
 
@@ -80,7 +80,7 @@ html {
 .mdx ol {
     padding-left: 1em;
     margin-bottom: 1.3em;
-    line-height: 2rem;
+    line-height: 150%;
 
 }
 
@@ -114,5 +114,5 @@ html {
     background-color: #f9f9f9;
     padding: 2px 4px;
     border-radius: 3px;
-
+    line-height: 150%;
 }
