@@ -69,14 +69,14 @@
 
 .mdx p {
     margin-bottom: 1.3em;
-    line-height: 1.5rem;
+    line-height: 2rem;
 }
 
 .mdx ul,
 .mdx ol {
     padding-left: 1em;
     margin-bottom: 1.3em;
-    line-height: 1.5rem;
+    line-height: 2rem;
 }
 
 .mdx ul {
@@ -87,9 +87,17 @@
     list-style: decimal outside;
 }
 
+.mdx li {
+  white-space: wrap;
+  text-overflow: ellipsis;
+}
+
 .mdx a {
     color: #0070f3;
     text-decoration: none;
+    
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 .mdx a:hover {
