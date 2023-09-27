@@ -1,20 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
-import styles from "./blog.module.css";
-
-export const useBlog = routeLoader$(async () => {
-  const modules = import.meta.glob("/src/blog/*.mdx", { eager: true });
-
-  const posts: any[] = [];
-
-  for (const path in modules) {
-    // @ts-ignore
-    const post = modules[path].default().children.type();
-    posts.push(post);
-  }
-
-  return posts;
-});
+import { Link, routeLoader$ } from "@builder.io/qwik-city";
 
 export const useFrontmatter = routeLoader$(async () => {
   const modules = import.meta.glob("/src/blog/*.mdx", { eager: true });
@@ -23,7 +8,14 @@ export const useFrontmatter = routeLoader$(async () => {
 
   for (const path in modules) {
     // @ts-ignore
-    const post = modules[path].frontmatter;
+    const post: Post = modules[path].frontmatter;
+
+    const slug = path
+      .split("/")
+      .pop()
+      ?.replace(/\.[^/.]+$/, ""); // Remove the file extension using regular expression
+
+    post.slug = slug;
     posts.push(post);
   }
 
@@ -31,20 +23,28 @@ export const useFrontmatter = routeLoader$(async () => {
 });
 
 export default component$(() => {
-  const data = useBlog();
-  const meta = useFrontmatter();
+  const metas = useFrontmatter();
   return (
     <div class="max-w-[680px] mx-4 md:mx-auto mt-8 ">
-      <span class={[styles.mdx]}>
-        {data.value.map((t, index) => (
-          <>
-            <h1 class="font-extrabold">{meta.value[index].title}</h1>
-            <h4>{meta.value[index].description}</h4> <br/>
-            <h5>Oleh : {meta.value[index].authors}</h5>
-            <div class="font-serif">{t}</div>
-          </>
-        ))}
-      </span>
+      {metas.value.map((meta) => (
+        <Link key={meta.slug} href={`/blog/${meta.slug}`}>
+          <div class="card">
+            <div>
+              <span class="font-extrabold">{meta.title}</span>
+              <br />
+              <span>{meta.description}</span>
+            </div>
+            <br />
+            <div>
+              <span>Oleh: {meta.authors.join(", ")}</span>
+              <div class="font-serif">{meta.slug}</div>
+              <div>Categories: {meta.categories.join(", ")}</div>
+              <div>Tags: {meta.tags.join(", ")}</div>
+              <div>Date: {new Date(meta.date).toDateString()}</div>
+            </div>
+          </div>
+        </Link>
+      ))}
     </div>
   );
 });
