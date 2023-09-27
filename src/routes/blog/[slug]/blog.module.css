@@ -1,5 +1,8 @@
 /* Responsive typography */
 
+html {
+    word-wrap: break-word;
+}
 
 @media (min-width: 576px) {
     .mdx {
@@ -35,7 +38,6 @@
 .mdx h5,
 .mdx h6 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    word-wrap: break-word
 }
 
 .mdx h1 {
@@ -72,7 +74,6 @@
     margin-bottom: 1.3em;
     line-height: 2rem;
     
-    word-wrap: break-word
 }
 
 .mdx ul,
@@ -81,7 +82,6 @@
     margin-bottom: 1.3em;
     line-height: 2rem;
 
-    word-wrap: break-word
 }
 
 .mdx ul {
@@ -96,14 +96,12 @@
   white-space: wrap;
   text-overflow: ellipsis;
 
-  word-wrap: break-word
 }
 
 .mdx a {
     color: #0070f3;
     text-decoration: none;
     
-    word-wrap: break-word;
     overflow: hidden;
 }
 
@@ -117,5 +115,4 @@
     padding: 2px 4px;
     border-radius: 3px;
 
-    word-wrap: break-word
 }
