@@ -35,6 +35,7 @@
 .mdx h5,
 .mdx h6 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    word-wrap: break-word
 }
 
 .mdx h1 {
@@ -70,6 +71,8 @@
 .mdx p {
     margin-bottom: 1.3em;
     line-height: 2rem;
+    
+    word-wrap: break-word
 }
 
 .mdx ul,
@@ -77,6 +80,8 @@
     padding-left: 1em;
     margin-bottom: 1.3em;
     line-height: 2rem;
+
+    word-wrap: break-word
 }
 
 .mdx ul {
@@ -90,6 +95,8 @@
 .mdx li {
   white-space: wrap;
   text-overflow: ellipsis;
+
+  word-wrap: break-word
 }
 
 .mdx a {
@@ -109,4 +116,6 @@
     background-color: #f9f9f9;
     padding: 2px 4px;
     border-radius: 3px;
+
+    word-wrap: break-word
 }
