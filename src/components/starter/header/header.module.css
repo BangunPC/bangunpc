@@ -58,9 +58,7 @@
   flex-wrap: nowrap;
   gap: 10px;
   border-radius: 0px 0px 0px 0px;
-}
 
-.link span {
   flex-shrink: 0;
   white-space: pre;
   overflow: visible;
@@ -73,6 +71,12 @@
   letter-spacing: 0em;
   line-height: 1.6;
   text-align: left;
+
+  :hover {
+    fill: #4c5986 !important;
+    color: #4c5986 !important;
+    text-decoration: none !important;
+  }
 }
 
 .login {
@@ -98,6 +102,7 @@
   flex-wrap: nowrap;
   gap: 10px;
   border-radius: 64px;
+  margin: 20px;
 }
 
 .login span {
@@ -114,21 +119,105 @@
   text-align: center;
 }
 
+.logoAndToggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.toggleButton {
+  display: block;
+  cursor: pointer;
+}
+
+.toggle {
+  display: none;
+}
+
+.buttons {
+  transition: all;
+  transition-duration: 0.3s;
+  width: fit-content;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 0px;
+  overflow: hidden;
+}
+
+@keyframes overflow {
+  from {
+    overflow: hidden;
+  }
+  to {
+    overflow: hidden;
+  }
+}
+
 @media screen {
+  .toggle:checked ~ .buttons {
+    gap: 20px;
+    height: 220px;
+    animation: overflow 0.3s;
+    overflow: visible;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .iconswrapper {
-    visibility: hidden;
-    width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 }
 
 @media screen and (min-width: 810px) {
+
+  .toggle:checked ~ .buttons {
+    gap: 0;
+    height: fit-content;
+    animation: none;
+  }
+
+  .logoAndToggle {
+    width: fit-content;
+  }
+
+  .buttons {
+    height: fit-content;
+    padding: 0;
+    flex-direction: row;
+    height: fit-content;
+    display: flex;
+    overflow: visible;
+  }
+
+  .button {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    visibility: visible;
+    margin: 0;
+    padding: 0;
+  }
+
   .iconswrapper {
-    width: 67%;
+    flex-direction: row;
     justify-content: space-evenly;
     visibility: visible;
   }
+
   .header {
     width: 100%;
+    flex-direction: row;
+  }
+
+  .toggleButton {
+    display: none;
   }
 }
 
