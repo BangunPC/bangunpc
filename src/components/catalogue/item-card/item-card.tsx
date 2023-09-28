@@ -45,16 +45,14 @@ export default component$<Props>((props) => {
         }
         // alt={product_name}
       />
-      <div class={styles["card-content"]}>
-        <div class={styles["brand-wrapper"]}>
-          <span class={styles["brand"]}>{brand_name}</span>
-        </div>
-        <span class={styles["name"]}>{product_name}</span>
-        <span class={styles["price"]}>Rp{price?.toLocaleString("id-ID")}</span>
+      <div class={styles["brand-wrapper"]}>
+        <span class={styles["brand"]}>{brand_name}</span>
       </div>
+      <span class={styles["name"]}>{product_name}</span>
+      <span class={styles["price"]}>Rp{price?.toLocaleString("id-ID")}</span>
       <footer class={styles["card-footer"]}>
         <btn aria-label="add to cart" class={styles["icon-wrapper"]}>
-          <HiPlusOutline class='w-full h-full p-2' />
+          <HiPlusOutline class="w-full h-full p-2" />
         </btn>
       </footer>
     </Link>
