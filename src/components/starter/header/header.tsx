@@ -46,7 +46,7 @@ export default component$(() => {
         </a>
         <div>
           <label for="toggle" class={styles.toggleButton}>
-            <TbMenu2 class='w-6' />
+            <TbMenu2 class='w-6 h-6' />
           </label>
         </div>
       </div>

@@ -31,7 +31,7 @@ html {
 /* Medium-like typography */
 
 .mdx {
-  color: hsl(0, 0%, 15%);
+  color: hsl(0, 0%, 25%);
 }
 
 .mdx h1,
@@ -116,4 +116,22 @@ html {
   padding: 2px 4px;
   border-radius: 3px;
   line-height: 150%;
+}
+
+.metaout {
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.metain {
+  color: hsl(0, 0%, 45%);
+  display: flex;
+  font-size: 14px;
+}
+
+.metain a {
+  color: hsl(212, 15%, 30%);
+  text-decoration: none;
 }
