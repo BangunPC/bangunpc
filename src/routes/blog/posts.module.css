@@ -1,0 +1,64 @@
+.card {
+  background-color: hsl(0, 0%, 98%);
+  box-sizing: border-box;
+  width: 216px;
+  height: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  padding: 8px 8px 8px 8px;
+  box-shadow:
+    0px 0.7226247621292714px 0.7226247621292714px -1.25px rgba(0, 0, 0, 0.18),
+    0px 2.7462399638921484px 2.7462399638921484px -2.5px rgba(0, 0, 0, 0.15889),
+    0px 12px 12px -3.75px rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+  align-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  border-radius: 12px;
+  border: 2px solid hsl(0, 0%, 94%);
+  margin: 0.25rem;
+  color: hsl(0, 0%, 20%);
+}
+
+.tag {
+  flex-shrink: 0;
+  width: auto; /* 30px */
+  height: auto; /* 20px */
+  white-space: pre;
+  position: relative;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Inter-Bold", "Inter", "Inter Placeholder", sans-serif;
+  color: #f1f3f5;
+  font-size: 16px;
+  letter-spacing: 0em;
+  line-height: 1.2;
+}
+
+.tagWrapper {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: min-content; /* 42px */
+  height: min-content; /* 28px */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 6px 4px 6px;
+  background-color: #4d5986;
+  overflow: hidden;
+  position: relative;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 0px;
+  border-radius: 6px;
+}
+
+.tagsWrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+}

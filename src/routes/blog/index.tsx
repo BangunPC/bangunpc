@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
+import styles from "./posts.module.css";
 
 export const useFrontmatter = routeLoader$(async () => {
   const modules = import.meta.glob("/src/blog/*.mdx", { eager: true });
@@ -27,22 +28,33 @@ export default component$(() => {
   return (
     <div class="max-w-[680px] mx-4 md:mx-auto mt-8 ">
       {metas.value.map((meta) => (
-        <Link key={meta.slug} href={`/blog/${meta.slug}`}>
-          <div class="card">
-            <div>
-              <span class="font-extrabold">{meta.title}</span>
-              <br />
-              <span>{meta.description}</span>
-            </div>
+        <Link key={meta.slug} href={`/blog/${meta.slug}`} class={styles.card}>
+          <div>{meta.categories.join(", ")}</div>
+          <span class="text-sm text-slate-600">
+            {new Date(meta.date).toLocaleDateString("id-ID", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </span>
+          <div>
+            <span class="text-xl leading-[1.1] font-light">{meta.title}</span>
             <br />
-            <div>
-              <span>Oleh: {meta.authors.join(", ")}</span>
-              <div class="font-serif">{meta.slug}</div>
-              <div>Categories: {meta.categories.join(", ")}</div>
-              <div>Tags: {meta.tags.join(", ")}</div>
-              <div>Date: {new Date(meta.date).toDateString()}</div>
+            <br />
+            <span class="font-semibold text-slate-500">{meta.description}</span>
+          </div>
+          <div>
+            {/* <span>Oleh: {meta.authors.join(", ")}</span> */}
+            <div class={styles.tagsWrap}>
+              {meta.tags.map((tag) => (
+                <div key={tag} class={styles.tagWrapper}>
+                  <span class={styles.tag}>{tag}</span>
+                </div>
+              ))}
             </div>
           </div>
+          <br />
         </Link>
       ))}
     </div>
