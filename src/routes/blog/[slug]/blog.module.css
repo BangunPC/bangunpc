@@ -34,17 +34,7 @@ html {
   color: hsl(0, 0%, 25%);
 }
 
-.mdx h1,
-.mdx h2,
-.mdx h3,
-.mdx h4,
-.mdx h5,
-.mdx h6 {
-  color: #242424;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.mdx h1 {
+/* .mdx h1 {
   font-size: 2.48832em;
   margin-bottom: 0.35466em;
 }
@@ -77,7 +67,7 @@ html {
 .mdx p {
   margin-bottom: 1.3em;
   line-height: 150%;
-}
+} */
 
 .mdx ul,
 .mdx ol {
@@ -110,25 +100,34 @@ html {
   text-decoration: underline;
 }
 
-.mdx code {
-  font-family: "Courier New", monospace;
-  background-color: #f9f9f9;
-  padding: 2px 4px;
-  border-radius: 3px;
-  line-height: 150%;
-}
-
-.metaout {
-  margin: auto 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+/* TODO(damywise): replace with actual link icon */
+.mdx h1,
+.mdx h2,
+.mdx h3,
+.mdx h4,
+.mdx h5,
+.mdx h6 {
+  a:has(span) {
+    display: none;
+  }
 }
 
 .metain {
   color: hsl(0, 0%, 45%);
   display: flex;
   font-size: 14px;
+}
+
+.metacol::after {
+  content: none;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .metacol::after {
+    content: "·";
+    margin-right: 4px;
+  }
 }
 
 .metain a {

@@ -26,22 +26,20 @@ export const useFrontmatter = routeLoader$(async () => {
 export default component$(() => {
   const metas = useFrontmatter();
   return (
-    <div class="max-w-[680px] mx-4 md:mx-auto mt-8 ">
+    <div class={styles.wrap}>
       {metas.value.map((meta) => (
         <Link key={meta.slug} href={`/blog/${meta.slug}`} class={styles.card}>
           <div>{meta.categories.join(", ")}</div>
           <span class="text-sm text-slate-600">
-            {new Date(meta.date).toLocaleDateString("id-ID", {
+            {new Date(meta.created_at).toLocaleDateString("id-ID", {
               weekday: "long",
               day: "numeric",
               month: "long",
               year: "numeric",
             })}
           </span>
-          <div>
+          <div class="flex flex-1 flex-col justify-evenly">
             <span class="text-xl leading-[1.1] font-light">{meta.title}</span>
-            <br />
-            <br />
             <span class="font-semibold text-slate-500">{meta.description}</span>
           </div>
           <div>

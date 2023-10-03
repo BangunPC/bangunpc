@@ -52,9 +52,16 @@ export default component$(() => {
   const metadata: Post = meta.value.get(slug);
 
   // TODO(damywise): Add image
-  const { title, description, date, categories, authors, tags } =
-    metadata;
-  const formattedDate = new Date(date).toLocaleDateString("id-ID", {
+  const {
+    title,
+    description,
+    created_at,
+    // updated_at,
+    categories,
+    authors,
+    tags,
+  } = metadata;
+  const formattedDate = new Date(created_at).toLocaleDateString("id-ID", {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -63,7 +70,7 @@ export default component$(() => {
 
   return (
     <div class="max-w-[680px] mx-4 md:mx-auto mt-8 ">
-      <span class={[styles.mdx]}>
+      <article class={["prose md:prose-xl xl:prose-xl text-left", styles.mdx]}>
         <>
           <h1 class="font-extrabold text-left">{title}</h1>
           <h4>{description}</h4>
@@ -72,44 +79,51 @@ export default component$(() => {
             <Profile
               width="48"
               height="48"
-              class="mr-2 p-2 rounded-full border-2"
+              class="w-12 h-12 mr-2 p-2 rounded-full border-2 my-auto"
             />
             <div class={styles.metaout}>
-              <di>{authors}</di>
-              <div class={styles.metain}>
-                {"Published in "}
-                <span class="mx-1">
-                  {categories.map((category) => (
-                    <a
-                      key={category}
-                      href={`/category/${category}`}
-                      class="font-semibold"
-                    >
-                      {category}
-                    </a>
-                  ))}
-                </span>
-                {" · "}
-                {formattedDate}
-                {" · "}
-                <span class="mx-1">
-                  {tags.map((tag) => (
-                    <a
-                      key={tag}
-                      href={`/tag/${tag}`}
-                      class="pr-1 font-semibold"
-                    >
-                      #{tag}
-                    </a>
-                  ))}
-                </span>
+              <span>{authors}</span>
+              <div
+                class={[
+                  styles.metain,
+                  "flex-col sm:flex-row md:gap-1 leading-tight",
+                ]}
+              >
+                <div class={styles.metacol}>
+                  Published in
+                  <span class="mx-1">
+                    {categories.map((category) => (
+                      <a
+                        key={category}
+                        href={`/category/${category}`}
+                        class="font-semibold"
+                      >
+                        {category}
+                      </a>
+                    ))}
+                  </span>
+                </div>
+                <div class={styles.metacol}>{formattedDate + " "}</div>
+                <div>
+                  <span>
+                    {tags.map((tag) => (
+                      <a
+                        key={tag}
+                        href={`/tag/${tag}`}
+                        class="pr-1 font-semibold"
+                      >
+                        #{tag}
+                      </a>
+                    ))}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
           <br />
           <div class="font-serif">{data.value.get(slug)}</div>
         </>
-      </span>
+      </article>
     </div>
   );
 });
