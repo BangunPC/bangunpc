@@ -3,7 +3,7 @@ import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import styles from "./posts.module.css";
 
 export const useFrontmatter = routeLoader$(async () => {
-  const modules = import.meta.glob("/src/blog/*.mdx", { eager: true });
+  const modules = import.meta.glob("/src/content/blogs/*.mdx", { eager: true });
 
   const posts: Post[] = [];
 
@@ -41,16 +41,6 @@ export default component$(() => {
           <div class="flex flex-1 flex-col justify-evenly">
             <span class="text-xl leading-[1.1] font-light">{meta.title}</span>
             <span class="font-semibold text-slate-500">{meta.description}</span>
-          </div>
-          <div>
-            {/* <span>Oleh: {meta.authors.join(", ")}</span> */}
-            <div class={styles.tagsWrap}>
-              {meta.tags.map((tag) => (
-                <div key={tag} class={styles.tagWrapper}>
-                  <span class={styles.tag}>{tag}</span>
-                </div>
-              ))}
-            </div>
           </div>
           <br />
         </Link>
