@@ -29,7 +29,6 @@ export default component$(() => {
     <div class={styles.wrap}>
       {metas.value.map((meta) => (
         <Link key={meta.slug} href={`/blog/${meta.slug}`} class={styles.card}>
-          <div>{meta.categories.join(", ")}</div>
           <span class="text-sm text-slate-600">
             {new Date(meta.created_at).toLocaleDateString("id-ID", {
               weekday: "long",
@@ -41,6 +40,16 @@ export default component$(() => {
           <div class="flex flex-1 flex-col justify-evenly">
             <span class="text-xl leading-[1.1] font-light">{meta.title}</span>
             <span class="font-semibold text-slate-500">{meta.description}</span>
+          </div>
+          <div>
+            {/* <span>Oleh: {meta.authors.join(", ")}</span> */}
+            <div class={styles.tagsWrap}>
+              {meta.categories.map((tag) => (
+                <div key={tag} class={styles.tagWrapper}>
+                  <span class={styles.tag}>{tag}</span>
+                </div>
+              ))}
+            </div>
           </div>
           <br />
         </Link>

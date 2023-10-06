@@ -52,8 +52,7 @@ export default component$(() => {
   const metadata: Post = meta.value.get(slug);
 
   // TODO(damywise): Add image
-  const { title, description, created_at, categories, authors } =
-    metadata;
+  const { title, description, created_at, categories, authors } = metadata;
   const formattedDate = new Date(created_at).toLocaleDateString("id-ID", {
     weekday: "long",
     day: "numeric",
@@ -85,18 +84,21 @@ export default component$(() => {
                 <div class={styles.metacol}>
                   Published in
                   <span class="mx-1">
-                    {categories.map((category) => (
-                      <a
-                        key={category}
-                        href={`/category/${category}`}
-                        class="font-semibold"
-                      >
-                        {category}
-                      </a>
+                    {categories.map((category, index) => (
+                      <>
+                        <a
+                          key={category}
+                          href={`/category/${category}`}
+                          class="font-semibold"
+                        >
+                          {category}
+                        </a>
+                        {index !== categories.length - 1 ? ", " : ""}
+                      </>
                     ))}
                   </span>
                 </div>
-                <div class={styles.metacol}>{formattedDate + " "}</div>
+                <div>{formattedDate + " "}</div>
               </div>
             </div>
           </div>

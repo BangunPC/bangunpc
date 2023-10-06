@@ -126,7 +126,6 @@ html {
 @media (min-width: 640px) {
   .metacol::after {
     content: "·";
-    margin-right: 4px;
   }
 }
 
