@@ -52,7 +52,7 @@
   position: relative;
   font-weight: 700;
   font-style: normal;
-  font-family: "Inter-Bold", "Inter", "Inter Placeholder", sans-serif;
+  font-family: 'Inter-Bold', 'Inter', 'Inter Placeholder', sans-serif;
   color: #f1f3f5;
   font-size: 16px;
   letter-spacing: 0em;
@@ -83,4 +83,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: 5px;
+}
+
+.cardImage {
+  aspect-ratio: 1;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: hsla(227, 27%, 41%, 0.4);
 }

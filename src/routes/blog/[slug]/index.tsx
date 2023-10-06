@@ -1,11 +1,11 @@
-import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
-import { routeLoader$, useLocation } from "@builder.io/qwik-city";
-import styles from "./blog.module.css";
-import Profile from "~/components/starter/icons/profile";
+import { component$ } from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
+import { routeLoader$, useLocation } from '@builder.io/qwik-city';
+import styles from './blog.module.css';
+import Profile from '~/components/starter/icons/profile';
 
 export const useBlog = routeLoader$(async () => {
-  const modules = import.meta.glob("/src/content/blogs/*.mdx", { eager: true });
+  const modules = import.meta.glob('/src/content/blogs/*.mdx', { eager: true });
 
   const posts: Map<string, any> = new Map();
 
@@ -14,9 +14,9 @@ export const useBlog = routeLoader$(async () => {
     const post = modules[path].default().children.type();
 
     const slug = path
-      .split("/")
+      .split('/')
       .pop()
-      ?.replace(/\.[^/.]+$/, ""); // Remove the file extension using regular expression
+      ?.replace(/\.[^/.]+$/, ''); // Remove the file extension using regular expression
 
     posts.set(slug!, post);
   }
@@ -25,7 +25,7 @@ export const useBlog = routeLoader$(async () => {
 });
 
 export const useFrontmatter = routeLoader$(async () => {
-  const modules = import.meta.glob("/src/content/blogs/*.mdx", { eager: true });
+  const modules = import.meta.glob('/src/content/blogs/*.mdx', { eager: true });
 
   const posts: Map<string, any> = new Map();
 
@@ -34,9 +34,9 @@ export const useFrontmatter = routeLoader$(async () => {
     const post = modules[path].frontmatter;
 
     const slug = path
-      .split("/")
+      .split('/')
       .pop()
-      ?.replace(/\.[^/.]+$/, ""); // Remove the file extension using regular expression
+      ?.replace(/\.[^/.]+$/, ''); // Remove the file extension using regular expression
 
     posts.set(slug!, post);
   }
@@ -53,17 +53,17 @@ export default component$(() => {
 
   // TODO(damywise): Add image
   const { title, description, created_at, categories, authors } = metadata;
-  const formattedDate = new Date(created_at).toLocaleDateString("id-ID", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  const formattedDate = new Date(created_at).toLocaleDateString('id-ID', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   });
 
   return (
     <div class="max-w-[680px] mx-4 md:mx-auto mt-8 ">
-      <article class={["prose md:prose-xl xl:prose-xl text-left", styles.mdx]}>
-        <>
+      <article class={['prose md:prose-xl xl:prose-xl text-left', styles.mdx]}>
+        <div>
           <h1 class="font-extrabold text-left">{title}</h1>
           <h4>{description}</h4>
           <div class="flex flex-row">
@@ -78,7 +78,7 @@ export default component$(() => {
               <div
                 class={[
                   styles.metain,
-                  "flex-col sm:flex-row md:gap-1 leading-tight",
+                  'flex-col sm:flex-row md:gap-1 leading-tight',
                 ]}
               >
                 <div class={styles.metacol}>
@@ -93,18 +93,19 @@ export default component$(() => {
                         >
                           {category}
                         </a>
-                        {index !== categories.length - 1 ? ", " : ""}
+                        {index !== categories.length - 1 ? ', ' : ''}
                       </>
                     ))}
                   </span>
                 </div>
-                <div>{formattedDate + " "}</div>
+                <div>{formattedDate + ' '}</div>
               </div>
             </div>
           </div>
           <br />
           <div class="font-serif">{data.value.get(slug)}</div>
-        </>
+          <div />
+        </div>
       </article>
     </div>
   );
@@ -118,7 +119,7 @@ export const head: DocumentHead = ({ resolveValue, params }) => {
     title: meta.title,
     meta: [
       {
-        name: "description",
+        name: 'description',
         content: meta.description,
       },
     ],
