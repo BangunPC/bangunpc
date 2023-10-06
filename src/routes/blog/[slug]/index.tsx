@@ -5,7 +5,7 @@ import styles from "./blog.module.css";
 import Profile from "~/components/starter/icons/profile";
 
 export const useBlog = routeLoader$(async () => {
-  const modules = import.meta.glob("/src/blog/*.mdx", { eager: true });
+  const modules = import.meta.glob("/src/content/blogs/*.mdx", { eager: true });
 
   const posts: Map<string, any> = new Map();
 
@@ -25,7 +25,7 @@ export const useBlog = routeLoader$(async () => {
 });
 
 export const useFrontmatter = routeLoader$(async () => {
-  const modules = import.meta.glob("/src/blog/*.mdx", { eager: true });
+  const modules = import.meta.glob("/src/content/blogs/*.mdx", { eager: true });
 
   const posts: Map<string, any> = new Map();
 
@@ -52,15 +52,7 @@ export default component$(() => {
   const metadata: Post = meta.value.get(slug);
 
   // TODO(damywise): Add image
-  const {
-    title,
-    description,
-    created_at,
-    // updated_at,
-    categories,
-    authors,
-    tags,
-  } = metadata;
+  const { title, description, created_at, categories, authors } = metadata;
   const formattedDate = new Date(created_at).toLocaleDateString("id-ID", {
     weekday: "long",
     day: "numeric",
@@ -92,31 +84,21 @@ export default component$(() => {
                 <div class={styles.metacol}>
                   Published in
                   <span class="mx-1">
-                    {categories.map((category) => (
-                      <a
-                        key={category}
-                        href={`/category/${category}`}
-                        class="font-semibold"
-                      >
-                        {category}
-                      </a>
+                    {categories.map((category, index) => (
+                      <>
+                        <a
+                          key={category}
+                          href={`/category/${category}`}
+                          class="font-semibold"
+                        >
+                          {category}
+                        </a>
+                        {index !== categories.length - 1 ? ", " : ""}
+                      </>
                     ))}
                   </span>
                 </div>
-                <div class={styles.metacol}>{formattedDate + " "}</div>
-                <div>
-                  <span>
-                    {tags.map((tag) => (
-                      <a
-                        key={tag}
-                        href={`/tag/${tag}`}
-                        class="pr-1 font-semibold"
-                      >
-                        #{tag}
-                      </a>
-                    ))}
-                  </span>
-                </div>
+                <div>{formattedDate + " "}</div>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import styles from "./posts.module.css";
 
 export const useFrontmatter = routeLoader$(async () => {
-  const modules = import.meta.glob("/src/blog/*.mdx", { eager: true });
+  const modules = import.meta.glob("/src/content/blogs/*.mdx", { eager: true });
 
   const posts: Post[] = [];
 
@@ -29,7 +29,6 @@ export default component$(() => {
     <div class={styles.wrap}>
       {metas.value.map((meta) => (
         <Link key={meta.slug} href={`/blog/${meta.slug}`} class={styles.card}>
-          <div>{meta.categories.join(", ")}</div>
           <span class="text-sm text-slate-600">
             {new Date(meta.created_at).toLocaleDateString("id-ID", {
               weekday: "long",
@@ -45,7 +44,7 @@ export default component$(() => {
           <div>
             {/* <span>Oleh: {meta.authors.join(", ")}</span> */}
             <div class={styles.tagsWrap}>
-              {meta.tags.map((tag) => (
+              {meta.categories.map((tag) => (
                 <div key={tag} class={styles.tagWrapper}>
                   <span class={styles.tag}>{tag}</span>
                 </div>
