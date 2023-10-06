@@ -102,11 +102,12 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "Complete PC/Components - BangunPC",
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content:
+        "Tired of searching for components? Worry not! We're here with a complete list of PC build and components from various marketplace.",
     },
   ],
 };
