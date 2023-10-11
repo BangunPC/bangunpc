@@ -1,5 +1,6 @@
 import { component$ } from '@builder.io/qwik';
-import { DocumentHead, Link, routeLoader$ } from '@builder.io/qwik-city';
+import type { DocumentHead } from '@builder.io/qwik-city';
+import { Link, routeLoader$ } from '@builder.io/qwik-city';
 import styles from './posts.module.css';
 import Image1 from '/src/content/images/1.webp?jsx';
 import Image2 from '/src/content/images/2.webp?jsx';
