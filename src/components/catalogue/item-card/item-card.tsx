@@ -1,7 +1,7 @@
-import { component$ } from "@builder.io/qwik";
-import { Link } from "@builder.io/qwik-city";
-import styles from "./item-card.module.css";
-import { HiPlusOutline } from "@qwikest/icons/heroicons";
+import { component$ } from '@builder.io/qwik';
+import { Link } from '@builder.io/qwik-city';
+import styles from './item-card.module.css';
+import { HiPlusOutline } from '@qwikest/icons/heroicons';
 type Props = {
   shimmer: boolean;
 
@@ -32,26 +32,27 @@ export default component$<Props>((props) => {
   } = props;
   return (
     <Link
-      class={styles["card"]}
-      href={shimmer ? "" : "/catalogue/" + slug + "/"}
+      class={styles['card']}
+      href={shimmer ? '' : '/catalogue/' + slug + '/'}
     >
-      <span class={styles["category"]}>{category}</span>
+      <span class={styles['category']}>{category}</span>
       <img
         width={400}
         height={400}
+        class={styles.cardImage}
         src={
-          "https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/" +
+          'https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/' +
           image_path
         }
         // alt={product_name}
       />
-      <div class={styles["brand-wrapper"]}>
-        <span class={styles["brand"]}>{brand_name}</span>
+      <div class={styles['brand-wrapper']}>
+        <span class={styles['brand']}>{brand_name}</span>
       </div>
-      <span class={styles["name"]}>{product_name}</span>
-      <span class={styles["price"]}>Rp{price?.toLocaleString("id-ID")}</span>
-      <footer class={styles["card-footer"]}>
-        <btn aria-label="add to cart" class={styles["icon-wrapper"]}>
+      <span class={styles['name']}>{product_name}</span>
+      <span class={styles['price']}>Rp{price?.toLocaleString('id-ID')}</span>
+      <footer class={styles['card-footer']}>
+        <btn aria-label="add to cart" class={styles['icon-wrapper']}>
           <HiPlusOutline class="w-full h-full p-2" />
         </btn>
       </footer>
