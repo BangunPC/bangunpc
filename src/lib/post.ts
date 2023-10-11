@@ -1,4 +1,5 @@
 type Post = {
+    id: number;
     title: string;
     description: string;
     created_at: string;
@@ -6,7 +7,6 @@ type Post = {
     image: string;
     categories: string[];
     authors: string[];
-    tags: string[];
     draft: boolean;
     slug?: string;
 }

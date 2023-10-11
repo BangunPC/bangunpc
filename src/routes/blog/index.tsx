@@ -1,6 +1,10 @@
 import { component$ } from '@builder.io/qwik';
 import { Link, routeLoader$ } from '@builder.io/qwik-city';
 import styles from './posts.module.css';
+import Image1 from '/src/content/images/1.webp?jsx';
+import Image2 from '/src/content/images/2.webp?jsx';
+
+const images = [<Image1 key={1} />, <Image2 key={2} />];
 
 export const useFrontmatter = routeLoader$(async () => {
   const modules = import.meta.glob('/src/content/blogs/*.mdx', { eager: true });
@@ -20,16 +24,16 @@ export const useFrontmatter = routeLoader$(async () => {
     posts.push(post);
   }
 
-  return posts;
+  return posts.sort((a, b) => a.id - b.id);
 });
 
 export default component$(() => {
   const metas = useFrontmatter();
   return (
     <div class={styles.wrap}>
-      {metas.value.map((meta) => (
+      {metas.value.map((meta, index) => (
         <Link key={meta.slug} href={`/blog/${meta.slug}`} class={styles.card}>
-          <div class={styles.cardImage}></div>
+          <div class={styles.cardImage}>{images[index]}</div>
           <span class="text-sm text-slate-600">
             {new Date(meta.created_at).toLocaleDateString('id-ID', {
               weekday: 'long',

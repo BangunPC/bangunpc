@@ -3,6 +3,10 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import styles from './blog.module.css';
 import Profile from '~/components/starter/icons/profile';
+import Image1 from '/src/content/images/1.webp?jsx';
+import Image2 from '/src/content/images/2.webp?jsx';
+
+const images = [<Image1 key={1} />, <Image2 key={2} />];
 
 export const useBlog = routeLoader$(async () => {
   const modules = import.meta.glob('/src/content/blogs/*.mdx', { eager: true });
@@ -50,6 +54,7 @@ export default component$(() => {
   const slug = useLocation().params.slug;
 
   const metadata: Post = meta.value.get(slug);
+  const image = images[metadata.id - 1];
 
   // TODO(damywise): Add image
   const { title, description, created_at, categories, authors } = metadata;
@@ -103,6 +108,7 @@ export default component$(() => {
             </div>
           </div>
           <br />
+          {image}
           <div class="font-serif">{data.value.get(slug)}</div>
           <div />
         </div>
