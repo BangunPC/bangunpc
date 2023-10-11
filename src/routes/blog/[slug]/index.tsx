@@ -3,10 +3,10 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import styles from './blog.module.css';
 import Profile from '~/components/starter/icons/profile';
-import Image1 from '/src/content/images/1.webp?jsx';
-import Image2 from '/src/content/images/2.webp?jsx';
+import BigImage1 from '/src/content/images/1.webp?jsx';
+import BigImage2 from '/src/content/images/2.webp?jsx';
 
-const images = [<Image1 key={1} />, <Image2 key={2} />];
+const images = [<BigImage1 key={1} />, <BigImage2 key={2} />];
 
 export const useBlog = routeLoader$(async () => {
   const modules = import.meta.glob('/src/content/blogs/*.mdx', { eager: true });
