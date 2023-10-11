@@ -91,5 +91,6 @@
   height: auto;
   object-fit: cover;
   border-radius: 8px;
+  overflow: hidden;
   background-color: hsla(227, 27%, 41%, 0.4);
 }

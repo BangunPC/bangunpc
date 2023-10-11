@@ -17,7 +17,7 @@
   flex-wrap: nowrap;
   gap: 10px;
   border-radius: 12px;
-  border: 2px solid hsl(0, 0%, 94%);;
+  border: 2px solid hsl(0, 0%, 94%);
   margin: 0.25rem;
 }
 
@@ -39,7 +39,7 @@
   text-align: left;
 }
 
-img {
+.cardImage {
   flex-shrink: 0;
   width: 200px;
   height: 200px;
@@ -50,6 +50,7 @@ img {
   border-radius: 8px;
   object-fit: cover;
   align-self: center;
+  background-color: hsla(227, 11%, 67%, 0.4);
 }
 
 .brand {
@@ -60,7 +61,7 @@ img {
   position: relative;
   font-weight: 700;
   font-style: normal;
-  font-family: "Inter-Bold", "Inter", "Inter Placeholder", sans-serif;
+  font-family: 'Inter-Bold', 'Inter', 'Inter Placeholder', sans-serif;
   color: #f1f3f5;
   font-size: 16px;
   letter-spacing: 0em;
@@ -97,7 +98,7 @@ img {
   word-wrap: break-word;
   word-break: break-word;
   position: relative;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   /* color: #000000; */
   color: #000000;
   font-size: 16px;
