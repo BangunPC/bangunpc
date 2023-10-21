@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import Image from "~/content/images/hero-image.webp?jsx";
 
 export default component$(() => {
   return (
@@ -26,7 +27,6 @@ export default component$(() => {
 
               </span>
               <span class='hero-section-left-top-bottom-rekomendasi'>
-
                 Rekomendasi komponen yang berkualitas tinggi dengan harga terjangkau.
               </span>
             </div>
@@ -47,6 +47,7 @@ export default component$(() => {
             </btn>
           </div>
         </div>
+        <Image class="hero-section-right" />
       </div>
     </>
   );
