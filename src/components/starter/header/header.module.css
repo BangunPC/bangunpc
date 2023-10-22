@@ -21,7 +21,6 @@
 .logo span {
   flex-shrink: 0;
   white-space: pre;
-  overflow: visible;
   position: relative;
   font-weight: 700;
   font-style: normal;
@@ -38,7 +37,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  overflow: visible;
   position: relative;
   padding: 0px;
   align-content: center;
@@ -52,7 +50,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  overflow: visible;
   position: relative;
   padding: 0px;
   align-content: center;
@@ -62,7 +59,6 @@
 
   flex-shrink: 0;
   white-space: pre;
-  overflow: visible;
   position: relative;
   font-weight: 500;
   font-style: normal;
@@ -97,7 +93,6 @@
     0px 13.646761411524492px 13.646761411524492px -3.125px rgba(0, 0, 0, 0.10451),
     0px 30px 30px -3.75px rgba(0, 0, 0, 0.05);
   background-color: #4c5986;
-  overflow: visible;
   position: relative;
   align-content: center;
   flex-wrap: nowrap;
@@ -161,7 +156,6 @@
     gap: 20px;
     height: 220px;
     animation: overflow 0.3s;
-    overflow: visible;
   }
 
   .header {
@@ -194,7 +188,6 @@
     flex-direction: row;
     height: fit-content;
     display: flex;
-    overflow: visible;
   }
 
   .button {

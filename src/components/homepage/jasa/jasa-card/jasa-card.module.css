@@ -1,0 +1,107 @@
+.jasa-card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    border: 3px solid #74738a;
+    padding: 24px;
+    gap: 24px;
+}
+
+.jasa-header {
+    width: min-content;
+    height: min-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px 0px 0px 0px;
+    align-content: center;
+    flex-wrap: nowrap;
+    gap: 23px;
+    border-radius: 0px 0px 0px 0px;
+}
+
+.jasa-icon {
+    box-sizing: border-box;
+    width: min-content;
+    height: min-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 4px;
+    color: white;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 10px;
+    border-radius: 8px;
+}
+
+.icon1 {
+    border: 1px solid #ef5757;
+    background: linear-gradient(136.61809419122798deg, #FC9A5F 0%, #F34A7B 100%);
+}
+
+.icon2 {
+    border: 1px solid #2596FF;
+    background: linear-gradient(136.61809419122798deg, #5DC1C1 0%, #0D75F8 100%);
+}
+
+.icon3 {
+    border: 1px solid #EF5757;
+    background: linear-gradient(136.61809419122798deg, #FC9A5F 0%, #F34A7B 100%);
+}
+
+.icon4 {
+    border: 1px solid #449C11;
+    background: linear-gradient(136.61809419122798deg, #80C848 0%, #4DBFAA 100%);
+}
+
+.jasacard-title {
+    width: max-content;
+    height: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-family: "Inter-SemiBold", "Inter", sans-serif;
+    color: #1c1f24;
+    font-size: 30px;
+    letter-spacing: 0em;
+    line-height: 118.52%;
+}
+
+.jasacard-main {
+    /* width: 524px; */
+    height: auto;
+    word-wrap: break-word;
+    word-break: break-word;
+    font-family: "Inter", sans-serif;
+    color: #404040;
+    font-size: 22px;
+    letter-spacing: 0em;
+    line-height: 118.52%;
+}
+
+@media screen and (max-width: 380px) {
+    .jasacard-title {
+        width: min-content;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .jasacard-title {
+        max-width: 240px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .jasa-card {
+        max-width: 640px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .jasa-card {
+        max-width: 810px;
+    }
+}
