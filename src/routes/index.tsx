@@ -26,5 +26,47 @@ export const head: DocumentHead = {
       content:
         "Tired of searching for components? Worry not! We're here with a complete list of PC build and components from various marketplace.",
     },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:url",
+      content: "https://bangunpc.pages.dev/",
+    },
+    {
+      property: "og:title",
+      content: "Complete PC/Components - BangunPC",
+    },
+    {
+      property: "og:description",
+      content:
+        "Tired of searching for components? Worry not! We're here with a complete list of PC build and components from various marketplace.",
+    },
+    {
+      property: "og:image",
+      content: "https://bangunpc.pages.dev/meta.png",
+    },
+    {
+      property: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      property: "twitter:url",
+      content: "https://bangunpc.pages.dev/",
+    },
+    {
+      property: "twitter:title",
+      content: "Complete PC/Components - BangunPC",
+    },
+    {
+      property: "twitter:description",
+      content:
+        "Tired of searching for components? Worry not! We're here with a complete list of PC build and components from various marketplace.",
+    },
+    {
+      property: "twitter:image",
+      content: "https://bangunpc.pages.dev/meta.png",
+    },
   ],
 };
