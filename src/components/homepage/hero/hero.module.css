@@ -5,7 +5,6 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  padding: 80px 80px 80px 80px;
   background-color: #eceef5;
   overflow: hidden;
   align-content: center;
@@ -22,7 +21,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   overflow: visible;
-  padding: 0px 0px 0px 0px;
+  padding: 0 12px;
   align-content: flex-start;
   flex-wrap: nowrap;
   gap: 44px;
@@ -207,6 +206,15 @@
   font-size: 15px;
   letter-spacing: 0px;
   line-height: 20px;
+}
+
+@media screen and (max-width: 810px) {
+  .hero-buatpcsesuai {
+    margin: auto;
+  }
+  .hero-buatpcsesuai span {
+    font-size: 16px;
+  }
 }
 
 @media screen and (max-width: 1200px) {
