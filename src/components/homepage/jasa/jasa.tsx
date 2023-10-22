@@ -27,7 +27,7 @@ export default component$(() => {
         },
     ]
     return (
-        <div class={styles['jasa-section']}>
+        <div id="jasa" class={styles['jasa-section']}>
             <header class={styles['jasa-header']}>
                 <span class={styles['jasa-title']}>
                     Pilih jasa yang kami sediakan untuk anda.

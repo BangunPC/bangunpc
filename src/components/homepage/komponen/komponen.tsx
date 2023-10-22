@@ -5,9 +5,9 @@ import Image from "~/content/images/homepage-komponen.webp?jsx";
 
 export default component$(() => {
     return (
-        <div class={styles['komponen-section']}>
+        <div id="komponen" class={styles['komponen-section']}>
             <div class={styles['komponen-image']}>
-                <Image />
+                <Image alt="easy search, components, and suggestions" />
             </div>
             <div class={styles['komponen-content-wrapper']}>
 

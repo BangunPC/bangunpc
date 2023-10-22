@@ -5,7 +5,7 @@ import styles from "./hero.module.css";
 
 export default component$(() => {
     return (
-        <div class={["bg-[#ECEEF5]", styles['hero-section']]}>
+        <div id="hero" class={["bg-[#ECEEF5]", styles['hero-section']]}>
             <div class={styles['hero-section-left']}>
 
                 <div class={styles['hero-section-left-top']}>
@@ -47,7 +47,7 @@ export default component$(() => {
                     </btn>
                 </div>
             </div>
-            <Image class={styles["hero-section-right"]} />
+            <Image class={styles["hero-section-right"]} alt="hero image which contains components" />
         </div>
     )
 })
