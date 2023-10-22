@@ -11,7 +11,7 @@
 }
 
 .jasa-header {
-    height: 152px;
+    min-height: 152px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
