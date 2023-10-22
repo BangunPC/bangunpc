@@ -42,7 +42,6 @@
     height: auto;
     word-wrap: break-word;
     word-break: break-word;
-    overflow: visible;
     font-weight: bold;
     font-style: normal;
     font-family: "Inter", sans-serif;
@@ -58,7 +57,6 @@
     height: auto;
     word-wrap: break-word;
     word-break: break-word;
-    overflow: visible;
     font-weight: 500;
     font-style: normal;
     font-family: "Inter", sans-serif;

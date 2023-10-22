@@ -9,7 +9,6 @@
   align-items: center;
   padding: 60px 40px 30px 60px;
   background-color: #111111;
-  overflow: visible;
   align-content: center;
   flex-wrap: nowrap;
   gap: 60px;
@@ -26,7 +25,6 @@
   justify-content: flex-start;
   align-items: flex-start;
   max-width: 1000px;
-  overflow: visible;
   align-content: flex-start;
   gap: 40px;
 }
@@ -38,7 +36,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  overflow: visible;
   align-content: flex-start;
   flex-wrap: nowrap;
   gap: 15px;
@@ -60,7 +57,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  overflow: visible;
   align-content: flex-start;
   flex-wrap: nowrap;
   gap: 10px;
@@ -71,7 +67,6 @@
   width: auto;
   height: auto;
   white-space: pre;
-  overflow: visible;
   font-weight: 500;
   font-style: normal;
   font-family: "Inter", sans-serif;
@@ -101,7 +96,6 @@
   align-items: center;
   padding: 30px 0px 0px 0px;
   max-width: 1000px;
-  overflow: visible;
   align-content: center;
   flex-wrap: nowrap;
   border-color: rgba(255, 255, 255, 0.2);
@@ -112,7 +106,6 @@
   border-right-width: 0px;
 
   white-space: pre;
-  overflow: visible;
   font-weight: 500;
   font-style: normal;
   font-family: "Inter", sans-serif;
@@ -132,7 +125,6 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  overflow: visible;
   align-content: center;
   flex-wrap: nowrap;
   gap: 10px;
@@ -144,7 +136,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    overflow: visible;
     align-content: flex-start;
     flex-wrap: wrap;
     gap: 40;

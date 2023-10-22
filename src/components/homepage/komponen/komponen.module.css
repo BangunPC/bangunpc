@@ -53,7 +53,6 @@
     height: auto;
     word-wrap: break-word;
     word-break: break-word;
-    overflow: visible;
     font-weight: bold;
     font-style: normal;
     font-family: "Inter", sans-serif;
@@ -69,7 +68,6 @@
     height: auto;
     word-wrap: break-word;
     word-break: break-word;
-    overflow: visible;
     font-weight: 500;
     font-style: normal;
     font-family: "Inter", sans-serif;
@@ -87,7 +85,6 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    overflow: visible;
     align-content: center;
     flex-wrap: nowrap;
     font-size: 24px;
