@@ -61,9 +61,8 @@
 }
 
 .jasacard-title {
-    width: auto;
+    width: max-content;
     height: auto;
-    white-space: pre;
     font-weight: 600;
     font-style: normal;
     font-family: "Inter-SemiBold", "Inter", sans-serif;
@@ -83,6 +82,18 @@
     font-size: 22px;
     letter-spacing: 0em;
     line-height: 118.52%;
+}
+
+@media screen and (max-width: 380px) {
+    .jasacard-title {
+        width: min-content;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .jasacard-title {
+        max-width: 240px;
+    }
 }
 
 @media screen and (max-width: 1280px) {
