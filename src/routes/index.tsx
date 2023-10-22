@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import Affiliate from "~/components/homepage/affiliate/affiliate";
 import Banding from "~/components/homepage/banding/banding";
 import Hero from "~/components/homepage/hero/hero";
 import Jasa from "~/components/homepage/jasa/jasa";
@@ -12,6 +13,7 @@ export default component$(() => {
       <Komponen />
       <Jasa />
       <Banding />
+      <Affiliate />
     </>
   );
 });

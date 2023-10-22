@@ -1,0 +1,52 @@
+.affiliate-section {
+    box-sizing: border-box;
+    width: 100%;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 40px 50px 40px;
+    background-color: #eceef5;
+    align-content: center;
+    flex-wrap: nowrap;
+    gap: 60px;
+}
+
+.affiliate-header {
+    width: auto;
+    height: auto;
+    overflow: visible;
+    line-height: 1.2;
+
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    color: var(--grey_description, #333333);
+    font-size: 28px;
+    letter-spacing: 0em;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.affiliate-main {
+    width: 1000px;
+    height: min-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    align-content: center;
+    flex-wrap: wrap;
+    gap: 60px;
+
+    border-radius: 0px 0px 0px 0px;
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+
+.shopee-svg {
+    height: 48px;
+    color: rgb(245, 61, 45);
+    fill: rgb(245, 61, 45);
+}
