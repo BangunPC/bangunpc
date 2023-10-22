@@ -61,7 +61,6 @@
 .hero-section-left-top-bottom-rakitpc {
   width: 100%;
   height: auto;
-  white-space: pre-wrap;
   word-wrap: break-word;
   word-break: break-word;
   font-weight: 700;
@@ -76,7 +75,6 @@
 .hero-section-left-top-bottom-rekomendasi {
   max-width: 480px;
   height: auto;
-  white-space: pre-wrap;
   word-wrap: break-word;
   word-break: break-word;
   font-family: "Inter", sans-serif;
@@ -131,13 +129,12 @@
   align-content: center;
   flex-wrap: nowrap;
   gap: 10px;
-  border-radius: 100px;
+  border-radius: 24px;
 }
 
 .hero-buatpcsesuai span {
   width: auto;
   height: auto;
-  white-space: pre;
   font-weight: 500;
   font-style: normal;
   font-family: "Inter-Medium", "Inter", sans-serif;
@@ -168,7 +165,6 @@
 
   width: auto;
   height: auto;
-  white-space: pre;
   font-weight: 700;
   font-style: normal;
   font-family: "Inter-Bold", "Inter", "Inter Placeholder", sans-serif;
@@ -198,7 +194,6 @@
 .outlined-button span {
   width: auto;
   height: auto;
-  white-space: pre;
   font-weight: 700;
   font-style: normal;
   font-family: "Inter-Bold", "Inter", "Inter Placeholder", sans-serif;
@@ -214,6 +209,10 @@
   }
   .hero-buatpcsesuai span {
     font-size: 16px;
+  }
+  .hero-section-left-buttons {
+    flex-direction: column;
+    margin: auto;
   }
 }
 
