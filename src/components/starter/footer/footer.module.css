@@ -80,6 +80,15 @@
   letter-spacing: 0em;
   line-height: 1.6;
   text-align: left;
+  
+  transition: color 0.2s;
+}
+
+.footer a:hover {
+  color: var(--token-ba0f8505-1870-43c0-8d4e-7d4bc5406462, #999999);
+  fill: #4c5986;
+  color: #4c5986;
+  text-decoration: underline;
 }
 
 .copyright {
