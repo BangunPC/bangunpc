@@ -28,7 +28,7 @@ export default component$(() => {
           link: "/simulasi"
         },
         {
-          title: "Katalog Rakit PC",
+          title: "Katalog Komponen PC",
           link: "/katalog"
         },
         {
