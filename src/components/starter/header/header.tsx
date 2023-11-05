@@ -25,7 +25,7 @@ const headersItems = [
   {
     icon: <ShoppingCart width="24" height="24" />,
     title: "Katalog",
-    href: "/catalogue",
+    href: "/katalog",
   },
   {
     icon: <DocumentText width="24" height="24" />,
