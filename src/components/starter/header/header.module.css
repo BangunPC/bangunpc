@@ -69,6 +69,8 @@
   line-height: 1.6;
   text-align: left;
 
+  cursor: pointer;
+
   :hover {
     fill: #4c5986 !important;
     color: #4c5986 !important;
