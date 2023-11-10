@@ -12,7 +12,11 @@ export const useRecords = routeLoader$(async () => {
 export default component$(() => {
     const cpus = useRecords();
 
-    const headers = ['', 'Nama', 'Core Count', 'Performance Core Clock', 'Performance Boost Clock', 'TDP', 'Integrated Graphics', 'SMT', 'Harga', 'Aksi'];
+    const defaultHeaders = ['', 'Aksi'];
+
+    let headers = ['Nama', 'Core Count', 'Performance Core Clock', 'Performance Boost Clock', 'TDP', 'Integrated Graphics', 'SMT', 'Harga'];
+
+    headers = [defaultHeaders[0], ...headers, defaultHeaders[1]];
 
     const productAmount = 200;
     return (
