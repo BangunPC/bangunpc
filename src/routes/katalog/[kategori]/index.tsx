@@ -6,7 +6,8 @@ import { supabase } from "~/lib/db";
 import Sidebar from "~/components/katalog/sidebar/sidebar";
 import Cpu from "~/components/katalog/kategori/cpu";
 
-export const useRecords = routeLoader$(async (requestEvent) => {
+export const useRecords = routeLoader$(async () => {
+// export const useRecords = routeLoader$(async (requestEvent) => {
 
     // const kategori = requestEvent.params.kategori;
 
