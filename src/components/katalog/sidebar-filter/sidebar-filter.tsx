@@ -13,7 +13,7 @@ export default component$<SidebarFilterType>((props) => {
     return (
         <div class={style.filter}>
             <input type="checkbox" id={id + "filtertoggle"} hidden />
-            <style>
+            <style dangerouslySetInnerHTML=
                 {`
                     .${id}main {
                         animation: overflow 0.3s;
@@ -35,9 +35,8 @@ export default component$<SidebarFilterType>((props) => {
                     #${id}filtertoggle:checked ~ label .${id}chevron {
                         rotate: 180deg;
                     }
-                `}
-            </style>
-            <label for={id + "filtertoggle"} class={id+'filterLabel'}>
+                `} />
+            <label for={id + "filtertoggle"} class={id + 'filterLabel'}>
                 <header class={style.header}>
                     {props.title}
                     <TbChevronUp class={id + 'chevron'} />

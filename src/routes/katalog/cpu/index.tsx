@@ -43,7 +43,7 @@ export default component$(() => {
                                     <tr class='h-4'></tr>
                                     {cpus.value.data?.map((cpu) => (
                                         <>
-                                            <tr class={styles.tableRow}>
+                                            <tr key={cpu.product_id} class={styles.tableRow}>
                                                 <td>
                                                     <input type="checkbox" id={cpu.product_id!.toString()} class={[styles.toggle]} />
                                                 </td>
@@ -57,7 +57,7 @@ export default component$(() => {
                                                 <td>{cpu.price?.toLocaleString('id-ID') ?? '-'}</td>
                                                 <td>Action</td>
                                             </tr>
-                                            <tr class='h-2'></tr>
+                                            <tr key={cpu.product_id + 'gap'} class='h-2'></tr>
                                         </>
                                     ))}
                                 </tbody>
