@@ -1,6 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import style from './modal-katalog.module.css';
-import { TbX } from '@qwikest/icons/tablericons';
+import { TbArrowLeft, TbArrowRight, TbX } from '@qwikest/icons/tablericons';
 import KCable from '~/content/images/katalog_cable.svg?jsx';
 import KMemory from '~/content/images/katalog_memory.svg?jsx';
 import KCooler from '~/content/images/katalog_cooler.svg?jsx';
@@ -151,12 +151,17 @@ export default component$(() => {
                 <div class={style['modal-katalog-content']}>
                     <header class={style['modal-katalog-header']}>
                         <span class={style['modal-katalog-title']}>
-                            Pilih Kategori Komponen PC
+                            Pilih Kategori Komponen
                         </span>
                         <label for="toggleKatalogModal">
                             <TbX class={style['modal-katalog-close']} />
                         </label>
                     </header>
+                    <input type="checkbox" id="toggleResponsiveCategory" class={style.toggleResponsiveCategory} hidden />
+                    <label for="toggleResponsiveCategory" class={style.toggleResponsiveCategoryLabel}>
+                        <span class={style.toggleResponsiveChangeToOther}>Kategori Lainnya <TbArrowRight class='inline' /></span>
+                        <span class={style.toggleResponsiveChangeToMain}><TbArrowLeft class='inline' /> Kategori Komponen PC  </span>
+                    </label>
                     <main class={style['modal-katalog-body']}>
                         <div class={style['modal-katalog-category-other']}>
                             {other.map((item) => (

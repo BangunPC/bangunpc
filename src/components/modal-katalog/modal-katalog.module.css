@@ -10,7 +10,7 @@
 
     width: 100%;
     height: 100dvh;
-    
+
     transition: all 0.2s ease-in-out;
 
     opacity: 0;
@@ -18,6 +18,8 @@
 
     position: fixed;
     background: rgba(0, 0, 0, 0.5);
+
+    overflow: scroll;
     z-index: 100;
 }
 
@@ -45,18 +47,68 @@
     width: fit-content;
     padding: 10px;
 
-    transform: scale(90%) translateY(-10%) translateX(10%);
+    transform: scale(90%) translateY(-10%);
 
     border-radius: 12px;
     background: #F4F4F4;
-    
+
     transition: inherit;
     transition-duration: inherit;
 
     box-shadow: 0px 4px 10px rgba(0, 0, 125, 0.1);
 
     z-index: 102;
+}
 
+.toggleResponsiveCategoryLabel {
+    display: none;
+}
+
+@media screen and (max-width: 810px) {
+    .toggleResponsiveCategory:checked~.modal-katalog-body .modal-katalog-category-other {
+        width: 100%;
+    }
+
+    .toggleResponsiveCategory:checked~.modal-katalog-body .modal-katalog-category-main {
+        display: none;
+    }
+
+    .toggleResponsiveCategory:not(:checked)~.modal-katalog-body .modal-katalog-category-other {
+        display: none;
+    }
+
+    .toggleResponsiveCategory:not(:checked)~.modal-katalog-body .modal-katalog-category-main {
+        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    .toggleResponsiveCategoryLabel {
+        cursor: pointer;
+
+        width: 100%;
+
+        padding: 8px;
+
+        border-radius: 6px;
+        background: #4C5986;
+        color: white;
+
+        justify-content: center;
+        text-align: center;
+    }
+
+    .toggleResponsiveCategoryLabel {
+        display: block;
+    }
+
+    .toggleResponsiveCategory:checked~.toggleResponsiveCategoryLabel .toggleResponsiveChangeToOther {
+        display: none;
+    }
+
+    .toggleResponsiveCategory:not(:checked)~.toggleResponsiveCategoryLabel .toggleResponsiveChangeToMain {
+        display: none;
+    }
 }
 
 .modal-katalog-close {
@@ -82,6 +134,8 @@
 .modal-katalog-title {
     width: 100%;
     text-align: center;
+    padding: 0 12px;
+    word-break: break-all;
 }
 
 .modal-katalog-body {
@@ -132,7 +186,7 @@
     border-radius: 8px;
     background-color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 125, 0.1);
-    
+
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
