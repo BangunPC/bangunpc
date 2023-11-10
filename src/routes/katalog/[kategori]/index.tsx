@@ -1,11 +1,41 @@
-import { routeLoader$ } from "@builder.io/qwik-city";
-import styles from "./cpu.module.css";
+import { routeLoader$, useLocation } from "@builder.io/qwik-city";
+import styles from "./kategori.module.css";
 
 import { component$ } from "@builder.io/qwik";
 import { supabase } from "~/lib/db";
 import Sidebar from "~/components/katalog/sidebar/sidebar";
+import Cpu from "~/components/katalog/kategori/cpu";
 
-export const useRecords = routeLoader$(async () => {
+export const useRecords = routeLoader$(async (requestEvent) => {
+
+    // const kategori = requestEvent.params.kategori;
+
+    // const categories = {
+    //     'headphone': '',
+    //     'keyboard': '',
+    //     'mouse': '',
+    //     'speaker': '',
+    //     'webcam': '',
+    //     'printer': '',
+    //     'monitor': '',
+    //     'os': '',
+    //     'soundcard': '',
+    //     'wirednetwork': '',
+    //     'wirelessnetwork': '',
+    //     'casefan': '',
+    //     'externaldrive': '',
+    //     'motherboard': '',
+    //     'cpu': '',
+    //     'gpu': '',
+    //     'memory': '',
+    //     'cooler': '',
+    //     'psu': '',
+    //     'cable': '',
+    //     'storage': '',
+    //     'casing': '',
+    // }
+
+    // const category = categories[kategori];
     return await supabase.schema("product").from("v_detail_cpu").select();
 });
 
@@ -14,9 +44,34 @@ export default component$(() => {
 
     const defaultHeaders = ['', 'Aksi'];
 
-    let headers = ['Nama', 'Core Count', 'Performance Core Clock', 'Performance Boost Clock', 'TDP', 'Integrated Graphics', 'SMT', 'Harga'];
+    const kategoriHeaders: { [key: string]: string[] } = {
+        'headphone': [],
+        'keyboard': [],
+        'mouse': [],
+        'speaker': [],
+        'webcam': [],
+        'printer': [],
+        'monitor': [],
+        'os': [],
+        'soundcard': [],
+        'wirednetwork': [],
+        'wirelessnetwork': [],
+        'casefan': [],
+        'externaldrive': [],
+        'motherboard': [],
+        'cpu': ['Nama', 'Core Count', 'Performance Core Clock', 'Performance Boost Clock', 'TDP', 'Integrated Graphics', 'SMT', 'Harga'],
+        'gpu': [],
+        'memory': [],
+        'cooler': [],
+        'psu': [],
+        'cable': [],
+        'storage': [],
+        'casing': [],
+    }
 
-    headers = [defaultHeaders[0], ...headers, defaultHeaders[1]];
+    const kategori = useLocation().params.kategori;
+
+    const headers = [defaultHeaders[0], ...kategoriHeaders[kategori], defaultHeaders[1]];
 
     const productAmount = 200;
     return (
@@ -51,14 +106,7 @@ export default component$(() => {
                                                 <td>
                                                     <input type="checkbox" id={cpu.product_id!.toString()} class={[styles.toggle]} />
                                                 </td>
-                                                <td>{cpu.product_name ?? '-'}</td>
-                                                <td>{cpu.core_count ?? '-'}</td>
-                                                <td>{cpu.core_clock_ghz ?? '-'}</td>
-                                                <td>{cpu.boost_clock_ghz ?? '-'}</td>
-                                                <td>{cpu.tdp ?? '-'}</td>
-                                                <td>{cpu.integrated_gpu ?? '-'}</td>
-                                                <td>???</td>
-                                                <td>{cpu.price?.toLocaleString('id-ID') ?? '-'}</td>
+                                                <Cpu cpu={cpu}/>
                                                 <td>Action</td>
                                             </tr>
                                             <tr key={cpu.product_id + 'gap'} class='h-2'></tr>
