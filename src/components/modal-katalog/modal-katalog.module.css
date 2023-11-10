@@ -16,7 +16,7 @@
     opacity: 0;
     pointer-events: none;
 
-    position: absolute;
+    position: fixed;
     background: rgba(0, 0, 0, 0.5);
     z-index: 100;
 }
@@ -45,7 +45,7 @@
     width: fit-content;
     padding: 10px;
 
-    transform: scale(0.5) translateY(-50%) translateX(50%);
+    transform: scale(90%) translateY(-10%) translateX(10%);
 
     border-radius: 12px;
     background: #F4F4F4;
