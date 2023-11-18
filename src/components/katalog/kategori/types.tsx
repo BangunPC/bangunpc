@@ -1,10 +1,15 @@
-import type { Database } from "~/lib/schema";
+import type { Database } from "~/lib/schema"
 
-export type All = Database['product']['Views']['v_all_product_list']['Row']
-export type Casing = Database['product']['Views']['v_detail_casing']['Row']
-export type Cpu = { cpu: Database['product']['Views']['v_detail_cpu']['Row'] };
-export type Gpu = Database['product']['Views']['v_detail_gpu']['Row']
-export type Storage = Database['product']['Views']['v_detail_internal_storage']['Row']
-export type Memory = Database['product']['Views']['v_detail_memory']['Row']
-export type Motherboard = Database['product']['Views']['v_detail_motherboard']['Row']
-export type Psu = Database['product']['Views']['v_detail_psu']['Row']
+export type All = { all: Database['product']['Views']['v_all_products']['Row'] }
+
+export type Casing = { casing: Database['product']['Views']['v_casings']['Row'] }
+export type Cpu = { cpu: Database['product']['Views']['v_cpus']['Row'] }
+export type Gpu = { gpu: Database['product']['Views']['v_gpus']['Row'] }
+export type Storage = { storage: Database['product']['Views']['v_internal_storages']['Row'] }
+export type Memory = { memory: Database['product']['Views']['v_memories']['Row'] }
+export type Motherboard = { motherboard: Database['product']['Views']['v_motherboards']['Row'] }
+export type Psu = { psu: Database['product']['Views']['v_power_supplies']['Row'] }
+
+export type Details = { detalis: Database['product']['Views']['v_product_details']['Row'] }
+
+export const productImageUrl = 'https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/'
