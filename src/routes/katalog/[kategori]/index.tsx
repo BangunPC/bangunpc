@@ -1,3 +1,4 @@
+import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import styles from './kategori.module.css';
 
@@ -7,6 +8,32 @@ import Sidebar from '~/components/katalog/sidebar/sidebar';
 import Cpu, { cpuHeaders } from '~/components/katalog/kategori/cpu';
 import Gpu, { gpuHeaders } from '~/components/katalog/kategori/gpu';
 import { productImageUrl } from '~/components/katalog/kategori/types';
+
+
+const titlesKategori: { [key: string]: string } = {
+  headphone: 'Headphone',
+  keyboard: 'Keyboard',
+  mouse: 'Mouse',
+  speaker: 'Speaker',
+  webcam: 'Webcam',
+  printer: 'Printer',
+  monitor: 'Monitor',
+  os: 'Operating System',
+  soundcard: 'Sound Card',
+  wirednetwork: 'Wired Network Device',
+  wirelessnetwork: 'Wireless Network Device',
+  casefan: 'Case Fan',
+  externaldrive: 'External Drive',
+  motherboard: 'Motherboard',
+  cpu: 'Computer Processor',
+  gpu: 'GPU',
+  memory: 'Memory',
+  cooler: 'CPU Cooler',
+  psu: 'Power Supply',
+  cable: 'Cable',
+  storage: 'Internal Storage',
+  casing: 'PC Casing',
+}
 
 // export const useRecords = routeLoader$(async () => {
 export const useRecords = routeLoader$(async (requestEvent) => {
@@ -83,31 +110,6 @@ export default component$(() => {
     ...defaultHeadersEnd,
   ];
 
-  const titlesKategori: { [key: string]: string } = {
-    headphone: 'Headphone',
-    keyboard: 'Keyboard',
-    mouse: 'Mouse',
-    speaker: 'Speaker',
-    webcam: 'Webcam',
-    printer: 'Printer',
-    monitor: 'Monitor',
-    os: 'Operating System',
-    soundcard: 'Sound Card',
-    wirednetwork: 'Wired Network Device',
-    wirelessnetwork: 'Wireless Network Device',
-    casefan: 'Case Fan',
-    externaldrive: 'External Drive',
-    motherboard: 'Motherboard',
-    cpu: 'Computer Processor',
-    gpu: 'GPU',
-    memory: 'Memory',
-    cooler: 'CPU Cooler',
-    psu: 'Power Supply',
-    cable: 'Cable',
-    storage: 'Internal Storage',
-    casing: 'PC Casing',
-  }
-
   const title = titlesKategori[kategori];
 
   const productAmount = 200;
@@ -155,7 +157,7 @@ export default component$(() => {
                           }
                         </td>
                         <td>{component.product_name ?? '-'}</td>
-                        
+
                         <ComponentFallback
                           kategori={kategori}
                           component={component}
@@ -190,3 +192,15 @@ const ComponentFallback = component$<ComponentFallbackType>(({ kategori, compone
       return (<Cpu cpu={component} />);
   }
 });
+
+export const head: DocumentHead = ({ params }) => {
+  return {
+    title: titlesKategori[params.kategori] + ' - BangunPC',
+    meta: [
+      {
+        name: 'description',
+        content: 'Cari ' + titlesKategori[params.kategori] + ' dari Tokopedia, Shopee, dan lainnya. Hanya di BangunPC',
+      },
+    ],
+  };
+};
