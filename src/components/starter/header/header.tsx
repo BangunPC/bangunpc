@@ -14,18 +14,18 @@ const headersItems = [
   {
     icon: <Devices width="24" height="24" />,
     title: "Simulasi Rakit PC",
-    href: "",
+    href: "/",
   },
   {
     icon: <User width="24" height="24" />,
     title: "Jasa Rakit PC",
     altTitle: "Jasa Servis PC",
-    href: "",
+    href: "/jasa",
   },
   {
     icon: <ShoppingCart width="24" height="24" />,
     title: "Katalog",
-    href: "/catalogue",
+    labelFor: "toggleKatalogModal",
   },
   {
     icon: <DocumentText width="24" height="24" />,
@@ -55,15 +55,25 @@ export default component$(() => {
         <div class={styles.iconswrapper}>
           {headersItems.map((item) => (
             <div key={item.title} class={styles.link}>
-              <Link
-                href={item.href}
-                title={item.title}
-                class={[styles.link, "transition duration-200"]}
-                // altTitle={item.altTitle}
-              >
-                {item.icon}
-                {item.title}
-              </Link>
+              {item.href && (
+                <Link
+                  href={item.href}
+                  title={item.title}
+                  class={[styles.link, "transition duration-200"]}
+                >
+                  {item.icon}
+                  {item.title}
+                </Link>
+              )}
+              {item.labelFor && (
+                
+                <label for={item.labelFor}
+                  class={[styles.link, "transition duration-200"]}
+                >
+                  {item.icon}
+                  {item.title}
+                </label>
+              )}
             </div>
           ))}
         </div>

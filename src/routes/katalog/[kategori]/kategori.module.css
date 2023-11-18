@@ -1,0 +1,138 @@
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: col;
+    padding: 24px 24px;
+    overflow: visible;
+}
+
+.sidebar {
+    height: max-content;
+    top: 24px;
+    position: sticky;
+}
+
+table {
+    width: 100%;
+}
+
+.tableSection {
+    width: 100%;
+}
+
+.tableHeader {
+    box-sizing: border-box;
+    width: 100%;
+    height: min-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* padding: 15px 10px 15px 10px; */
+    /* box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14); */
+    /* background-color: #4c5986; */
+    overflow: visible;
+    align-content: center;
+    flex-wrap: nowrap;
+    border-radius: 8px;
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+    font-weight: 700;
+    font-style: normal;
+    font-family: "DM Sans", "DM Sans Placeholder", sans-serif;
+    color: black;
+    font-size: 32px;
+    letter-spacing: 0em;
+    line-height: 22.71px;
+    text-align: left;
+}
+
+.tableSubHeader {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-color: #191b2a86;
+    border-bottom-width: 1px;
+    padding: 12px 0;
+}
+
+.tableSubHeaderTitle {
+    font-weight: bold;
+}
+
+.tableHead {
+    height: 32px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: visible;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+    text-align: left;
+    border-bottom-width: 1px;
+
+    background-color: rgba(245, 245, 245, 0.5);
+    backdrop-filter: blur(10px);
+
+    position: sticky;
+    top: 0;
+}
+/* 
+.tableHead tr :first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.tableHead tr :last-child {
+    border-radius: 0 8px 8px 0;
+} */
+
+.tableHead tr th {
+    font-size: small;
+    font-weight: normal;
+    padding: 8px 0;
+}
+
+.tableBody {
+    padding: 20px;
+    height: min-content;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: visible;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 3px;
+}
+
+.tableBody td {
+    padding: 10px 0;
+    padding-right: 4px;
+}
+
+.tableBody tr :first-child {
+    padding-left: 12px;
+    /* box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14); */
+    background-color: #ffffff;
+    overflow: hidden;
+    border-radius: 8px 0 0 8px;
+}
+
+.tableBody td {
+    /* box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14); */
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.tableBody tr :last-child {
+    padding-right: 12px;
+    /* box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14); */
+    background-color: #ffffff;
+    overflow: hidden;
+    border-radius: 0 8px 8px 0;
+}
+
+.tableRow {
+    height: 56px;
+}
