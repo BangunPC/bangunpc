@@ -49,7 +49,7 @@ export default component$(() => {
   const categoryData = useRecords() as any;
 
   const defaultHeadersStart = ['', 'Nama', ''] // The first '' is for the checkbox, the second for the image
-  const defaultHeadersEnd = ['Aksi']
+  const defaultHeadersEnd = ['Harga Terendah (Rp)', 'Aksi']
 
 
   const kategoriHeaders: { [key: string]: string[] } = {
@@ -155,10 +155,103 @@ export default component$(() => {
                           }
                         </td>
                         <td>{component.product_name ?? '-'}</td>
+                        
                         <ComponentFallback
                           kategori={kategori}
                           component={component}
                         />
+
+                        <td>{component.lowest_price?.toLocaleString('id-ID') ?? '-'}</td>
+                        <td>Action</td>
+                      </tr>
+                      <tr key={component.product_id + 'gap'} class="h-2"></tr>
+                    </>
+                  ))}
+                  {categoryData.value.data?.map((component: any) => (
+                    <>
+                      <tr key={component.product_id} class={styles.tableRow}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            id={component.product_id!.toString()}
+                            class={[styles.toggle]}
+                          />
+                        </td>
+                        <td>
+                          {component.image_paths?.[0] &&
+                            <>
+                              <img src={productImageUrl + component.image_paths?.[0]} width={64} height={64} />
+                            </>
+                          }
+                        </td>
+                        <td>{component.product_name ?? '-'}</td>
+                        
+                        <ComponentFallback
+                          kategori={kategori}
+                          component={component}
+                        />
+
+                        <td>{component.lowest_price?.toLocaleString('id-ID') ?? '-'}</td>
+                        <td>Action</td>
+                      </tr>
+                      <tr key={component.product_id + 'gap'} class="h-2"></tr>
+                    </>
+                  ))}
+                  {categoryData.value.data?.map((component: any) => (
+                    <>
+                      <tr key={component.product_id} class={styles.tableRow}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            id={component.product_id!.toString()}
+                            class={[styles.toggle]}
+                          />
+                        </td>
+                        <td>
+                          {component.image_paths?.[0] &&
+                            <>
+                              <img src={productImageUrl + component.image_paths?.[0]} width={64} height={64} />
+                            </>
+                          }
+                        </td>
+                        <td>{component.product_name ?? '-'}</td>
+                        
+                        <ComponentFallback
+                          kategori={kategori}
+                          component={component}
+                        />
+
+                        <td>{component.lowest_price?.toLocaleString('id-ID') ?? '-'}</td>
+                        <td>Action</td>
+                      </tr>
+                      <tr key={component.product_id + 'gap'} class="h-2"></tr>
+                    </>
+                  ))}
+                  {categoryData.value.data?.map((component: any) => (
+                    <>
+                      <tr key={component.product_id} class={styles.tableRow}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            id={component.product_id!.toString()}
+                            class={[styles.toggle]}
+                          />
+                        </td>
+                        <td>
+                          {component.image_paths?.[0] &&
+                            <>
+                              <img src={productImageUrl + component.image_paths?.[0]} width={64} height={64} />
+                            </>
+                          }
+                        </td>
+                        <td>{component.product_name ?? '-'}</td>
+                        
+                        <ComponentFallback
+                          kategori={kategori}
+                          component={component}
+                        />
+
+                        <td>{component.lowest_price?.toLocaleString('id-ID') ?? '-'}</td>
                         <td>Action</td>
                       </tr>
                       <tr key={component.product_id + 'gap'} class="h-2"></tr>

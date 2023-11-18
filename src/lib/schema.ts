@@ -1347,6 +1347,7 @@ export interface Database {
           description: string
           id: number
           image_paths: string[] | null
+          lowest_price: number | null
           name: string
           slug: string
         }
@@ -1356,6 +1357,7 @@ export interface Database {
           description?: string
           id?: number
           image_paths?: string[] | null
+          lowest_price?: number | null
           name: string
           slug?: string
         }
@@ -1365,6 +1367,7 @@ export interface Database {
           description?: string
           id?: number
           image_paths?: string[] | null
+          lowest_price?: number | null
           name?: string
           slug?: string
         }
@@ -1544,6 +1547,7 @@ export interface Database {
           category_name: string | null
           description: string | null
           image_paths: string[] | null
+          lowest_price: number | null
           product_id: number | null
           product_name: string | null
           slug: string | null
@@ -1562,6 +1566,7 @@ export interface Database {
           gpu_max_mm: number | null
           height_mm: number | null
           image_paths: string[] | null
+          lowest_price: number | null
           mobo_supports: string[] | null
           product_id: number | null
           product_name: string | null
@@ -1581,6 +1586,7 @@ export interface Database {
           description: string | null
           image_paths: string[] | null
           integrated_gpu: string | null
+          lowest_price: number | null
           product_id: number | null
           product_name: string | null
           slug: string | null
@@ -1598,6 +1604,7 @@ export interface Database {
           description: string | null
           image_paths: string[] | null
           length_mm: number | null
+          lowest_price: number | null
           product_id: number | null
           product_name: string | null
           slug: string | null
@@ -1613,6 +1620,7 @@ export interface Database {
           form_factor: string | null
           image_paths: string[] | null
           interface: string | null
+          lowest_price: number | null
           product_id: number | null
           product_name: string | null
           size_gb: number | null
@@ -1631,6 +1639,7 @@ export interface Database {
           has_ecc: boolean | null
           has_rgb: boolean | null
           image_paths: string[] | null
+          lowest_price: number | null
           memory_type: string | null
           product_id: number | null
           product_name: string | null
@@ -1649,6 +1658,7 @@ export interface Database {
           form_factor: string | null
           image_paths: string[] | null
           input_output_ports: string | null
+          lowest_price: number | null
           memory_max_gb: number | null
           memory_slot_amount: number | null
           memory_type: string | null
@@ -1670,6 +1680,7 @@ export interface Database {
           form_factor: string | null
           height_mm: number | null
           image_paths: string[] | null
+          lowest_price: number | null
           modularity: Database["public"]["Enums"]["psu_modularity"] | null
           product_id: number | null
           product_name: string | null
