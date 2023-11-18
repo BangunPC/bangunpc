@@ -1,15 +1,20 @@
 import { component$ } from "@builder.io/qwik";
-import { productImageUrl, type Gpu } from "./types";
+import {type Gpu } from "./types";
+
+export const gpuHeaders = [
+    'Boost Clock (MHz)',
+    'Brand Name',
+    'Chipset',
+    'Color',
+    'Core Clock (MHz)',
+    'Length (mm)',
+    'TDP (Watt)',
+    'VRAM (GB)'
+]    
 
 export default component$<Gpu>((props) => {
     const gpu = props.gpu;
     return <>
-        <td>{gpu.image_paths?.[0] &&
-            <>
-                <img src={productImageUrl + gpu.image_paths?.[0]} width={80} height={80} />
-            </>
-        } {gpu.product_name ?? '-'}</td>
-
         <td>{gpu.boost_clock_mhz ?? '-'}</td>
         <td>{gpu.brand_name ?? '-'}</td>
         <td>{gpu.chipset ?? '-'}</td>
@@ -18,6 +23,5 @@ export default component$<Gpu>((props) => {
         <td>{gpu.length_mm ?? '-'}</td>
         <td>{gpu.tdp_watt ?? '-'}</td>
         <td>{gpu.vram_gb ?? '-'}</td>
-        <td>{gpu.description ?? '-'}</td>
     </>;
 })

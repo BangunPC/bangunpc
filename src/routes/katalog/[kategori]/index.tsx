@@ -4,8 +4,9 @@ import styles from './kategori.module.css';
 import { component$ } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
 import Sidebar from '~/components/katalog/sidebar/sidebar';
-import Cpu from '~/components/katalog/kategori/cpu';
-import Gpu from '~/components/katalog/kategori/gpu';
+import Cpu, { cpuHeaders } from '~/components/katalog/kategori/cpu';
+import Gpu, { gpuHeaders } from '~/components/katalog/kategori/gpu';
+import { productImageUrl } from '~/components/katalog/kategori/types';
 
 // export const useRecords = routeLoader$(async () => {
 export const useRecords = routeLoader$(async (requestEvent) => {
@@ -47,7 +48,9 @@ export default component$(() => {
 
   const categoryData = useRecords() as any;
 
-  const defaultHeaders = ['', 'Aksi'];
+  const defaultHeadersStart = ['', 'Nama', ''] // The first '' is for the checkbox, the second for the image
+  const defaultHeadersEnd = ['Aksi']
+
 
   const kategoriHeaders: { [key: string]: string[] } = {
     headphone: [],
@@ -64,15 +67,8 @@ export default component$(() => {
     casefan: [],
     externaldrive: [],
     motherboard: [],
-    cpu: [
-      'Nama',
-      'Core Count',
-      'Performance Core Clock',
-      'Performance Boost Clock',
-      'TDP',
-      'Integrated Graphics',
-    ],
-    gpu: [],
+    cpu: cpuHeaders,
+    gpu: gpuHeaders,
     memory: [],
     cooler: [],
     psu: [],
@@ -82,10 +78,37 @@ export default component$(() => {
   };
 
   const headers = [
-    defaultHeaders[0],
+    ...defaultHeadersStart,
     ...kategoriHeaders[kategori],
-    defaultHeaders[1],
+    ...defaultHeadersEnd,
   ];
+
+  const titlesKategori: { [key: string]: string } = {
+    headphone: 'Headphone',
+    keyboard: 'Keyboard',
+    mouse: 'Mouse',
+    speaker: 'Speaker',
+    webcam: 'Webcam',
+    printer: 'Printer',
+    monitor: 'Monitor',
+    os: 'Operating System',
+    soundcard: 'Sound Card',
+    wirednetwork: 'Wired Network Device',
+    wirelessnetwork: 'Wireless Network Device',
+    casefan: 'Case Fan',
+    externaldrive: 'External Drive',
+    motherboard: 'Motherboard',
+    cpu: 'Computer Processor',
+    gpu: 'GPU',
+    memory: 'Memory',
+    cooler: 'CPU Cooler',
+    psu: 'Power Supply',
+    cable: 'Cable',
+    storage: 'Internal Storage',
+    casing: 'PC Casing',
+  }
+
+  const title = titlesKategori[kategori];
 
   const productAmount = 200;
   return (
@@ -95,7 +118,7 @@ export default component$(() => {
           <Sidebar />
         </aside>
         <div class={styles.tableSection}>
-          <header class={styles.tableHeader}>Pilih Processor</header>
+          <header class={styles.tableHeader}>Pilih {title}</header>
           <main>
             <header class={styles.tableSubHeader}>
               <div class={styles.tableSubHeaderTitle}>
@@ -124,6 +147,14 @@ export default component$(() => {
                             class={[styles.toggle]}
                           />
                         </td>
+                        <td>
+                          {component.image_paths?.[0] &&
+                            <>
+                              <img src={productImageUrl + component.image_paths?.[0]} width={64} height={64} />
+                            </>
+                          }
+                        </td>
+                        <td>{component.product_name ?? '-'}</td>
                         <ComponentFallback
                           kategori={kategori}
                           component={component}
