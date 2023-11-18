@@ -5,43 +5,47 @@ import { component$ } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
 import Sidebar from '~/components/katalog/sidebar/sidebar';
 import Cpu from '~/components/katalog/kategori/cpu';
+import Gpu from '~/components/katalog/kategori/gpu';
 
-export const useRecords = routeLoader$(async () => {
-  // export const useRecords = routeLoader$(async (requestEvent) => {
+// export const useRecords = routeLoader$(async () => {
+export const useRecords = routeLoader$(async (requestEvent) => {
 
-  // const kategori = requestEvent.params.kategori;
+  const kategori = requestEvent.params.kategori;
 
-  // const categories = {
-  //     'headphone': '',
-  //     'keyboard': '',
-  //     'mouse': '',
-  //     'speaker': '',
-  //     'webcam': '',
-  //     'printer': '',
-  //     'monitor': '',
-  //     'os': '',
-  //     'soundcard': '',
-  //     'wirednetwork': '',
-  //     'wirelessnetwork': '',
-  //     'casefan': '',
-  //     'externaldrive': '',
-  //     'motherboard': '',
-  //     'cpu': '',
-  //     'gpu': '',
-  //     'memory': '',
-  //     'cooler': '',
-  //     'psu': '',
-  //     'cable': '',
-  //     'storage': '',
-  //     'casing': '',
-  // }
+  const categories: { [key: string]: string } = {
+    'headphone': '',
+    'keyboard': '',
+    'mouse': '',
+    'speaker': '',
+    'webcam': '',
+    'printer': '',
+    'monitor': '',
+    'os': '',
+    'soundcard': '',
+    'wirednetwork': '',
+    'wirelessnetwork': '',
+    'casefan': '',
+    'externaldrive': '',
+    'motherboard': 'v_motherboards',
+    'cpu': 'v_cpus',
+    'gpu': 'v_gpus',
+    'memory': 'v_memories',
+    'cooler': '',
+    'psu': 'v_power_supplies',
+    'cable': '',
+    'storage': 'v_internal_storages',
+    'casing': 'v_casings',
+  }
 
-  // const category = categories[kategori];
-  return await supabase.schema('product').from('v_cpus').select();
+  const category = categories[kategori];
+  return await supabase.schema('product').from(category).select();
 });
 
 export default component$(() => {
-  const cpus = useRecords();
+
+  const kategori = useLocation().params.kategori;
+
+  const categoryData = useRecords() as any;
 
   const defaultHeaders = ['', 'Aksi'];
 
@@ -67,8 +71,6 @@ export default component$(() => {
       'Performance Boost Clock',
       'TDP',
       'Integrated Graphics',
-      'SMT',
-      'Harga',
     ],
     gpu: [],
     memory: [],
@@ -78,8 +80,6 @@ export default component$(() => {
     storage: [],
     casing: [],
   };
-
-  const kategori = useLocation().params.kategori;
 
   const headers = [
     defaultHeaders[0],
@@ -114,20 +114,23 @@ export default component$(() => {
                 </thead>
                 <tbody class={styles.tableBody}>
                   <tr class="h-4"></tr>
-                  {cpus.value.data?.map((cpu) => (
+                  {categoryData.value.data?.map((component: any) => (
                     <>
-                      <tr key={cpu.product_id} class={styles.tableRow}>
+                      <tr key={component.product_id} class={styles.tableRow}>
                         <td>
                           <input
                             type="checkbox"
-                            id={cpu.product_id!.toString()}
+                            id={component.product_id!.toString()}
                             class={[styles.toggle]}
                           />
                         </td>
-                        <Cpu cpu={cpu} />
+                        <ComponentFallback
+                          kategori={kategori}
+                          component={component}
+                        />
                         <td>Action</td>
                       </tr>
-                      <tr key={cpu.product_id + 'gap'} class="h-2"></tr>
+                      <tr key={component.product_id + 'gap'} class="h-2"></tr>
                     </>
                   ))}
                 </tbody>
@@ -138,4 +141,18 @@ export default component$(() => {
       </div>
     </>
   );
+});
+
+type ComponentFallbackType = {
+  kategori: string;
+  component: any;
+}
+
+const ComponentFallback = component$<ComponentFallbackType>(({ kategori, component }) => {
+  switch (kategori) {
+    case 'gpu':
+      return (<Gpu gpu={component} />);
+    default:
+      return (<Cpu cpu={component} />);
+  }
 });
