@@ -12,8 +12,7 @@ export const gpuHeaders = [
     'VRAM (GB)'
 ]    
 
-export default component$<Gpu>((props) => {
-    const gpu = props.gpu;
+export default component$<Gpu>(({gpu}) => {
     return <>
         <td>{gpu.boost_clock_mhz ?? '-'}</td>
         <td>{gpu.brand_name ?? '-'}</td>

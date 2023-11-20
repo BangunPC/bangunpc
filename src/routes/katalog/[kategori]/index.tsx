@@ -8,6 +8,10 @@ import Sidebar from '~/components/katalog/sidebar/sidebar';
 import Cpu, { cpuHeaders } from '~/components/katalog/kategori/cpu';
 import Gpu, { gpuHeaders } from '~/components/katalog/kategori/gpu';
 import { productImageUrl } from '~/components/katalog/kategori/types';
+import Motherboard, { motherboardHeaders } from '~/components/katalog/kategori/motherboard';
+import Casing, { casingHeaders } from '~/components/katalog/kategori/casing';
+import PowerSupply, { psuHeaders } from '~/components/katalog/kategori/power-supply';
+import Memory, { memoryHeaders } from '~/components/katalog/kategori/memory';
 
 
 const titlesKategori: { [key: string]: string } = {
@@ -80,28 +84,28 @@ export default component$(() => {
 
 
   const kategoriHeaders: { [key: string]: string[] } = {
-    headphone: [],
-    keyboard: [],
-    mouse: [],
-    speaker: [],
-    webcam: [],
-    printer: [],
-    monitor: [],
-    os: [],
-    soundcard: [],
-    wirednetwork: [],
-    wirelessnetwork: [],
-    casefan: [],
-    externaldrive: [],
-    motherboard: [],
-    cpu: cpuHeaders,
-    gpu: gpuHeaders,
-    memory: [],
-    cooler: [],
-    psu: [],
-    cable: [],
-    storage: [],
-    casing: [],
+    // 'headphone': headphoneHeaders,
+    // 'keyboard': keyboardHeaders,
+    // 'mouse': mouseHeaders,
+    // 'speaker': speakerHeaders,
+    // 'webcam': webcamHeaders,
+    // 'printer': printerHeaders,
+    // 'monitor': monitorHeaders,
+    // 'os': osHeaders,
+    // 'soundcard': soundcardHeaders,
+    // 'wirednetwork': wirednetworkHeaders,
+    // 'wirelessnetwork': wirelessnetworkHeaders,
+    // 'casefan': casefanHeaders,
+    // 'externaldrive': externaldriveHeaders,
+    'motherboard': motherboardHeaders,
+    'cpu': cpuHeaders,
+    'gpu': gpuHeaders,
+    'memory': memoryHeaders,
+    // 'cooler': coolerHeaders,
+    'psu': psuHeaders,
+    // 'cable': cableHeaders,
+    // 'storage': storageHeaders,
+    'casing': casingHeaders,
   };
 
   const headers = [
@@ -186,8 +190,48 @@ type ComponentFallbackType = {
 
 const ComponentFallback = component$<ComponentFallbackType>(({ kategori, component }) => {
   switch (kategori) {
-    case 'gpu':
+    // case "headphone":
+    //   return (<Headphone headphone={component} />);
+    // case "keyboard":
+    //   return (<Keyboard keyboard={component} />);
+    // case "mouse":
+    //   return (<Mouse mouse={component} />);
+    // case "speaker":
+    //   return (<Speaker speaker={component} />);
+    // case "webcam":
+    //   return (<Webcam webcam={component} />);
+    // case "printer":
+    //   return (<Printer printer={component} />);
+    // case "monitor":
+    //   return (<Monitor monitor={component} />);
+    // case "os":
+    //   return (<Os os={component} />);
+    // case "soundcard":
+    //   return (<Soundcard soundcard={component} />);
+    // case "wirednetwork":
+    //   return (<WiredNetwork wirednetwork={component} />);
+    // case "wirelessnetwork":
+    //   return (<WirelessNetwork wirelessnetwork={component} />);
+    // case "casefan":
+    //   return (<CaseFan casefan={component} />);
+    // case "externaldrive":
+    //   return (<ExternalDrive externaldrive={component} />);
+    case "motherboard":
+      return (<Motherboard motherboard={component} />);
+    case "gpu":
       return (<Gpu gpu={component} />);
+    case "memory":
+      return (<Memory memory={component} />);
+    // case "cooler":
+    //   return (<Cooler cooler={component} />);
+    case "psu":
+      return (<PowerSupply psu={component} />);
+    // case "cable":
+    //   return (<Cable cable={component} />);
+    // case "storage":
+    //   return (<InternalStorage storage={component} />);
+    case "casing":
+      return (<Casing casing={component} />);
     default:
       return (<Cpu cpu={component} />);
   }

@@ -8,8 +8,7 @@ export const cpuHeaders = ['Core Count',
     'Integrated Graphics',
 ]
 
-export default component$<Cpu>((props) => {
-    const cpu = props.cpu;
+export default component$<Cpu>(({cpu}) => {
     return <>
         <td>{cpu.core_count ?? '-'}</td>
         <td>{cpu.core_clock_ghz ?? '-'}</td>
