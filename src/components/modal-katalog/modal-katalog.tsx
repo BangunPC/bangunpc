@@ -158,12 +158,12 @@ export default component$(() => {
                         </label>
                     </header>
                     <input type="checkbox" id="toggleResponsiveCategory" class={style.toggleResponsiveCategory} hidden />
-                    <label for="toggleResponsiveCategory" class={style.toggleResponsiveCategoryLabel}>
+                    {/* <label for="toggleResponsiveCategory" class={style.toggleResponsiveCategoryLabel}>
                         <span class={style.toggleResponsiveChangeToOther}>Kategori Lainnya <TbArrowRight class='inline' /></span>
                         <span class={style.toggleResponsiveChangeToMain}><TbArrowLeft class='inline' /> Kategori Komponen PC  </span>
-                    </label>
+                    </label> */}
                     <main class={style['modal-katalog-body']}>
-                        <div class={style['modal-katalog-category-other']}>
+                        {/* <div class={style['modal-katalog-category-other']}>
                             {other.map((item) => (
                                 <div key={item.title} class={style['category-other-list']}>
                                     <span class={style['category-other-title']}>
@@ -176,7 +176,7 @@ export default component$(() => {
                                     ))}
                                 </div>
                             ))}
-                        </div>
+                        </div> */}
                         <div class={style['modal-katalog-category-main']}>
                             {katalog.map((item) => (
                                 <Link href={item.href} key={item.name} class={style['modal-katalog-item']}>
