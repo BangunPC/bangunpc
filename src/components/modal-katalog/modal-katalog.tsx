@@ -1,7 +1,7 @@
 import { component$ } from '@builder.io/qwik';
 import style from './modal-katalog.module.css';
-import { TbArrowLeft, TbArrowRight, TbX } from '@qwikest/icons/tablericons';
-import KCable from '~/content/images/katalog_cable.svg?jsx';
+import { TbX } from '@qwikest/icons/tablericons';
+import KCpuCooler from '~/content/images/katalog_cpu_coolers.svg?jsx';
 import KMemory from '~/content/images/katalog_memory.svg?jsx';
 import KCooler from '~/content/images/katalog_cooler.svg?jsx';
 import KCpu from '~/content/images/katalog_cpu.svg?jsx';
@@ -119,17 +119,12 @@ export default component$(() => {
         {
             name: 'CPU Cooler',
             href: '/katalog/cooler',
-            image: <KCooler style={{ width: '100px', height: '80px' }} />
+            image: <KCpuCooler style={{ width: '100px', height: '80px' }} />
         },
         {
             name: 'Power Supply',
             href: '/katalog/psu',
             image: <KPsu style={{ width: '100px', height: '80px' }} />
-        },
-        {
-            name: 'Cable',
-            href: '/katalog/cable',
-            image: <KCable style={{ width: '100px', height: '80px' }} />
         },
         {
             name: 'Storage',
@@ -140,6 +135,11 @@ export default component$(() => {
             name: 'PC Case',
             href: '/katalog/casing',
             image: <KCasing style={{ width: '100px', height: '80px' }} />
+        },
+        {
+            name: 'Case Fan',
+            href: '/katalog/case_fan',
+            image: <KCooler style={{ width: '100px', height: '80px' }} />
         },
     ]
 
