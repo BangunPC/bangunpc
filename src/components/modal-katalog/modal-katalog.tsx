@@ -15,85 +15,85 @@ import { Link } from '@builder.io/qwik-city';
 
 export default component$(() => {
 
-    const other = [
-        {
-            title: 'Peripherals',
-            items: [
-                {
-                    name: 'Headphones',
-                    href: '/katalog/headphone',
-                },
-                {
-                    name: 'Keyboards',
-                    href: '/katalog/keyboard',
-                },
-                {
-                    name: 'Mouse',
-                    href: '/katalog/mouse',
-                },
-                {
-                    name: 'Speakers',
-                    href: '/katalog/speaker',
-                },
-                {
-                    name: 'Webcams',
-                    href: '/katalog/webcam',
-                }
-                // {
-                //     name: 'Printers',
-                //     href: '/katalog/printer',
-                // },
-            ]
-        },
-        {
-            title: 'Displays',
-            items: [
-                {
-                    name: 'Monitors',
-                    href: '/katalog/monitor',
-                }
-            ]
-        },
-        {
-            title: 'Software',
-            items: [
-                {
-                    name: 'Operating Systems',
-                    href: '/katalog/os',
-                }
-            ]
-        },
-        {
-            title: 'Expansion',
-            items: [
-                {
-                    name: 'Sound Cards',
-                    href: '/katalog/soundcard',
-                },
-                {
-                    name: 'Wired Networking',
-                    href: '/katalog/wirednetwork',
-                },
-                {
-                    name: 'Wireless Networking',
-                    href: '/katalog/wirelessnetwork',
-                },
-            ]
-        },
-        {
-            title: 'Accessories / Other',
-            items: [
-                {
-                    name: 'Case Fans',
-                    href: '/katalog/casefan',
-                },
-                {
-                    name: 'External Hard Drives',
-                    href: '/katalog/externaldrive',
-                }
-            ]
-        },
-    ]
+    // const other = [
+    //     {
+    //         title: 'Peripherals',
+    //         items: [
+    //             {
+    //                 name: 'Headphones',
+    //                 href: '/katalog/headphone',
+    //             },
+    //             {
+    //                 name: 'Keyboards',
+    //                 href: '/katalog/keyboard',
+    //             },
+    //             {
+    //                 name: 'Mouse',
+    //                 href: '/katalog/mouse',
+    //             },
+    //             {
+    //                 name: 'Speakers',
+    //                 href: '/katalog/speaker',
+    //             },
+    //             {
+    //                 name: 'Webcams',
+    //                 href: '/katalog/webcam',
+    //             }
+    //             // {
+    //             //     name: 'Printers',
+    //             //     href: '/katalog/printer',
+    //             // },
+    //         ]
+    //     },
+    //     {
+    //         title: 'Displays',
+    //         items: [
+    //             {
+    //                 name: 'Monitors',
+    //                 href: '/katalog/monitor',
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         title: 'Software',
+    //         items: [
+    //             {
+    //                 name: 'Operating Systems',
+    //                 href: '/katalog/os',
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         title: 'Expansion',
+    //         items: [
+    //             {
+    //                 name: 'Sound Cards',
+    //                 href: '/katalog/soundcard',
+    //             },
+    //             {
+    //                 name: 'Wired Networking',
+    //                 href: '/katalog/wirednetwork',
+    //             },
+    //             {
+    //                 name: 'Wireless Networking',
+    //                 href: '/katalog/wirelessnetwork',
+    //             },
+    //         ]
+    //     },
+    //     {
+    //         title: 'Accessories / Other',
+    //         items: [
+    //             {
+    //                 name: 'Case Fans',
+    //                 href: '/katalog/casefan',
+    //             },
+    //             {
+    //                 name: 'External Hard Drives',
+    //                 href: '/katalog/externaldrive',
+    //             }
+    //         ]
+    //     },
+    // ]
 
     const katalog = [
         {
