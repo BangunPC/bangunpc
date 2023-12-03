@@ -1,8 +1,8 @@
-import type { Database } from "~/lib/schema"
+import type { Database } from '~/lib/schema';
 
 export type All = { all: Database['product']['Views']['v_all_products']['Row'] }
 
-export type Casing = { casing: Database['product']['Views']['casing']['Row'] }
+export type Casing = { casing: Database['product']['Views']['v_casings']['Row'] }
 export type Cpu = { cpu: Database['product']['Views']['v_cpus']['Row'] }
 export type Gpu = { gpu: Database['product']['Views']['v_gpus']['Row'] }
 export type Storage = { storage: Database['product']['Views']['v_internal_storages']['Row'] }

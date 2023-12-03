@@ -71,6 +71,13 @@ export interface Database {
             foreignKeyName: "casing_fans_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casing_fans_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -78,7 +85,35 @@ export interface Database {
             foreignKeyName: "casing_fans_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casing_fans_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casing_fans_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casing_fans_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casing_fans_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
@@ -106,11 +141,15 @@ export interface Database {
           colors: string[] | null
           depth_mm: number | null
           drive_bays: Json | null
+          dust_cover: string | null
+          expansion_slot: number | null
           fan_slots: number | null
-          gpu_max_mm: number | null
           height_mm: number | null
           id: number
+          max_cpu_cooler_length_mm: number | null
+          max_gpu_length_mm: number | null
           product_id: number | null
+          side_panel: string | null
           type_id: number | null
           weight_kg: number | null
           width_mm: number | null
@@ -119,11 +158,15 @@ export interface Database {
           colors?: string[] | null
           depth_mm?: number | null
           drive_bays?: Json | null
+          dust_cover?: string | null
+          expansion_slot?: number | null
           fan_slots?: number | null
-          gpu_max_mm?: number | null
           height_mm?: number | null
           id?: number
+          max_cpu_cooler_length_mm?: number | null
+          max_gpu_length_mm?: number | null
           product_id?: number | null
+          side_panel?: string | null
           type_id?: number | null
           weight_kg?: number | null
           width_mm?: number | null
@@ -132,11 +175,15 @@ export interface Database {
           colors?: string[] | null
           depth_mm?: number | null
           drive_bays?: Json | null
+          dust_cover?: string | null
+          expansion_slot?: number | null
           fan_slots?: number | null
-          gpu_max_mm?: number | null
           height_mm?: number | null
           id?: number
+          max_cpu_cooler_length_mm?: number | null
+          max_gpu_length_mm?: number | null
           product_id?: number | null
+          side_panel?: string | null
           type_id?: number | null
           weight_kg?: number | null
           width_mm?: number | null
@@ -160,6 +207,13 @@ export interface Database {
             foreignKeyName: "casings_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casings_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -167,7 +221,35 @@ export interface Database {
             foreignKeyName: "casings_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casings_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casings_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casings_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casings_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           },
           {
@@ -241,6 +323,13 @@ export interface Database {
             foreignKeyName: "cpu_coolers_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpu_coolers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -248,7 +337,35 @@ export interface Database {
             foreignKeyName: "cpu_coolers_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpu_coolers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpu_coolers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpu_coolers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpu_coolers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
@@ -317,9 +434,8 @@ export interface Database {
           id: number
           integrated_gpu_id: number | null
           max_clock_ghz: number | null
+          max_memory_channel: number | null
           max_memory_size_gb: number | null
-          max_memory_type_channel_1: number | null
-          max_memory_type_channel_2: number | null
           max_power_watt: number | null
           performance_core: number | null
           product_id: number | null
@@ -334,9 +450,8 @@ export interface Database {
           id?: number
           integrated_gpu_id?: number | null
           max_clock_ghz?: number | null
+          max_memory_channel?: number | null
           max_memory_size_gb?: number | null
-          max_memory_type_channel_1?: number | null
-          max_memory_type_channel_2?: number | null
           max_power_watt?: number | null
           performance_core?: number | null
           product_id?: number | null
@@ -351,9 +466,8 @@ export interface Database {
           id?: number
           integrated_gpu_id?: number | null
           max_clock_ghz?: number | null
+          max_memory_channel?: number | null
           max_memory_size_gb?: number | null
-          max_memory_type_channel_1?: number | null
-          max_memory_type_channel_2?: number | null
           max_power_watt?: number | null
           performance_core?: number | null
           product_id?: number | null
@@ -375,6 +489,13 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "cpus_cpu_socket_id_fkey"
+            columns: ["cpu_socket_id"]
+            isOneToOne: false
+            referencedRelation: "v_cpus"
+            referencedColumns: ["cpu_socket_id"]
+          },
+          {
             foreignKeyName: "cpus_integrated_gpu_id_fkey"
             columns: ["integrated_gpu_id"]
             isOneToOne: false
@@ -382,20 +503,6 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "cpus_max_memory_type_channel_1_fkey"
-            columns: ["max_memory_type_channel_1"]
-            isOneToOne: false
-            referencedRelation: "memories"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "cpus_max_memory_type_channel_2_fkey"
-            columns: ["max_memory_type_channel_2"]
-            isOneToOne: false
-            referencedRelation: "memory_types"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "cpus_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: true
@@ -413,7 +520,35 @@ export interface Database {
             foreignKeyName: "cpus_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: true
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: true
             referencedRelation: "v_cpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: true
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: true
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: true
+            referencedRelation: "v_memories"
             referencedColumns: ["product_id"]
           },
           {
@@ -422,54 +557,98 @@ export interface Database {
             isOneToOne: true
             referencedRelation: "v_motherboards"
             referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: true
+            referencedRelation: "v_power_supplies"
+            referencedColumns: ["product_id"]
           }
         ]
+      }
+      gpu_chipsets: {
+        Row: {
+          id: number
+          name: string
+        }
+        Insert: {
+          id?: number
+          name: string
+        }
+        Update: {
+          id?: number
+          name?: string
+        }
+        Relationships: []
       }
       gpus: {
         Row: {
           base_clock_mhz: number | null
           boost_clock_mhz: number | null
           bus_interface: Database["public"]["Enums"]["bus_interface"] | null
-          chipset: string | null
+          core_count: number | null
+          gpu_chipset_id: number | null
           gpu_memory_type: Database["public"]["Enums"]["gpu_memory_type"] | null
+          height_mm: number | null
           id: number
           length_mm: number | null
+          max_temp_celcius: number | null
           memory_bus_bit: number | null
+          min_psu_watt: number | null
           product_id: number
           tdp_watt: number | null
           vram_gb: number | null
+          width_mm: number | null
         }
         Insert: {
           base_clock_mhz?: number | null
           boost_clock_mhz?: number | null
           bus_interface?: Database["public"]["Enums"]["bus_interface"] | null
-          chipset?: string | null
+          core_count?: number | null
+          gpu_chipset_id?: number | null
           gpu_memory_type?:
             | Database["public"]["Enums"]["gpu_memory_type"]
             | null
+          height_mm?: number | null
           id?: number
           length_mm?: number | null
+          max_temp_celcius?: number | null
           memory_bus_bit?: number | null
+          min_psu_watt?: number | null
           product_id: number
           tdp_watt?: number | null
           vram_gb?: number | null
+          width_mm?: number | null
         }
         Update: {
           base_clock_mhz?: number | null
           boost_clock_mhz?: number | null
           bus_interface?: Database["public"]["Enums"]["bus_interface"] | null
-          chipset?: string | null
+          core_count?: number | null
+          gpu_chipset_id?: number | null
           gpu_memory_type?:
             | Database["public"]["Enums"]["gpu_memory_type"]
             | null
+          height_mm?: number | null
           id?: number
           length_mm?: number | null
+          max_temp_celcius?: number | null
           memory_bus_bit?: number | null
+          min_psu_watt?: number | null
           product_id?: number
           tdp_watt?: number | null
           vram_gb?: number | null
+          width_mm?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "gpus_gpu_chipset_id_fkey"
+            columns: ["gpu_chipset_id"]
+            isOneToOne: false
+            referencedRelation: "gpu_chipsets"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "gpus_product_id_fkey"
             columns: ["product_id"]
@@ -488,6 +667,13 @@ export interface Database {
             foreignKeyName: "gpus_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "gpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -495,35 +681,69 @@ export interface Database {
             foreignKeyName: "gpus_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "gpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "gpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "gpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "gpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
       }
       internal_storages: {
         Row: {
+          capacity_gb: number
           form_factor: string | null
           id: number
           interface: string | null
           product_id: number | null
-          size_gb: number
+          read_speed_mbs: number | null
           type: Database["public"]["Enums"]["storage_type"]
+          write_speed_mbs: number | null
         }
         Insert: {
+          capacity_gb?: number
           form_factor?: string | null
           id?: number
           interface?: string | null
           product_id?: number | null
-          size_gb?: number
+          read_speed_mbs?: number | null
           type: Database["public"]["Enums"]["storage_type"]
+          write_speed_mbs?: number | null
         }
         Update: {
+          capacity_gb?: number
           form_factor?: string | null
           id?: number
           interface?: string | null
           product_id?: number | null
-          size_gb?: number
+          read_speed_mbs?: number | null
           type?: Database["public"]["Enums"]["storage_type"]
+          write_speed_mbs?: number | null
         }
         Relationships: [
           {
@@ -544,6 +764,13 @@ export interface Database {
             foreignKeyName: "internal_storages_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "internal_storages_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -551,7 +778,35 @@ export interface Database {
             foreignKeyName: "internal_storages_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "internal_storages_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "internal_storages_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "internal_storages_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "internal_storages_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
@@ -575,10 +830,11 @@ export interface Database {
         Row: {
           amount: number
           capacity_gb: number | null
-          frequency_mhz: number | null
           has_ecc: boolean | null
+          has_heatsink: boolean | null
           has_rgb: boolean | null
           id: number
+          overclocked: boolean | null
           product_id: number | null
           type_id: number | null
           voltage: number | null
@@ -586,10 +842,11 @@ export interface Database {
         Insert: {
           amount: number
           capacity_gb?: number | null
-          frequency_mhz?: number | null
           has_ecc?: boolean | null
+          has_heatsink?: boolean | null
           has_rgb?: boolean | null
           id?: number
+          overclocked?: boolean | null
           product_id?: number | null
           type_id?: number | null
           voltage?: number | null
@@ -597,10 +854,11 @@ export interface Database {
         Update: {
           amount?: number
           capacity_gb?: number | null
-          frequency_mhz?: number | null
           has_ecc?: boolean | null
+          has_heatsink?: boolean | null
           has_rgb?: boolean | null
           id?: number
+          overclocked?: boolean | null
           product_id?: number | null
           type_id?: number | null
           voltage?: number | null
@@ -624,6 +882,13 @@ export interface Database {
             foreignKeyName: "memories_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "memories_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -631,7 +896,35 @@ export interface Database {
             foreignKeyName: "memories_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "memories_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "memories_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "memories_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "memories_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           },
           {
@@ -645,75 +938,60 @@ export interface Database {
       }
       memory_types: {
         Row: {
-          description: string | null
+          frequency_mhz: number | null
+          friendly_name: string | null
           id: number
-          name: string | null
-          year_release: string | null
+          industry_name: string | null
+          type: Database["public"]["Enums"]["memory_type"]
         }
         Insert: {
-          description?: string | null
+          frequency_mhz?: number | null
+          friendly_name?: string | null
           id?: number
-          name?: string | null
-          year_release?: string | null
+          industry_name?: string | null
+          type: Database["public"]["Enums"]["memory_type"]
         }
         Update: {
-          description?: string | null
+          frequency_mhz?: number | null
+          friendly_name?: string | null
           id?: number
-          name?: string | null
-          year_release?: string | null
+          industry_name?: string | null
+          type?: Database["public"]["Enums"]["memory_type"]
         }
         Relationships: []
       }
       motherboard_chipsets: {
         Row: {
-          code_name_id: number | null
           cpu_socket_id: number | null
           id: number
           name: string
         }
         Insert: {
-          code_name_id?: number | null
           cpu_socket_id?: number | null
           id?: number
           name?: string
         }
         Update: {
-          code_name_id?: number | null
           cpu_socket_id?: number | null
           id?: number
           name?: string
         }
         Relationships: [
           {
-            foreignKeyName: "motherboard_chipsets_code_name_id_fkey"
-            columns: ["code_name_id"]
+            foreignKeyName: "motherboard_chipsets_cpu_socket_id_fkey"
+            columns: ["cpu_socket_id"]
             isOneToOne: false
-            referencedRelation: "motherboard_code_name"
+            referencedRelation: "cpu_sockets"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "motherboard_chipsets_cpu_socket_id_fkey"
             columns: ["cpu_socket_id"]
             isOneToOne: false
-            referencedRelation: "cpu_sockets"
-            referencedColumns: ["id"]
+            referencedRelation: "v_cpus"
+            referencedColumns: ["cpu_socket_id"]
           }
         ]
-      }
-      motherboard_code_name: {
-        Row: {
-          id: number
-          name: string
-        }
-        Insert: {
-          id?: number
-          name?: string
-        }
-        Update: {
-          id?: number
-          name?: string
-        }
-        Relationships: []
       }
       motherboard_form_factors: {
         Row: {
@@ -735,53 +1013,62 @@ export interface Database {
       }
       motherboards: {
         Row: {
-          chipset: string | null
-          color: string | null
-          cpu_socket_id: number | null
+          chipset_id: number | null
           form_factor_id: number
           id: number
-          input_output_ports: string | null
+          memory_channel_count: number | null
           memory_max_gb: number | null
-          memory_slot_amount: number | null
+          memory_slot: number | null
           memory_type_id: number | null
+          pcie_m2_slot: number | null
           pcie_slots: string | null
           product_id: number | null
-          storage_interface: string | null
+          sata3_slot: number | null
+          usb2_slot: number | null
+          usb32_gen1_slot: number | null
+          usb32_gen2_slot: number | null
+          wireless_network: string | null
         }
         Insert: {
-          chipset?: string | null
-          color?: string | null
-          cpu_socket_id?: number | null
+          chipset_id?: number | null
           form_factor_id: number
           id?: number
-          input_output_ports?: string | null
+          memory_channel_count?: number | null
           memory_max_gb?: number | null
-          memory_slot_amount?: number | null
+          memory_slot?: number | null
           memory_type_id?: number | null
+          pcie_m2_slot?: number | null
           pcie_slots?: string | null
           product_id?: number | null
-          storage_interface?: string | null
+          sata3_slot?: number | null
+          usb2_slot?: number | null
+          usb32_gen1_slot?: number | null
+          usb32_gen2_slot?: number | null
+          wireless_network?: string | null
         }
         Update: {
-          chipset?: string | null
-          color?: string | null
-          cpu_socket_id?: number | null
+          chipset_id?: number | null
           form_factor_id?: number
           id?: number
-          input_output_ports?: string | null
+          memory_channel_count?: number | null
           memory_max_gb?: number | null
-          memory_slot_amount?: number | null
+          memory_slot?: number | null
           memory_type_id?: number | null
+          pcie_m2_slot?: number | null
           pcie_slots?: string | null
           product_id?: number | null
-          storage_interface?: string | null
+          sata3_slot?: number | null
+          usb2_slot?: number | null
+          usb32_gen1_slot?: number | null
+          usb32_gen2_slot?: number | null
+          wireless_network?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "motherboards_cpu_socket_id_fkey"
-            columns: ["cpu_socket_id"]
+            foreignKeyName: "motherboards_chipset_id_fkey"
+            columns: ["chipset_id"]
             isOneToOne: false
-            referencedRelation: "cpu_sockets"
+            referencedRelation: "motherboard_chipsets"
             referencedColumns: ["id"]
           },
           {
@@ -816,6 +1103,13 @@ export interface Database {
             foreignKeyName: "motherboards_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "motherboards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -823,7 +1117,35 @@ export interface Database {
             foreignKeyName: "motherboards_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "motherboards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "motherboards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "motherboards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "motherboards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
@@ -904,6 +1226,13 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "pc_builds_cpu_socket_id_fkey"
+            columns: ["cpu_socket_id"]
+            isOneToOne: false
+            referencedRelation: "v_cpus"
+            referencedColumns: ["cpu_socket_id"]
+          },
+          {
             foreignKeyName: "pc_builds_gpu_id_fkey"
             columns: ["gpu_id"]
             isOneToOne: false
@@ -963,6 +1292,7 @@ export interface Database {
       }
       power_supplies: {
         Row: {
+          cables: string | null
           color: string | null
           depth_mm: number | null
           efficiency_rating_id: number
@@ -975,6 +1305,7 @@ export interface Database {
           width_mm: number | null
         }
         Insert: {
+          cables?: string | null
           color?: string | null
           depth_mm?: number | null
           efficiency_rating_id: number
@@ -987,6 +1318,7 @@ export interface Database {
           width_mm?: number | null
         }
         Update: {
+          cables?: string | null
           color?: string | null
           depth_mm?: number | null
           efficiency_rating_id?: number
@@ -1031,6 +1363,13 @@ export interface Database {
             foreignKeyName: "power_supplies_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "power_supplies_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -1038,7 +1377,35 @@ export interface Database {
             foreignKeyName: "power_supplies_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "power_supplies_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "power_supplies_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "power_supplies_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "power_supplies_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
@@ -1122,6 +1489,13 @@ export interface Database {
             foreignKeyName: "product_details_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -1129,7 +1503,35 @@ export interface Database {
             foreignKeyName: "product_details_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
@@ -1262,6 +1664,13 @@ export interface Database {
             foreignKeyName: "thermal_pastes_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "thermal_pastes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -1269,7 +1678,35 @@ export interface Database {
             foreignKeyName: "thermal_pastes_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "thermal_pastes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "thermal_pastes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "thermal_pastes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "thermal_pastes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
@@ -1315,6 +1752,13 @@ export interface Database {
             foreignKeyName: "wireless_network_cards_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "wireless_network_cards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -1322,7 +1766,35 @@ export interface Database {
             foreignKeyName: "wireless_network_cards_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "wireless_network_cards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "wireless_network_cards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "wireless_network_cards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "wireless_network_cards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
@@ -1342,19 +1814,50 @@ export interface Database {
         }
         Relationships: []
       }
+      v_casings: {
+        Row: {
+          brand_name: string | null
+          casing_type: string | null
+          category_name: string | null
+          colors: string[] | null
+          depth_mm: number | null
+          description: string | null
+          drive_bays: Json | null
+          dust_cover: string | null
+          expansion_slot: number | null
+          fan_slots: number | null
+          height_mm: number | null
+          image_paths: string[] | null
+          max_cpu_cooler_length_mm: number | null
+          max_gpu_length_mm: number | null
+          mobo_supports: string[] | null
+          product_id: number | null
+          product_name: string | null
+          side_panel: string | null
+          slug: string | null
+          weight_kg: number | null
+          width_mm: number | null
+        }
+        Relationships: []
+      }
       v_cpus: {
         Row: {
           base_clock_ghz: number | null
           base_power_watt: number | null
           brand_name: string | null
+          category_name: string | null
+          code_name: string | null
           cpu_socket: string | null
+          cpu_socket_id: number | null
           description: string | null
           efficiency_core: number | null
           image_paths: string[] | null
           integrated_gpu: string | null
-          lowest_price: number | null
           max_clock_ghz: number | null
+          max_memory_channel: number | null
+          max_memory_size_gb: number | null
           max_power_watt: number | null
+          model_line: string | null
           performance_core: number | null
           product_id: number | null
           product_name: string | null
@@ -1364,25 +1867,133 @@ export interface Database {
         }
         Relationships: []
       }
-      v_motherboards: {
+      v_gpus: {
         Row: {
+          base_clock_mhz: number | null
+          boost_clock_mhz: number | null
           brand_name: string | null
+          bus_interface: Database["public"]["Enums"]["bus_interface"] | null
+          category_name: string | null
           chipset: string | null
-          color: string | null
-          cpu_socket: string | null
+          core_count: number | null
           description: string | null
-          form_factor: string | null
+          gpu_memory_type: Database["public"]["Enums"]["gpu_memory_type"] | null
+          height_mm: number | null
           image_paths: string[] | null
-          input_output_ports: string | null
-          lowest_price: number | null
-          memory_max_gb: number | null
-          memory_slot_amount: number | null
-          memory_type: string | null
-          pcie_slots: string | null
+          length_mm: number | null
+          max_temp_celcius: number | null
+          memory_bus_bit: number | null
+          min_psu_watt: number | null
           product_id: number | null
           product_name: string | null
           slug: string | null
-          storage_interface: string | null
+          tdp_watt: number | null
+          vram_gb: number | null
+          width_mm: number | null
+        }
+        Relationships: []
+      }
+      v_internal_storages: {
+        Row: {
+          brand_name: string | null
+          capacity_gb: number | null
+          category_name: string | null
+          description: string | null
+          form_factor: string | null
+          image_paths: string[] | null
+          interface: string | null
+          product_id: number | null
+          product_name: string | null
+          read_speed_mbs: number | null
+          slug: string | null
+          type: Database["public"]["Enums"]["storage_type"] | null
+          write_speed_mbs: number | null
+        }
+        Relationships: []
+      }
+      v_memories: {
+        Row: {
+          amount: number | null
+          brand_name: string | null
+          capacity_gb: number | null
+          category_name: string | null
+          description: string | null
+          frequency_mhz: number | null
+          has_ecc: boolean | null
+          has_heatsink: boolean | null
+          has_rgb: boolean | null
+          image_paths: string[] | null
+          memory_type: Database["public"]["Enums"]["memory_type"] | null
+          overclocked: boolean | null
+          product_id: number | null
+          product_name: string | null
+          slug: string | null
+          voltage: number | null
+        }
+        Relationships: []
+      }
+      v_motherboards: {
+        Row: {
+          brand_name: string | null
+          category_name: string | null
+          chipset: string | null
+          cpu_socket: string | null
+          cpu_socket_id: number | null
+          cpu_socket_support: string | null
+          description: string | null
+          form_factor: string | null
+          image_paths: string[] | null
+          memory_channel_count: number | null
+          memory_frequency_mhz: number | null
+          memory_max_gb: number | null
+          memory_slot: number | null
+          memory_type: Database["public"]["Enums"]["memory_type"] | null
+          pcie_m2_slot: number | null
+          pcie_slots: string | null
+          product_id: number | null
+          product_name: string | null
+          sata3_slot: number | null
+          slug: string | null
+          usb2_slot: number | null
+          usb32_gen1_slot: number | null
+          usb32_gen2_slot: number | null
+          wireless_network: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "motherboard_chipsets_cpu_socket_id_fkey"
+            columns: ["cpu_socket_id"]
+            isOneToOne: false
+            referencedRelation: "cpu_sockets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "motherboard_chipsets_cpu_socket_id_fkey"
+            columns: ["cpu_socket_id"]
+            isOneToOne: false
+            referencedRelation: "v_cpus"
+            referencedColumns: ["cpu_socket_id"]
+          }
+        ]
+      }
+      v_power_supplies: {
+        Row: {
+          brand_name: string | null
+          cables: string | null
+          category_name: string | null
+          color: string | null
+          depth_mm: number | null
+          description: string | null
+          efficiency_rating: string | null
+          form_factor: string | null
+          height_mm: number | null
+          image_paths: string[] | null
+          modularity: Database["public"]["Enums"]["psu_modularity"] | null
+          product_id: number | null
+          product_name: string | null
+          slug: string | null
+          wattage: number | null
+          width_mm: number | null
         }
         Relationships: []
       }
@@ -1415,6 +2026,13 @@ export interface Database {
             foreignKeyName: "product_details_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_casings"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["product_id"]
           },
@@ -1422,7 +2040,35 @@ export interface Database {
             foreignKeyName: "product_details_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
+            referencedRelation: "v_gpus"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_internal_storages"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_memories"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "v_motherboards"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_power_supplies"
             referencedColumns: ["product_id"]
           }
         ]
@@ -1862,6 +2508,7 @@ export interface Database {
     Enums: {
       bus_interface: "PCIe 3.0 ×16" | "PCIe 4.0 ×16"
       gpu_memory_type: "GDDR6" | "GDDR6X" | "GDDR5"
+      memory_type: "DDR3" | "DDR4" | "DDR5"
       partner_type: "jasa rakit pc" | "jasa servis pc/laptop" | "rakit keyboard"
       psu_modularity: "full" | "semi" | "no"
       status: "done" | "on-going" | "cancelled"
@@ -1872,3 +2519,83 @@ export interface Database {
     }
   }
 }
+
+export type Tables<
+  PublicTableNameOrOptions extends
+    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
+      Database["public"]["Views"])
+  ? (Database["public"]["Tables"] &
+      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : never
+
+export type TablesInsert<
+  PublicTableNameOrOptions extends
+    | keyof Database["public"]["Tables"]
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
+  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : never
+
+export type TablesUpdate<
+  PublicTableNameOrOptions extends
+    | keyof Database["public"]["Tables"]
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
+  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : never
+
+export type Enums<
+  PublicEnumNameOrOptions extends
+    | keyof Database["public"]["Enums"]
+    | { schema: keyof Database },
+  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    : never = never
+> = PublicEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
+  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
+  : never

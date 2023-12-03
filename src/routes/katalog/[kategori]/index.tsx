@@ -12,6 +12,7 @@ import Motherboard, { motherboardHeaders } from '~/components/katalog/kategori/m
 import Casing, { casingHeaders } from '~/components/katalog/kategori/casing';
 import PowerSupply, { psuHeaders } from '~/components/katalog/kategori/power-supply';
 import Memory, { memoryHeaders } from '~/components/katalog/kategori/memory';
+import Storage, { storageHeaders } from '~/components/katalog/kategori/storage';
 
 
 const titlesKategori: { [key: string]: string } = {
@@ -97,14 +98,14 @@ export default component$(() => {
     // 'wirelessnetwork': wirelessnetworkHeaders,
     // 'casefan': casefanHeaders,
     // 'externaldrive': externaldriveHeaders,
+    // 'cable': cableHeaders,
     'motherboard': motherboardHeaders,
     'cpu': cpuHeaders,
     'gpu': gpuHeaders,
     'memory': memoryHeaders,
     // 'cooler': coolerHeaders,
     'psu': psuHeaders,
-    // 'cable': cableHeaders,
-    // 'storage': storageHeaders,
+    'storage': storageHeaders,
     'casing': casingHeaders,
   };
 
@@ -228,8 +229,8 @@ const ComponentFallback = component$<ComponentFallbackType>(({ kategori, compone
       return (<PowerSupply psu={component} />);
     // case "cable":
     //   return (<Cable cable={component} />);
-    // case "storage":
-    //   return (<InternalStorage storage={component} />);
+    case "storage":
+      return (<Storage storage={component} />);
     case "casing":
       return (<Casing casing={component} />);
     default:
