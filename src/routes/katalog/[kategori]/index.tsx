@@ -57,7 +57,7 @@ export const useRecords = routeLoader$(async (requestEvent) => {
     'soundcard': '',
     'wirednetwork': '',
     'wirelessnetwork': '',
-    'casefan': '',
+    'cable': '',
     'externaldrive': '',
     'motherboard': 'v_motherboards',
     'cpu': 'v_cpus',
@@ -65,9 +65,9 @@ export const useRecords = routeLoader$(async (requestEvent) => {
     'memory': 'v_memories',
     'cooler': '',
     'psu': 'v_power_supplies',
-    'cable': '',
     'storage': 'v_internal_storages',
     'casing': 'v_casings',
+    'casefan': '',
   }
 
   const category = categories[kategori];
@@ -96,7 +96,6 @@ export default component$(() => {
     // 'soundcard': soundcardHeaders,
     // 'wirednetwork': wirednetworkHeaders,
     // 'wirelessnetwork': wirelessnetworkHeaders,
-    // 'casefan': casefanHeaders,
     // 'externaldrive': externaldriveHeaders,
     // 'cable': cableHeaders,
     'motherboard': motherboardHeaders,
@@ -107,6 +106,7 @@ export default component$(() => {
     'psu': psuHeaders,
     'storage': storageHeaders,
     'casing': casingHeaders,
+    // 'casefan': casefanHeaders,
   };
 
   const headers = [
@@ -134,6 +134,7 @@ export default component$(() => {
               <div>[Search component]</div>
             </header>
             <main>
+              {/* TODO(damywise): use cards instead of table on mobile/small screen */}
               <table>
                 <thead class={styles.tableHead}>
                   <tr>
