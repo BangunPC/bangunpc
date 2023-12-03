@@ -1,10 +1,12 @@
-# Qwik City App ⚡️
+# BangunPC
 
-- [Qwik Docs](https://qwik.builder.io/)
-- [Discord](https://qwik.builder.io/chat)
-- [Qwik GitHub](https://github.com/BuilderIO/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+This repository contains the front-end side of the bangunpc website which contains the following:
+- Home Page
+- Simulasi Rakit PC
+- Jasa Rakit/Servis PC
+- Katalog
+- Blog
+- Login/Profile
 
 ---
 
@@ -46,7 +48,19 @@ Development mode uses [Vite's development server](https://vitejs.dev/). The `dev
 npm start # or `yarn start`
 ```
 
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
+> [!NOTE]  
+> During dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
+
+### Updating Schema
+
+During development, there may be updates in the schema. To reflect this changes in the front-end, run `gentypes` command.
+
+```shell
+npm run gentypes # or `yarn gentypes`
+```
+
+> [!NOTE]
+> Make sure to update types accordingly.
 
 ## Preview
 
