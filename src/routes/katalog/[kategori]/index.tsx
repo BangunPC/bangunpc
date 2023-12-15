@@ -171,7 +171,7 @@ export default component$(() => {
                 }
               </div>
 
-              <table class={"hidden md:block"}>
+              <table class={"hidden md:table"}>
                 <thead class={styles.tableHead}>
                   <tr>
                     {headers.map((item) => (
