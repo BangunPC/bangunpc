@@ -99,47 +99,56 @@ export default component$(() => {
         {
             name: 'Motherboard',
             href: '/katalog/motherboard',
-            image: <KMotherboard style={{ width: '100px', height: '80px' }} />
+            image: <KMotherboard style={{ width: '100px', height: '80px' }} />,
+            disabled: false,
         },
         {
             name: 'CPU',
             href: '/katalog/cpu',
-            image: <KCpu style={{ width: '100px', height: '80px' }} />
+            image: <KCpu style={{ width: '100px', height: '80px' }} />,
+            disabled: false,
         },
         {
             name: 'GPU',
             href: '/katalog/gpu',
-            image: <KGpu style={{ width: '100px', height: '80px' }} />
+            image: <KGpu style={{ width: '100px', height: '80px' }} />,
+            disabled: false,
         },
         {
             name: 'Memory',
             href: '/katalog/memory',
-            image: <KMemory style={{ width: '100px', height: '80px' }} />
+            image: <KMemory style={{ width: '100px', height: '80px' }} />,
+            disabled: false,
         },
         {
             name: 'CPU Cooler',
             href: '/katalog/cooler',
-            image: <KCpuCooler style={{ width: '100px', height: '80px' }} />
+            image: <KCpuCooler style={{ width: '100px', height: '80px' }} />,
+            disabled: true,
         },
         {
             name: 'Power Supply',
             href: '/katalog/psu',
-            image: <KPsu style={{ width: '100px', height: '80px' }} />
+            image: <KPsu style={{ width: '100px', height: '80px' }} />,
+            disabled: false,
         },
         {
             name: 'Storage',
             href: '/katalog/storage',
-            image: <KStorage style={{ width: '100px', height: '80px' }} />
+            image: <KStorage style={{ width: '100px', height: '80px' }} />,
+            disabled: false,
         },
         {
             name: 'PC Case',
             href: '/katalog/casing',
-            image: <KCasing style={{ width: '100px', height: '80px' }} />
+            image: <KCasing style={{ width: '100px', height: '80px' }} />,
+            disabled: false,
         },
         {
             name: 'Case Fan',
             href: '/katalog/case_fan',
-            image: <KCooler style={{ width: '100px', height: '80px' }} />
+            image: <KCooler style={{ width: '100px', height: '80px' }} />,
+            disabled: true,
         },
     ]
 
@@ -179,7 +188,7 @@ export default component$(() => {
                         </div> */}
                         <div class={style['modal-katalog-category-main']}>
                             {katalog.map((item) => (
-                                <Link href={item.href} key={item.name} class={style['modal-katalog-item']}>
+                                <Link href={item.disabled ? '' : item.href} key={item.name} class={[style['modal-katalog-item'], item.disabled ? 'saturate-0 contrast-50 cursor-not-allowed pointer-events-none' : '']}>
                                     {item.image}
                                     <div class='h-2' />
                                     <span>{item.name}</span>

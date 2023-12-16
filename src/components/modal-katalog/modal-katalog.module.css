@@ -19,7 +19,7 @@
     position: fixed;
     background: rgba(0, 0, 0, 0.5);
 
-    overflow: scroll;
+    overflow: auto;
     z-index: 100;
 }
 
