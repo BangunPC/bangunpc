@@ -138,36 +138,6 @@
   line-height: 155.02%;
 }
 
-.filled-button {
-  box-sizing: border-box;
-  width: 180px;
-  height: 54px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 18px 8px 18px;
-  background-color: #4c5986;
-  overflow: hidden;
-  align-content: center;
-  flex-wrap: nowrap;
-  gap: 4px;
-  border-radius: 8px;
-}
-
-.filled-button span {
-
-  width: auto;
-  height: auto;
-  font-weight: 700;
-  font-style: normal;
-  font-family: "Inter-Bold", "Inter", "Inter Placeholder", sans-serif;
-  color: #ffffff;
-  font-size: 15px;
-  letter-spacing: 0px;
-  line-height: 20px;
-}
-
 .outlined-button {
   box-sizing: border-box;
   width: 180px;

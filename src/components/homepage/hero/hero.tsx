@@ -1,6 +1,8 @@
 import { component$ } from "@builder.io/qwik";
 import Image from "~/content/images/hero-image.webp?jsx";
 import styles from "./hero.module.css";
+import FilledButton from "~/components/common/filled-button";
+import OutlinedButton from "~/components/common/outlined-button";
 
 
 export default component$(() => {
@@ -32,19 +34,16 @@ export default component$(() => {
                     </div>
                 </div>
                 <div class={styles['hero-section-left-buttons']}>
-
-                    <btn class={styles['filled-button']}>
-                        <span>
-
+                    <FilledButton class="w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-lg items-center justify-center">
+                        <span class="text-white font-semibold text-[15px]">
                             Rakit Sekarang
                         </span>
-                    </btn>
-                    <btn class={styles['outlined-button']}>
-                        <span>
-
+                    </FilledButton>
+                    <OutlinedButton class="w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-lg items-center justify-center border-[3px]">
+                        <span class="font-semibold text-[15px]">
                             Cari Komponen PC
                         </span>
-                    </btn>
+                    </OutlinedButton>
                 </div>
             </div>
             <Image class={styles["hero-section-right"]} alt="hero image which contains components" />

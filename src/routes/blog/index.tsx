@@ -33,12 +33,12 @@ export default component$(() => {
   const metas = useFrontmatter();
   return (
     <div>
-      <div class="w-full max-w-7xl m-auto">
-        <div class="w-80 ml-auto mt-4 mr-4">
+      <aside class="w-full max-w-7xl m-auto top-4 sticky z-10">
+        <div class="w-80 ml-auto my-4 mr-4 drop-shadow-sm">
           <SearchBox placeholder='Cari entri blog yang ingin kamu baca' />
         </div>
-      </div>
-      <div class={styles.wrap}>
+      </aside>
+      <main class={styles.wrap}>
         {metas.value.map((meta, index) => (
           <Link key={meta.slug} href={`/blog/${meta.slug}`} class={styles.card}>
             <div class={styles.cardImage}>{images[index]}</div>
@@ -70,7 +70,7 @@ export default component$(() => {
             <br />
           </Link>
         ))}
-      </div>
+      </main>
     </div>
   );
 });
