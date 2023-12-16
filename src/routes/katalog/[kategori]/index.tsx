@@ -5,14 +5,9 @@ import styles from './kategori.module.css';
 import { component$ } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
 import Sidebar from '~/components/katalog/sidebar/sidebar';
-import Cpu, { cpuHeaders } from '~/components/katalog/kategori/cpu';
-import Gpu, { gpuHeaders } from '~/components/katalog/kategori/gpu';
-import { productImageUrl } from '~/components/katalog/kategori/types';
-import Motherboard, { motherboardHeaders } from '~/components/katalog/kategori/motherboard';
-import Casing, { casingHeaders } from '~/components/katalog/kategori/casing';
-import PowerSupply, { psuHeaders } from '~/components/katalog/kategori/power-supply';
-import Memory, { memoryHeaders } from '~/components/katalog/kategori/memory';
-import Storage, { storageHeaders } from '~/components/katalog/kategori/storage';
+import SearchBox from '~/components/common/search-box';
+import { casingHeaders, casingKeys, cpuHeaders, cpuKeys, gpuHeaders, gpuKeys, memoryHeaders, memoryKeys, motherboardHeaders, motherboardKeys, productImageUrl, psuHeaders, psuKeys, storageHeaders, storageKeys } from '~/lib/katalog_types';
+import FilledButton from '~/components/common/filled-button';
 
 
 const titlesKategori: { [key: string]: string } = {
@@ -121,7 +116,7 @@ export default component$(() => {
   return (
     <>
       <div class={styles.main}>
-        <aside class={styles.sidebar}>
+        <aside class={[styles.sidebar, "hidden md:block"]}>
           <Sidebar />
         </aside>
         <div class={styles.tableSection}>
@@ -131,11 +126,52 @@ export default component$(() => {
               <div class={styles.tableSubHeaderTitle}>
                 Tersedia {productAmount} produk yang siap kamu pilih
               </div>
-              <div>[Search component]</div>
+              <div class="w-64 ml-auto mt-4 md:mr-4">
+                <SearchBox
+                  placeholder='Temukan komponen di sini'
+                />
+              </div>
             </header>
             <main>
               {/* TODO(damywise): use cards instead of table on mobile/small screen */}
-              <table>
+
+              <div class="md:hidden flex flex-col gap-1">
+                {
+                  categoryData.value.data?.map((component: any) => (
+                    <div key={component.product_id} class="rounded-xl shadow-lg bg-white p-2">
+                      <div class="flex flex-row items-center gap-1">
+                        <input type='checkbox' />
+                        <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
+                          <img src={productImageUrl + component.image_paths?.[0]} width={80} height={80} />
+                          <div class="flex flex-col">
+                            <span class="text-lg font-bold leading-none">
+                              {component.product_name}
+                            </span>
+                            <span class="font-bold mt-2">
+                              Rp {(component.lowest_price as number | null)?.toLocaleString('id-ID') ?? '-'}
+                            </span>
+                          </div>
+                        </div>
+                        <div>
+                          <FilledButton >
+                            Tambah
+                          </FilledButton>
+                        </div>
+                      </div>
+                      <div class="grid sm:grid-cols-4 grid-cols-3 gap-1">
+                        <ComponentFallback
+                          headers={headers}
+                          kategori={kategori}
+                          component={component}
+                          isMobile={true}
+                        />
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+
+              <table class={"hidden md:table"}>
                 <thead class={styles.tableHead}>
                   <tr>
                     {headers.map((item) => (
@@ -165,12 +201,16 @@ export default component$(() => {
                         <td>{component.product_name ?? '-'}</td>
 
                         <ComponentFallback
+                          headers={headers}
                           kategori={kategori}
                           component={component}
+                          isMobile={false}
                         />
 
                         <td>{component.lowest_price?.toLocaleString('id-ID') ?? '-'}</td>
-                        <td>Action</td>
+                        <td>
+                          <FilledButton>Tambah</FilledButton>
+                        </td>
                       </tr>
                       <tr key={component.product_id + 'gap'} class="h-2"></tr>
                     </>
@@ -185,58 +225,80 @@ export default component$(() => {
   );
 });
 
-type ComponentFallbackType = {
+type ComponentFallbackProps = {
+  headers: string[];
   kategori: string;
   component: any;
+  isMobile: boolean;
 }
 
-const ComponentFallback = component$<ComponentFallbackType>(({ kategori, component }) => {
+const ComponentFallback = component$<ComponentFallbackProps>(({ headers, kategori, component, isMobile }) => {
+  let keys: any[] = [];
   switch (kategori) {
     // case "headphone":
-    //   return (<Headphone headphone={component} />);
     // case "keyboard":
-    //   return (<Keyboard keyboard={component} />);
     // case "mouse":
-    //   return (<Mouse mouse={component} />);
     // case "speaker":
-    //   return (<Speaker speaker={component} />);
     // case "webcam":
-    //   return (<Webcam webcam={component} />);
     // case "printer":
-    //   return (<Printer printer={component} />);
     // case "monitor":
-    //   return (<Monitor monitor={component} />);
     // case "os":
-    //   return (<Os os={component} />);
     // case "soundcard":
-    //   return (<Soundcard soundcard={component} />);
     // case "wirednetwork":
-    //   return (<WiredNetwork wirednetwork={component} />);
     // case "wirelessnetwork":
-    //   return (<WirelessNetwork wirelessnetwork={component} />);
     // case "casefan":
-    //   return (<CaseFan casefan={component} />);
     // case "externaldrive":
-    //   return (<ExternalDrive externaldrive={component} />);
     case "motherboard":
-      return (<Motherboard motherboard={component} />);
+      keys = motherboardKeys;
+      break;
+    case "cpu":
+      keys = cpuKeys
+      break;
     case "gpu":
-      return (<Gpu gpu={component} />);
+      keys = gpuKeys
+      break;
     case "memory":
-      return (<Memory memory={component} />);
+      keys = memoryKeys
+      break;
     // case "cooler":
-    //   return (<Cooler cooler={component} />);
     case "psu":
-      return (<PowerSupply psu={component} />);
+      keys = psuKeys
+      break;
     // case "cable":
-    //   return (<Cable cable={component} />);
     case "storage":
-      return (<Storage storage={component} />);
+      keys = storageKeys
+      break;
     case "casing":
-      return (<Casing casing={component} />);
+      keys = casingKeys;
+      break;
     default:
-      return (<Cpu cpu={component} />);
+      break;
   }
+
+  if (isMobile) return (
+    <>
+      {keys.map((key, index) => (
+        <div key={key} class="flex flex-col">
+          <div class="text-sm mt-1 mb-2">
+            {headers[index + 3]}
+          </div>
+          <div class="font-semibold">
+            {component[key] ?? '-'}
+          </div>
+        </div>
+      ))}
+    </>
+  )
+
+  return (
+    <>
+      {keys.map((key) => (
+        <td key={key}>
+          {component[key] ?? '-'}
+        </td>
+      ))}
+    </>
+  );
 });
 
 export const head: DocumentHead = ({ params }) => {
