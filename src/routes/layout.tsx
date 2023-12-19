@@ -31,7 +31,7 @@ export default component$(() => {
     <>
       <Header />
       <main>
-      <ModalKatalog />
+        <ModalKatalog />
         <Slot />
       </main>
       <Footer />

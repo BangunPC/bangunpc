@@ -2,12 +2,13 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import styles from './kategori.module.css';
 
-import { component$ } from '@builder.io/qwik';
+import { $, component$, useSignal } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
 import Sidebar from '~/components/katalog/sidebar/sidebar';
 import SearchBox from '~/components/common/search-box';
 import { casingHeaders, casingKeys, cpuHeaders, cpuKeys, gpuHeaders, gpuKeys, memoryHeaders, memoryKeys, motherboardHeaders, motherboardKeys, productImageUrl, psuHeaders, psuKeys, storageHeaders, storageKeys } from '~/lib/katalog_types';
 import FilledButton from '~/components/common/filled-button';
+import { TbArrowLeft, TbArrowRight } from '@qwikest/icons/tablericons';
 
 
 const titlesKategori: { [key: string]: string } = {
@@ -71,6 +72,8 @@ export const useRecords = routeLoader$(async (requestEvent) => {
 
 export default component$(() => {
 
+  let isShowKatalogFilter = useSignal(false);
+
   const kategori = useLocation().params.kategori;
 
   const categoryData = useRecords() as any;
@@ -113,6 +116,7 @@ export default component$(() => {
   const title = titlesKategori[kategori];
 
   const productAmount = 200;
+
   return (
     <>
       <div class={styles.main}>
@@ -132,8 +136,22 @@ export default component$(() => {
                 />
               </div>
             </header>
+            <aside class="block sticky md:hidden top-4 mb-4">
+              <input type="checkbox" id="toggleKatalogFilter" class={styles.toggleKatalogFilter} hidden />
+              <div class='w-full flex'>
+                <div class={[styles.showFilterButton, 'w-full flex']}>
+                  <FilledButton class={'flex w-full text-center'} labelFor='toggleKatalogFilter'>
+                    <span class=''>Filter <TbArrowRight class='inline' /></span>
+                  </FilledButton>
+                </div>
+                <div class={[styles.hideFilterButton, 'w-full flex']}>
+                  <FilledButton class={'flex w-full text-center'} labelFor='toggleKatalogFilter'>
+                    <span class=''><TbArrowLeft class='inline' /> Katalog  </span>
+                  </FilledButton>
+                </div>
+              </div>
+            </aside>
             <main>
-              {/* TODO(damywise): use cards instead of table on mobile/small screen */}
 
               <div class="md:hidden flex flex-col gap-1">
                 {

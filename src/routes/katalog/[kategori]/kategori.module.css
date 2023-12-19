@@ -142,3 +142,15 @@ table {
 .tableRow {
     height: 56px;
 }
+
+.hideFilterButton {
+    display: none;
+}
+
+.toggleKatalogFilter:checked ~ div > .showFilterButton {
+    display: none;
+}
+
+.toggleKatalogFilter:checked ~ div > .hideFilterButton {
+    display: flex;
+}
