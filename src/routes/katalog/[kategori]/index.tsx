@@ -117,40 +117,6 @@ export default component$(() => {
 
   const productAmount = 200;
 
-  const tableComponent: any[] = [];
-  categoryData.value.data?.forEach((component: any) => tableComponent.push(
-    <>
-      <tr key={component.product_id} class={styles.tableRow}>
-        <td>
-          <input
-            type="checkbox"
-            id={component.product_id!.toString()}
-            class={[styles.toggle]}
-          />
-        </td>
-        <td>
-          {component.image_paths?.[0] &&
-            <img alt={component.product_name} src={productImageUrl + component.image_paths?.[0]} width={64} height={64} />
-          }
-        </td>
-        <td>{component.product_name ?? '-'}</td>
-
-        <ComponentFallback
-          headers={headers}
-          kategori={kategori}
-          component={component}
-          isMobile={false}
-        />
-
-        <td>{component.lowest_price?.toLocaleString('id-ID') ?? '-'}</td>
-        <td>
-          <FilledButton>Tambah</FilledButton>
-        </td>
-      </tr>
-      <tr key={component.product_id + 'gap'} class="h-2"></tr>
-    </>
-  ))
-
   return (
     <>
       <input type="checkbox" id="toggleKatalogFilter" class={styles.toggleKatalogFilter} hidden />
@@ -203,7 +169,7 @@ export default component$(() => {
                       <div class="flex flex-row items-center gap-1">
                         <input type='checkbox' />
                         <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
-                          <img alt={component.product_name} src={productImageUrl + component.image_paths?.[0]} width={80} height={80} />
+                          <img src={productImageUrl + component.image_paths?.[0]} width={80} height={80} />
                           <div class="flex flex-col">
                             <span class="text-lg font-bold leading-none">
                               {component.product_name}
@@ -242,7 +208,40 @@ export default component$(() => {
                 </thead>
                 <tbody class={styles.tableBody}>
                   <tr class="h-4"></tr>
-                  {tableComponent}
+                  {categoryData.value.data?.map((component: any) => (
+                    <>
+                      <tr key={component.product_id} class={styles.tableRow}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            id={component.product_id!.toString()}
+                            class={[styles.toggle]}
+                          />
+                        </td>
+                        <td>
+                          {component.image_paths?.[0] &&
+                            <>
+                              <img src={productImageUrl + component.image_paths?.[0]} width={64} height={64} />
+                            </>
+                          }
+                        </td>
+                        <td>{component.product_name ?? '-'}</td>
+
+                        <ComponentFallback
+                          headers={headers}
+                          kategori={kategori}
+                          component={component}
+                          isMobile={false}
+                        />
+
+                        <td>{component.lowest_price?.toLocaleString('id-ID') ?? '-'}</td>
+                        <td>
+                          <FilledButton>Tambah</FilledButton>
+                        </td>
+                      </tr>
+                      <tr key={component.product_id + 'gap'} class="h-2"></tr>
+                    </>
+                  ))}
                 </tbody>
               </table>
             </main>
