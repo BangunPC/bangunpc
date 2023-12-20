@@ -143,14 +143,23 @@ table {
     height: 56px;
 }
 
-.hideFilterButton {
+.toggleKatalogFilter:checked ~ *  .showFilterButton {
     display: none;
 }
 
-.toggleKatalogFilter:checked ~ div > .showFilterButton {
-    display: none;
-}
-
-.toggleKatalogFilter:checked ~ div > .hideFilterButton {
+.toggleKatalogFilter:checked ~ *  .hideFilterButton {
     display: flex;
+}
+
+.mobileSidebar {
+    translate: calc(-100% - 128px);
+    position: absolute;
+}
+
+.toggleKatalogFilter:checked ~ *  .mobileSidebar {
+    translate: 50%;
+}
+
+.toggleKatalogFilter:checked ~ *  .mobileKatalog {
+    translate: calc(100% + 24px);
 }

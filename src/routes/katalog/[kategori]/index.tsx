@@ -119,6 +119,7 @@ export default component$(() => {
 
   return (
     <>
+      <input type="checkbox" id="toggleKatalogFilter" class={styles.toggleKatalogFilter} hidden />
       <div class={styles.main}>
         <aside class={[styles.sidebar, "hidden md:block"]}>
           <Sidebar />
@@ -136,24 +137,32 @@ export default component$(() => {
                 />
               </div>
             </header>
-            <aside class="block sticky md:hidden top-4 mb-4">
-              <input type="checkbox" id="toggleKatalogFilter" class={styles.toggleKatalogFilter} hidden />
+            <aside class="block sticky md:hidden top-4 mb-4 z-10">
               <div class='w-full flex'>
                 <div class={[styles.showFilterButton, 'w-full flex']}>
                   <FilledButton class={'flex w-full text-center'} labelFor='toggleKatalogFilter'>
                     <span class=''>Filter <TbArrowRight class='inline' /></span>
                   </FilledButton>
                 </div>
-                <div class={[styles.hideFilterButton, 'w-full flex']}>
+                <div class={[styles.hideFilterButton, 'w-full hidden']}>
                   <FilledButton class={'flex w-full text-center'} labelFor='toggleKatalogFilter'>
                     <span class=''><TbArrowLeft class='inline' /> Katalog  </span>
                   </FilledButton>
                 </div>
               </div>
             </aside>
-            <main>
 
-              <div class="md:hidden flex flex-col gap-1">
+            <main class="grid grid-cols-2 grid-rows-1 md:block">
+              <div class="h-full">
+
+                <div class={[styles.mobileSidebar, "w-fit sticky top-16 mx-auto md:hidden mt-2 gap-1 transition-all duration-200 "]}>
+                  <div class="mx-auto bg-white rounded-lg shadow-xl p-4">
+                    <Sidebar />
+                  </div>
+                </div>
+              </div>
+
+              <div class={[styles.mobileKatalog, "flex flex-col w-[calc(100vw-64px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]"]}>
                 {
                   categoryData.value.data?.map((component: any) => (
                     <div key={component.product_id} class="rounded-xl shadow-lg bg-white p-2">
