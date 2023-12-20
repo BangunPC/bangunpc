@@ -2,7 +2,7 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import styles from './kategori.module.css';
 
-import { component$, useSignal } from '@builder.io/qwik';
+import { component$ } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
 import Sidebar from '~/components/katalog/sidebar/sidebar';
 import SearchBox from '~/components/common/search-box';

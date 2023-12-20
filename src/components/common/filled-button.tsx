@@ -1,4 +1,5 @@
-import { ClassList, Signal, Slot, component$ } from "@builder.io/qwik";
+import type { ClassList, Signal} from "@builder.io/qwik";
+import { Slot, component$ } from "@builder.io/qwik";
 
 export type ButtonProps = {
     onClick?: () => {},
