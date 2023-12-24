@@ -1,6 +1,7 @@
 import { TbChevronUp } from '@qwikest/icons/tablericons';
 import style from './sidebar-filter.module.css';
 import { component$ } from "@builder.io/qwik";
+import { randomUUID } from 'crypto';
 
 type SidebarFilterType = {
     title: string
@@ -8,7 +9,7 @@ type SidebarFilterType = {
 }
 
 export default component$<SidebarFilterType>((props) => {
-    const id = props.title.replace(/\s/g, '_');
+    const id = props.title.replace(/\s/g, '_') + randomUUID();
 
     return (
         <div class={style.filter}>
