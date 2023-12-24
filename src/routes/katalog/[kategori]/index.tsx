@@ -153,8 +153,8 @@ export default component$(() => {
             <main class="grid grid-cols-2 grid-rows-1 md:block">
               <div class="h-full">
 
-                <div class={[styles.mobileSidebar, "w-fit sticky top-16 mx-auto md:hidden mt-2 gap-1 transition-all duration-200 "]}>
-                  <div class="mx-auto bg-white rounded-lg shadow-xl p-4">
+                <div class={[styles.mobileSidebar, "w-full sticky top-16 mx-auto md:hidden mt-2 gap-1 transition-all duration-200 "]}>
+                  <div class="w-fit mx-auto bg-white rounded-lg shadow-xl p-4">
                     <Sidebar />
                   </div>
                 </div>

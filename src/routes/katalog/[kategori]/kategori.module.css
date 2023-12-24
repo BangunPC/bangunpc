@@ -152,14 +152,14 @@ table {
 }
 
 .mobileSidebar {
-    translate: calc(-100% - 128px);
-    position: absolute;
+    translate: calc(-100vw);
 }
 
 .toggleKatalogFilter:checked ~ *  .mobileSidebar {
-    translate: 50%;
+    translate: 0;
+    width: calc(100vw - 64px);
 }
 
 .toggleKatalogFilter:checked ~ *  .mobileKatalog {
-    translate: calc(100% + 24px);
+    translate: calc(100vw);
 }
