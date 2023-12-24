@@ -163,7 +163,7 @@ export default component$(() => {
               <div class={[styles.mobileKatalog, "flex flex-col w-[calc(100vw-64px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]"]}>
                 {
                   categoryData.value.data?.map((component: any) => (
-                    <div key={component.product_id} class="rounded-xl shadow-lg bg-white p-2">
+                    <a href={`/detail/${kategori}/${component.slug}`} key={component.product_id} class="text-black hover:scale-105 hover:z-10 transition-transform rounded-xl shadow-lg bg-white p-2">
                       <div class="flex flex-row items-center gap-1">
                         <input type='checkbox' />
                         <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
@@ -191,7 +191,7 @@ export default component$(() => {
                           isMobile={true}
                         />
                       </div>
-                    </div>
+                    </a>
                   ))
                 }
               </div>
@@ -208,7 +208,7 @@ export default component$(() => {
                   <tr class="h-4"></tr>
                   {categoryData.value.data?.map((component: any) => (
                     <>
-                      <tr key={component.product_id} class={styles.tableRow}>
+                      <tr data-href={`/detail/${kategori}/${component.slug}`} key={component.product_id} class={[styles.tableRow, "transition-transform hover:scale-105 hover:z-10 cursor-pointer hover:bg-slate-100"]} onClick$={() => window.location.href=`/detail/${kategori}/${component.slug}`}>
                         <td>
                           <input
                             type="checkbox"
