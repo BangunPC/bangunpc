@@ -31,7 +31,7 @@ export default component$(() => {
 
   return (
     <>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col lg:flex-row gap-2">
         <div class="p-6 pb-0 lg:pb-6">
           <div class="border border-[#1C1F24] rounded-md aspect-square max-w-xl mx-auto">
             
