@@ -32,7 +32,7 @@ export default component$(() => {
   return (
     <>
       <div class="flex flex-col lg:flex-row gap-2">
-        <div class="p-6 pb-0 lg:pb-6">
+        <div class="p-6 pb-0 lg:pb-6 flex-1 lg:max-w-lg">
           <div class="border border-[#1C1F24] rounded-md aspect-square max-w-xl mx-auto">
             
           </div>
@@ -60,9 +60,9 @@ export default component$(() => {
             </TextButton>
           </div>
         </div>
-        <div class="flex flex-col gap-2 p-6 pt-0 lg:pt-6 ">
+        <div class="flex flex-col gap-2 p-6 pt-0 lg:pt-6 max-w-4xl">
           <header>
-            <div class="text-xl lg:font-bold lg:text-4xl">{name}</div>
+            <div class="lg:font-bold text-4xl">{name}</div>
           </header>
           <main class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
