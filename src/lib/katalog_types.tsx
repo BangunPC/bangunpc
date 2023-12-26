@@ -122,6 +122,32 @@ export const storageKeys = [
     'interface',
   ];
 
+
+export const categories: { [key: string]: string } = {
+    headphone: '',
+    keyboard: '',
+    mouse: '',
+    speaker: '',
+    webcam: '',
+    printer: '',
+    monitor: '',
+    os: '',
+    soundcard: '',
+    wirednetwork: '',
+    wirelessnetwork: '',
+    cable: '',
+    externaldrive: '',
+    motherboard: 'v_motherboards',
+    cpu: 'v_cpus',
+    gpu: 'v_gpus',
+    memory: 'v_memories',
+    cooler: '',
+    psu: 'v_power_supplies',
+    storage: 'v_internal_storages',
+    casing: 'v_casings',
+    casefan: '',
+  };
+
 // export type All = { isMobile: boolean, all: Database['product']['Views']['v_all_products']['Row'] }
 
 // export type Casing = { isMobile: boolean, casing: Database['product']['Views']['v_casings']['Row'] }
