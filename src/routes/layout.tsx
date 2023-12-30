@@ -30,7 +30,7 @@ export default component$(() => {
   return (
     <>
       <Header />
-      <main>
+      <main class='pt-16'>
         <ModalKatalog />
         <Slot />
       </main>

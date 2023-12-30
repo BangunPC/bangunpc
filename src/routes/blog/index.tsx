@@ -33,7 +33,7 @@ export default component$(() => {
   const metas = useFrontmatter();
   return (
     <div>
-      <aside class="w-full max-w-7xl m-auto top-4 sticky z-10">
+      <aside class="w-full max-w-7xl m-auto top-[calc(64px+1rem)] sticky z-10">
         <div class="w-80 ml-auto my-4 mr-4 drop-shadow-sm">
           <SearchBox placeholder='Cari entri blog yang ingin kamu baca' />
         </div>

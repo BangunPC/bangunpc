@@ -4,8 +4,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 24px;
-  padding-bottom: 0;
   align-content: center;
   flex-wrap: nowrap;
   gap: 24px;
@@ -16,6 +14,11 @@
   border-bottom-width: 1px;
   border-left-width: 0px;
   border-right-width: 0px;
+
+  padding: 12px;
+  position: fixed;
+  background-color: #f5f5f5;
+  z-index: 100;
 }
 
 .logo span {
@@ -33,6 +36,8 @@
 }
 
 .iconswrapper {
+  height: fit-content;
+  margin: auto;
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
@@ -87,20 +92,13 @@
   justify-content: center;
   align-items: center;
   padding: 15px;
-  box-shadow:
-    0px 0.7065919983928324px 0.7065919983928324px -0.625px rgba(0, 0, 0, 0.15),
-    0px 1.8065619053231785px 1.8065619053231785px -1.25px rgba(0, 0, 0, 0.14398),
-    0px 3.6217592146567767px 3.6217592146567767px -1.875px rgba(0, 0, 0, 0.13793),
-    0px 6.8655999097303715px 6.8655999097303715px -2.5px rgba(0, 0, 0, 0.12711),
-    0px 13.646761411524492px 13.646761411524492px -3.125px rgba(0, 0, 0, 0.10451),
-    0px 30px 30px -3.75px rgba(0, 0, 0, 0.05);
   background-color: #4c5986;
   position: relative;
   align-content: center;
   flex-wrap: nowrap;
   gap: 10px;
   border-radius: 64px;
-  margin: 20px;
+  margin: 0 20px;
 }
 
 .login span {
@@ -148,33 +146,37 @@
   from {
     overflow: hidden;
   }
+
   to {
     overflow: hidden;
   }
 }
 
 @media screen {
-  .toggle:checked ~ .buttons {
+  .toggle:checked~.buttons {
     gap: 20px;
-    height: 220px;
+    height: 200px;
     animation: overflow 0.3s;
   }
 
   .header {
+    width: 100%;
     flex-direction: column;
     gap: 10px;
+    align-items: center;
   }
 
   .iconswrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 12px;
   }
 }
 
 @media screen and (min-width: 810px) {
 
-  .toggle:checked ~ .buttons {
+  .toggle:checked~.buttons {
     gap: 0;
     height: fit-content;
     animation: none;
@@ -208,7 +210,7 @@
   }
 
   .header {
-    width: 100%;
+    width: 100vw;
     flex-direction: row;
   }
 
@@ -219,7 +221,7 @@
 
 @media screen and (min-width: 1200px) {
   .header {
-    max-width: 100%;
+    width: 100vw;
     justify-content: center;
   }
 

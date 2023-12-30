@@ -8,7 +8,7 @@
 
 .sidebar {
     height: max-content;
-    top: 24px;
+    top: calc(24px + 64px);
     position: sticky;
 }
 
@@ -84,7 +84,8 @@ table {
     backdrop-filter: blur(10px);
 
     position: sticky;
-    top: 0;
+    top: 64px;
+    z-index: 50;
 }
 
 /* 

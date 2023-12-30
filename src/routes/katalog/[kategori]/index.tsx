@@ -126,7 +126,7 @@ export default component$(() => {
                 <SearchBox placeholder="Temukan komponen di sini" />
               </div>
             </header>
-            <aside class="block sticky md:hidden top-4 mb-4 z-10">
+            <aside class="block sticky md:hidden top-[calc(64px+1rem)] mb-4 z-10">
               <div class="w-full flex">
                 <div class={[styles.showFilterButton, 'w-full flex']}>
                   <FilledButton
@@ -156,7 +156,7 @@ export default component$(() => {
                 <div
                   class={[
                     styles.mobileSidebar,
-                    'w-full sticky top-16 mx-auto md:hidden mt-2 gap-1 transition-all duration-200 ',
+                    'w-full sticky top-[calc(64px+4rem)] mx-auto md:hidden mt-2 gap-1 transition-all duration-200 ',
                   ]}
                 >
                   <div class="w-fit mx-auto bg-white rounded-lg shadow-xl p-4">
