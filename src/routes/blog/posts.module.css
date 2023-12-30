@@ -6,13 +6,12 @@
   height: min-content; /* 1274px */
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-end;
   overflow: hidden;
   flex: 1 0 0px;
   position: relative;
   padding: 0px 0px 0px 0px;
-  align-content: center;
   flex-wrap: wrap;
   gap: 10px;
   border-radius: 0px 0px 0px 0px;
@@ -23,7 +22,7 @@
 .card {
   background-color: hsl(0, 0%, 98%);
   box-sizing: border-box;
-  width: 216px;
+  max-width: 384px;
   height: auto;
   flex-direction: column;
   justify-content: center;
@@ -93,4 +92,12 @@
   border-radius: 8px;
   overflow: hidden;
   background-color: hsla(227, 27%, 41%, 0.4);
+}
+
+.textHover {
+  :hover {
+    fill: #4c5986 !important;
+    color: #4c5986 !important;
+    text-decoration: none !important;
+  }
 }

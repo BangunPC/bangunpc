@@ -41,7 +41,7 @@ export default component$(() => {
       <main class={styles.wrap}>
         {metas.value.map((meta, index) => (
           <Link key={meta.slug} href={`/blog/${meta.slug}`} class={styles.card}>
-            <div class={styles.cardImage}>{images[index]}</div>
+            <div class={[styles.cardImage, 'transition-transform hover:scale-105']}>{images[index]}</div>
             <span class="text-sm text-slate-600">
               {new Date(meta.created_at).toLocaleDateString('id-ID', {
                 weekday: 'long',
@@ -50,8 +50,8 @@ export default component$(() => {
                 year: 'numeric',
               })}
             </span>
-            <div class="flex flex-1 flex-col">
-              <span class="text-xl leading-[1.1] font-semibold">
+            <div class="flex flex-1 flex-col hover:text-main-color">
+              <span class="text-xl leading-[1.1] font-semibold mb-2">
                 {meta.title}
               </span>
               <br />
