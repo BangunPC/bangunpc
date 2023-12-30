@@ -48,10 +48,8 @@
     "wrangler": "^3.0.0"
   },
   "dependencies": {
-    "@img/sharp-linux-x64": "^0.33.1",
     "@qwikest/icons": "^0.0.13",
     "@supabase/supabase-js": "^2.36.0",
-    "sharp": "^0.33.1",
     "supabase-auth-helpers-qwik": "^0.0.3",
     "uuid": "^9.0.1"
   },
@@ -59,8 +57,5 @@
     "singleQuote": true,
     "trailingComma": "es5",
     "tabWidth": 2
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.9.2"
   }
 }
