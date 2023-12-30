@@ -37,7 +37,7 @@ const headersItems = [
 
 export default component$(() => {
   return (
-    <header class={[styles.header,'h-20 pb-4 sticky top-0 backdrop-filter backdrop-blur-lg bg-opacity-30 border-b border-gray-200 z-2']}>
+    <header class={styles.header}>
       {/* <div class={["container", styles.wrapper]}> */}
       <div class={styles.logoAndToggle}>
         <a href="/" title="qwik">
@@ -77,7 +77,7 @@ export default component$(() => {
             </div>
           ))}
         </div>
-        <Link class={[styles.login, 'transition-transform hover:scale-105 cursor-pointer']}>
+        <Link class={styles.login}>
           <Profile width="24" height="24" class="inline-block fill-white" />
           <span>Login</span>
         </Link>
