@@ -55,15 +55,22 @@
 
 .jasa-main {
     display: grid;
-    overflow: hidden;
+    overflow: visible;
     justify-content: center;
     gap: 12px;
+    .jasa-main {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 820px) {
     .jasa-main {
-        grid-auto-rows: minmax(0, 1fr);
-        grid-template-columns: repeat(2, minmax(50px, 1fr));
-        grid-template-rows: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1560px) {
+    .jasa-main {
+        grid-template-columns: repeat(4, 1fr);
     }
 }

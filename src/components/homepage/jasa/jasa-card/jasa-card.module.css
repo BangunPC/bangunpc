@@ -1,12 +1,4 @@
-.jasa-card {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    border-radius: 12px;
-    border: 3px solid #74738a;
-    padding: 24px;
-    gap: 24px;
-}
+
 
 .jasa-header {
     width: min-content;
