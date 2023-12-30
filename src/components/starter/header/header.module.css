@@ -36,8 +36,6 @@
 }
 
 .iconswrapper {
-  height: fit-content;
-  margin: auto;
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
@@ -84,6 +82,7 @@
 }
 
 .login {
+  width: fit-content;
   box-sizing: border-box;
   flex-shrink: 0;
   height: 40px;
@@ -98,7 +97,6 @@
   flex-wrap: nowrap;
   gap: 10px;
   border-radius: 64px;
-  margin: 0 20px;
 }
 
 .login span {
@@ -170,7 +168,11 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 12px;
+  }
+
+  .login {
+    margin: auto;
+    margin-top: 12px;
   }
 }
 
@@ -216,6 +218,10 @@
 
   .toggleButton {
     display: none;
+  }
+
+  .login {
+    margin: 0 20px;
   }
 }
 

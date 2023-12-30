@@ -52,7 +52,7 @@ export default component$(() => {
       </div>
       <input type="checkbox" id="toggle" class={styles.toggle} />
       <div class={styles.buttons}>
-        <div class={styles.iconswrapper}>
+        <div class={[styles.iconswrapper, 'm-auto']}>
           {headersItems.map((item) => (
             <div key={item.title} class={styles.link}>
               {item.href && (
