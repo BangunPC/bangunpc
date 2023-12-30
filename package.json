@@ -48,6 +48,7 @@
     "wrangler": "^3.0.0"
   },
   "dependencies": {
+    "@img/sharp-linux-x64": "^0.33.1",
     "@qwikest/icons": "^0.0.13",
     "@supabase/supabase-js": "^2.36.0",
     "sharp": "^0.33.1",
