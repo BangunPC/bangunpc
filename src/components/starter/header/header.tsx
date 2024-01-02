@@ -37,7 +37,7 @@ const headersItems = [
 
 export default component$(() => {
   return (
-    <header class={styles.header}>
+    <header class={[styles.header, 'backdrop-blur-3xl']}>
       {/* <div class={["container", styles.wrapper]}> */}
       <div class={styles.logoAndToggle}>
         <a href="/" title="qwik">
