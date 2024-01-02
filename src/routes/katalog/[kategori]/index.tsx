@@ -175,7 +175,7 @@ export default component$(() => {
                   <a
                     href={`/detail/${kategori}/${component.slug}`}
                     key={component.product_id}
-                    class="text-black hover:scale-105 hover:z-10 transition-transform rounded-xl shadow-lg bg-white p-2"
+                    class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
                   >
                     <div class="flex flex-row items-center gap-1">
                       <input type="checkbox" />
@@ -230,7 +230,7 @@ export default component$(() => {
                         key={component.product_id}
                         class={[
                           styles.tableRow,
-                          'transition-transform hover:scale-105 hover:z-10 cursor-pointer hover:bg-slate-100',
+                          'transition-transform hover:scale-[1.01] hover:z-10 cursor-pointer',
                         ]}
                         onClick$={() =>
                           (window.location.href = `/detail/${kategori}/${component.slug}`)
