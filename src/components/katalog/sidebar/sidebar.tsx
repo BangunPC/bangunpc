@@ -4,14 +4,16 @@ import { component$ } from "@builder.io/qwik";
 import SidebarFilter from "../sidebar-filter/sidebar-filter";
 import { TbFilterSearch } from "@qwikest/icons/tablericons";
 
+type SidebarProps = {
+    filters: Array<Filter>
+}
 
-export default component$(() => {
-    const filters = [
-        { title: 'Type', items: ['AMD', 'Intel'] },
-        { title: 'Nama Toko', items: ['Tokopedia', 'Shopee', 'Blibli', 'Amazon'] },
-        { title: 'Lokasi', items: ['Jabodetabek', 'DKI Jakarta', 'Bandung', 'Surabaya'] },
-        { title: 'Kondisi', items: ['Baru', 'Bekas'] },
-    ]
+export type Filter = {
+    title: string
+    items: Array<string>
+}
+
+export default component$<SidebarProps>(({filters}) => {
 
     return (
         <div class={styles.sidebar}>

@@ -4,7 +4,7 @@ import styles from './kategori.module.css';
 
 import { component$ } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
-import Sidebar from '~/components/katalog/sidebar/sidebar';
+import Sidebar, { Filter } from '~/components/katalog/sidebar/sidebar';
 import SearchBox from '~/components/common/search-box';
 import {
   casingHeaders,
@@ -103,6 +103,13 @@ export default component$(() => {
 
   const productAmount = 200;
 
+  const filters: Filter[] = [
+    {
+      title: 'Harga',
+      items: ['Harga Terendah', 'Harga Tertinggi'],
+    },
+  ]
+
   return (
     <>
       <input
@@ -113,7 +120,7 @@ export default component$(() => {
       />
       <div class={styles.main}>
         <aside class={[styles.sidebar, 'hidden md:block']}>
-          <Sidebar />
+          <Sidebar filters={filters} />
         </aside>
         <div class={styles.tableSection}>
           <header class={styles.tableHeader}>Pilih {title}</header>
@@ -160,7 +167,7 @@ export default component$(() => {
                   ]}
                 >
                   <div class="w-fit mx-auto bg-white rounded-lg shadow-xl p-4">
-                    <Sidebar />
+                    <Sidebar filters={filters} />
                   </div>
                 </div>
               </div>
