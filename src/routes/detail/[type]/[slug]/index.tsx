@@ -14,7 +14,8 @@ export const useComponentDetail = routeLoader$(async (requestEvent) => {
   const params = requestEvent.params;
   const type = params.type;
   const slug = params.slug;
-  return await supabase
+  const client = await supabase();
+  return client
     .schema('product')
     .from(categories[type])
     .select()

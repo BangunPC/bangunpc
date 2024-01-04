@@ -58,7 +58,8 @@ export const useRecords = routeLoader$(async (requestEvent) => {
   const kategori = requestEvent.params.kategori;
 
   const category = categories[kategori];
-  return await supabase.schema('product').from(category).select();
+  const client = await supabase();
+  return await client.schema('product').from(category).select();
 });
 
 export default component$(() => {
