@@ -24,7 +24,8 @@
     "serve": "wrangler pages dev ./dist",
     "start": "vite --open --mode ssr",
     "qwik": "qwik",
-    "gentypes": "npx supabase gen types typescript --project-id \"onawoodgnwkncueeyusr\" > src/lib/schema.ts --schema public --schema product"
+    "gentypes": "npx supabase gen types typescript --project-id \"onawoodgnwkncueeyusr\" > src/lib/schema.ts --schema public --schema product",
+    "supa": "npm run gentypes"
   },
   "devDependencies": {
     "@builder.io/qwik": "^1.2.12",

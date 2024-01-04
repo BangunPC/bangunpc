@@ -4,7 +4,8 @@ import styles from './kategori.module.css';
 
 import { component$ } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
-import Sidebar, { Filter } from '~/components/katalog/sidebar/sidebar';
+import type { Filter } from '~/components/katalog/sidebar/sidebar';
+import Sidebar from '~/components/katalog/sidebar/sidebar';
 import SearchBox from '~/components/common/search-box';
 import {
   casingHeaders,
