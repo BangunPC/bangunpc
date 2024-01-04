@@ -95,7 +95,7 @@ export default component$(() => {
         ))}
       </main>
       <div class={styles.copyright}>
-        BangunPC © 2024
+        BangunPC © {new Date().getFullYear()}
         <div class={styles.brand}>
           <FaInstagram />
           <FaXTwitter />
