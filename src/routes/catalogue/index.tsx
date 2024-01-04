@@ -6,7 +6,8 @@ import { supabase } from "~/lib/db";
 import styles from "./catalogue.module.css";
 
 export const useRecords = routeLoader$(async () => {
-  return await supabase.schema("product").from("v_all_product_list").select();
+  const client = await supabase();
+  return await client.schema("product").from("v_all_product_list").select();
 });
 
 export default component$(() => {
