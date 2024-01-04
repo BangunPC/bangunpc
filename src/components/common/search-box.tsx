@@ -1,11 +1,10 @@
-import type { PropFunction} from "@builder.io/qwik";
+import type { PropFunction } from "@builder.io/qwik";
 import { component$ } from "@builder.io/qwik"
 import { FaMagnifyingGlassSolid } from "@qwikest/icons/font-awesome";
 
 export type SearchBoxProps = {
     placeholder?: string
     onInput$?: PropFunction<(event: InputEvent, element: HTMLInputElement) => void>
-    onChange$?: PropFunction<(event: Event, element: HTMLInputElement) => void>
 }
 
 export default component$<SearchBoxProps>((props) => {
@@ -14,7 +13,6 @@ export default component$<SearchBoxProps>((props) => {
             <FaMagnifyingGlassSolid class="w-5 h-5" />
             <input
                 onInput$={props.onInput$}
-                onChange$={props.onChange$}
                 placeholder={props.placeholder}
                 class="w-full outline-none"
             />
