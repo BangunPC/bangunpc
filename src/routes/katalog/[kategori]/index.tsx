@@ -1,8 +1,8 @@
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { routeLoader$, useLocation } from '@builder.io/qwik-city';
+import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import styles from './kategori.module.css';
 
-import { component$ } from '@builder.io/qwik';
+import { $, component$, useSignal } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
 import type { Filter } from '~/components/katalog/sidebar/sidebar';
 import Sidebar from '~/components/katalog/sidebar/sidebar';
@@ -27,6 +27,7 @@ import {
 } from '~/lib/katalog_types';
 import FilledButton from '~/components/common/filled-button';
 import { TbArrowLeft, TbArrowRight } from '@qwikest/icons/tablericons';
+import { useDebounce } from '~/lib/use-debounce';
 
 const titlesKategori: { [key: string]: string } = {
   headphone: 'Headphone',
@@ -55,14 +56,36 @@ const titlesKategori: { [key: string]: string } = {
 
 // export const useRecords = routeLoader$(async () => {
 export const useRecords = routeLoader$(async (requestEvent) => {
+  console.log('called useRecord')
+  const search = requestEvent.url.searchParams.get("value");
   const kategori = requestEvent.params.kategori;
 
   const category = categories[kategori];
   const client = await supabase();
-  return await client.schema('product').from(category).select();
+  if (!search || search === '' || search === ' ') {
+    return await client.schema('product').from(category).select();
+  }
+  return await client.schema('product').from(category).select().order('product_name', { ascending: true }).ilike('product_name', `%${search}%`);
 });
 
 export default component$(() => {
+  const location = useLocation();
+  const nav = useNavigate();
+
+  const inputSig = useSignal('');
+  useDebounce(inputSig, 300, $(async (value: string) => {
+    const url = location.url;
+    url.searchParams.set("value", value.replace(/ +/g, ' '));
+    window.history.pushState({}, '', url);
+
+    console.log('debounced: ', value);
+    await nav();
+  }));
+
+  const handleSearch = $((event: InputEvent, element: HTMLInputElement) => {
+    inputSig.value = element.value;
+  });
+
   const kategori = useLocation().params.kategori;
 
   const categoryData = useRecords() as any;
@@ -132,7 +155,7 @@ export default component$(() => {
                 Tersedia {productAmount} produk yang siap kamu pilih
               </div>
               <div class="w-64 ml-auto mt-4 md:mr-4">
-                <SearchBox placeholder="Temukan komponen di sini" />
+                <SearchBox placeholder="Temukan komponen di sini" onInput$={handleSearch} />
               </div>
             </header>
             <aside class="block sticky md:hidden top-[calc(64px+1rem)] mb-4 z-10">
