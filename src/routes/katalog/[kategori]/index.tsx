@@ -19,7 +19,6 @@ import {
   memoryKeys,
   motherboardHeaders,
   motherboardKeys,
-  productImageUrl,
   psuHeaders,
   psuKeys,
   storageHeaders,
@@ -70,7 +69,7 @@ export const useRecords = routeLoader$(async (requestEvent) => {
         .select("image_filenames")
         .eq('product_id', component['product_id'])
         .single()
-    
+
       if (imageUrls.length == 0) {
         imageUrls.push(undefined)
       }
@@ -81,7 +80,7 @@ export const useRecords = routeLoader$(async (requestEvent) => {
         })[0])
       }
     })
-    
+
     await Promise.all(promises)
   }
 
@@ -227,7 +226,7 @@ export default component$(() => {
                   'flex flex-col w-[calc(100vw-64px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]',
                 ]}
               >
-                {categoryData?.map((component: any) => (
+                {categoryData?.map((component: any, index: number) => (
                   <a
                     href={`/detail/${kategori}/${component.slug}`}
                     key={component.product_id}
@@ -237,7 +236,9 @@ export default component$(() => {
                       <input type="checkbox" />
                       <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
                         <img
-                          src={productImageUrl + component.image_paths?.[0]}
+                          src={
+                            imageUrls[index]?.length == 0 ? '' : imageUrls[index]
+                          }
                           width={80}
                           height={80}
                         />
