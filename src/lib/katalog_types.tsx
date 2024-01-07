@@ -148,6 +148,31 @@ export const categories: { [key: string]: string } = {
     casefan: '',
   };
 
+
+  export const titlesKategori: { [key: string]: string } = {
+    headphone: 'Headphone',
+    keyboard: 'Keyboard',
+    mouse: 'Mouse',
+    speaker: 'Speaker',
+    webcam: 'Webcam',
+    printer: 'Printer',
+    monitor: 'Monitor',
+    os: 'Operating System',
+    soundcard: 'Sound Card',
+    wirednetwork: 'Wired Network Device',
+    wirelessnetwork: 'Wireless Network Device',
+    casefan: 'Case Fan',
+    externaldrive: 'External Drive',
+    motherboard: 'Motherboard',
+    cpu: 'Computer Processor',
+    gpu: 'GPU',
+    memory: 'Memory',
+    cooler: 'CPU Cooler',
+    psu: 'Power Supply',
+    cable: 'Cable',
+    storage: 'Internal Storage',
+    casing: 'PC Casing',
+  };
 // export type All = { isMobile: boolean, all: Database['product']['Views']['v_all_products']['Row'] }
 
 // export type Casing = { isMobile: boolean, casing: Database['product']['Views']['v_casings']['Row'] }

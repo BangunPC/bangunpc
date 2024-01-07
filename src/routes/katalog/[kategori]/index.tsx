@@ -24,48 +24,68 @@ import {
   psuKeys,
   storageHeaders,
   storageKeys,
+  titlesKategori,
 } from '~/lib/katalog_types';
 import FilledButton from '~/components/common/filled-button';
 import { TbArrowLeft, TbArrowRight } from '@qwikest/icons/tablericons';
 import { useDebounce } from '~/lib/use-debounce';
 
-const titlesKategori: { [key: string]: string } = {
-  headphone: 'Headphone',
-  keyboard: 'Keyboard',
-  mouse: 'Mouse',
-  speaker: 'Speaker',
-  webcam: 'Webcam',
-  printer: 'Printer',
-  monitor: 'Monitor',
-  os: 'Operating System',
-  soundcard: 'Sound Card',
-  wirednetwork: 'Wired Network Device',
-  wirelessnetwork: 'Wireless Network Device',
-  casefan: 'Case Fan',
-  externaldrive: 'External Drive',
-  motherboard: 'Motherboard',
-  cpu: 'Computer Processor',
-  gpu: 'GPU',
-  memory: 'Memory',
-  cooler: 'CPU Cooler',
-  psu: 'Power Supply',
-  cable: 'Cable',
-  storage: 'Internal Storage',
-  casing: 'PC Casing',
-};
-
 // export const useRecords = routeLoader$(async () => {
 export const useRecords = routeLoader$(async (requestEvent) => {
+  const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
+  const storageUrl = '/storage/v1/object/public/product-images/';
+
   console.log('called useRecord')
   const search = requestEvent.url.searchParams.get("value");
   const kategori = requestEvent.params.kategori;
 
   const category = categories[kategori];
   const client = await supabase();
+
+  let data: any[] | undefined;
+
   if (!search || search === '' || search === ' ') {
-    return await client.schema('product').from(category).select();
+    console.log('searching data')
+    data = (await client.schema('product').from(category).select()).data ?? undefined;
   }
-  return await client.schema('product').from(category).select().order('product_name', { ascending: true }).ilike('product_name', `%${search}%`);
+
+  if (!data) {
+    console.log('getting data')
+    await client
+      .schema('product')
+      .from(category)
+      .select()
+      .order('product_name', { ascending: true })
+      .ilike('product_name', `%${search}%`)
+      .then((res) => {
+        data = res.data
+      });
+  }
+
+  const imageUrls: (string | undefined)[] = []
+
+  if (data) {
+    const promises = data.map(async (component: any) => {
+      const { data: imageData } = await client.schema('product').from('v_product_images')
+        .select("image_filenames")
+        .eq('product_id', component['product_id'])
+        .single()
+    
+      if (imageUrls.length == 0) {
+        imageUrls.push(undefined)
+      }
+      else {
+        imageUrls.push(imageData?.image_filenames?.map((name: string) => {
+          const url = `${supabaseUrl}${storageUrl}${component['product_id']}/${name}`
+          return url;
+        })[0])
+      }
+    })
+    
+    await Promise.all(promises)
+  }
+
+  return { data, imageUrls }
 });
 
 export default component$(() => {
@@ -88,7 +108,11 @@ export default component$(() => {
 
   const kategori = useLocation().params.kategori;
 
-  const categoryData = useRecords() as any;
+  const component = useRecords().value;
+
+  const categoryData = component.data;
+
+  const imageUrls = component.imageUrls;
 
   const defaultHeadersStart = ['', 'Nama', '']; // The first '' is for the checkbox, the second for the image
   const defaultHeadersEnd = ['Harga Terendah (Rp)', 'Aksi'];
@@ -203,7 +227,7 @@ export default component$(() => {
                   'flex flex-col w-[calc(100vw-64px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]',
                 ]}
               >
-                {categoryData.value.data?.map((component: any) => (
+                {categoryData?.map((component: any) => (
                   <a
                     href={`/detail/${kategori}/${component.slug}`}
                     key={component.product_id}
@@ -255,7 +279,7 @@ export default component$(() => {
                 </thead>
                 <tbody class={styles.tableBody}>
                   <tr class="h-4"></tr>
-                  {categoryData.value.data?.map((component: any) => (
+                  {categoryData?.map((component: any, index: number) => (
                     <>
                       <tr
                         data-href={`/detail/${kategori}/${component.slug}`}
@@ -276,11 +300,11 @@ export default component$(() => {
                           />
                         </td>
                         <td>
-                          {component.image_paths?.[0] && (
+                          {imageUrls[index] && (
                             <>
                               <img
                                 src={
-                                  productImageUrl + component.image_paths?.[0]
+                                  imageUrls[index].length == 0 ? '' : imageUrls[index][0]
                                 }
                                 width={64}
                                 height={64}
