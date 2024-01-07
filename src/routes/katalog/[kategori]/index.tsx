@@ -304,7 +304,7 @@ export default component$(() => {
                             <>
                               <img
                                 src={
-                                  imageUrls[index].length == 0 ? '' : imageUrls[index][0]
+                                  imageUrls[index].length == 0 ? '' : imageUrls[index]
                                 }
                                 width={64}
                                 height={64}
