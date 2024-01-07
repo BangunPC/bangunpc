@@ -58,7 +58,7 @@ export const useRecords = routeLoader$(async (requestEvent) => {
       .order('product_name', { ascending: true })
       .ilike('product_name', `%${search}%`)
       .then((res) => {
-        data = res.data
+        data = res.data !== null ? res.data : undefined;
       });
   }
 
@@ -304,7 +304,7 @@ export default component$(() => {
                             <>
                               <img
                                 src={
-                                  imageUrls[index].length == 0 ? '' : imageUrls[index]
+                                  imageUrls[index]?.length == 0 ? '' : imageUrls[index]
                                 }
                                 width={64}
                                 height={64}
