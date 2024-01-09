@@ -59,29 +59,31 @@ export default component$(() => {
       <div class="flex flex-col lg:flex-row gap-2">
         <div class="p-6 pb-0 lg:pb-6 flex-1 lg:max-w-lg">
           <div class="border border-[#1C1F24] border-opacity-40 rounded-md aspect-square max-w-xl mx-auto items-center overflow-hidden">
-            <div>
+            <div
+              class="flex items-center justify-center w-full h-full"
+              onMouseMove$={(
+                event: QwikMouseEvent<HTMLDivElement, MouseEvent>,
+                element: HTMLDivElement
+              ) => {
+                // zoom the image at mouse position
+                const rect = element.getBoundingClientRect();
+                const translate = {
+                  x: event.x - rect.x - rect.width / 2,
+                  y: event.y - rect.y - rect.height / 2,
+                };
+                const child = element.firstChild as HTMLImageElement;
+                child.style.transform = `translate(${-translate.x}px, ${-translate.y}px) scale(2)`;
+              }}
+              onMouseLeave$={(_, element: HTMLDivElement) => {
+                const child = element.firstChild as HTMLImageElement;
+                child.style.transform = ``;
+              }}
+            >
               {imageUrls[0] && (
                 <img
-                  onMouseMove$={(
-                    event: QwikMouseEvent<HTMLImageElement, MouseEvent>,
-                    element: HTMLImageElement
-                  ) => {
-                    // zoom the image at mouse position
-                    console.log(event.x, event.y);
-                    const parent = element.parentElement as HTMLDivElement;
-                    const rect = parent.getBoundingClientRect();
-                    const translate = {
-                      x: event.x - rect.x - rect.width / 2,
-                      y: event.y - rect.y - rect.height / 2,
-                    };
-                    element.style.transform = `translate(${-translate.x}px, ${-translate.y}px) scale(2)`;
-                  }}
-                  onMouseLeave$={(_, element: HTMLImageElement) => {
-                    element.style.transform = ``;
-                  }}
                   id="compimg"
                   src={imageUrls[0]}
-                  class="object-scaledown"
+                  class="object-fill"
                   width={600}
                   height={600}
                 ></img>
