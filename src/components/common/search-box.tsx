@@ -4,6 +4,7 @@ import { FaMagnifyingGlassSolid } from "@qwikest/icons/font-awesome";
 
 export type SearchBoxProps = {
     placeholder?: string
+    defaultValue?: string
     onInput$?: PropFunction<(event: InputEvent, element: HTMLInputElement) => void>
 }
 
@@ -14,6 +15,7 @@ export default component$<SearchBoxProps>((props) => {
             <input
                 onInput$={props.onInput$}
                 placeholder={props.placeholder}
+                value={props.defaultValue}
                 class="w-full outline-none"
             />
         </div>
