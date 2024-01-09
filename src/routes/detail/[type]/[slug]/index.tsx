@@ -1,3 +1,4 @@
+import type { QwikMouseEvent } from '@builder.io/qwik';
 import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$ } from '@builder.io/qwik-city';
@@ -62,19 +63,17 @@ export default component$(() => {
               {imageUrls[0] && (
                 <img
                   onMouseMove$={(
-                    event: MouseEvent,
+                    event: QwikMouseEvent<HTMLImageElement, MouseEvent>,
                     element: HTMLImageElement
                   ) => {
                     // zoom the image at mouse position
                     console.log(event.x, event.y);
                     const parent = element.parentElement as HTMLDivElement;
                     const rect = parent.getBoundingClientRect();
-                    console.log(rect);
                     const translate = {
                       x: event.x - rect.x - rect.width / 2,
                       y: event.y - rect.y - rect.height / 2,
                     };
-                    console.log(translate)
                     element.style.transform = `translate(${-translate.x}px, ${-translate.y}px) scale(2)`;
                   }}
                   onMouseLeave$={(_, element: HTMLImageElement) => {
