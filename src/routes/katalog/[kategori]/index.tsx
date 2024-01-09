@@ -178,7 +178,7 @@ export default component$(() => {
                 Tersedia {productAmount} produk yang siap kamu pilih
               </div>
               <div class="w-64 ml-auto mt-4 md:mr-4">
-                <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get("value")} onInput$={handleSearch} />
+                <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get("value") || ''} onInput$={handleSearch} />
               </div>
             </header>
             <aside class="block sticky md:hidden top-[calc(64px+1rem)] mb-4 z-10">
