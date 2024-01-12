@@ -45,7 +45,6 @@ export const gpuHeaders = [
 export const gpuKeys = [
     'boost_clock_mhz',
     'brand_name',
-    'chipset',
     'base_clock_mhz',
     'length_mm',
     'tdp_watt',
@@ -70,7 +69,6 @@ export const memoryKeys = [
 
 export const motherboardHeaders = [
     'Brand Name',
-    'Chipset',
     'CPU Socket',
     'Form Factor',
     'Memory Max (GB)',
@@ -79,7 +77,6 @@ export const motherboardHeaders = [
 
 export const motherboardKeys = [
     'brand_name',
-    'chipset',
     'cpu_socket',
     'form_factor',
     'memory_max_gb',

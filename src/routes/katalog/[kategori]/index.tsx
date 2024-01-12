@@ -114,7 +114,7 @@ export default component$(() => {
   const imageUrls = component.imageUrls;
 
   const defaultHeadersStart = ['', 'Nama', '']; // The first '' is for the checkbox, the second for the image
-  const defaultHeadersEnd = ['Harga Terendah (Rp)', 'Aksi'];
+  const defaultHeadersEnd = ['Harga (Rp)', 'Aksi'];
 
   const kategoriHeaders: { [key: string]: string[] } = {
     // 'headphone': headphoneHeaders,
