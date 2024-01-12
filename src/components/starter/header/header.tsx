@@ -20,7 +20,7 @@ const headersItems = [
     icon: <User width="24" height="24" />,
     title: "Jasa Rakit PC",
     altTitle: "Jasa Servis PC",
-    href: "/jasa",
+    href: "/",
   },
   {
     icon: <ShoppingCart width="24" height="24" />,
