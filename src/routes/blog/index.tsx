@@ -46,7 +46,7 @@ export default component$(() => {
       <main class="flex flex-col m-auto max-w-[800px] w-fit gap-2 mb-8 px-2">
         {metas.value.map((meta, index) => (
           <Link
-            onMouseEnter$={(event: MouseEvent, element: HTMLAnchorElement) => {
+            onMouseEnter$={(_: any, element: HTMLAnchorElement) => {
               const image = document.getElementById('imagewrap' + (index));
               if (image !== null) {
                 element.style.transform = `scale(1.05)`
@@ -56,7 +56,7 @@ export default component$(() => {
               console.log(image);
               hovered.value = index;
             }}
-            onMouseLeave$={(event: MouseEvent, element: HTMLAnchorElement) => {
+            onMouseLeave$={(_: any, element: HTMLAnchorElement) => {
               const image = document.getElementById('imagewrap' + (index));
               if (image !== null) {
                 element.style.transform = ``
