@@ -1,4 +1,6 @@
+import type { QwikMouseEvent } from '@builder.io/qwik';
 import { component$ } from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import FilledButton from '~/components/common/filled-button';
 import TextButton from '~/components/common/text-button';
@@ -8,18 +10,39 @@ import Send2 from '~/components/starter/icons/send-2';
 import Shop from '~/components/starter/icons/shop';
 import Tag2 from '~/components/starter/icons/tag-2';
 import { supabase } from '~/lib/db';
-import { categories } from '~/lib/katalog_types';
+import { categories, titlesKategori } from '~/lib/katalog_types';
 
 export const useComponentDetail = routeLoader$(async (requestEvent) => {
+  const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
+  const storageUrl = '/storage/v1/object/public/product-images/';
+
   const params = requestEvent.params;
   const type = params.type;
   const slug = params.slug;
-  return await supabase
+  const client = await supabase();
+  const { data } = await client
     .schema('product')
     .from(categories[type])
     .select()
     .eq('slug', slug)
     .single();
+
+  let imageUrls = [];
+
+  const { data: imageData } = await client
+    .schema('product')
+    .from('v_product_images')
+    .select('image_filenames')
+    .eq('product_id', data['product_id'])
+    .single();
+
+  imageUrls =
+    imageData?.image_filenames?.map((name: string) => {
+      const url = `${supabaseUrl}${storageUrl}${data['product_id']}/${name}`;
+      return url;
+    }) ?? [];
+
+  return { data, imageUrls };
 });
 
 export default component$(() => {
@@ -27,26 +50,73 @@ export default component$(() => {
 
   const data = component.value.data;
 
+  const imageUrls = component.value.imageUrls;
+
   const name = data['product_name'];
 
   return (
     <>
       <div class="flex flex-col lg:flex-row gap-2">
         <div class="p-6 pb-0 lg:pb-6 flex-1 lg:max-w-lg">
-          <div class="border border-[#1C1F24] rounded-md aspect-square max-w-xl mx-auto">
-            
+          <div class="border border-[#1C1F24] border-opacity-40 rounded-md aspect-square max-w-xl mx-auto items-center overflow-hidden">
+            <div
+              class="flex items-center justify-center w-full h-full"
+              onMouseMove$={(
+                event: QwikMouseEvent<HTMLDivElement, MouseEvent>,
+                element: HTMLDivElement
+              ) => {
+                // zoom the image at mouse position
+                const rect = element.getBoundingClientRect();
+                const translate = {
+                  x: event.x - rect.x - rect.width / 2,
+                  y: event.y - rect.y - rect.height / 2,
+                };
+                const child = element.firstChild as HTMLImageElement;
+                child.style.transform = `translate(${-translate.x}px, ${-translate.y}px) scale(2)`;
+              }}
+              onMouseLeave$={(_, element: HTMLDivElement) => {
+                const child = element.firstChild as HTMLImageElement;
+                child.style.transform = ``;
+              }}
+            >
+              {imageUrls[0] && (
+                <img
+                  id="compimg"
+                  src={imageUrls[0]}
+                  class="object-fill"
+                  width={600}
+                  height={600}
+                ></img>
+              )}
+            </div>
           </div>
 
-          <div class="grid grid-cols-4 my-4 gap-4 justify-center">
-            <div class="border border-[#1C1F24] rounded-md aspect-square max-w-xl ">
-              
-            </div> 
-            <div class="border border-[#1C1F24] rounded-md aspect-square max-w-xl ">
-              
-            </div>
-            <div class="border border-[#1C1F24] rounded-md aspect-square max-w-xl ">
-              
-            </div>
+          <div class="grid grid-cols-4 lg:grid-cols-3 auto-rows-fr my-4 gap-4 justify-center">
+            {imageUrls.map((url: string | undefined) => (
+              <img
+                onMouseEnter$={() => {
+                  const compimg = document.getElementById(
+                    'compimg'
+                  ) as HTMLImageElement | null;
+                  if (compimg && url) {
+                    compimg.src = url;
+                  }
+                }}
+                onClick$={() => {
+                  const compimg = document.getElementById(
+                    'compimg'
+                  ) as HTMLImageElement | null;
+                  if (compimg && url) {
+                    compimg.src = url;
+                  }
+                }}
+                key={url}
+                src={url}
+                class="border border-[#1C1F24] border-opacity-40 rounded-md aspect-square object-scale-down"
+                width={240}
+                height={240}
+              ></img>
+            ))}
           </div>
 
           <div class="flex flex-row gap-2">
@@ -98,3 +168,25 @@ export default component$(() => {
     </>
   );
 });
+
+export const head: DocumentHead = ({ resolveValue, params }) => {
+  const component = resolveValue(useComponentDetail);
+
+  const data = component.data;
+
+  const name = data['product_name'];
+  const type = params.type;
+
+  return {
+    title: name + ' - BangunPC',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'Cari ' +
+          titlesKategori[type] +
+          ' dari Tokopedia, Shopee, dan lainnya. Hanya di BangunPC',
+      },
+    ],
+  };
+};

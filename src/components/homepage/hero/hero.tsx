@@ -34,12 +34,16 @@ export default component$(() => {
                     </div>
                 </div>
                 <div class={styles['hero-section-left-buttons']}>
-                    <FilledButton class="w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-lg items-center justify-center">
+                    <FilledButton class="w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center"
+                        onClick$={() => alert('Coming Soon!')}
+                    >
                         <span class="text-white font-semibold text-[15px]">
                             Rakit Sekarang
                         </span>
                     </FilledButton>
-                    <OutlinedButton class="w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-lg items-center justify-center border-[3px]">
+                    <OutlinedButton class="w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center border-[3px]"
+                        onClick$={() => alert('Coming Soon!')}
+                    >
                         <span class="font-semibold text-[15px]">
                             Cari Komponen PC
                         </span>

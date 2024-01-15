@@ -45,7 +45,6 @@ export const gpuHeaders = [
 export const gpuKeys = [
     'boost_clock_mhz',
     'brand_name',
-    'chipset',
     'base_clock_mhz',
     'length_mm',
     'tdp_watt',
@@ -70,7 +69,6 @@ export const memoryKeys = [
 
 export const motherboardHeaders = [
     'Brand Name',
-    'Chipset',
     'CPU Socket',
     'Form Factor',
     'Memory Max (GB)',
@@ -79,7 +77,6 @@ export const motherboardHeaders = [
 
 export const motherboardKeys = [
     'brand_name',
-    'chipset',
     'cpu_socket',
     'form_factor',
     'memory_max_gb',
@@ -148,6 +145,31 @@ export const categories: { [key: string]: string } = {
     casefan: '',
   };
 
+
+  export const titlesKategori: { [key: string]: string } = {
+    headphone: 'Headphone',
+    keyboard: 'Keyboard',
+    mouse: 'Mouse',
+    speaker: 'Speaker',
+    webcam: 'Webcam',
+    printer: 'Printer',
+    monitor: 'Monitor',
+    os: 'Operating System',
+    soundcard: 'Sound Card',
+    wirednetwork: 'Wired Network Device',
+    wirelessnetwork: 'Wireless Network Device',
+    casefan: 'Case Fan',
+    externaldrive: 'External Drive',
+    motherboard: 'Motherboard',
+    cpu: 'Computer Processor',
+    gpu: 'GPU',
+    memory: 'Memory',
+    cooler: 'CPU Cooler',
+    psu: 'Power Supply',
+    cable: 'Cable',
+    storage: 'Internal Storage',
+    casing: 'PC Casing',
+  };
 // export type All = { isMobile: boolean, all: Database['product']['Views']['v_all_products']['Row'] }
 
 // export type Casing = { isMobile: boolean, casing: Database['product']['Views']['v_casings']['Row'] }

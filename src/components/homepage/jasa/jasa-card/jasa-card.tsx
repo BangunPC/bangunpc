@@ -23,7 +23,11 @@ export default component$<JasaProps>((props) => {
                 </span>
                 {props.description}
             </main>
-            <footer class={`mx-auto rounded-full ${borderClass} w-fit px-6 text-2xl transition-colors bg-white hover:bg-[#4c5986]  hover:border-[#a6afce] hover:text-white cursor-pointer translate-y-[50%]`}>
+            <footer
+                class={`mx-auto rounded-full ${borderClass} w-fit px-6 text-2xl transition-colors bg-white hover:bg-[#4c5986]  hover:border-[#a6afce] hover:text-white cursor-pointer translate-y-[50%]`}
+                
+                onClick$={() => alert('Coming Soon!')}
+            >
                 <HiArrowUpSolid class="rotate-45" />
             </footer>
         </div>

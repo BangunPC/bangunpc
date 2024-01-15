@@ -14,13 +14,13 @@ const headersItems = [
   {
     icon: <Devices width="24" height="24" />,
     title: "Simulasi Rakit PC",
-    href: "/",
+    disabled: true,
   },
   {
     icon: <User width="24" height="24" />,
     title: "Jasa Rakit PC",
     altTitle: "Jasa Servis PC",
-    href: "/jasa",
+    disabled: true,
   },
   {
     icon: <ShoppingCart width="24" height="24" />,
@@ -55,6 +55,20 @@ export default component$(() => {
         <div class={[styles.iconswrapper, 'm-auto']}>
           {headersItems.map((item) => (
             <div key={item.title} class={styles.link}>
+              {item.disabled && (
+                <Link
+                  preventdefault:click
+                  title={item.title}
+                  class={[styles.link, "transition duration-200"]}
+                  onClick$={() => {
+                    // toast("Coming Soon!")
+                    alert('Coming Soon!')
+                  }}
+                >
+                  {item.icon}
+                  {item.title}
+                </Link>
+              )}
               {item.href && (
                 <Link
                   href={item.href}
@@ -66,7 +80,7 @@ export default component$(() => {
                 </Link>
               )}
               {item.labelFor && (
-                
+
                 <label for={item.labelFor}
                   class={[styles.link, "transition duration-200"]}
                 >

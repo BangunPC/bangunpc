@@ -25,19 +25,23 @@ export default component$(() => {
         },
         {
           title: "Simulasi Rakit PC",
-          link: "/simulasi"
+          link: "/simulasi",
+          disabled: true,
         },
         {
           title: "Katalog Komponen PC",
-          link: "/katalog"
+          link: "/katalog",
+          disabled: true,
         },
         {
           title: "Jasa Rakit PC",
-          link: "/rakit"
+          link: "/rakit",
+          disabled: true,
         },
         {
           title: "Jasa Servis PC",
-          link: "/servis"
+          link: "/servis",
+          disabled: true,
         },
         {
           title: "Blog",
@@ -50,23 +54,28 @@ export default component$(() => {
       list: [
         {
           title: "Tentang Kami",
-          link: "/"
+          link: "/",
+          disabled: true,
         },
         {
           title: "Hubungi Kami",
-          link: "/"
+          link: "/",
+          disabled: true,
         },
         {
           title: "Syarat dan Ketentuan",
-          link: "/"
+          link: "/",
+          disabled: true,
         },
         {
           title: "Privasi",
-          link: "/"
+          link: "/",
+          disabled: true,
         },
         {
           title: "Dukung Kami",
-          link: "/"
+          link: "/",
+          disabled: true,
         },
       ],
     },
@@ -85,17 +94,31 @@ export default component$(() => {
             <header>{item.title}</header>
             <main class={styles.kontenList}>
 
-              {item.list.map((listItem) => (
-                <div key={listItem.title}>
-                  <a href={listItem.link}>{listItem.title}</a>
-                </div>
-              ))}
+              {item.list.map((listItem) => {
+                if (listItem.disabled) {
+                  return (
+                    <div key={listItem.title}>
+                      <a preventdefault:click
+                        onclick$={() => alert('Coming Soon!')}
+                        href={listItem.link}
+                      >
+                        {listItem.title}
+                      </a>
+                    </div>
+                  )
+                }
+                return (
+                  <div key={listItem.title}>
+                    <a href={listItem.link}>{listItem.title}</a>
+                  </div>
+                )
+              })}
             </main>
           </div>
         ))}
       </main>
       <div class={styles.copyright}>
-        BangunPC © 2024
+        BangunPC © {new Date().getFullYear()}
         <div class={styles.brand}>
           <FaInstagram />
           <FaXTwitter />

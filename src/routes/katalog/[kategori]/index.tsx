@@ -1,9 +1,10 @@
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { routeLoader$, useLocation } from '@builder.io/qwik-city';
+import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import styles from './kategori.module.css';
 
-import { component$ } from '@builder.io/qwik';
+import { $, component$, useSignal } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
+import type { Filter } from '~/components/katalog/sidebar/sidebar';
 import Sidebar from '~/components/katalog/sidebar/sidebar';
 import SearchBox from '~/components/common/search-box';
 import {
@@ -18,55 +19,98 @@ import {
   memoryKeys,
   motherboardHeaders,
   motherboardKeys,
-  productImageUrl,
   psuHeaders,
   psuKeys,
   storageHeaders,
   storageKeys,
+  titlesKategori,
 } from '~/lib/katalog_types';
 import FilledButton from '~/components/common/filled-button';
-import { TbArrowLeft, TbArrowRight } from '@qwikest/icons/tablericons';
-
-const titlesKategori: { [key: string]: string } = {
-  headphone: 'Headphone',
-  keyboard: 'Keyboard',
-  mouse: 'Mouse',
-  speaker: 'Speaker',
-  webcam: 'Webcam',
-  printer: 'Printer',
-  monitor: 'Monitor',
-  os: 'Operating System',
-  soundcard: 'Sound Card',
-  wirednetwork: 'Wired Network Device',
-  wirelessnetwork: 'Wireless Network Device',
-  casefan: 'Case Fan',
-  externaldrive: 'External Drive',
-  motherboard: 'Motherboard',
-  cpu: 'Computer Processor',
-  gpu: 'GPU',
-  memory: 'Memory',
-  cooler: 'CPU Cooler',
-  psu: 'Power Supply',
-  cable: 'Cable',
-  storage: 'Internal Storage',
-  casing: 'PC Casing',
-};
+import { TbArrowLeft } from '@qwikest/icons/tablericons';
+import { useDebounce } from '~/lib/use-debounce';
 
 // export const useRecords = routeLoader$(async () => {
 export const useRecords = routeLoader$(async (requestEvent) => {
+  const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
+  const storageUrl = '/storage/v1/object/public/product-images/';
+
+  const search = requestEvent.url.searchParams.get("value");
   const kategori = requestEvent.params.kategori;
 
   const category = categories[kategori];
-  return await supabase.schema('product').from(category).select();
+  const client = await supabase();
+
+  let data: any[] | undefined;
+
+  if (!search || search === '' || search === ' ') {
+    data = (await client.schema('product').from(category).select()).data ?? undefined;
+  }
+
+  if (!data) {
+    await client
+      .schema('product')
+      .from(category)
+      .select()
+      .order('product_name', { ascending: true })
+      .ilike('product_name', `%${search}%`)
+      .then((res) => {
+        data = res.data !== null ? res.data : undefined;
+      });
+  }
+
+  const imageUrls: (string | undefined)[] = []
+
+  if (data) {
+    const promises = data.map(async (component: any) => {
+      const { data: imageData } = await client.schema('product').from('v_product_images')
+        .select("image_filenames")
+        .eq('product_id', component['product_id'])
+        .single()
+
+      if (imageData?.image_filenames.length == 0) {
+        imageUrls.push(undefined)
+      }
+      else {
+        imageUrls.push(imageData?.image_filenames?.map((name: string) => {
+          const url = `${supabaseUrl}${storageUrl}${component['product_id']}/${name}`
+          return url;
+        })[0])
+      }
+    })
+
+    await Promise.all(promises)
+  }
+
+  return { data, imageUrls }
 });
 
 export default component$(() => {
+  const location = useLocation();
+  const nav = useNavigate();
+
+  const inputSig = useSignal('');
+  useDebounce(inputSig, 300, $(async (value: string) => {
+    const url = location.url;
+    url.searchParams.set("value", value.replace(/ +/g, ' '));
+    window.history.pushState({}, '', url);
+
+    await nav();
+  }));
+
+  const handleSearch = $((event: InputEvent, element: HTMLInputElement) => {
+    inputSig.value = element.value;
+  });
+
   const kategori = useLocation().params.kategori;
 
-  const categoryData = useRecords() as any;
+  const component = useRecords().value;
+
+  const categoryData = component.data;
+
+  const imageUrls = component.imageUrls;
 
   const defaultHeadersStart = ['', 'Nama', '']; // The first '' is for the checkbox, the second for the image
-  const defaultHeadersEnd = ['Harga Terendah (Rp)', 'Aksi'];
+  const defaultHeadersEnd = ['Harga (Rp)', 'Aksi'];
 
   const kategoriHeaders: { [key: string]: string[] } = {
     // 'headphone': headphoneHeaders,
@@ -103,6 +147,13 @@ export default component$(() => {
 
   const productAmount = 200;
 
+  const filters: Filter[] = [
+    {
+      title: 'Harga',
+      items: ['Harga Terendah', 'Harga Tertinggi'],
+    },
+  ]
+
   return (
     <>
       <input
@@ -113,7 +164,7 @@ export default component$(() => {
       />
       <div class={styles.main}>
         <aside class={[styles.sidebar, 'hidden md:block']}>
-          <Sidebar />
+          <Sidebar filters={filters} />
         </aside>
         <div class={styles.tableSection}>
           <header class={styles.tableHeader}>Pilih {title}</header>
@@ -123,12 +174,12 @@ export default component$(() => {
                 Tersedia {productAmount} produk yang siap kamu pilih
               </div>
               <div class="w-64 ml-auto mt-4 md:mr-4">
-                <SearchBox placeholder="Temukan komponen di sini" />
+                <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get("value") || ''} onInput$={handleSearch} />
               </div>
             </header>
             <aside class="block sticky md:hidden top-[calc(64px+1rem)] mb-4 z-10">
               <div class="w-full flex">
-                <div class={[styles.showFilterButton, 'w-full flex']}>
+                {/* <div class={[styles.showFilterButton, 'w-full flex']}>
                   <FilledButton
                     class={'flex w-full text-center'}
                     labelFor="toggleKatalogFilter"
@@ -137,7 +188,7 @@ export default component$(() => {
                       Filter <TbArrowRight class="inline" />
                     </span>
                   </FilledButton>
-                </div>
+                </div> */}
                 <div class={[styles.hideFilterButton, 'w-full hidden']}>
                   <FilledButton
                     class={'flex w-full text-center'}
@@ -160,7 +211,7 @@ export default component$(() => {
                   ]}
                 >
                   <div class="w-fit mx-auto bg-white rounded-lg shadow-xl p-4">
-                    <Sidebar />
+                    <Sidebar filters={filters} />
                   </div>
                 </div>
               </div>
@@ -171,7 +222,7 @@ export default component$(() => {
                   'flex flex-col w-[calc(100vw-64px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]',
                 ]}
               >
-                {categoryData.value.data?.map((component: any) => (
+                {categoryData?.map((component: any, index: number) => (
                   <a
                     href={`/detail/${kategori}/${component.slug}`}
                     key={component.product_id}
@@ -181,7 +232,9 @@ export default component$(() => {
                       <input type="checkbox" />
                       <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
                         <img
-                          src={productImageUrl + component.image_paths?.[0]}
+                          src={
+                            imageUrls[index]?.length == 0 ? '' : imageUrls[index]
+                          }
                           width={80}
                           height={80}
                         />
@@ -223,7 +276,7 @@ export default component$(() => {
                 </thead>
                 <tbody class={styles.tableBody}>
                   <tr class="h-4"></tr>
-                  {categoryData.value.data?.map((component: any) => (
+                  {categoryData?.map((component: any, index: number) => (
                     <>
                       <tr
                         data-href={`/detail/${kategori}/${component.slug}`}
@@ -244,11 +297,11 @@ export default component$(() => {
                           />
                         </td>
                         <td>
-                          {component.image_paths?.[0] && (
+                          {imageUrls[index] && (
                             <>
                               <img
                                 src={
-                                  productImageUrl + component.image_paths?.[0]
+                                  imageUrls[index]?.length == 0 ? '' : imageUrls[index]
                                 }
                                 width={64}
                                 height={64}
