@@ -12,17 +12,6 @@ import { TbMenu2 } from "@qwikest/icons/tablericons";
 
 const headersItems = [
   {
-    icon: <Devices width="24" height="24" />,
-    title: "Simulasi Rakit PC",
-    disabled: true,
-  },
-  {
-    icon: <User width="24" height="24" />,
-    title: "Jasa Rakit PC",
-    altTitle: "Jasa Servis PC",
-    disabled: true,
-  },
-  {
     icon: <ShoppingCart width="24" height="24" />,
     title: "Katalog",
     labelFor: "toggleKatalogModal",
@@ -32,6 +21,17 @@ const headersItems = [
     title: "Blog",
     // href: "https://static-bangunpc.pages.dev/artikel/",
     href: "/blog",
+  },
+  {
+    icon: <Devices width="24" height="24" />,
+    title: "Simulasi Rakit PC",
+    disabled: true,
+  },
+  {
+    icon: <User width="24" height="24" />,
+    title: "Jasa Rakit PC",
+    altTitle: "Jasa Servis PC",
+    disabled: true,
   },
 ];
 
