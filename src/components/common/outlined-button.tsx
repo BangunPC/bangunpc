@@ -7,6 +7,6 @@ export default component$<ButtonProps>((props) => {
     if (props.labelFor) {
         return <label class={componentClass} for={props.labelFor}><Slot /></label>;
     } else {
-        return <button class={componentClass} onClick$={props.onClick}><Slot /></button>;
+        return <button class={componentClass} onClick$={props.onClick$}><Slot /></button>;
     }
 });
