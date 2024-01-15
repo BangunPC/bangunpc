@@ -26,7 +26,7 @@ import {
   titlesKategori,
 } from '~/lib/katalog_types';
 import FilledButton from '~/components/common/filled-button';
-import { TbArrowLeft, TbArrowRight } from '@qwikest/icons/tablericons';
+import { TbArrowLeft } from '@qwikest/icons/tablericons';
 import { useDebounce } from '~/lib/use-debounce';
 
 // export const useRecords = routeLoader$(async () => {
