@@ -67,7 +67,7 @@ export const useRecords = routeLoader$(async (requestEvent) => {
         .eq('product_id', component['product_id'])
         .single()
 
-      if (imageData?.image_filenames.length == 0) {
+      if (imageData?.image_filenames?.length == 0) {
         imageUrls.push(undefined)
       }
       else {
