@@ -188,7 +188,15 @@ export default component$(() => {
                         </div> */}
                         <div class={style['modal-katalog-category-main']}>
                             {katalog.map((item) => (
-                                <Link href={item.disabled ? '' : item.href} key={item.name} class={[style['modal-katalog-item'], item.disabled ? 'saturate-0 contrast-50 cursor-not-allowed pointer-events-none' : '']}>
+                                <Link
+                                    href={item.disabled ? '' : item.href}
+                                    key={item.name}
+                                    class={[style['modal-katalog-item'], item.disabled ? 'saturate-0 contrast-50 cursor-not-allowed pointer-events-none' : '']}
+                                    onClick$={() => {
+                                        const toggle = document.getElementById('toggleKatalogModal') as HTMLInputElement | null;
+                                        if (toggle) toggle.checked = false
+                                    }}
+                                >
                                     {item.image}
                                     <div class='h-2' />
                                     <span>{item.name}</span>
