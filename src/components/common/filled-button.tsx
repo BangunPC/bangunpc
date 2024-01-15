@@ -1,4 +1,4 @@
-import type { ClassList, Signal} from "@builder.io/qwik";
+import type { ClassList, Signal } from "@builder.io/qwik";
 import { Slot, component$ } from "@builder.io/qwik";
 
 export type ButtonProps = {
@@ -7,8 +7,10 @@ export type ButtonProps = {
     class?: ClassList | Signal<ClassList> | undefined,
 }
 
+export const filledButtonClass = "rounded-md bg-[#4c5986] text-white font-semibold text-lg px-2 py-1 transition-colors duration-200 hover:bg-[#808cb8] "
+
 export default component$<ButtonProps>((props) => {
-    const componentClass: any = ["rounded-md bg-[#4c5986] text-white font-semibold text-lg px-2 py-1 transition-colors duration-200 hover:bg-[#808cb8] ", props.class];
+    const componentClass: any = [filledButtonClass, props.class];
 
     if (props.labelFor) {
         return <label class={componentClass + " cursor-pointer"} for={props.labelFor}><Slot /></label>;

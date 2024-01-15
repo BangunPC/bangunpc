@@ -35,7 +35,6 @@ export const cpuKeys = [
 export const gpuHeaders = [
     'Boost Clock (MHz)',
     'Brand Name',
-    'Color',
     'Core Clock (MHz)',
     'Length (mm)',
     'TDP (Watt)',

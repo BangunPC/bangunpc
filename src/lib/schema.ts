@@ -64,13 +64,6 @@ export interface Database {
             foreignKeyName: "casing_fans_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "casing_fans_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -121,6 +114,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casing_fans_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           }
         ]
@@ -213,13 +213,6 @@ export interface Database {
             foreignKeyName: "casings_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "casings_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -270,6 +263,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "casings_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           },
           {
@@ -336,13 +336,6 @@ export interface Database {
             foreignKeyName: "cpu_coolers_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "cpu_coolers_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -393,6 +386,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpu_coolers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           }
         ]
@@ -540,13 +540,6 @@ export interface Database {
             foreignKeyName: "cpus_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: true
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "cpus_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: true
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -597,6 +590,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: true
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "cpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: true
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           }
         ]
@@ -694,13 +694,6 @@ export interface Database {
             foreignKeyName: "gpus_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "gpus_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -751,6 +744,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "gpus_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           }
         ]
@@ -798,13 +798,6 @@ export interface Database {
             foreignKeyName: "internal_storages_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "internal_storages_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -855,6 +848,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "internal_storages_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           }
         ]
@@ -923,13 +923,6 @@ export interface Database {
             foreignKeyName: "memories_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "memories_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -980,6 +973,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "memories_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           },
           {
@@ -1145,13 +1145,6 @@ export interface Database {
             foreignKeyName: "motherboards_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "motherboards_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -1202,6 +1195,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "motherboards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           }
         ]
@@ -1412,13 +1412,6 @@ export interface Database {
             foreignKeyName: "power_supplies_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "power_supplies_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -1469,6 +1462,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "power_supplies_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           }
         ]
@@ -1545,13 +1545,6 @@ export interface Database {
             foreignKeyName: "product_details_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -1602,6 +1595,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           }
         ]
@@ -1663,13 +1663,6 @@ export interface Database {
             foreignKeyName: "product_details_duplicate_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -1721,6 +1714,13 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "v_product_images"
             referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_duplicate_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
+            referencedColumns: ["product_id"]
           }
         ]
       }
@@ -1770,7 +1770,7 @@ export interface Database {
             foreignKeyName: "products_brand_id_fkey"
             columns: ["brand_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
+            referencedRelation: "v_products"
             referencedColumns: ["brand_id"]
           },
           {
@@ -1784,7 +1784,7 @@ export interface Database {
             foreignKeyName: "products_category_id_fkey"
             columns: ["category_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
+            referencedRelation: "v_products"
             referencedColumns: ["category_id"]
           }
         ]
@@ -1862,13 +1862,6 @@ export interface Database {
             foreignKeyName: "thermal_pastes_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "thermal_pastes_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -1919,6 +1912,13 @@ export interface Database {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "v_product_images"
+            referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "thermal_pastes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
             referencedColumns: ["product_id"]
           }
         ]
@@ -1957,13 +1957,6 @@ export interface Database {
             foreignKeyName: "wireless_network_cards_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "wireless_network_cards_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -2015,27 +2008,18 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "v_product_images"
             referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "wireless_network_cards_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
+            referencedColumns: ["product_id"]
           }
         ]
       }
     }
     Views: {
-      v_all_products: {
-        Row: {
-          brand_id: number | null
-          brand_name: string | null
-          category_id: number | null
-          category_name: string | null
-          description: string | null
-          lowest_price: number | null
-          product_id: number | null
-          product_name: string | null
-          review_urls: string[] | null
-          slug: string | null
-          spec_url: string | null
-        }
-        Relationships: []
-      }
       v_casings: {
         Row: {
           brand_name: string | null
@@ -2325,13 +2309,6 @@ export interface Database {
             foreignKeyName: "product_details_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "v_all_products"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "v_casings"
             referencedColumns: ["product_id"]
           },
@@ -2383,6 +2360,13 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "v_product_images"
             referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "product_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "v_products"
+            referencedColumns: ["product_id"]
           }
         ]
       }
@@ -2391,6 +2375,22 @@ export interface Database {
           image_filenames: string[] | null
           product_id: number | null
           product_name: string | null
+        }
+        Relationships: []
+      }
+      v_products: {
+        Row: {
+          brand_id: number | null
+          brand_name: string | null
+          category_id: number | null
+          category_name: string | null
+          description: string | null
+          lowest_price: number | null
+          product_id: number | null
+          product_name: string | null
+          review_urls: string[] | null
+          slug: string | null
+          spec_url: string | null
         }
         Relationships: []
       }
