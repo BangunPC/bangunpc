@@ -179,7 +179,7 @@ export default component$(() => {
             </header>
             <aside class="block sticky md:hidden top-[calc(64px+1rem)] mb-4 z-10">
               <div class="w-full flex">
-                <div class={[styles.showFilterButton, 'w-full flex']}>
+                {/* <div class={[styles.showFilterButton, 'w-full flex']}>
                   <FilledButton
                     class={'flex w-full text-center'}
                     labelFor="toggleKatalogFilter"
@@ -188,7 +188,7 @@ export default component$(() => {
                       Filter <TbArrowRight class="inline" />
                     </span>
                   </FilledButton>
-                </div>
+                </div> */}
                 <div class={[styles.hideFilterButton, 'w-full hidden']}>
                   <FilledButton
                     class={'flex w-full text-center'}
