@@ -2,7 +2,7 @@ import type { ClassList, Signal} from "@builder.io/qwik";
 import { Slot, component$ } from "@builder.io/qwik";
 
 export type ButtonProps = {
-    onClick$?: VoidFunction,
+    onClick$?: VoidFunction | undefined,
     labelFor?: string,
     class?: ClassList | Signal<ClassList> | undefined,
 }
