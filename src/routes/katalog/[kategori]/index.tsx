@@ -34,7 +34,6 @@ export const useRecords = routeLoader$(async (requestEvent) => {
   const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
   const storageUrl = '/storage/v1/object/public/product-images/';
 
-  console.log('called useRecord')
   const search = requestEvent.url.searchParams.get("value");
   const kategori = requestEvent.params.kategori;
 
@@ -44,12 +43,10 @@ export const useRecords = routeLoader$(async (requestEvent) => {
   let data: any[] | undefined;
 
   if (!search || search === '' || search === ' ') {
-    console.log('searching data')
     data = (await client.schema('product').from(category).select()).data ?? undefined;
   }
 
   if (!data) {
-    console.log('getting data')
     await client
       .schema('product')
       .from(category)
@@ -97,7 +94,6 @@ export default component$(() => {
     url.searchParams.set("value", value.replace(/ +/g, ' '));
     window.history.pushState({}, '', url);
 
-    console.log('debounced: ', value);
     await nav();
   }));
 

@@ -49,11 +49,10 @@ export default component$(() => {
             onMouseEnter$={(_: any, element: HTMLAnchorElement) => {
               const image = document.getElementById('imagewrap' + (index));
               if (image !== null) {
-                element.style.transform = `scale(1.05)`
+                element.style.transform = `scale(1.02)`
                 image.style.height = `20rem`;
                 element.style.margin = `8px 0px`;
               }
-              console.log(image);
               hovered.value = index;
             }}
             onMouseLeave$={(_: any, element: HTMLAnchorElement) => {
