@@ -5,7 +5,16 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig(() => {
   return {
-    plugins: [qwikCity(), qwikVite(), tsconfigPaths()],
+    plugins: [
+      qwikCity(), qwikVite(), tsconfigPaths(),
+      cloudflarePagesAdapter({
+        ssg: {
+          include: ['/*'],
+          origin: 'https://qwik.builder.io',
+          sitemapOutFile: 'sitemap.xml',
+        },
+      }),
+    ],
     preview: {
       headers: {
         'Cache-Control': 'public, max-age=600',
