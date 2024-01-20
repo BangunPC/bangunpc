@@ -37,7 +37,7 @@ const headersItems = [
 
 export default component$(() => {
   return (
-    <header class={[styles.header, 'backdrop-blur-3xl']}>
+    <header class={[styles.header, 'backdrop-blur-3xl h-[64px]']}>
       {/* <div class={["container", styles.wrapper]}> */}
       <div class={styles.logoAndToggle}>
         <a href="/" title="qwik">
@@ -91,6 +91,7 @@ export default component$(() => {
             </div>
           ))}
         </div>
+        {/* <Link class={styles.login}>
           <Profile width="24" height="24" class="inline-block fill-white" />
           <span>Login</span>
         </Link> */}
