@@ -40,7 +40,14 @@ export const useRecords = routeLoader$(async (requestEvent) => {
   const category = categories[kategori];
   const client = await supabase();
 
+  let total = 0;
   let data: any[] | undefined;
+
+  total = await client
+    .schema('product')
+    .from(category)
+    .select('*', { count: 'exact', head: true })
+    .then((res) => res.count ?? 0);
 
   if (!search || search === '' || search === ' ') {
     data = (await client.schema('product').from(category).select()).data ?? undefined;
@@ -81,7 +88,7 @@ export const useRecords = routeLoader$(async (requestEvent) => {
     await Promise.all(promises)
   }
 
-  return { data, imageUrls }
+  return { data, imageUrls, total }
 });
 
 export default component$(() => {
@@ -145,7 +152,7 @@ export default component$(() => {
 
   const title = titlesKategori[kategori];
 
-  const productAmount = 200;
+  const productAmount = component.total;
 
   const filters: Filter[] = [
     {
