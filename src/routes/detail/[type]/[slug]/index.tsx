@@ -167,12 +167,6 @@ export default component$(() => {
               <Moneys class="fill-none stroke-black" width="24" height="24" />
               <span class="text-lg">Dari Rp. 720.000 - Rp. 1.200.000</span>
             </div>
-            <div class="flex items-center gap-2">
-              <Tag2 class="fill-none stroke-black" width="24" height="24" />
-              <span class="text-lg">
-                Lihat perbandingan harga pada setiap toko
-              </span>
-            </div>
             <FilledButton
               class="flex lg:block lg:w-fit font-normal text-sm px-2 py-3 justify-center rounded-xl"
               onClick$={() => alert('Coming soon')}
