@@ -173,7 +173,7 @@ export default component$(() => {
         <aside class={[styles.sidebar, 'hidden md:block']}>
           <Sidebar filters={filters} />
         </aside>
-        <div class={styles.tableSection}>
+        <div class={[styles.tableSection, 'px-2']}>
           <header class={styles.tableHeader}>Pilih {title}</header>
           <main>
             <header class={styles.tableSubHeader}>
@@ -273,7 +273,7 @@ export default component$(() => {
                 ))}
               </div>
 
-              <table class={'hidden md:table'}>
+              <table class='hidden md:table'>
                 <thead class={styles.tableHead}>
                   <tr>
                     {headers.map((item) => (
@@ -300,7 +300,7 @@ export default component$(() => {
                           <input
                             type="checkbox"
                             id={component.product_id!.toString()}
-                            class={[styles.toggle]}
+                            class={[styles.toggle, 'z-20']}
                           />
                         </td>
                         <td>
