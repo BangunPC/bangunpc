@@ -174,7 +174,7 @@ export default component$(() => {
               </span>
             </div>
             <FilledButton
-              class="flex lg:block lg:w-fit font-normal px-4 py-4 justify-center rounded-xl"
+              class="flex lg:block lg:w-fit font-normal text-sm px-2 py-3 justify-center rounded-xl"
               onClick$={() => alert('Coming soon')}
             >
               + Tambahkan ke Simulasi Rakit PC
