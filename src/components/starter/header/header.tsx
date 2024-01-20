@@ -6,7 +6,7 @@ import ShoppingCart from "../icons/shopping-cart";
 import Devices from "../icons/devices";
 import User from "../icons/user";
 import DocumentText from "../icons/document-text";
-import Profile from "../icons/profile";
+// import Profile from "../icons/profile";
 import { TbMenu2 } from "@qwikest/icons/tablericons";
 
 
@@ -91,10 +91,9 @@ export default component$(() => {
             </div>
           ))}
         </div>
-        <Link class={styles.login}>
           <Profile width="24" height="24" class="inline-block fill-white" />
           <span>Login</span>
-        </Link>
+        </Link> */}
       </div>
       {/* </div> */}
     </header>
