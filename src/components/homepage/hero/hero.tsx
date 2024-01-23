@@ -2,7 +2,7 @@ import { component$ } from "@builder.io/qwik";
 import Image from "~/content/images/hero-image.webp?jsx";
 import styles from "./hero.module.css";
 import FilledButton from "~/components/common/filled-button";
-import OutlinedButton from "~/components/common/outlined-button";
+import { outlinedButtonClass } from "~/components/common/outlined-button";
 
 
 export default component$(() => {
@@ -41,13 +41,14 @@ export default component$(() => {
                             Rakit Sekarang
                         </span>
                     </FilledButton>
-                    <OutlinedButton class="w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center border-[3px]"
-                        onClick$={() => alert('Coming Soon!')}
+                    <label
+                        for="toggleKatalogModal"
+                        class={[outlinedButtonClass, "w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center border-[3px]"]}
                     >
                         <span class="font-semibold text-[15px]">
                             Cari Komponen PC
                         </span>
-                    </OutlinedButton>
+                    </label>
                 </div>
             </div>
             <Image class={styles["hero-section-right"]} alt="hero image which contains components" />

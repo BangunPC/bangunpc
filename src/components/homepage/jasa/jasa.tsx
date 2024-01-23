@@ -13,7 +13,8 @@ export default component$(() => {
         {
             icon: <TbBook q:slot="icon" style={{ width: '24px', height: '24px' }} />,
             title: 'Katalog Komponen PC',
-            description: 'Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet'
+            description: 'Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet',
+            labelFor: "toggleKatalogModal",
         },
         {
             icon: <TbTool q:slot="icon" style={{ width: '24px', height: '24px' }} />,
@@ -39,7 +40,13 @@ export default component$(() => {
             </header>
             <main class={styles['jasa-main']}>
                 {jasa.map((item, index) => (
-                    <JasaCard key={item.title} title={item.title} iconNumber={index + 1} description={item.description}>
+                    <JasaCard
+                        key={item.title}
+                        title={item.title}
+                        iconNumber={index + 1}
+                        description={item.description}
+                        labelFor={item.labelFor}
+                    >
                         {item.icon}
                     </JasaCard>
                 ))}
