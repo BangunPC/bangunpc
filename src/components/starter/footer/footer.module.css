@@ -117,8 +117,6 @@
 }
 
 .brand {
-  font-size: 24px;
-
   width: min-content;
   height: min-content;
   display: flex;

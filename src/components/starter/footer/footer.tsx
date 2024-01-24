@@ -8,7 +8,7 @@ export default component$(() => {
 
   const konten = [
     {
-      title: "BangunPC",
+      title: "Bangun PC",
       list: [
         {
           title: "bangunpc@gmail.com",
@@ -118,10 +118,22 @@ export default component$(() => {
         ))}
       </main>
       <div class={styles.copyright}>
-        BangunPC © {new Date().getFullYear()}
+        Bangun PC © {new Date().getFullYear()}
         <div class={styles.brand}>
-          <FaInstagram />
-          <FaXTwitter />
+          <a
+            target="_blank"
+            href="https://www.instagram.com/bangunpc"
+            style={"font-size: 24px"}
+          >
+            <FaInstagram />
+          </a>
+          <a
+            target="_blank"
+            href="https://twitter.com/bangunpc"
+            style={"font-size: 24px"}
+          >
+            <FaXTwitter />
+          </a>
         </div>
       </div>
     </footer>
