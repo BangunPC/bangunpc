@@ -2,14 +2,13 @@ import { component$ } from "@builder.io/qwik";
 // import { useServerTimeLoader } from "~/routes/layout";
 import styles from "./footer.module.css";
 import { FaInstagram, FaXTwitter } from "@qwikest/icons/font-awesome";
-import { Link } from "@builder.io/qwik-city";
 
 export default component$(() => {
   // const serverTime = useServerTimeLoader();
 
   const konten = [
     {
-      title: "BangunPC",
+      title: "Bangun PC",
       list: [
         {
           title: "bangunpc@gmail.com",
@@ -99,18 +98,18 @@ export default component$(() => {
                 if (listItem.disabled) {
                   return (
                     <div key={listItem.title}>
-                      <Link preventdefault:click
+                      <a preventdefault:click
                         onclick$={() => alert('Coming Soon!')}
                         href={listItem.link}
                       >
                         {listItem.title}
-                      </Link>
+                      </a>
                     </div>
                   )
                 }
                 return (
                   <div key={listItem.title}>
-                    <Link href={listItem.link}>{listItem.title}</Link>
+                    <a href={listItem.link}>{listItem.title}</a>
                   </div>
                 )
               })}
@@ -119,10 +118,22 @@ export default component$(() => {
         ))}
       </main>
       <div class={styles.copyright}>
-        BangunPC © {new Date().getFullYear()}
+        Bangun PC © {new Date().getFullYear()}
         <div class={styles.brand}>
-          <FaInstagram />
-          <FaXTwitter />
+          <a
+            target="_blank"
+            href="https://www.instagram.com/bangunpc"
+            style={"font-size: 24px"}
+          >
+            <FaInstagram />
+          </a>
+          <a
+            target="_blank"
+            href="https://twitter.com/bangunpc"
+            style={"font-size: 24px"}
+          >
+            <FaXTwitter />
+          </a>
         </div>
       </div>
     </footer>
