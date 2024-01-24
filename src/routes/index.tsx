@@ -19,12 +19,12 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Complete PC/Components - BangunPC",
+  title: "Rakit PC Impianmu | BangunPC",
   meta: [
     {
       name: "description",
       content:
-        "Tired of searching for components? Worry not! We're here with a complete list of PC build and components from various marketplace.",
+        "Solusi praktis dalam memilih dan merakit komponen-komponen PC sesuai dengan kebutuhan dan budget yang dimiliki yang terafiliasi dengan e-commerce di Indonesia",
     },
     {
       property: "og:type",
@@ -32,16 +32,16 @@ export const head: DocumentHead = {
     },
     {
       property: "og:url",
-      content: "https://bangunpc.pages.dev/",
+      content: "https://bangunpc.com/",
     },
     {
       property: "og:title",
-      content: "Complete PC/Components - BangunPC",
+      content: "Rakit PC Impianmu | BangunPC",
     },
     {
       property: "og:description",
       content:
-        "Tired of searching for components? Worry not! We're here with a complete list of PC build and components from various marketplace.",
+        "Solusi praktis dalam memilih dan merakit komponen-komponen PC sesuai dengan kebutuhan dan budget yang dimiliki yang terafiliasi dengan e-commerce di Indonesia",
     },
     {
       property: "og:image",
@@ -53,20 +53,20 @@ export const head: DocumentHead = {
     },
     {
       property: "twitter:url",
-      content: "https://bangunpc.pages.dev/",
+      content: "https://bangunpc.com/",
     },
     {
       property: "twitter:title",
-      content: "Complete PC/Components - BangunPC",
+      content: "Rakit PC Impianmu | BangunPC",
     },
     {
       property: "twitter:description",
       content:
-        "Tired of searching for components? Worry not! We're here with a complete list of PC build and components from various marketplace.",
+        "Solusi praktis dalam memilih dan merakit komponen-komponen PC sesuai dengan kebutuhan dan budget yang dimiliki yang terafiliasi dengan e-commerce di Indonesia",
     },
     {
       property: "twitter:image",
-      content: "https://bangunpc.pages.dev/meta.png",
+      content: "https://bangunpc.com/meta.png",
     },
   ],
 };
