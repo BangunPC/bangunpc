@@ -42,10 +42,10 @@ export default component$(() => {
       <header class={[styles.header, 'backdrop-blur-3xl pr-[20px]']}>
         {/* <div class={["container", styles.wrapper]}> */}
         <div class={[styles.logoAndToggle, 'mr-auto']}>
-          <a href="/" title="qwik">
+          <Link href="/" title="qwik">
             {/* <QwikLogo height={50} width={143} /> */}
             <span class="text-2xl font-semibold text-black">BangunPC</span>
-          </a>
+          </Link>
           <div>
             <label for="toggle" class={styles.toggleButton}>
               <TbMenu2 class='w-6 h-6' />

@@ -1,5 +1,5 @@
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
+import { Link, routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import styles from './kategori.module.css';
 
 import { $, component$, useSignal } from '@builder.io/qwik';
@@ -230,7 +230,7 @@ export default component$(() => {
                 ]}
               >
                 {categoryData?.map((component: any, index: number) => (
-                  <a
+                  <Link
                     href={`/detail/${kategori}/${component.slug}`}
                     key={component.product_id}
                     class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
@@ -269,7 +269,7 @@ export default component$(() => {
                         isMobile={true}
                       />
                     </div>
-                  </a>
+                  </Link>
                 ))}
               </div>
 

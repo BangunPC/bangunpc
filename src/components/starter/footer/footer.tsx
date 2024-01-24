@@ -2,6 +2,7 @@ import { component$ } from "@builder.io/qwik";
 // import { useServerTimeLoader } from "~/routes/layout";
 import styles from "./footer.module.css";
 import { FaInstagram, FaXTwitter } from "@qwikest/icons/font-awesome";
+import { Link } from "@builder.io/qwik-city";
 
 export default component$(() => {
   // const serverTime = useServerTimeLoader();
@@ -98,18 +99,18 @@ export default component$(() => {
                 if (listItem.disabled) {
                   return (
                     <div key={listItem.title}>
-                      <a preventdefault:click
+                      <Link preventdefault:click
                         onclick$={() => alert('Coming Soon!')}
                         href={listItem.link}
                       >
                         {listItem.title}
-                      </a>
+                      </Link>
                     </div>
                   )
                 }
                 return (
                   <div key={listItem.title}>
-                    <a href={listItem.link}>{listItem.title}</a>
+                    <Link href={listItem.link}>{listItem.title}</Link>
                   </div>
                 )
               })}

@@ -8,6 +8,7 @@ import Footer from "~/components/starter/footer/footer";
 import styles from "./styles.css?inline";
 import ModalKatalog from "~/components/modal-katalog/modal-katalog";
 import { QwikCityNprogress } from "@quasarwork/qwik-city-nprogress";
+import Feedback from "~/components/feedback";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -33,6 +34,7 @@ export default component$(() => {
       <Header />
       <QwikCityNprogress />
       <main class='pt-16'>
+        <Feedback />
         <ModalKatalog />
         <Slot />
       </main>

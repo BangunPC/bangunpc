@@ -1,0 +1,15 @@
+import { component$ } from "@builder.io/qwik";
+import { Link } from "@builder.io/qwik-city";
+import { filledButtonClass } from "../common/filled-button";
+
+export default component$(() => {
+    return (
+        <Link
+            href='https://forms.gle/NXWEQB1HpGmZeBs98'
+            target='_blank'
+            class={[filledButtonClass, 'fixed bottom-5 right-5 bg-[#4c5986] rounded-lg text-white font-semibold text-lg px-2 py-1',]}
+        >
+            Feedback
+        </Link>
+    )
+})
