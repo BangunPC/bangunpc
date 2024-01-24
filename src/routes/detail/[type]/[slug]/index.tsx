@@ -327,7 +327,7 @@ export const head: DocumentHead = ({ resolveValue, params }) => {
   const type = params.type;
 
   return {
-    title: name + ' - BangunPC',
+    title: name + ' | BangunPC',
     meta: [
       {
         name: 'description',
