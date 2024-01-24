@@ -44,7 +44,7 @@ export default component$(() => {
         <div class={[styles.logoAndToggle, 'mr-auto']}>
           <Link href="/" title="qwik">
             {/* <QwikLogo height={50} width={143} /> */}
-            <span class="text-2xl font-semibold text-black">BangunPC</span>
+            <span class="text-2xl font-semibold text-black">Bangun PC</span>
           </Link>
           <div>
             <label for="toggle" class={styles.toggleButton}>
