@@ -106,12 +106,12 @@ export default component$(() => {
 
 export const head: DocumentHead = {
   title:
-    'BangunPC Tech Blog: Stay Updated on the Latest Trends, Reviews, and Tips',
+    'Tech Blog: Stay Updated on the Latest Trends, Reviews, and Tips | Bangun PC',
   meta: [
     {
       name: 'description',
       content:
-        'Explore the world of PC technology with our comprehensive blog. Stay informed about the latest trends, read in-depth hardware reviews, and discover valuable tips and tricks. Enhance your gaming experience, optimize performance, and troubleshoot issues with expert insights and industry updates. ',
+        'Jelajahi dunia teknologi PC dengan blog komprehensif kami. Tetap terinformasi tentang tren terkini, baca ulasan perangkat keras secara mendalam, dan temukan tips dan trik berharga. ',
     },
   ],
 };

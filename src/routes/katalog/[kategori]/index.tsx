@@ -421,14 +421,14 @@ const ComponentFallback = component$<ComponentFallbackProps>(
 
 export const head: DocumentHead = ({ params }) => {
   return {
-    title: titlesKategori[params.kategori] + ' - BangunPC',
+    title: titlesKategori[params.kategori] + ' | BangunPC',
     meta: [
       {
         name: 'description',
         content:
           'Cari ' +
           titlesKategori[params.kategori] +
-          ' dari Tokopedia, Shopee, dan lainnya. Hanya di BangunPC',
+          ' dari Tokopedia, Shopee, dan lainnya. Hanya di Bangun PC',
       },
     ],
   };

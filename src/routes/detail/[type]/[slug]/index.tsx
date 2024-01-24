@@ -327,14 +327,14 @@ export const head: DocumentHead = ({ resolveValue, params }) => {
   const type = params.type;
 
   return {
-    title: name + ' - BangunPC',
+    title: name + ' | BangunPC',
     meta: [
       {
         name: 'description',
         content:
           'Cari ' +
           titlesKategori[type] +
-          ' dari Tokopedia, Shopee, dan lainnya. Hanya di BangunPC',
+          ' dari Tokopedia, Shopee, dan lainnya. Hanya di Bangun PC',
       },
     ],
   };
