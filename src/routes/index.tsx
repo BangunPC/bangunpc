@@ -19,7 +19,7 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Rakit PC Impianmu | BangunPC",
+  title: "Rakit PC Impianmu | Bangun PC",
   meta: [
     {
       name: "description",
@@ -36,7 +36,7 @@ export const head: DocumentHead = {
     },
     {
       property: "og:title",
-      content: "Rakit PC Impianmu | BangunPC",
+      content: "Rakit PC Impianmu | Bangun PC",
     },
     {
       property: "og:description",
@@ -57,7 +57,7 @@ export const head: DocumentHead = {
     },
     {
       property: "twitter:title",
-      content: "Rakit PC Impianmu | BangunPC",
+      content: "Rakit PC Impianmu | Bangun PC",
     },
     {
       property: "twitter:description",
