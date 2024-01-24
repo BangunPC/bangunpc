@@ -6,10 +6,18 @@ export type JasaProps = {
     title: string
     description: string
     iconNumber: number
+    labelFor?: string | undefined
 }
 
 export default component$<JasaProps>((props) => {
     const borderClass = 'border border-black border-opacity-50';
+    const arrow = <footer
+        class={`mx-auto rounded-full ${borderClass} w-fit px-6 text-2xl transition-colors bg-white hover:bg-[#4c5986]  hover:border-[#a6afce] hover:text-white cursor-pointer translate-y-[50%]`}
+
+        onClick$={() => props.labelFor ? undefined : alert('Coming Soon!')}
+    >
+        <HiArrowUpSolid class="rotate-45" />
+    </footer>
     return (
         <div class={`min-w-fit max-w-sm px-4 bg-white rounded-lg my-8 shadow-xl shadow-slate-200 ${borderClass}`}>
             <header class={[style['jasa-header'], 'mx-auto translate-y-[-50%]']}>
@@ -23,13 +31,13 @@ export default component$<JasaProps>((props) => {
                 </span>
                 {props.description}
             </main>
-            <footer
-                class={`mx-auto rounded-full ${borderClass} w-fit px-6 text-2xl transition-colors bg-white hover:bg-[#4c5986]  hover:border-[#a6afce] hover:text-white cursor-pointer translate-y-[50%]`}
-                
-                onClick$={() => alert('Coming Soon!')}
-            >
-                <HiArrowUpSolid class="rotate-45" />
-            </footer>
+            {props.labelFor && (
+                <label for={props.labelFor}>
+                    {arrow}
+                </label>
+            )}
+            {!props.labelFor && arrow}
+
         </div>
     )
 })

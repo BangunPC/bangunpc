@@ -44,11 +44,12 @@
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6",
     "undici": "5.26.2",
-    "vite": "4.4.12",
+    "vite": "^4.5.2",
     "vite-tsconfig-paths": "4.2.0",
     "wrangler": "^3.0.0"
   },
   "dependencies": {
+    "@quasarwork/qwik-city-nprogress": "^0.0.3",
     "@qwikest/icons": "^0.0.13",
     "@supabase/supabase-js": "^2.36.0",
     "supabase-auth-helpers-qwik": "^0.0.3",

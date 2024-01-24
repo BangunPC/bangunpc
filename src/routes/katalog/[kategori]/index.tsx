@@ -1,5 +1,5 @@
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
+import { Link, routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import styles from './kategori.module.css';
 
 import { $, component$, useSignal } from '@builder.io/qwik';
@@ -40,7 +40,14 @@ export const useRecords = routeLoader$(async (requestEvent) => {
   const category = categories[kategori];
   const client = await supabase();
 
+  let total = 0;
   let data: any[] | undefined;
+
+  total = await client
+    .schema('product')
+    .from(category)
+    .select('*', { count: 'exact', head: true })
+    .then((res) => res.count ?? 0);
 
   if (!search || search === '' || search === ' ') {
     data = (await client.schema('product').from(category).select()).data ?? undefined;
@@ -81,7 +88,7 @@ export const useRecords = routeLoader$(async (requestEvent) => {
     await Promise.all(promises)
   }
 
-  return { data, imageUrls }
+  return { data, imageUrls, total }
 });
 
 export default component$(() => {
@@ -145,7 +152,7 @@ export default component$(() => {
 
   const title = titlesKategori[kategori];
 
-  const productAmount = 200;
+  const productAmount = component.total;
 
   const filters: Filter[] = [
     {
@@ -166,7 +173,7 @@ export default component$(() => {
         <aside class={[styles.sidebar, 'hidden md:block']}>
           <Sidebar filters={filters} />
         </aside>
-        <div class={styles.tableSection}>
+        <div class={[styles.tableSection, 'px-2']}>
           <header class={styles.tableHeader}>Pilih {title}</header>
           <main>
             <header class={styles.tableSubHeader}>
@@ -223,7 +230,7 @@ export default component$(() => {
                 ]}
               >
                 {categoryData?.map((component: any, index: number) => (
-                  <a
+                  <Link
                     href={`/detail/${kategori}/${component.slug}`}
                     key={component.product_id}
                     class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
@@ -262,11 +269,11 @@ export default component$(() => {
                         isMobile={true}
                       />
                     </div>
-                  </a>
+                  </Link>
                 ))}
               </div>
 
-              <table class={'hidden md:table'}>
+              <table class='hidden md:table'>
                 <thead class={styles.tableHead}>
                   <tr>
                     {headers.map((item) => (
@@ -293,7 +300,7 @@ export default component$(() => {
                           <input
                             type="checkbox"
                             id={component.product_id!.toString()}
-                            class={[styles.toggle]}
+                            class={[styles.toggle, 'z-20']}
                           />
                         </td>
                         <td>
