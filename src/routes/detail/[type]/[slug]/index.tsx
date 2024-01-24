@@ -66,9 +66,12 @@ export default component$(() => {
 
   const name = data['product_name'];
 
-  const lowest_price = product_details.data!.reduce(
-    (a, b) => (a.price ?? 0) < (b.price ?? 0) ? a : b,
-  ).price?.toLocaleString('id-ID') ?? undefined;
+  let lowest_price = undefined;
+  if ((product_details.data?.length ?? -1) > 0)
+    lowest_price =
+      product_details.data?.reduce(
+        (a, b) => (a.price ?? 0) < (b.price ?? 0) ? a : b,
+      ).price?.toLocaleString('id-ID') ?? undefined;
 
   return (
     <>
