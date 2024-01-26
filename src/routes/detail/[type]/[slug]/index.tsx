@@ -1,7 +1,7 @@
 import type { QwikMouseEvent } from '@builder.io/qwik';
 import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { routeLoader$ } from '@builder.io/qwik-city';
+import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import FilledButton, { filledButtonClass } from '~/components/common/filled-button';
 import TextButton from '~/components/common/text-button';
 import Heart from '~/components/starter/icons/heart';
@@ -15,6 +15,7 @@ import ShopeeSvg from "~/components/homepage/affiliate/shopee-svg/shopee-svg";
 import TokopediaSvg from "~/components/homepage/affiliate/tokopedia.svg?jsx";
 import BlibliSvg from "~/components/homepage/affiliate/blibli-svg/blibli-svg";
 import { TbMapPin } from '@qwikest/icons/tablericons';
+import { v_spec } from '~/lib/katalog_complete_types';
 
 export const useComponentDetail = routeLoader$(async (requestEvent) => {
   const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
@@ -59,6 +60,10 @@ export default component$(() => {
   const component = useComponentDetail();
 
   const data = component.value.data;
+
+  const { type } = useLocation().params;
+
+  const componentInfo = v_spec[type]?.flatMap((v) => ({title: v[1], value: data[v[0]]}));
 
   const imageUrls = component.value.imageUrls;
 
@@ -181,12 +186,21 @@ export default component$(() => {
               + Tambahkan ke Simulasi Rakit PC
             </FilledButton>
             <header>
-              <div class="text-3xl font-semibold">Informasi Komponen</div>
+              <div class="text-3xl font-semibold">Informasi Produk</div>
             </header>
             <main>
               {/* TODO: component specs */}
               <header class="text-lg font-semibold">Tentang Produk</header>
               <main class="mt-4">{data['description']}</main>
+              <header class="text-lg font-semibold mt-4">Spesifikasi</header>
+              <main class="mt-4 flex flex-col gap-2">
+                {componentInfo?.map((info: any, index) => ( 
+                  <div key={'componentinfo-' + index} class="flex flex-col gap-1">
+                    <span class="font-semibold">{info.title}</span>
+                    <span class="">{info.value ?? '-'}</span>
+                  </div>
+                ))}
+              </main>
             </main>
             <header>
               <div class="text-3xl font-semibold">Bandingkan Produk</div>
