@@ -42,7 +42,7 @@ export default component$(() => {
       <header class={[styles.header, 'backdrop-blur-3xl pr-[20px]']}>
         {/* <div class={["container", styles.wrapper]}> */}
         <div class={[styles.logoAndToggle, 'mr-auto']}>
-          <Link href="/" title="qwik">
+          <Link href="/" title="Bangun PC">
             {/* <QwikLogo height={50} width={143} /> */}
             <span class="text-2xl font-semibold text-black">Bangun PC</span>
           </Link>

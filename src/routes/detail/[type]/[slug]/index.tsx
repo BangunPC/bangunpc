@@ -53,7 +53,7 @@ export const useComponentDetail = routeLoader$(async (requestEvent) => {
     .select()
     .filter('product_id', 'eq', data['product_id']);
 
-  return { data, imageUrls, product_details };
+  return { data, imageUrls, product_details, review_urls: data['review_urls'] };
 });
 
 export default component$(() => {
@@ -63,11 +63,13 @@ export default component$(() => {
 
   const { type } = useLocation().params;
 
-  const componentInfo = v_spec[type]?.flatMap((v) => ({title: v[1], value: data[v[0]]}));
+  const componentInfo = v_spec[type]?.flatMap((v) => ({ title: v[1], value: data[v[0]] }));
 
   const imageUrls = component.value.imageUrls;
 
   const product_details = component.value.product_details;
+
+  const review_urls = component.value.review_urls;
 
   const name = data['product_name'];
 
@@ -194,7 +196,7 @@ export default component$(() => {
               <main class="mt-4">{data['description']}</main>
               <header class="text-lg font-semibold mt-4">Spesifikasi</header>
               <main class="mt-4 flex flex-col gap-2">
-                {componentInfo?.map((info: any, index) => ( 
+                {componentInfo?.map((info: any, index) => (
                   <div key={'componentinfo-' + index} class="flex flex-col gap-1">
                     <span class="font-semibold">{info.title}</span>
                     <span class="">{info.value ?? '-'}</span>
@@ -323,8 +325,29 @@ export default component$(() => {
                 </tbody>
               </table>
             </main>
-            <main>
-            </main>
+            {review_urls?.length > 0 &&
+              <>
+                <header>
+                  <div class="text-3xl font-semibold">Video Review</div>
+                </header>
+                <main>
+                  {
+                    review_urls?.map((url: any) => (
+                      <iframe
+                        key={url}
+                        width="100%"
+                        height="315"
+                        src={`https://www.youtube.com/embed${new URL(url).pathname}`}
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        class="rounded-xl mb-1"
+                        allowFullScreen
+                      ></iframe>
+                    ))
+                  }
+                </main>
+              </>
+            }
           </main>
         </div>
       </div>
