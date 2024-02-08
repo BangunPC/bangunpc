@@ -8,7 +8,7 @@ export const supabase = server$(function () {
   const outer_this: RequestEventBase = this
   const supabaseClient: SupabaseClient<Database> = createServerClient(
     this.env.get("SUPABASE_URL")!,
-    this.env.get("SUPABASE_PUBLIC_KEY")!,
+    this.env.get("SUPABASE_ANON_KEY")!,
     outer_this
   );
 
