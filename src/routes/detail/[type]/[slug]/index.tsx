@@ -8,7 +8,6 @@ import Heart from '~/components/starter/icons/heart';
 import Moneys from '~/components/starter/icons/moneys';
 import Send2 from '~/components/starter/icons/send-2';
 import Shop from '~/components/starter/icons/shop';
-import Tag2 from '~/components/starter/icons/tag-2';
 import { supabase } from '~/lib/db';
 import { categories, titlesKategori } from '~/lib/katalog_types';
 import ShopeeSvg from "~/components/homepage/affiliate/shopee-svg/shopee-svg";
@@ -66,6 +65,13 @@ export default component$(() => {
   const product_details = component.value.product_details;
 
   const name = data['product_name'];
+
+  let lowest_price = undefined;
+  if ((product_details.data?.length ?? -1) > 0)
+    lowest_price =
+      product_details.data?.reduce(
+        (a, b) => (a.price ?? 0) < (b.price ?? 0) ? a : b,
+      ).price?.toLocaleString('id-ID') ?? undefined;
 
   return (
     <>
@@ -160,21 +166,16 @@ export default component$(() => {
             <div class="flex items-center gap-2">
               <Shop class="fill-none stroke-black" width="24" height="24" />
               <span class="text-lg">
-                3709 penjual dari Tokopedia, Shopee & lainnya
+                {product_details.data!.length} penjual dari Tokopedia, Shopee & lainnya
               </span>
             </div>
-            <div class="flex items-center gap-2">
-              <Moneys class="fill-none stroke-black" width="24" height="24" />
-              <span class="text-lg">Dari Rp. 720.000 - Rp. 1.200.000</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <Tag2 class="fill-none stroke-black" width="24" height="24" />
-              <span class="text-lg">
-                Lihat perbandingan harga pada setiap toko
-              </span>
-            </div>
+            {lowest_price &&
+              <div class="flex items-center gap-2">
+                <Moneys class="fill-none stroke-black" width="24" height="24" />
+                <span class="text-lg">Dari Rp{lowest_price}</span>
+              </div>}
             <FilledButton
-              class="flex lg:block lg:w-fit font-normal px-4 py-4 justify-center rounded-xl"
+              class="flex lg:block lg:w-fit font-normal text-sm px-2 py-3 justify-center rounded-xl"
               onClick$={() => alert('Coming soon')}
             >
               + Tambahkan ke Simulasi Rakit PC
@@ -326,14 +327,14 @@ export const head: DocumentHead = ({ resolveValue, params }) => {
   const type = params.type;
 
   return {
-    title: name + ' - BangunPC',
+    title: name + ' | BangunPC',
     meta: [
       {
         name: 'description',
         content:
           'Cari ' +
           titlesKategori[type] +
-          ' dari Tokopedia, Shopee, dan lainnya. Hanya di BangunPC',
+          ' dari Tokopedia, Shopee, dan lainnya. Hanya di Bangun PC',
       },
     ],
   };
