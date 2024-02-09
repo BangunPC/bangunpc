@@ -174,7 +174,7 @@ export default component$(() => {
           <Sidebar filters={filters} />
         </aside>
         <div class={[styles.tableSection, 'px-2']}>
-          <header class={styles.tableHeader}>Pilih {title}</header>
+          <h1 class={styles.tableHeader}>Pilih {title}</h1>
           <main>
             <header class={styles.tableSubHeader}>
               <div class={styles.tableSubHeaderTitle}>

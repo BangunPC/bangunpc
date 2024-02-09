@@ -38,6 +38,7 @@ export default component$(() => {
 
   return (
     <div>
+      <h1 class="text-center font-semibold font-sans my-4 text-4xl">Tech Blog</h1>
       <aside class="w-full max-w-7xl m-auto top-[calc(64px+1rem)] sticky z-10">
         <div class="w-80 ml-auto my-4 mr-4 drop-shadow-sm">
           <SearchBox placeholder='Cari entri blog yang ingin kamu baca' />

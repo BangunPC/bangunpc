@@ -14,12 +14,12 @@ export default component$(() => {
 
                     <div class={styles['hero-buatpcsesuai']}>
                         <span>
-                            Buat PC sesuai dengan kebutuhan dan gayamu.
+                            Bangun PC sesuai kebutuhan dan gayamu.
                         </span>
                     </div>
 
                     <div class={styles['hero-section-left-top-bottom']}>
-                        <span class={styles['hero-section-left-top-bottom-rakitpc']}>
+                        <h1 class={styles['hero-section-left-top-bottom-rakitpc']}>
 
                             Rakit PC Impianmu
                             <br />
@@ -27,7 +27,7 @@ export default component$(() => {
                             <br />
                             <span class='text-[#4C5986]'>MURAH </span>
 
-                        </span>
+                        </h1>
                         <span class={styles['hero-section-left-top-bottom-rekomendasi']}>
                             Rekomendasi komponen yang berkualitas tinggi dengan harga terjangkau.
                         </span>
