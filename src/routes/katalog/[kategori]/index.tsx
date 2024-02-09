@@ -1,8 +1,8 @@
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { Link, routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
+import { Link, server$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import styles from './kategori.module.css';
 
-import { $, component$, useSignal } from '@builder.io/qwik';
+import { $, Resource, component$, useResource$, useSignal } from '@builder.io/qwik';
 import { supabase } from '~/lib/db';
 import type { Filter } from '~/components/katalog/sidebar/sidebar';
 import Sidebar from '~/components/katalog/sidebar/sidebar';
@@ -29,13 +29,10 @@ import FilledButton from '~/components/common/filled-button';
 import { TbArrowLeft } from '@qwikest/icons/tablericons';
 import { useDebounce } from '~/lib/use-debounce';
 
-// export const useRecords = routeLoader$(async () => {
-export const useRecords = routeLoader$(async (requestEvent) => {
+const getData = server$(async (search: string, kategori: string) => {
+
   const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
   const storageUrl = '/storage/v1/object/public/product-images/';
-
-  const search = requestEvent.url.searchParams.get("value");
-  const kategori = requestEvent.params.kategori;
 
   const category = categories[kategori];
   const client = await supabase();
@@ -89,7 +86,7 @@ export const useRecords = routeLoader$(async (requestEvent) => {
   }
 
   return { data, imageUrls, total }
-});
+})
 
 export default component$(() => {
   const location = useLocation();
@@ -110,11 +107,18 @@ export default component$(() => {
 
   const kategori = useLocation().params.kategori;
 
-  const component = useRecords().value;
+  const isLoading = useSignal(true);
 
-  const categoryData = component.data;
+  const fetchData = useResource$(async ({ track }) => {
+    track(() => location.url);
+    const input = track(() => inputSig.value);
+    const kateg = track(() => kategori);
 
-  const imageUrls = component.imageUrls;
+    isLoading.value = true;
+    const { data: categoryData, imageUrls, total: productAmount } = await getData(input, kateg);
+    isLoading.value = false;
+    return { categoryData, imageUrls, productAmount };
+  })
 
   const defaultHeadersStart = ['', 'Nama', '']; // The first '' is for the checkbox, the second for the image
   const defaultHeadersEnd = ['Harga (Rp)', 'Aksi'];
@@ -152,8 +156,6 @@ export default component$(() => {
 
   const title = titlesKategori[kategori];
 
-  const productAmount = component.total;
-
   const filters: Filter[] = [
     {
       title: 'Harga',
@@ -161,190 +163,199 @@ export default component$(() => {
     },
   ]
 
+  if (fetchData.loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <>
-      <input
-        type="checkbox"
-        id="toggleKatalogFilter"
-        class={styles.toggleKatalogFilter}
-        hidden
-      />
-      <div class={styles.main}>
-        <aside class={[styles.sidebar, 'hidden md:block']}>
-          <Sidebar filters={filters} />
-        </aside>
-        <div class={[styles.tableSection, 'px-2']}>
-          <h1 class={styles.tableHeader}>Pilih {title}</h1>
-          <main>
-            <header class={styles.tableSubHeader}>
-              <div class={styles.tableSubHeaderTitle}>
-                Tersedia {productAmount} produk yang siap kamu pilih
-              </div>
-              <div class="w-64 ml-auto mt-4 md:mr-4">
-                <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get("value") || ''} onInput$={handleSearch} />
-              </div>
-            </header>
-            <aside class="block sticky md:hidden top-[calc(64px+1rem)] mb-4 z-10">
-              <div class="w-full flex">
-                {/* <div class={[styles.showFilterButton, 'w-full flex']}>
-                  <FilledButton
-                    class={'flex w-full text-center'}
-                    labelFor="toggleKatalogFilter"
-                  >
-                    <span class="">
-                      Filter <TbArrowRight class="inline" />
-                    </span>
-                  </FilledButton>
-                </div> */}
-                <div class={[styles.hideFilterButton, 'w-full hidden']}>
-                  <FilledButton
-                    class={'flex w-full text-center'}
-                    labelFor="toggleKatalogFilter"
-                  >
-                    <span class="">
-                      <TbArrowLeft class="inline" /> Katalog{' '}
-                    </span>
-                  </FilledButton>
-                </div>
-              </div>
+    <Resource
+      value={fetchData}
+      onPending={() => <div>Loading...</div>}
+      onResolved={({ categoryData, imageUrls, productAmount }) => (
+        <>
+          <input
+            type="checkbox"
+            id="toggleKatalogFilter"
+            class={styles.toggleKatalogFilter}
+            hidden
+          />
+          <div class={styles.main}>
+            <aside class={[styles.sidebar, 'hidden md:block']}>
+              <Sidebar filters={filters} />
             </aside>
-
-            <main class="grid grid-cols-2 grid-rows-1 md:block">
-              <div class="h-full">
-                <div
-                  class={[
-                    styles.mobileSidebar,
-                    'w-full sticky top-[calc(64px+4rem)] mx-auto md:hidden mt-2 gap-1 transition-all duration-200 ',
-                  ]}
-                >
-                  <div class="w-fit mx-auto bg-white rounded-lg shadow-xl p-4">
-                    <Sidebar filters={filters} />
+            <div class={[styles.tableSection, 'px-2']}>
+              <h1 class={styles.tableHeader}>Pilih {title}</h1>
+              <main>
+                <header class={styles.tableSubHeader}>
+                  <div class={styles.tableSubHeaderTitle}>
+                    Tersedia {productAmount} produk yang siap kamu pilih
                   </div>
-                </div>
-              </div>
-
-              <div
-                class={[
-                  styles.mobileKatalog,
-                  'flex flex-col w-[calc(100vw-64px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]',
-                ]}
-              >
-                {categoryData?.map((component: any, index: number) => (
-                  <Link
-                    href={`/detail/${kategori}/${component.slug}`}
-                    key={component.product_id}
-                    class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
-                  >
-                    <div class="flex flex-row items-center gap-1">
-                      <input type="checkbox" />
-                      <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
-                        <img
-                          src={
-                            imageUrls[index]?.length == 0 ? '' : imageUrls[index]
-                          }
-                          alt={`Gambar ${component.product_name}`}
-                          width={80}
-                          height={80}
-                        />
-                        <div class="flex flex-col">
-                          <span class="text-lg font-bold leading-none">
-                            {component.product_name}
-                          </span>
-                          <span class="font-bold mt-2">
-                            Rp{' '}
-                            {(
-                              component.lowest_price as number | null
-                            )?.toLocaleString('id-ID') ?? '-'}
-                          </span>
-                        </div>
-                      </div>
-                      <div>
-                        <FilledButton>Tambah</FilledButton>
-                      </div>
-                    </div>
-                    <div class="grid sm:grid-cols-4 grid-cols-3 gap-1">
-                      <ComponentFallback
-                        headers={headers}
-                        kategori={kategori}
-                        component={component}
-                        isMobile={true}
-                      />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-              <table class='hidden md:table'>
-                <thead class={styles.tableHead}>
-                  <tr>
-                    {headers.map((item) => (
-                      <th key={item}>{item}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody class={styles.tableBody}>
-                  <tr class="h-4"></tr>
-                  {categoryData?.map((component: any, index: number) => (
-                    <>
-                      <tr
-                        data-href={`/detail/${kategori}/${component.slug}`}
-                        key={component.product_id}
-                        class={[
-                          styles.tableRow,
-                          'transition-transform hover:scale-[1.01] hover:z-10 cursor-pointer',
-                        ]}
-                        onClick$={() =>
-                          (window.location.href = `/detail/${kategori}/${component.slug}`)
-                        }
+                  <div class="w-64 ml-auto mt-4 md:mr-4">
+                    <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get("value") || ''} onInput$={handleSearch} />
+                  </div>
+                </header>
+                <aside class="block sticky md:hidden top-[calc(64px+1rem)] mb-4 z-10">
+                  <div class="w-full flex">
+                    {/* <div class={[styles.showFilterButton, 'w-full flex']}>
+                      <FilledButton
+                        class={'flex w-full text-center'}
+                        labelFor="toggleKatalogFilter"
+    @ -196,155 +206,156 @@ export default component$(() => {
+                        </span>
+                      </FilledButton>
+                    </div> */}
+                    <div class={[styles.hideFilterButton, 'w-full hidden']}>
+                      <FilledButton
+                        class={'flex w-full text-center'}
+                        labelFor="toggleKatalogFilter"
                       >
-                        <td>
-                          <input
-                            type="checkbox"
-                            id={component.product_id!.toString()}
-                            class={[styles.toggle, 'z-20']}
+                        <span class="">
+                          <TbArrowLeft class="inline" /> Katalog{' '}
+                        </span>
+                      </FilledButton>
+                    </div>
+                  </div>
+                </aside>
+
+                <main class="grid grid-cols-2 grid-rows-1 md:block">
+                  <div class="h-full">
+                    <div
+                      class={[
+                        styles.mobileSidebar,
+                        'w-full sticky top-[calc(64px+4rem)] mx-auto md:hidden mt-2 gap-1 transition-all duration-200 ',
+                      ]}
+                    >
+                      <div class="w-fit mx-auto bg-white rounded-lg shadow-xl p-4">
+                        <Sidebar filters={filters} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class={[
+                      styles.mobileKatalog,
+                      'flex flex-col w-[calc(100vw-64px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]',
+                    ]}
+                  >
+                    {categoryData?.map((component: any, index: number) => (
+                      <Link
+                        href={`/detail/${kategori}/${component.slug}`}
+                        key={component.product_id}
+                        class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
+                      >
+                        <div class="flex flex-row items-center gap-1">
+                          <input type="checkbox" />
+                          <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
+                            <img
+                              src={
+                                imageUrls[index]?.length == 0 ? '' : imageUrls[index]
+                              }
+                              alt={`Gambar ${component.product_name}`}
+                              width={80}
+                              height={80}
+                            />
+                            <div class="flex flex-col">
+                              <span class="text-lg font-bold leading-none">
+                                {component.product_name}
+                              </span>
+                              <span class="font-bold mt-2">
+                                Rp{' '}
+                                {(
+                                  component.lowest_price as number | null
+                                )?.toLocaleString('id-ID') ?? '-'}
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <FilledButton>Tambah</FilledButton>
+                          </div>
+                        </div>
+                        <div class="grid sm:grid-cols-4 grid-cols-3 gap-1">
+                          <ComponentFallback
+                            headers={headers}
+                            kategori={kategori}
+                            component={component}
+                            isMobile={true}
                           />
-                        </td>
-                        <td>
-                          {imageUrls[index] && (
-                            <>
-                              <img
-                                src={
-                                  imageUrls[index]?.length == 0 ? '' : imageUrls[index]
-                                }
-                                alt={`Gambar ${component.product_name}`}
-                                width={64}
-                                height={64}
-                              />
-                            </>
-                          )}
-                        </td>
-                        <td>{component.product_name ?? '-'}</td>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
 
-                        <ComponentFallback
-                          headers={headers}
-                          kategori={kategori}
-                          component={component}
-                          isMobile={false}
-                        />
-
-                        <td>
-                          {component.lowest_price?.toLocaleString('id-ID') ??
-                            '-'}
-                        </td>
-                        <td>
-                          <FilledButton>Tambah</FilledButton>
-                        </td>
+                  <table class='hidden md:table'>
+                    <thead class={styles.tableHead}>
+                      <tr>
+                        {headers.map((item) => (
+                          <th key={item}>{item}</th>
+                        ))}
                       </tr>
-                      <tr key={component.product_id + 'gap'} class="h-2"></tr>
-                    </>
-                  ))}
-                </tbody>
-              </table>
-            </main>
-          </main>
-        </div>
-      </div>
-    </>
+                    </thead>
+                    <tbody class={styles.tableBody}>
+                      <tr class="h-4"></tr>
+                      {categoryData?.map((component: any, index: number) => (
+                        <>
+                          <tr
+                            data-href={`/detail/${kategori}/${component.slug}`}
+                            key={component.product_id}
+                            class={[
+                              styles.tableRow,
+                              'transition-transform hover:scale-[1.01] hover:z-10 cursor-pointer',
+                            ]}
+                            onClick$={() =>
+                              (window.location.href = `/detail/${kategori}/${component.slug}`)
+                            }
+                          >
+                            <td>
+                              <input
+                                type="checkbox"
+                                id={component.product_id!.toString()}
+                                class={[styles.toggle, 'z-20']}
+                              />
+                            </td>
+                            <td>
+                              {imageUrls[index] && (
+                                <>
+                                  <img
+                                    src={
+                                      imageUrls[index]?.length == 0 ? '' : imageUrls[index]
+                                    }
+                                    alt={`Gambar ${component.product_name}`}
+                                    width={64}
+                                    height={64}
+                                  />
+                                </>
+                              )}
+                            </td>
+                            <td>{component.product_name ?? '-'}</td>
+
+                            <ComponentFallback
+                              headers={headers}
+                              kategori={kategori}
+                              component={component}
+                              isMobile={false}
+                            />
+
+                            <td>
+                              {component.lowest_price?.toLocaleString('id-ID') ??
+                                '-'}
+                            </td>
+                            <td>
+                              <FilledButton>Tambah</FilledButton>
+                            </td>
+                          </tr>
+                          <tr key={component.product_id + 'gap'} class="h-2"></tr>
+                        </>
+                      ))}
+                    </tbody>
+                  </table>
+                </main>
+              </main>
+            </div>
+          </div>
+        </>
+      )}
+    />
+
   );
 });
 

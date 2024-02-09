@@ -1,4 +1,4 @@
-import { type PropFunction, type Signal, useSignal, useTask$ } from '@builder.io/qwik';
+import { type PropFunction, type Signal, useSignal, useTask$, useVisibleTask$ } from '@builder.io/qwik';
 
 /**
  * Debounces a signal value and invokes a function after a specified delay.
@@ -17,7 +17,7 @@ export function useDebounce<T>(
   // create the debounced Signal
   const debouncedSig = useSignal('');
 
-  useTask$(({ track, cleanup }) => {
+  useVisibleTask$(({ track, cleanup }) => {
     // track the signal
     track(() => signal.value);
 
