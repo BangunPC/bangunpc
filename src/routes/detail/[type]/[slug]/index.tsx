@@ -102,6 +102,7 @@ export default component$(() => {
                 <img
                   id="compimg"
                   src={imageUrls[0]}
+                  alt={`Gambar ${name}`}
                   class="object-fill"
                   width={600}
                   height={600}
@@ -131,6 +132,7 @@ export default component$(() => {
                 }}
                 key={url}
                 src={url}
+                alt={`Gambar ${name}`}
                 class="border border-[#1C1F24] border-opacity-40 rounded-md aspect-square object-scale-down hover:cursor-pointer hover:bg-zinc-200"
                 width={240}
                 height={240}
@@ -160,7 +162,7 @@ export default component$(() => {
         </div>
         <div class="flex flex-col gap-2 p-6 pt-0 lg:pt-6 max-w-4xl m-auto md:m-0">
           <header>
-            <div class="lg:font-bold text-4xl">{name}</div>
+            <h1 class="lg:font-bold text-4xl">{name}</h1>
           </header>
           <main class="flex flex-col gap-2">
             <div class="flex items-center gap-2">

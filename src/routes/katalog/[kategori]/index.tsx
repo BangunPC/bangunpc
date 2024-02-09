@@ -174,7 +174,7 @@ export default component$(() => {
           <Sidebar filters={filters} />
         </aside>
         <div class={[styles.tableSection, 'px-2']}>
-          <header class={styles.tableHeader}>Pilih {title}</header>
+          <h1 class={styles.tableHeader}>Pilih {title}</h1>
           <main>
             <header class={styles.tableSubHeader}>
               <div class={styles.tableSubHeaderTitle}>
@@ -242,6 +242,7 @@ export default component$(() => {
                           src={
                             imageUrls[index]?.length == 0 ? '' : imageUrls[index]
                           }
+                          alt={`Gambar ${component.product_name}`}
                           width={80}
                           height={80}
                         />
@@ -310,6 +311,7 @@ export default component$(() => {
                                 src={
                                   imageUrls[index]?.length == 0 ? '' : imageUrls[index]
                                 }
+                                alt={`Gambar ${component.product_name}`}
                                 width={64}
                                 height={64}
                               />

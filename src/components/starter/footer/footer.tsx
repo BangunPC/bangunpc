@@ -12,8 +12,8 @@ export default component$(() => {
       title: "Bangun PC",
       list: [
         {
-          title: "bangunpc@gmail.com",
-          link: "mailto:bangunpc@gmail.com"
+          title: "irham.bangunpc@gmail.com",
+          link: "mailto:irham.bangunpc@gmail.com"
         }
       ]
     },
@@ -26,7 +26,7 @@ export default component$(() => {
         },
         {
           title: "Simulasi Rakit PC",
-          link: "/simulasi",
+          link: "/",
           disabled: true,
         },
         {
@@ -36,12 +36,12 @@ export default component$(() => {
         },
         {
           title: "Jasa Rakit PC",
-          link: "/rakit",
+          link: "/",
           disabled: true,
         },
         {
           title: "Jasa Servis PC",
-          link: "/servis",
+          link: "/",
           disabled: true,
         },
         {
