@@ -242,6 +242,7 @@ export default component$(() => {
                           src={
                             imageUrls[index]?.length == 0 ? '' : imageUrls[index]
                           }
+                          alt={`Gambar ${component.product_name}`}
                           width={80}
                           height={80}
                         />
@@ -310,6 +311,7 @@ export default component$(() => {
                                 src={
                                   imageUrls[index]?.length == 0 ? '' : imageUrls[index]
                                 }
+                                alt={`Gambar ${component.product_name}`}
                                 width={64}
                                 height={64}
                               />

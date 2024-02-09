@@ -44,13 +44,13 @@ export default component$<Props>((props) => {
           'https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/' +
           image_path
         }
-        // alt={product_name}
+        alt={product_name  || 'Gambar Produk'}
       />
       <div class={styles['brand-wrapper']}>
         <span class={styles['brand']}>{brand_name}</span>
       </div>
       <span class={styles['name']}>{product_name}</span>
-      <span class={styles['price']}>Rp{price?.toLocaleString('id-ID')}</span>
+      <span class={styles['price']}>Rp {price?.toLocaleString('id-ID')}</span>
       <footer class={styles['card-footer']}>
         <btn aria-label="add to cart" class={styles['icon-wrapper']}>
           <HiPlusOutline class="w-full h-full p-2" />
