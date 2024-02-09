@@ -1,7 +1,7 @@
 import type { QwikMouseEvent } from '@builder.io/qwik';
 import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { routeLoader$ } from '@builder.io/qwik-city';
+import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import FilledButton, { filledButtonClass } from '~/components/common/filled-button';
 import TextButton from '~/components/common/text-button';
 import Heart from '~/components/starter/icons/heart';
@@ -15,6 +15,8 @@ import ShopeeSvg from "~/components/homepage/affiliate/shopee-svg/shopee-svg";
 import TokopediaSvg from "~/components/homepage/affiliate/tokopedia.svg?jsx";
 import BlibliSvg from "~/components/homepage/affiliate/blibli-svg/blibli-svg";
 import { TbMapPin } from '@qwikest/icons/tablericons';
+import { v_spec } from '~/lib/katalog_complete_types';
+import Dropdown from '~/components/common/dropdown';
 
 export const useComponentDetail = routeLoader$(async (requestEvent) => {
   const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
@@ -52,7 +54,7 @@ export const useComponentDetail = routeLoader$(async (requestEvent) => {
     .select()
     .filter('product_id', 'eq', data['product_id']);
 
-  return { data, imageUrls, product_details };
+  return { data, imageUrls, product_details, review_urls: data['review_urls'] };
 });
 
 export default component$(() => {
@@ -60,9 +62,15 @@ export default component$(() => {
 
   const data = component.value.data;
 
+  const { type } = useLocation().params;
+
+  const componentInfo = v_spec[type]?.flatMap((v) => ({ title: v[1], value: data[v[0]] }));
+
   const imageUrls = component.value.imageUrls;
 
   const product_details = component.value.product_details;
+
+  const review_urls = component.value.review_urls;
 
   const name = data['product_name'];
 
@@ -160,7 +168,7 @@ export default component$(() => {
             </TextButton>
           </div>
         </div>
-        <div class="flex flex-col gap-2 p-6 pt-0 lg:pt-6 max-w-4xl m-auto md:m-0">
+        <div class="flex flex-col gap-2 p-6 pt-0 lg:pt-6 max-w-4xl w-full m-auto md:m-0">
           <header>
             <h1 class="lg:font-bold text-4xl">{name}</h1>
           </header>
@@ -182,23 +190,50 @@ export default component$(() => {
             >
               + Tambahkan ke Simulasi Rakit PC
             </FilledButton>
-            <header>
-              <div class="text-3xl font-semibold">Informasi Komponen</div>
-            </header>
-            <main>
-              {/* TODO: component specs */}
-              <header class="text-lg font-semibold">Tentang Produk</header>
-              <main class="mt-4">{data['description']}</main>
-            </main>
-            <header>
-              <div class="text-3xl font-semibold">Bandingkan Produk</div>
-            </header>
-            <main>
-              <div class="flex flex-col w-full md:hidden gap-2">
-                {product_details.data?.map((detail: any) => (
-                  <div
-                    key={'marketplacemobile-' + detail.id}
-                    class="
+            <Dropdown>
+              <span q:slot="header" class='w-full text-3xl font-semibold'>
+                Informasi
+              </span>
+              <span q:slot='main'>
+                {/* TODO: component specs */}
+                <Dropdown>
+
+                  <span q:slot='header'
+                    class='text-lg font-semibold'
+                  >
+                    Tentang Produk
+                  </span>
+                  <span q:slot='main' class='mt-4 gap-2'>{data['description']}</span>
+                </Dropdown>
+                <Dropdown>
+                  <span q:slot='header'
+                    class='text-lg font-semibold mt-4 ${dropdownClass}'
+                  >
+                    Spesifikasi
+                  </span>
+                  <span q:slot='main' class='mt-4 flex flex-col gap-2'>
+                    {componentInfo?.map((info: any, index) => (
+                      <div key={'componentinfo-' + index} class="flex flex-col gap-1">
+                        <span class="font-semibold">{info.title}</span>
+                        <span class="">{info.value ?? '-'}</span>
+                      </div>
+                    ))}
+                  </span>
+                </Dropdown>
+              </span>
+            </Dropdown>
+            {(product_details.data?.length ?? -1) > 0 &&
+              <Dropdown>
+
+                <span q:slot='header'>
+                  <div class="text-3xl font-semibold">Bandingkan Produk</div>
+                </span>
+                <span q:slot='main'>
+                  <div class="flex flex-col w-full md:hidden gap-2">
+                    {product_details.data?.map((detail: any) => (
+                      <div
+                        key={'marketplacemobile-' + detail.id}
+                        class="
                     flex
                     flex-col
                     gap-2
@@ -210,112 +245,135 @@ export default component$(() => {
                     bg-white
                     p-2
                     "
-                  >
+                      >
 
-                    {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
-                    {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
-                    {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
+                        {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
+                        {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
+                        {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
 
-                    <span class='font-semibold text-xl'>
-                      Rp{detail.price.toLocaleString('id-ID')}
-                    </span>
-
-                    <div class='flex flex-row gap-1'>
-                      <TbMapPin />
-                      {detail.seller_city}
-                    </div>
-
-                    <a
-                      href={detail.url}
-                      class={[filledButtonClass, 'text-center']}
-                      target="_blank" rel="noopener noreferrer"
-                    >
-                      Beli disini
-                    </a>
-                  </div>
-                ))}
-              </div>
-              <table class="w-full hidden md:table">
-                <thead class="drop-shadow-sm">
-                  <tr>
-                    <td
-                      class="bg-white rounded-s-lg p-2"
-                    >
-                      Merchant
-                    </td>
-                    <td
-                      class=" bg-white p-2"
-                    >
-                      Harga
-                    </td>
-                    <td
-                      class=" bg-white p-2"
-                    >
-                      Lokasi Toko
-                    </td>
-                    <td
-                      class="bg-white"
-                    >
-                      Stok
-                    </td>
-                    <td
-                      class="bg-white rounded-e-lg p-2"
-                    >
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class='h-4' />
-                  {product_details.data?.map((detail: any) => (
-                    // [detail.id,
-                    // detail.marketplace_id,
-                    // detail.price,
-                    // detail.product_detail_description_id,
-                    // detail.product_id,
-                    // detail.seller_city,
-                    // detail.stock,
-                    // detail.url].map((detail: any) => (
-                    //   <div>
-                    //     <div class="text-lg font-semibold">{detail}</div>
-                    //   </div>
-                    // ))
-                    <>
-                      <tr key={'marketplate-' + detail.id} class="drop-shadow-sm">
-                        <td class="bg-white p-2 rounded-s-lg">
-                          {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
-                          {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
-                          {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
-                        </td>
-                        <td class="bg-white p-2 font-semibold">
+                        <span class='font-semibold text-xl'>
                           Rp{detail.price.toLocaleString('id-ID')}
-                        </td>
-                        <td class="bg-white p-2">
+                        </span>
+
+                        <div class='flex flex-row gap-1'>
+                          <TbMapPin />
                           {detail.seller_city}
+                        </div>
+
+                        <a
+                          href={detail.url}
+                          class={[filledButtonClass, 'text-center']}
+                          target="_blank" rel="noopener noreferrer"
+                        >
+                          Beli disini
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                  <table class="w-full hidden md:table">
+                    <thead class="drop-shadow-sm">
+                      <tr>
+                        <td
+                          class="bg-white rounded-s-lg p-2"
+                        >
+                          Merchant
                         </td>
-                        <td class="bg-white p-2">
-                          {detail.stock}
+                        <td
+                          class=" bg-white p-2"
+                        >
+                          Harga
                         </td>
-                        <td class="bg-white p-2 rounded-e-lg">
-                          <a
-                            href={detail.url}
-                            class={[filledButtonClass]}
-                            target="_blank" rel="noopener noreferrer"
-                          >
-                            Beli disini
-                          </a>
+                        <td
+                          class=" bg-white p-2"
+                        >
+                          Lokasi Toko
+                        </td>
+                        <td
+                          class="bg-white"
+                        >
+                          Stok
+                        </td>
+                        <td
+                          class="bg-white rounded-e-lg p-2"
+                        >
                         </td>
                       </tr>
-                      <tr key={'marketplategap-' + detail.id} class='h-1' />
-                    </>
-                  ))}
-                </tbody>
-              </table>
-            </main>
-            <main>
-            </main>
+                    </thead>
+                    <tbody>
+                      <tr class='h-4' />
+                      {product_details.data?.map((detail: any) => (
+                        // [detail.id,
+                        // detail.marketplace_id,
+                        // detail.price,
+                        // detail.product_detail_description_id,
+                        // detail.product_id,
+                        // detail.seller_city,
+                        // detail.stock,
+                        // detail.url].map((detail: any) => (
+                        //   <div>
+                        //     <div class="text-lg font-semibold">{detail}</div>
+                        //   </div>
+                        // ))
+                        <>
+                          <tr key={'marketplate-' + detail.id} class="drop-shadow-sm">
+                            <td class="bg-white p-2 rounded-s-lg">
+                              {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
+                              {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
+                              {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
+                            </td>
+                            <td class="bg-white p-2 font-semibold">
+                              Rp{detail.price.toLocaleString('id-ID')}
+                            </td>
+                            <td class="bg-white p-2">
+                              {detail.seller_city}
+                            </td>
+                            <td class="bg-white p-2">
+                              {detail.stock}
+                            </td>
+                            <td class="bg-white p-2 rounded-e-lg">
+                              <a
+                                href={detail.url}
+                                class={[filledButtonClass]}
+                                target="_blank" rel="noopener noreferrer"
+                              >
+                                Beli disini
+                              </a>
+                            </td>
+                          </tr>
+                          <tr key={'marketplategap-' + detail.id} class='h-1' />
+                        </>
+                      ))}
+                    </tbody>
+                  </table>
+                </span>
+              </Dropdown>
+            }
+            {review_urls?.length > 0 &&
+              <Dropdown>
+                <span q:slot='header' class='text-3xl font-semibold'>
+                  Video Review
+                </span>
+                <span q:slot='main'>
+                  {
+                    review_urls?.map((url: any) => (
+                      <iframe
+                        key={url}
+                        width="100%"
+                        height="315"
+                        src={`https://www.youtube.com/embed${new URL(url).pathname}`}
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        class="rounded-xl mb-1"
+                        allowFullScreen
+                      ></iframe>
+                    ))
+                  }
+                </span>
+              </Dropdown>
+            }
           </main>
         </div>
-      </div>
+      </div >
     </>
   );
 });
