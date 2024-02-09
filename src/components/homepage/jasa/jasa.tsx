@@ -8,23 +8,23 @@ export default component$(() => {
         {
             icon: <TbDevicesPc q:slot="icon" style={{ width: '24px', height: '24px' }} />,
             title: 'Simulasi Rakit PC',
-            description: 'Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet'
+            description: 'Cukup pilih komponen PC yang anda inginkan di setiap kategori komponennya dan secara otomatis kompatibilitas antar komponennya sudah sesuai'
         },
         {
             icon: <TbBook q:slot="icon" style={{ width: '24px', height: '24px' }} />,
             title: 'Katalog Komponen PC',
-            description: 'Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet',
+            description: 'Temukan komponen PC yang anda inginkan yang sudah terkategorisasi dan terafiliasi dengan marketplace yang ada di Indonesia',
             labelFor: "toggleKatalogModal",
         },
         {
             icon: <TbTool q:slot="icon" style={{ width: '24px', height: '24px' }} />,
             title: 'Jasa Rakit PC',
-            description: 'Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet'
+            description: 'Tak punya waktu atau bingung cara merakit PC sendiri? Tenang, kami dapat merakitkan PC impian Anda sampai siap pakai'
         },
         {
             icon: <TbDeviceDesktopCog q:slot="icon" style={{ width: '24px', height: '24px' }} />,
-            title: 'Jasa Servis PC',
-            description: 'Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet Deskripsi simulasi rakit PC lorem ipsum dolor sip amet'
+            title: 'Jasa Servis PC & Laptop',
+            description: 'Ada komponen PC atau laptop yang bermasalah? Kami siap membantu Anda memperbaikinya dengan teknisi yang telah berpengalaman',
         },
     ]
     return (
