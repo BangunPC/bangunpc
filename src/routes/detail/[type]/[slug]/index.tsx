@@ -1,5 +1,5 @@
 import type { QwikMouseEvent } from '@builder.io/qwik';
-import { component$ } from '@builder.io/qwik';
+import { Slot, component$, useSignal } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import FilledButton, { filledButtonClass } from '~/components/common/filled-button';
@@ -16,6 +16,8 @@ import TokopediaSvg from "~/components/homepage/affiliate/tokopedia.svg?jsx";
 import BlibliSvg from "~/components/homepage/affiliate/blibli-svg/blibli-svg";
 import { TbMapPin } from '@qwikest/icons/tablericons';
 import { v_spec } from '~/lib/katalog_complete_types';
+import { FaChevronDownSolid, FaChevronUpSolid } from '@qwikest/icons/font-awesome';
+import Dropdown from '~/components/common/dropdown';
 
 export const useComponentDetail = routeLoader$(async (requestEvent) => {
   const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
@@ -165,7 +167,7 @@ export default component$(() => {
             </TextButton>
           </div>
         </div>
-        <div class="flex flex-col gap-2 p-6 pt-0 lg:pt-6 max-w-4xl m-auto md:m-0">
+        <div class="flex flex-col gap-2 p-6 pt-0 lg:pt-6 max-w-4xl w-full m-auto md:m-0">
           <header>
             <div class="lg:font-bold text-4xl">{name}</div>
           </header>
@@ -187,32 +189,50 @@ export default component$(() => {
             >
               + Tambahkan ke Simulasi Rakit PC
             </FilledButton>
-            <header>
-              <div class="text-3xl font-semibold">Informasi Produk</div>
-            </header>
-            <main>
-              {/* TODO: component specs */}
-              <header class="text-lg font-semibold">Tentang Produk</header>
-              <main class="mt-4">{data['description']}</main>
-              <header class="text-lg font-semibold mt-4">Spesifikasi</header>
-              <main class="mt-4 flex flex-col gap-2">
-                {componentInfo?.map((info: any, index) => (
-                  <div key={'componentinfo-' + index} class="flex flex-col gap-1">
-                    <span class="font-semibold">{info.title}</span>
-                    <span class="">{info.value ?? '-'}</span>
-                  </div>
-                ))}
-              </main>
-            </main>
-            <header>
-              <div class="text-3xl font-semibold">Bandingkan Produk</div>
-            </header>
-            <main>
-              <div class="flex flex-col w-full md:hidden gap-2">
-                {product_details.data?.map((detail: any) => (
-                  <div
-                    key={'marketplacemobile-' + detail.id}
-                    class="
+            <Dropdown>
+              <span q:slot="header" class='w-full text-3xl font-semibold'>
+                Informasi
+              </span>
+              <span q:slot='main'>
+                {/* TODO: component specs */}
+                <Dropdown>
+
+                  <span q:slot='header'
+                    class='text-lg font-semibold'
+                  >
+                    Tentang Produk
+                  </span>
+                  <span q:slot='main' class='mt-4 gap-2'>{data['description']}</span>
+                </Dropdown>
+                <Dropdown>
+                  <span q:slot='header'
+                    class='text-lg font-semibold mt-4 ${dropdownClass}'
+                  >
+                    Spesifikasi
+                  </span>
+                  <span q:slot='main' class='mt-4 flex flex-col gap-2'>
+                    {componentInfo?.map((info: any, index) => (
+                      <div key={'componentinfo-' + index} class="flex flex-col gap-1">
+                        <span class="font-semibold">{info.title}</span>
+                        <span class="">{info.value ?? '-'}</span>
+                      </div>
+                    ))}
+                  </span>
+                </Dropdown>
+              </span>
+            </Dropdown>
+            {(product_details.data?.length ?? -1) > 0 &&
+              <Dropdown>
+
+                <span q:slot='header'>
+                  <div class="text-3xl font-semibold">Bandingkan Produk</div>
+                </span>
+                <span q:slot='main'>
+                  <div class="flex flex-col w-full md:hidden gap-2">
+                    {product_details.data?.map((detail: any) => (
+                      <div
+                        key={'marketplacemobile-' + detail.id}
+                        class="
                     flex
                     flex-col
                     gap-2
@@ -224,113 +244,115 @@ export default component$(() => {
                     bg-white
                     p-2
                     "
-                  >
+                      >
 
-                    {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
-                    {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
-                    {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
+                        {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
+                        {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
+                        {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
 
-                    <span class='font-semibold text-xl'>
-                      Rp{detail.price.toLocaleString('id-ID')}
-                    </span>
-
-                    <div class='flex flex-row gap-1'>
-                      <TbMapPin />
-                      {detail.seller_city}
-                    </div>
-
-                    <a
-                      href={detail.url}
-                      class={[filledButtonClass, 'text-center']}
-                      target="_blank" rel="noopener noreferrer"
-                    >
-                      Beli disini
-                    </a>
-                  </div>
-                ))}
-              </div>
-              <table class="w-full hidden md:table">
-                <thead class="drop-shadow-sm">
-                  <tr>
-                    <td
-                      class="bg-white rounded-s-lg p-2"
-                    >
-                      Merchant
-                    </td>
-                    <td
-                      class=" bg-white p-2"
-                    >
-                      Harga
-                    </td>
-                    <td
-                      class=" bg-white p-2"
-                    >
-                      Lokasi Toko
-                    </td>
-                    <td
-                      class="bg-white"
-                    >
-                      Stok
-                    </td>
-                    <td
-                      class="bg-white rounded-e-lg p-2"
-                    >
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class='h-4' />
-                  {product_details.data?.map((detail: any) => (
-                    // [detail.id,
-                    // detail.marketplace_id,
-                    // detail.price,
-                    // detail.product_detail_description_id,
-                    // detail.product_id,
-                    // detail.seller_city,
-                    // detail.stock,
-                    // detail.url].map((detail: any) => (
-                    //   <div>
-                    //     <div class="text-lg font-semibold">{detail}</div>
-                    //   </div>
-                    // ))
-                    <>
-                      <tr key={'marketplate-' + detail.id} class="drop-shadow-sm">
-                        <td class="bg-white p-2 rounded-s-lg">
-                          {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
-                          {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
-                          {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
-                        </td>
-                        <td class="bg-white p-2 font-semibold">
+                        <span class='font-semibold text-xl'>
                           Rp{detail.price.toLocaleString('id-ID')}
-                        </td>
-                        <td class="bg-white p-2">
+                        </span>
+
+                        <div class='flex flex-row gap-1'>
+                          <TbMapPin />
                           {detail.seller_city}
+                        </div>
+
+                        <a
+                          href={detail.url}
+                          class={[filledButtonClass, 'text-center']}
+                          target="_blank" rel="noopener noreferrer"
+                        >
+                          Beli disini
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                  <table class="w-full hidden md:table">
+                    <thead class="drop-shadow-sm">
+                      <tr>
+                        <td
+                          class="bg-white rounded-s-lg p-2"
+                        >
+                          Merchant
                         </td>
-                        <td class="bg-white p-2">
-                          {detail.stock}
+                        <td
+                          class=" bg-white p-2"
+                        >
+                          Harga
                         </td>
-                        <td class="bg-white p-2 rounded-e-lg">
-                          <a
-                            href={detail.url}
-                            class={[filledButtonClass]}
-                            target="_blank" rel="noopener noreferrer"
-                          >
-                            Beli disini
-                          </a>
+                        <td
+                          class=" bg-white p-2"
+                        >
+                          Lokasi Toko
+                        </td>
+                        <td
+                          class="bg-white"
+                        >
+                          Stok
+                        </td>
+                        <td
+                          class="bg-white rounded-e-lg p-2"
+                        >
                         </td>
                       </tr>
-                      <tr key={'marketplategap-' + detail.id} class='h-1' />
-                    </>
-                  ))}
-                </tbody>
-              </table>
-            </main>
+                    </thead>
+                    <tbody>
+                      <tr class='h-4' />
+                      {product_details.data?.map((detail: any) => (
+                        // [detail.id,
+                        // detail.marketplace_id,
+                        // detail.price,
+                        // detail.product_detail_description_id,
+                        // detail.product_id,
+                        // detail.seller_city,
+                        // detail.stock,
+                        // detail.url].map((detail: any) => (
+                        //   <div>
+                        //     <div class="text-lg font-semibold">{detail}</div>
+                        //   </div>
+                        // ))
+                        <>
+                          <tr key={'marketplate-' + detail.id} class="drop-shadow-sm">
+                            <td class="bg-white p-2 rounded-s-lg">
+                              {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
+                              {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
+                              {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
+                            </td>
+                            <td class="bg-white p-2 font-semibold">
+                              Rp{detail.price.toLocaleString('id-ID')}
+                            </td>
+                            <td class="bg-white p-2">
+                              {detail.seller_city}
+                            </td>
+                            <td class="bg-white p-2">
+                              {detail.stock}
+                            </td>
+                            <td class="bg-white p-2 rounded-e-lg">
+                              <a
+                                href={detail.url}
+                                class={[filledButtonClass]}
+                                target="_blank" rel="noopener noreferrer"
+                              >
+                                Beli disini
+                              </a>
+                            </td>
+                          </tr>
+                          <tr key={'marketplategap-' + detail.id} class='h-1' />
+                        </>
+                      ))}
+                    </tbody>
+                  </table>
+                </span>
+              </Dropdown>
+            }
             {review_urls?.length > 0 &&
-              <>
-                <header>
-                  <div class="text-3xl font-semibold">Video Review</div>
-                </header>
-                <main>
+              <Dropdown>
+                <span q:slot='header' class='text-3xl font-semibold'>
+                  Video Review
+                </span>
+                <span q:slot='main'>
                   {
                     review_urls?.map((url: any) => (
                       <iframe
@@ -345,12 +367,12 @@ export default component$(() => {
                       ></iframe>
                     ))
                   }
-                </main>
-              </>
+                </span>
+              </Dropdown>
             }
           </main>
         </div>
-      </div>
+      </div >
     </>
   );
 });
