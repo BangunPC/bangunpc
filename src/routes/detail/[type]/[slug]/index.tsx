@@ -1,5 +1,5 @@
 import type { QwikMouseEvent } from '@builder.io/qwik';
-import { Slot, component$, useSignal } from '@builder.io/qwik';
+import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import FilledButton, { filledButtonClass } from '~/components/common/filled-button';
@@ -16,7 +16,6 @@ import TokopediaSvg from "~/components/homepage/affiliate/tokopedia.svg?jsx";
 import BlibliSvg from "~/components/homepage/affiliate/blibli-svg/blibli-svg";
 import { TbMapPin } from '@qwikest/icons/tablericons';
 import { v_spec } from '~/lib/katalog_complete_types';
-import { FaChevronDownSolid, FaChevronUpSolid } from '@qwikest/icons/font-awesome';
 import Dropdown from '~/components/common/dropdown';
 
 export const useComponentDetail = routeLoader$(async (requestEvent) => {
