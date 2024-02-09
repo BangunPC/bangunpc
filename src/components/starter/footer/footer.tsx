@@ -12,8 +12,8 @@ export default component$(() => {
       title: "Bangun PC",
       list: [
         {
-          title: "bangunpc@gmail.com",
-          link: "mailto:bangunpc@gmail.com"
+          title: "irham.bangunpc@gmail.com",
+          link: "mailto:irham.bangunpc@gmail.com"
         }
       ]
     },
