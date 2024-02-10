@@ -13,7 +13,7 @@ export default component$(() => {
 
                 <div class={styles['komponen-content']}>
                     <header class={styles['komponen-header']}>
-                        Bersama Kami, Wujudkan PC Idaman Anda dengan Mudah dan Profesional!
+                        Bersama kami, wujudkan PC idaman Anda dengan mudah dan profesional!
                     </header>
                     <main class={styles['komponen-main']}>
                         Kami hadir untuk membuat pengalaman merakit PC menjadi mudah, tanpa ribet, dan profesional. Kami siap membantu Anda menemukan solusi sesuai dengan kebutuhan dan anggaran Anda, serta memberikan panduan dan dukungan yang dibutuhkan. Bersama kami, wujudkan PC impian Anda!
