@@ -104,7 +104,7 @@ export default component$(() => {
     }
   });
 
-  useDebounce(inputSig, 300, handleDebounce);
+  useDebounce(inputSig, 500, handleDebounce);
 
   const handleSearch = $((event: InputEvent, element: HTMLInputElement) => {
     inputSig.value = element.value;
