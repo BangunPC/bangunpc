@@ -26,7 +26,7 @@ import {
   titlesKategori,
 } from '~/lib/katalog_types';
 import FilledButton from '~/components/common/filled-button';
-import { TbArrowLeft } from '@qwikest/icons/tablericons';
+import { TbArrowLeft, TbLoader2 } from '@qwikest/icons/tablericons';
 import { useDebounce } from '~/lib/use-debounce';
 
 const getData = server$(async (search: string, kategori: string) => {
@@ -93,13 +93,18 @@ export default component$(() => {
   const nav = useNavigate();
 
   const inputSig = useSignal('');
-  useDebounce(inputSig, 300, $(async (value: string) => {
-    const url = location.url;
-    url.searchParams.set("value", value.replace(/ +/g, ' '));
-    window.history.pushState({}, '', url);
 
-    await nav();
-  }));
+  const handleDebounce = $(async (value: string) => {
+    if (typeof window !== 'undefined') {
+      const url = location.url;
+      url.searchParams.set("value", value.replace(/ +/g, ' '));
+      window.history.pushState({}, '', url);
+
+      await nav();
+    }
+  });
+
+  useDebounce(inputSig, 300, handleDebounce);
 
   const handleSearch = $((event: InputEvent, element: HTMLInputElement) => {
     inputSig.value = element.value;
@@ -110,12 +115,11 @@ export default component$(() => {
   const isLoading = useSignal(true);
 
   const fetchData = useResource$(async ({ track }) => {
-    track(() => location.url);
-    const input = track(() => inputSig.value);
+    const url = track(() => location.url);
     const kateg = track(() => kategori);
 
     isLoading.value = true;
-    const { data: categoryData, imageUrls, total: productAmount } = await getData(input, kateg);
+    const { data: categoryData, imageUrls, total: productAmount } = await getData(url.searchParams.get("value") ?? '', kateg);
     isLoading.value = false;
     return { categoryData, imageUrls, productAmount };
   })
@@ -163,14 +167,83 @@ export default component$(() => {
     },
   ]
 
-  if (fetchData.loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <Resource
       value={fetchData}
-      onPending={() => <div>Loading...</div>}
+      onPending={() => <div class={styles.main}>
+        <aside class={[styles.sidebar, 'hidden md:block']}>
+          <Sidebar filters={filters} />
+        </aside>
+        <div class={[styles.tableSection, 'px-2']}>
+          <h1 class={styles.tableHeader}>Pilih {title}</h1>
+          <main>
+            <header class={styles.tableSubHeader}>
+              <div class={styles.tableSubHeaderTitle}>
+                Tersedia ... produk yang siap kamu pilih
+              </div>
+              <div class="w-64 ml-auto mt-4 md:mr-4">
+                <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get("value") || ''} onInput$={handleSearch} />
+              </div>
+            </header>
+            <aside class="block sticky md:hidden top-[calc(64px+1rem)] mb-4 z-10">
+              <div class="w-full flex">
+                {/* <div class={[styles.showFilterButton, 'w-full flex']}>
+                <FilledButton
+                  class={'flex w-full text-center'}
+                  labelFor="toggleKatalogFilter"
+@ -196,155 +206,156 @@ export default component$(() => {
+                  </span>
+                </FilledButton>
+              </div> */}
+                <div class={[styles.hideFilterButton, 'w-full hidden']}>
+                  <FilledButton
+                    class={'flex w-full text-center'}
+                    labelFor="toggleKatalogFilter"
+                  >
+                    <span class="">
+                      <TbArrowLeft class="inline" /> Katalog{' '}
+                    </span>
+                  </FilledButton>
+                </div>
+              </div>
+            </aside>
+
+            <main class="grid grid-cols-2 grid-rows-1 md:block">
+              <div class="h-full">
+                <div
+                  class={[
+                    styles.mobileSidebar,
+                    'w-full sticky top-[calc(64px+4rem)] mx-auto md:hidden mt-2 gap-1 transition-all duration-200 ',
+                  ]}
+                >
+                  <div class="w-fit mx-auto bg-white rounded-lg shadow-xl p-4">
+                    <Sidebar filters={filters} />
+                  </div>
+                </div>
+              </div>
+
+              <table class='hidden md:table'>
+                <thead class={styles.tableHead}>
+                  <tr>
+                    {headers.map((item) => (
+                      <th key={item}>{item}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody class={styles.tableBody}>
+                  <tr class="h-4"></tr>
+                </tbody>
+              </table>
+
+              <div class="flex justify-center items-center">
+                <div class="inline-block rounded-full m-auto" role="status">
+                  <TbLoader2 class="h-8 w-8 animate-spin " />
+                </div>
+              </div>
+            </main>
+          </main>
+        </div>
+      </div>}
       onResolved={({ categoryData, imageUrls, productAmount }) => (
         <>
           <input
