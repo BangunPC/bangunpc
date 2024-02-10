@@ -208,7 +208,7 @@ export default component$(() => {
               </div>
             </aside>
 
-            <main class="grid grid-cols-2 grid-rows-1 md:block">
+            <main class="">
               <div class="h-full">
                 <div
                   class={[
