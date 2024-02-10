@@ -116,7 +116,7 @@ export default component$(() => {
 
   const fetchData = useResource$(async ({ track }) => {
     const url = track(() => location.url);
-    const kateg = track(() => kategori);
+    const kateg = track(() => location.params.kategori);
 
     isLoading.value = true;
     const { data: categoryData, imageUrls, total: productAmount } = await getData(url.searchParams.get("value") ?? '', kateg);
