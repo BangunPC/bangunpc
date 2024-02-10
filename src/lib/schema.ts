@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   product: {
     Tables: {
       brands: {
@@ -627,7 +627,6 @@ export interface Database {
           height_mm: number | null
           id: number
           length_mm: number | null
-          max_temp_celcius: number | null
           memory_bus_bit: number | null
           min_psu_watt: number | null
           product_id: number
@@ -647,7 +646,6 @@ export interface Database {
           height_mm?: number | null
           id?: number
           length_mm?: number | null
-          max_temp_celcius?: number | null
           memory_bus_bit?: number | null
           min_psu_watt?: number | null
           product_id: number
@@ -667,7 +665,6 @@ export interface Database {
           height_mm?: number | null
           id?: number
           length_mm?: number | null
-          max_temp_celcius?: number | null
           memory_bus_bit?: number | null
           min_psu_watt?: number | null
           product_id?: number
@@ -1606,124 +1603,6 @@ export interface Database {
           }
         ]
       }
-      product_details_duplicate: {
-        Row: {
-          id: number
-          marketplace_id: number | null
-          price: number | null
-          product_detail_description_id: number | null
-          product_id: number
-          seller_city: string | null
-          stock: number | null
-          url: string
-        }
-        Insert: {
-          id?: number
-          marketplace_id?: number | null
-          price?: number | null
-          product_detail_description_id?: number | null
-          product_id: number
-          seller_city?: string | null
-          stock?: number | null
-          url?: string
-        }
-        Update: {
-          id?: number
-          marketplace_id?: number | null
-          price?: number | null
-          product_detail_description_id?: number | null
-          product_id?: number
-          seller_city?: string | null
-          stock?: number | null
-          url?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "product_details_duplicate_marketplace_id_fkey"
-            columns: ["marketplace_id"]
-            isOneToOne: false
-            referencedRelation: "marketplaces"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_detail_description_id_fkey"
-            columns: ["product_detail_description_id"]
-            isOneToOne: false
-            referencedRelation: "product_detail_descriptions"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "products"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "v_casings"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "v_cpus"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "v_gpus"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "v_internal_storages"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "v_memories"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "v_motherboards"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "v_power_supplies"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "v_product_images"
-            referencedColumns: ["product_id"]
-          },
-          {
-            foreignKeyName: "product_details_duplicate_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "v_products"
-            referencedColumns: ["product_id"]
-          }
-        ]
-      }
       products: {
         Row: {
           brand_id: number | null
@@ -2120,7 +1999,6 @@ export interface Database {
           height_mm: number | null
           length_mm: number | null
           lowest_price: number | null
-          max_temp_celcius: number | null
           memory_bus_bit: number | null
           min_psu_watt: number | null
           product_id: number | null
@@ -2459,6 +2337,41 @@ export interface Database {
   }
   public: {
     Tables: {
+      admins: {
+        Row: {
+          avatar_filename: string | null
+          created_at: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          role: string
+        }
+        Insert: {
+          avatar_filename?: string | null
+          created_at?: string
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+          role: string
+        }
+        Update: {
+          avatar_filename?: string | null
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admins_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       partners: {
         Row: {
           city: string
@@ -2485,54 +2398,6 @@ export interface Database {
           type?: Database["public"]["Enums"]["partner_type"]
         }
         Relationships: []
-      }
-      permission_types: {
-        Row: {
-          id: number
-          permission_type: string
-        }
-        Insert: {
-          id?: number
-          permission_type?: string
-        }
-        Update: {
-          id?: number
-          permission_type?: string
-        }
-        Relationships: []
-      }
-      permissions: {
-        Row: {
-          permission_type_id: number | null
-          role_id: number
-          table_name: string
-        }
-        Insert: {
-          permission_type_id?: number | null
-          role_id: number
-          table_name: string
-        }
-        Update: {
-          permission_type_id?: number | null
-          role_id?: number
-          table_name?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "permissions_permission_type_id_fkey"
-            columns: ["permission_type_id"]
-            isOneToOne: false
-            referencedRelation: "permission_types"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "permissions_role_id_fkey"
-            columns: ["role_id"]
-            isOneToOne: false
-            referencedRelation: "roles"
-            referencedColumns: ["id"]
-          }
-        ]
       }
       reviews: {
         Row: {
@@ -2582,21 +2447,6 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
-      }
-      roles: {
-        Row: {
-          id: number
-          name: string
-        }
-        Insert: {
-          id?: number
-          name: string
-        }
-        Update: {
-          id?: number
-          name?: string
-        }
-        Relationships: []
       }
       service_orders: {
         Row: {
@@ -2667,69 +2517,6 @@ export interface Database {
         }
         Relationships: []
       }
-      user_roles: {
-        Row: {
-          id: number
-          role_id: number | null
-          user_id: string | null
-        }
-        Insert: {
-          id?: number
-          role_id?: number | null
-          user_id?: string | null
-        }
-        Update: {
-          id?: number
-          role_id?: number | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_roles_role_id_fkey"
-            columns: ["role_id"]
-            isOneToOne: false
-            referencedRelation: "roles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_roles_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      users: {
-        Row: {
-          address: string | null
-          avatar_url: string | null
-          created_at: string
-          email: string
-          fullname: string
-          id: number
-          phone_number: string | null
-        }
-        Insert: {
-          address?: string | null
-          avatar_url?: string | null
-          created_at?: string
-          email: string
-          fullname: string
-          id?: number
-          phone_number?: string | null
-        }
-        Update: {
-          address?: string | null
-          avatar_url?: string | null
-          created_at?: string
-          email?: string
-          fullname?: string
-          id?: number
-          phone_number?: string | null
-        }
-        Relationships: []
-      }
       wishlists: {
         Row: {
           id: string
@@ -2794,7 +2581,7 @@ export interface Database {
       }
     }
     Enums: {
-      bus_interface: "PCIe 3.0 ×16" | "PCIe 4.0 ×16"
+      bus_interface: "PCIe 3.0 ×16" | "PCIe 4.0 ×8" | "PCIe 4.0 ×16"
       gpu_memory_type: "GDDR6" | "GDDR6X" | "GDDR5"
       memory_type: "DDR3" | "DDR4" | "DDR5"
       partner_type: "jasa rakit pc" | "jasa servis pc/laptop" | "rakit keyboard"

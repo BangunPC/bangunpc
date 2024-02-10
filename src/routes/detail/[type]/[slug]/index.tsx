@@ -17,6 +17,7 @@ import BlibliSvg from "~/components/homepage/affiliate/blibli-svg/blibli-svg";
 import { TbMapPin } from '@qwikest/icons/tablericons';
 import { v_spec } from '~/lib/katalog_complete_types';
 import Dropdown from '~/components/common/dropdown';
+import OutlinedButton from '~/components/common/outlined-button';
 
 export const useComponentDetail = routeLoader$(async (requestEvent) => {
   const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
@@ -54,25 +55,17 @@ export const useComponentDetail = routeLoader$(async (requestEvent) => {
     .select()
     .filter('product_id', 'eq', data['product_id']);
 
-  return { data, imageUrls, product_details, review_urls: data['review_urls'] };
+  return { data, imageUrls, product_details, review_urls: data['review_urls'], spec_url: data['spec_url'], name: data['product_name'] };
 });
 
 export default component$(() => {
   const component = useComponentDetail();
 
-  const data = component.value.data;
+  const { data, imageUrls, product_details, review_urls, spec_url, name } = component.value;
 
   const { type } = useLocation().params;
 
   const componentInfo = v_spec[type]?.flatMap((v) => ({ title: v[1], value: data[v[0]] }));
-
-  const imageUrls = component.value.imageUrls;
-
-  const product_details = component.value.product_details;
-
-  const review_urls = component.value.review_urls;
-
-  const name = data['product_name'];
 
   let lowest_price = undefined;
   if ((product_details.data?.length ?? -1) > 0)
@@ -210,6 +203,14 @@ export default component$(() => {
                     class='text-lg font-semibold mt-4 ${dropdownClass}'
                   >
                     Spesifikasi
+
+                    {spec_url && (
+                      <a href={spec_url} target="_blank" rel="noreferrer" class="ml-1">
+                        <OutlinedButton class=" text-sm">
+                          Buka Spesifikasi Resmi
+                        </OutlinedButton>
+                      </a>
+                    )}
                   </span>
                   <span q:slot='main' class='mt-4 flex flex-col gap-2'>
                     {componentInfo?.map((info: any, index) => (

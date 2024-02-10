@@ -46,7 +46,6 @@ export const v_gpus = [
     ['gpu_memory_type', 'GPU Memory Type'],
     ['height_mm', 'Height (mm)'],
     ['length_mm', 'Length (mm)'],
-    ['max_temp_celcius', 'Max Temp (Celsius)'],
     ['memory_bus_bit', 'Memory Bus Bit'],
     ['min_psu_watt', 'Min PSU (Watt)'],
     ['tdp_watt', 'TDP (Watt)'],

@@ -422,6 +422,14 @@ export default component$(() => {
                     </tbody>
                   </table>
                 </main>
+                {categoryData == null || categoryData.length == 0 && (
+                  <div class="flex text-center text-lg font-bold w-full justify-center m-auto">
+                    {location.url.searchParams.get('value') ?
+                      `${title} "${location.url.searchParams.get('value')}" tidak ditemukan`
+                      : `Tidak ada ${title.toLowerCase()} yang ditemukan`
+                    }
+                  </div>
+                )}
               </main>
             </div>
           </div>
