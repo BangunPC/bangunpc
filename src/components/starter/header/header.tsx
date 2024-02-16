@@ -39,7 +39,7 @@ export default component$(() => {
   return (
     <>
       <input type="checkbox" id="toggle" class={styles.toggle} />
-      <header class={[styles.header, 'backdrop-blur-3xl pr-[20px]']}>
+      <header class={[styles.header, 'backdrop-blur-3xl pr-[20px] mx-2']}>
         {/* <div class={["container", styles.wrapper]}> */}
         <div class={[styles.logoAndToggle, 'mr-auto']}>
           <Link href="/" title="Bangun PC">

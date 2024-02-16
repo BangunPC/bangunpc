@@ -119,7 +119,7 @@
   justify-content: center;
   align-items: center;
   padding: 8px 12px 8px 24px;
-  background-color: #4c5986;
+  background-color: rgb(var(--color-primary));
   align-content: center;
   flex-wrap: nowrap;
   gap: 10px;
@@ -152,7 +152,7 @@
   flex-wrap: nowrap;
   gap: 4px;
   border-radius: 8px;
-  border: 3px solid #4c5986;
+  border: 3px solid rgb(var(--color-primary));
 }
 
 .outlined-button span {
@@ -161,7 +161,7 @@
   font-weight: 700;
   font-style: normal;
   font-family: "Inter-Bold", "Inter", "Inter Placeholder", sans-serif;
-  color: #4c5986;
+  color: rgb(var(--color-primary));
   font-size: 15px;
   letter-spacing: 0px;
   line-height: 20px;

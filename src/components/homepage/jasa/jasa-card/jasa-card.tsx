@@ -12,7 +12,7 @@ export type JasaProps = {
 export default component$<JasaProps>((props) => {
     const borderClass = 'border border-black border-opacity-50';
     const arrow = <footer
-        class={`mx-auto rounded-full ${borderClass} w-fit px-6 text-2xl transition-colors bg-white hover:bg-[#4c5986]  hover:border-[#a6afce] hover:text-white cursor-pointer translate-y-[-50%]`}
+        class={`mx-auto rounded-full ${borderClass} w-fit px-6 text-2xl transition-colors bg-white hover:bg-primary  hover:border-[#a6afce] hover:text-white cursor-pointer translate-y-[-50%]`}
 
         onClick$={() => props.labelFor ? undefined : alert('Coming Soon!')}
     >

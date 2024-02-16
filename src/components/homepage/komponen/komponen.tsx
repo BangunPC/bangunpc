@@ -1,7 +1,8 @@
 import { component$ } from "@builder.io/qwik";
 import styles from "./komponen.module.css";
-import { TbCheckbox } from "@qwikest/icons/tablericons";
 import Image from "~/content/images/homepage-komponen.webp?jsx";
+import TickSquare from "~/components/starter/icons/tick-square";
+import { filledButtonClass } from "~/components/common/filled-button";
 
 export default component$(() => {
     return (
@@ -19,19 +20,22 @@ export default component$(() => {
                         Kami hadir untuk membuat pengalaman merakit PC menjadi mudah, tanpa ribet, dan profesional. Kami siap membantu Anda menemukan solusi sesuai dengan kebutuhan dan anggaran Anda, serta memberikan panduan dan dukungan yang dibutuhkan. Bersama kami, wujudkan PC impian Anda!
                     </main>
                     <div class={styles['komponen-checkbox']}>
-                        <TbCheckbox />
+                        <TickSquare class="w-[24px] h-[24px] fill-primary" />
                         <span>
 
                             Simplenya Merakit PC
                         </span>
                     </div>
-                    <div class={styles['komponen-checkbox']}>
-                        <TbCheckbox />
-                        <span>
+                    <span class={styles['komponen-subtitle']}>
+                        Kami menyederhanakan proses merakit PC dengan alat simulasi yang mudah digunakan, memungkinkan Anda merancang sistem sesuai keinginan dengan cepat.
+                    </span>
+                    <label
+                        for="toggleKatalogModal"
+                        class={[filledButtonClass, "w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center "]}
+                    >
+                        Lihat Katalog
+                    </label>
 
-                            Realisasi Impian Anda
-                        </span>
-                    </div>
                 </div>
             </div>
         </div>

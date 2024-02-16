@@ -91,7 +91,7 @@
         padding: 8px;
 
         border-radius: 6px;
-        background: #4C5986;
+        background: rgb(var(--color-primary));
         color: white;
 
         justify-content: center;
@@ -119,8 +119,12 @@
     padding: 8px;
 
     border-radius: 6px;
-    background: #4C5986;
+    background: rgb(var(--color-primary));
     color: white;
+}
+
+.modal-katalog-close:hover {
+    background: rgb(var(--color-primary-hover));
 }
 
 .modal-katalog-header {
@@ -168,7 +172,7 @@
     font-size: 14px;
     font-weight: bold;
     border-bottom: 1px solid;
-    color: #4C5986;
+    color: rgb(var(--color-primary));
     padding-bottom: 4px;
 }
 
@@ -179,7 +183,7 @@
 }
 
 .category-other-item:hover {
-    color: #4C5986;
+    color: rgb(var(--color-primary));
 }
 
 .modal-katalog-category-main {
@@ -197,7 +201,7 @@
 
 .modal-katalog-item {
 
-    background: #4C5986;
+    background: rgb(var(--color-primary));
     border-radius: 8px;
     padding: 10px;
 
