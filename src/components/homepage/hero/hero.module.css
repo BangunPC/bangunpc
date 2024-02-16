@@ -3,7 +3,7 @@
   height: 714px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   background-color: #eceef5;
   overflow: hidden;

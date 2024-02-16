@@ -9,6 +9,8 @@
     overflow: hidden;
     align-content: center;
     flex-wrap: nowrap;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .komponen-image {
