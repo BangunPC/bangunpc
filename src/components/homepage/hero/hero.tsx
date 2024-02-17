@@ -2,6 +2,7 @@ import { component$ } from "@builder.io/qwik";
 import Image from "~/content/images/hero-image.webp?jsx";
 import styles from "./hero.module.css";
 import FilledButton from "~/components/common/filled-button";
+import Computer from "~/components/starter/icons/computer";
 
 
 export default component$(() => {
@@ -37,7 +38,7 @@ export default component$(() => {
                         onClick$={() => alert('Coming Soon!')}
                     >
                         <span class="text-white font-semibold text-[15px]">
-                            Rakit Sekarang
+                            <Computer class='inline w-5 h-5 fill-transparent -translate-y-[3px]' />{' Rakit Sekarang '}
                         </span>
                     </FilledButton>
                 </div>

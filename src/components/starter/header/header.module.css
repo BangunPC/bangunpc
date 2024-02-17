@@ -64,8 +64,8 @@
   cursor: pointer;
 
   :hover {
-    fill: #4c5986 !important;
-    color: #4c5986 !important;
+    fill: rgb(var(--color-button-hover)) !important;
+    color: rgb(var(--color-button-hover)) !important;
     text-decoration: none !important;
   }
 }
@@ -80,7 +80,7 @@
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background-color: #4c5986;
+  background-color: rgb(var(--color-button));
   position: relative;
   align-content: center;
   flex-wrap: nowrap;

@@ -7,7 +7,7 @@ export type ButtonProps = {
     class?: ClassList | Signal<ClassList> | undefined,
 }
 
-export const filledButtonClass = "rounded-md bg-primary text-white font-semibold text-lg px-2 py-1 transition-colors duration-200 hover:bg-primary-hover "
+export const filledButtonClass = "rounded-md bg-button text-white font-semibold text-lg px-2 py-1 transition-colors duration-200 hover:bg-button-hover "
 
 export default component$<ButtonProps>((props) => {
     const componentClass: any = [filledButtonClass, props.class];

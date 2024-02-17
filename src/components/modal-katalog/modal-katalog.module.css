@@ -119,12 +119,12 @@
     padding: 8px;
 
     border-radius: 6px;
-    background: rgb(var(--color-primary));
+    background: rgb(var(--color-button));
     color: white;
 }
 
 .modal-katalog-close:hover {
-    background: rgb(var(--color-primary-hover));
+    background: rgb(var(--color-button-hover));
 }
 
 .modal-katalog-header {
@@ -201,7 +201,7 @@
 
 .modal-katalog-item {
 
-    background: rgb(var(--color-primary));
+    background: rgb(var(--color-button));
     border-radius: 8px;
     padding: 10px;
 
