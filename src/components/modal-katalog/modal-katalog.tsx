@@ -191,7 +191,7 @@ export default component$(() => {
                                 <Link
                                     href={item.disabled ? '' : item.href}
                                     key={item.name}
-                                    class={[style['modal-katalog-item'], item.disabled ? 'saturate-0 contrast-50 cursor-not-allowed pointer-events-none' : '']}
+                                    class={[style['modal-katalog-item'], item.disabled ? 'saturate-0 contrast-50 opacity-70 cursor-not-allowed pointer-events-none' : '']}
                                     onClick$={() => {
                                         const toggle = document.getElementById('toggleKatalogModal') as HTMLInputElement | null;
                                         if (toggle) toggle.checked = false

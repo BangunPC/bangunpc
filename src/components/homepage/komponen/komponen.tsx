@@ -29,15 +29,17 @@ export default component$(() => {
                     <span class={styles['komponen-subtitle']}>
                         Kami menyederhanakan proses merakit PC dengan alat simulasi yang mudah digunakan, memungkinkan Anda merancang sistem sesuai keinginan dengan cepat.
                     </span>
-                    <label
-                        for="toggleKatalogModal"
-                        class={[filledButtonClass, "w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center "]}
-                    >
-                        <FaCartShoppingSolid class="inline w-5 h-5 mr-1" />
-                        <span>
-                            Lihat Katalog
-                        </span>
-                    </label>
+                    <div class={styles['komponen-button-wrapper']}>
+                        <label
+                            for="toggleKatalogModal"
+                            class={[filledButtonClass, "w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center"]}
+                        >
+                            <FaCartShoppingSolid class="inline w-5 h-5 mr-1" />
+                            <span>
+                                Lihat Katalog
+                            </span>
+                        </label>
+                    </div>
 
                 </div>
             </div>

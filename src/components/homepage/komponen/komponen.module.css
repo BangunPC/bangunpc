@@ -126,6 +126,10 @@
         order: 1;
         flex-direction: column;
     }
+
+    .komponen-button-wrapper {
+        margin: auto;
+    }
 }
 
 @media screen and (min-width: 810px) {
