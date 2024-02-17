@@ -19,10 +19,9 @@ export default component$(() => {
                     <main class={styles['komponen-main']}>
                         Kami hadir untuk membuat pengalaman merakit PC menjadi mudah, tanpa ribet, dan profesional. Kami siap membantu Anda menemukan solusi sesuai dengan kebutuhan dan anggaran Anda, serta memberikan panduan dan dukungan yang dibutuhkan. Bersama kami, wujudkan PC impian Anda!
                     </main>
-                    <div class={styles['komponen-checkbox']}>
+                    <div class={[styles['komponen-checkbox'], 'border-t-primary/50 border-t w-full pt-4']}>
                         <TickSquare class="w-[24px] h-[24px] fill-primary" />
                         <span>
-
                             Simplenya Merakit PC
                         </span>
                     </div>

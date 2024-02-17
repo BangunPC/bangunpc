@@ -4,7 +4,7 @@ import styles from "./header.module.css";
 import { Link } from "@builder.io/qwik-city";
 import ShoppingCart from "../icons/shopping-cart";
 import Devices from "../icons/devices";
-import User from "../icons/user";
+// import User from "../icons/user";
 import DocumentText from "../icons/document-text";
 // import Profile from "../icons/profile";
 import { TbMenu2 } from "@qwikest/icons/tablericons";
@@ -27,75 +27,78 @@ const headersItems = [
     title: "Simulasi Rakit PC",
     disabled: true,
   },
-  {
-    icon: <User width="24" height="24" />,
-    title: "Jasa Rakit PC",
-    altTitle: "Jasa Servis PC",
-    disabled: true,
-  },
+  // {
+  //   icon: <User width="24" height="24" />,
+  //   title: "Jasa Rakit PC",
+  //   altTitle: "Jasa Servis PC",
+  //   disabled: true,
+  // },
 ];
 
 export default component$(() => {
   return (
     <>
-      <input type="checkbox" id="toggle" class={styles.toggle} />
-      <header class={[styles.header, 'backdrop-blur-3xl pr-[20px] mx-2']}>
-        {/* <div class={["container", styles.wrapper]}> */}
-        <div class={[styles.logoAndToggle, 'mr-auto']}>
-          <Link href="/" title="Bangun PC">
-            {/* <QwikLogo height={50} width={143} /> */}
-            <span class="text-2xl font-semibold text-black">Bangun PC</span>
-          </Link>
-          <div>
-            <label for="toggle" class={styles.toggleButton}>
-              <TbMenu2 class='w-6 h-6' />
-            </label>
-          </div>
-        </div>
-        <div class={styles.buttons}>
-          <div class={[styles.iconswrapper, 'm-auto']}>
-            {headersItems.map((item) => (
-              <div key={item.title} class={styles.link}>
-                {item.disabled && (
-                  <Link
-                    preventdefault:click
-                    title={item.title}
-                    class={[styles.link, "transition duration-200"]}
-                    onClick$={() => {
-                      // toast("Coming Soon!")
-                      alert('Coming Soon!')
-                    }}
-                  >
-                    {item.icon}
-                    {item.title}
-                  </Link>
-                )}
-                {item.href && (
-                  <Link
-                    href={item.href}
-                    title={item.title}
-                    class={[styles.link, "transition duration-200"]}
-                  >
-                    {item.icon}
-                    {item.title}
-                  </Link>
-                )}
-                {item.labelFor && (
+      <header class={['flex backdrop-blur-3xl pr-[20px] mx-2 fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]']}>
+        <input type="checkbox" id="toggle" class={styles.toggle} />
+        <div class={[styles.header, 'max-w-6xl']}>
 
-                  <label for={item.labelFor}
-                    class={[styles.link, "transition duration-200"]}
-                  >
-                    {item.icon}
-                    {item.title}
-                  </label>
-                )}
-              </div>
-            ))}
+          {/* <div class={["container", styles.wrapper]}> */}
+          <div class={[styles.logoAndToggle, 'mr-auto  min-h-[56px]']}>
+            <Link href="/" title="Bangun PC">
+              {/* <QwikLogo height={50} width={143} /> */}
+              <span class="text-2xl font-semibold text-black">Bangun PC</span>
+            </Link>
+            <div>
+              <label for="toggle" class={styles.toggleButton}>
+                <TbMenu2 class='w-6 h-6' />
+              </label>
+            </div>
           </div>
-          {/* <Link class={styles.login}>
+          <div class={styles.buttons}>
+            <div class={[styles.iconswrapper, 'm-auto']}>
+              {headersItems.map((item) => (
+                <div key={item.title} class={styles.link}>
+                  {item.disabled && (
+                    <Link
+                      preventdefault:click
+                      title={item.title}
+                      class={[styles.link, "transition duration-200"]}
+                      onClick$={() => {
+                        // toast("Coming Soon!")
+                        alert('Coming Soon!')
+                      }}
+                    >
+                      {item.icon}
+                      {item.title}
+                    </Link>
+                  )}
+                  {item.href && (
+                    <Link
+                      href={item.href}
+                      title={item.title}
+                      class={[styles.link, "transition duration-200"]}
+                    >
+                      {item.icon}
+                      {item.title}
+                    </Link>
+                  )}
+                  {item.labelFor && (
+
+                    <label for={item.labelFor}
+                      class={[styles.link, "transition duration-200"]}
+                    >
+                      {item.icon}
+                      {item.title}
+                    </label>
+                  )}
+                </div>
+              ))}
+            </div>
+            {/* <Link class={styles.login}>
           <Profile width="24" height="24" class="inline-block fill-white" />
           <span>Login</span>
         </Link> */}
+          </div>
         </div>
         {/* </div> */}
       </header>
