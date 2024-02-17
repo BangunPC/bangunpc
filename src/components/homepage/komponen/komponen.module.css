@@ -9,6 +9,8 @@
     overflow: hidden;
     align-content: center;
     flex-wrap: nowrap;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .komponen-image {
@@ -78,6 +80,21 @@
     text-align: left;
 }
 
+.komponen-subtitle {
+    width: 100%;
+    height: auto;
+    word-wrap: break-word;
+    word-break: break-word;
+    font-weight: 500;
+    font-style: normal;
+    font-family: "Inter", sans-serif;
+    color: #888888;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 118.5%;
+    text-align: left;
+}
+
 .komponen-checkbox {
     width: 313px;
     height: min-content;
@@ -89,7 +106,7 @@
     flex-wrap: nowrap;
     font-size: 24px;
     gap: 15px;
-    color: #4c5986;
+    color: rgb(var(--color-primary));
 }
 
 .komponen-checkbox span {

@@ -18,7 +18,7 @@ export default component$(() => {
         },
         {
             icon: <TbTool q:slot="icon" style={{ width: '24px', height: '24px' }} />,
-            title: 'Jasa Rakit PC',
+            title: 'Rakitanku',
             description: 'Tak punya waktu atau bingung cara merakit PC sendiri? Tenang, kami dapat merakitkan PC impian Anda sampai siap pakai'
         },
         {

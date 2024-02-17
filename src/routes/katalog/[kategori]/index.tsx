@@ -56,7 +56,7 @@ const getData = server$(async (search: string, kategori: string) => {
       .from(category)
       .select()
       .order('product_name', { ascending: true })
-      .ilike('product_name', `%${search}%`)
+      .textSearch('product_name', `'${search}'`, {type: 'websearch', config: 'english'})
       .then((res) => {
         data = res.data !== null ? res.data : undefined;
       });

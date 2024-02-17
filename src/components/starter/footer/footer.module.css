@@ -80,9 +80,8 @@
 }
 
 .footer a:hover {
-  color: var(--token-ba0f8505-1870-43c0-8d4e-7d4bc5406462, #999999);
-  fill: #4c5986;
-  color: #4c5986;
+  fill: rgb(var(--color-primary));
+  color: rgb(var(--color-primary));
   text-decoration: underline;
 }
 
