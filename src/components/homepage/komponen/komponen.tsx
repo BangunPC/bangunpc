@@ -3,6 +3,7 @@ import styles from "./komponen.module.css";
 import Image from "~/content/images/homepage-komponen.webp?jsx";
 import TickSquare from "~/components/starter/icons/tick-square";
 import { filledButtonClass } from "~/components/common/filled-button";
+import { FaCartShoppingSolid } from "@qwikest/icons/font-awesome";
 
 export default component$(() => {
     return (
@@ -32,7 +33,10 @@ export default component$(() => {
                         for="toggleKatalogModal"
                         class={[filledButtonClass, "w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center "]}
                     >
-                        Lihat Katalog
+                        <FaCartShoppingSolid class="inline w-5 h-5 mr-1" />
+                        <span>
+                            Lihat Katalog
+                        </span>
                     </label>
 
                 </div>
