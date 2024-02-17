@@ -1,15 +1,15 @@
 import { component$ } from "@builder.io/qwik";
 import styles from "./komponen.module.css";
-import Image from "~/content/images/homepage-komponen.webp?jsx";
 import TickSquare from "~/components/starter/icons/tick-square";
 import { filledButtonClass } from "~/components/common/filled-button";
 import { FaCartShoppingSolid } from "@qwikest/icons/font-awesome";
+import { DemoImage } from "./demoimage";
 
 export default component$(() => {
     return (
         <div id="komponen" class={styles['komponen-section']}>
             <div class={styles['komponen-image']}>
-                <Image alt="easy search, components, and suggestions" />
+                <DemoImage />
             </div>
             <div class={styles['komponen-content-wrapper']}>
 
