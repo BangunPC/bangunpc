@@ -28,7 +28,7 @@ export default component$(() => {
 
                         </h1>
                         <span class={styles['hero-section-left-top-bottom-rekomendasi']}>
-                            Rekomendasi komponen yang berkualitas tinggi dengan harga terjangkau.
+                            Rekomendasi komponen PC yang berkualitas tinggi dengan harga terbaik.
                         </span>
                     </div>
                 </div>
