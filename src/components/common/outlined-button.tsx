@@ -1,7 +1,7 @@
 import { Slot, component$ } from "@builder.io/qwik";
 import type { ButtonProps } from "./filled-button";
 
-export const outlinedButtonClass = "rounded-md bg-transparent border border-solid border-primary text-primary font-semibold text-lg px-2 py-1 transition-colors duration-200 hover:bg-button hover:border-transparent hover:text-white ";
+export const outlinedButtonClass = "rounded-md bg-transparent border border-solid border-primary text-primary font-semibold text-lg px-2 py-1 transition-colors duration-200 hover:bg-button-hover hover:border-transparent hover:text-white ";
 
 export default component$<ButtonProps>((props) => {
     const componentClass = outlinedButtonClass + props.class

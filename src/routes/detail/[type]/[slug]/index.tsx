@@ -290,9 +290,14 @@ export default component$(() => {
                           Lokasi Toko
                         </td>
                         <td
-                          class="bg-white"
+                          class="bg-white p-2"
                         >
                           Stok
+                        </td>
+                        <td
+                          class="bg-white p-2"
+                        >
+                          Details
                         </td>
                         <td
                           class="bg-white rounded-e-lg p-2"
@@ -330,6 +335,9 @@ export default component$(() => {
                             </td>
                             <td class="bg-white p-2">
                               {detail.stock}
+                            </td>
+                            <td class="bg-white p-2">
+                              {detail.product_detail_description ?? '-'}
                             </td>
                             <td class="bg-white p-2 rounded-e-lg">
                               <a
