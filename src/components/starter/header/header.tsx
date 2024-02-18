@@ -38,7 +38,7 @@ const headersItems = [
 export default component$(() => {
   return (
     <>
-      <header class={['flex backdrop-blur-3xl pr-[20px] mx-2 fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]']}>
+      <header class={['flex backdrop-blur-3xl pr-[20px] px-2 fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]']}>
         <input type="checkbox" id="toggle" class={styles.toggle} />
         <div class={[styles.header, 'max-w-6xl']}>
 
