@@ -8,7 +8,7 @@
 
 .sidebar {
     height: max-content;
-    top: calc(24px + 69px);
+    top: calc(24px + 70px);
     position: sticky;
 }
 
@@ -84,7 +84,7 @@ table {
     backdrop-filter: blur(10px);
 
     position: sticky;
-    top: 69px;
+    top: 70px;
     z-index: 50;
 }
 
@@ -158,7 +158,7 @@ table {
 
 .toggleKatalogFilter:checked ~ *  .mobileSidebar {
     translate: 0;
-    width: calc(100vw - 69px);
+    width: calc(100vw - 70px);
 }
 
 .toggleKatalogFilter:checked ~ *  .mobileKatalog {
