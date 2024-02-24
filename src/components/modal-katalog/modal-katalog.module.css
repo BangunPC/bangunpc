@@ -50,7 +50,7 @@
     transform: scale(90%) translateY(-10%);
 
     border-radius: 12px;
-    background: #F4F4F4;
+    background: #f0f1fd;
 
     transition: inherit;
     transition-duration: inherit;
@@ -188,7 +188,7 @@
 
 .modal-katalog-category-main {
     border-radius: 8px;
-    background-color: white;
+    background-color: #f7f8fe;
     box-shadow: 0px 4px 10px rgba(0, 0, 125, 0.1);
 
     display: grid;
@@ -201,7 +201,7 @@
 
 .modal-katalog-item {
 
-    background: rgb(var(--color-button));
+    background: rgb(var(--color-primary));
     border-radius: 8px;
     padding: 10px;
 
@@ -217,4 +217,8 @@
 
 .modal-katalog-item:hover {
     transform: scale(1.1);
+}
+
+.lihat-semua-button {
+    box-shadow: 0px 4px 10px rgba(0, 0, 43, 0.2);
 }

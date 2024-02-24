@@ -11,6 +11,7 @@ import KPsu from '~/content/images/katalog_psu.svg?jsx';
 import KStorage from '~/content/images/katalog_storage.svg?jsx';
 import KCasing from '~/content/images/katalog_casing.svg?jsx';
 import { Link } from '@builder.io/qwik-city';
+import { filledButtonClass } from '../common/filled-button';
 
 
 export default component$(() => {
@@ -204,6 +205,16 @@ export default component$(() => {
                             ))}
                         </div>
                     </main>
+                    <Link
+                        href='/katalog'
+                        class={[filledButtonClass, style['lihat-semua-button'], 'text-center']}
+                        onClick$={() => {
+                            const toggle = document.getElementById('toggleKatalogModal') as HTMLInputElement | null;
+                            if (toggle) toggle.checked = false
+                        }}
+                    >
+                        Lihat Semua
+                    </Link>
                 </div>
             </div>
         </>
