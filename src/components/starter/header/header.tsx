@@ -8,6 +8,8 @@ import Devices from "../icons/devices";
 import DocumentText from "../icons/document-text";
 // import Profile from "../icons/profile";
 import { TbMenu2 } from "@qwikest/icons/tablericons";
+import LogoHeader from "./logo-header";
+import User2 from "../icons/user-2";
 
 
 const headersItems = [
@@ -25,7 +27,7 @@ const headersItems = [
   {
     icon: <Devices width="24" height="24" />,
     title: "Simulasi Rakit PC",
-    disabled: true,
+    href: "/simulasi",
   },
   // {
   //   icon: <User width="24" height="24" />,
@@ -38,15 +40,15 @@ const headersItems = [
 export default component$(() => {
   return (
     <>
-      <header class={['flex backdrop-blur-3xl pr-[20px] px-2 fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]']}>
+      <header class={['flex backdrop-blur-3xl pr-[20px] pr-2 fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]']}>
         <input type="checkbox" id="toggle" class={styles.toggle} />
         <div class={[styles.header, 'max-w-6xl']}>
 
           {/* <div class={["container", styles.wrapper]}> */}
-          <div class={[styles.logoAndToggle, 'mr-auto  min-h-[56px]']}>
-            <Link href="/" title="Bangun PC">
+          <div class={[styles.logoAndToggle, ' min-h-[56px]']}>
+            <Link href="/" title="Bangun PC" class='bg-primary aspect-square w-16'>
               {/* <QwikLogo height={50} width={143} /> */}
-              <span class="text-2xl font-semibold text-black">Bangun PC</span>
+              <LogoHeader width="44" height="64" class="m-auto aspect-[44/64] w-7 outline-none stroke-none" />
             </Link>
             <div>
               <label for="toggle" class={styles.toggleButton}>
@@ -54,8 +56,8 @@ export default component$(() => {
               </label>
             </div>
           </div>
-          <div class={styles.buttons}>
-            <div class={[styles.iconswrapper, 'm-auto']}>
+          <div class={[styles.buttons, 'w-full']}>
+            <div class={[styles.iconswrapper, 'mr-auto']}>
               {headersItems.map((item) => (
                 <div key={item.title} class={styles.link}>
                   {item.disabled && (
@@ -98,6 +100,14 @@ export default component$(() => {
           <Profile width="24" height="24" class="inline-block fill-white" />
           <span>Login</span>
         </Link> */}
+            <div
+              class='m-auto tablet:m-0 mt-4 w-32 tablet:w-28 bg-button hover:bg-button-hover transition-colors hover:cursor-pointer rounded-full flex flex-row text-white items-center py-2 px-4 justify-evenly tablet:justify-between font-semibold'
+            >
+              <User2 width="24" height="24" class="fill-none" />
+              <span class='ml-1 -translate-x-1'>
+                Login
+              </span>
+            </div>
           </div>
         </div>
         {/* </div> */}

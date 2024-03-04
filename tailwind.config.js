@@ -10,7 +10,14 @@ module.exports = {
       button: 'rgb(var(--color-button) / <alpha-value>)',
 
       ...colors,
-    }
+    },
+    screens: {
+      'tablet': '810px',
+      // => @media (min-width: 640px) { ... }
+
+      'desktop': '1200px',
+      // => @media (min-width: 1280px) { ... }
+    },
   },
   plugins: [require("@tailwindcss/typography")],
 };

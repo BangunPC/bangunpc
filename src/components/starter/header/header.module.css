@@ -1,5 +1,4 @@
 .header {
-  min-height: 68px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -144,15 +143,16 @@
     gap: 20px;
     /* This is height with login button */
     /* height: 200px; */
+    height: 172px;
     /* height: 156px; */
-    height: 128px;
+    /* height: 128px; */
     animation: overflow 0.3s;
   }
   
   .header {
     width: 100%;
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
     align-items: center;
   }
 

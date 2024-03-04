@@ -9,7 +9,7 @@ export default component$(() => {
     const nav = useNavigate();
 
     const page = loc.url.searchParams.get('page') ? parseInt(loc.url.searchParams.get('page')!) : 1;
-    const size = loc.url.searchParams.get('size') ? parseInt(loc.url.searchParams.get('size')!) : 10;
+    const size = loc.url.searchParams.get('size') ? parseInt(loc.url.searchParams.get('size')!) : 20;
     const fetchData = getComponentsPaginated(page, size, '');
 
     return (
