@@ -40,7 +40,7 @@ const headersItems = [
 export default component$(() => {
   return (
     <>
-      <header class={['flex backdrop-blur-3xl pr-[20px] pr-2 fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]']}>
+      <header class={['flex backdrop-blur-3xl pr-[20px] fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]']}>
         <input type="checkbox" id="toggle" class={styles.toggle} />
         <div class={[styles.header, 'max-w-6xl']}>
 
@@ -60,7 +60,7 @@ export default component$(() => {
             <div class={[styles.iconswrapper, 'mr-auto']}>
               {headersItems.map((item) => (
                 <div key={item.title} class={styles.link}>
-                  {item.disabled && (
+                  {/* {item.disabled && (
                     <Link
                       preventdefault:click
                       title={item.title}
@@ -73,7 +73,7 @@ export default component$(() => {
                       {item.icon}
                       {item.title}
                     </Link>
-                  )}
+                  )} */}
                   {item.href && (
                     <Link
                       href={item.href}
