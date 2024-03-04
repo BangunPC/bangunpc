@@ -33,8 +33,8 @@ export default component$(() => {
         { icon: <SimulasiRouter width="27" height="27" />, title: 'Router' },
     ]
 
-    return <div class='mt-1'>
-        <header class='font-semibold text-4xl'>
+    return <div class='mt-1 p-4'>
+        <header class='font-semibold text-3xl'>
             Simulasi Rakit PC
         </header>
         <main class='p-4 max-w-7xl w-full m-auto'>

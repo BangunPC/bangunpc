@@ -42,7 +42,7 @@ export default component$(() => {
     <>
       <header class={['flex backdrop-blur-3xl pr-[20px] fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]']}>
         <input type="checkbox" id="toggle" class={styles.toggle} />
-        <div class={[styles.header, 'max-w-6xl']}>
+        <div class={[styles.header]}>
 
           {/* <div class={["container", styles.wrapper]}> */}
           <div class={[styles.logoAndToggle, ' min-h-[56px]']}>
