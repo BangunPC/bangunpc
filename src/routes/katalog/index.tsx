@@ -103,8 +103,7 @@ export default component$(() => {
                         </>
                     )
                 }}
-            >
-            </Resource>
+            />
         </div>
     )
 })
