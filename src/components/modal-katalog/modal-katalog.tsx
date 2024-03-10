@@ -12,6 +12,7 @@ import KStorage from '~/content/images/katalog_storage.svg?jsx';
 import KCasing from '~/content/images/katalog_casing.svg?jsx';
 import { Link } from '@builder.io/qwik-city';
 import { filledButtonClass } from '../common/filled-button';
+import { kToggleKatalogModal } from '~/lib/constant';
 
 
 export default component$(() => {
@@ -155,15 +156,15 @@ export default component$(() => {
 
     return (
         <>
-            <input type="checkbox" id="toggleKatalogModal" class={style.toggleKatalogModal} hidden />
+            <input type="checkbox" id={kToggleKatalogModal} class={style.toggleKatalogModal} hidden />
             <div class={style['modal-katalog']}>
-                <label for="toggleKatalogModal" class={style.toggleKatalogModalLabel} />
+                <label for={kToggleKatalogModal} class={style.toggleKatalogModalLabel} />
                 <div class={style['modal-katalog-content']}>
                     <header class={style['modal-katalog-header']}>
                         <span class={style['modal-katalog-title']}>
                             Pilih Kategori Komponen
                         </span>
-                        <label for="toggleKatalogModal">
+                        <label for={kToggleKatalogModal}>
                             <TbX class={style['modal-katalog-close']} />
                         </label>
                     </header>
@@ -194,7 +195,7 @@ export default component$(() => {
                                     key={item.name}
                                     class={[style['modal-katalog-item'], item.disabled ? 'saturate-0 contrast-50 opacity-70 cursor-not-allowed pointer-events-none' : '']}
                                     onClick$={() => {
-                                        const toggle = document.getElementById('toggleKatalogModal') as HTMLInputElement | null;
+                                        const toggle = document.getElementById(kToggleKatalogModal) as HTMLInputElement | null;
                                         if (toggle) toggle.checked = false
                                     }}
                                 >
@@ -209,7 +210,7 @@ export default component$(() => {
                         href='/katalog'
                         class={[filledButtonClass, style['lihat-semua-button'], 'text-center']}
                         onClick$={() => {
-                            const toggle = document.getElementById('toggleKatalogModal') as HTMLInputElement | null;
+                            const toggle = document.getElementById(kToggleKatalogModal) as HTMLInputElement | null;
                             if (toggle) toggle.checked = false
                         }}
                     >

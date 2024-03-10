@@ -3,6 +3,7 @@ import { component$ } from "@builder.io/qwik";
 import styles from "./footer.module.css";
 import { FaInstagram, FaXTwitter } from "@qwikest/icons/font-awesome";
 import { Link } from "@builder.io/qwik-city";
+import { kToggleKatalogModal } from "~/lib/constant";
 
 export default component$(() => {
   // const serverTime = useServerTimeLoader();
@@ -26,13 +27,11 @@ export default component$(() => {
         },
         {
           title: "Simulasi Rakit PC",
-          link: "/",
-          disabled: true,
+          link: "/simulasi",
         },
         {
           title: "Katalog Komponen PC",
-          link: "/katalog",
-          disabled: true,
+          labelFor: kToggleKatalogModal,
         },
         {
           title: "Jasa Rakit PC",
@@ -106,6 +105,13 @@ export default component$(() => {
                         {listItem.title}
                       </Link>
                     </div>
+                  )
+                }
+                if (listItem.labelFor) {
+                  return (
+                    <label key={listItem.title} for={listItem.labelFor}>
+                      {listItem.title}
+                    </label>
                   )
                 }
                 return (

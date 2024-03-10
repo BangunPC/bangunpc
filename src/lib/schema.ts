@@ -462,7 +462,7 @@ export type Database = {
           integrated_gpu_id: number | null
           max_clock_ghz: number | null
           max_memory_channel: number | null
-          max_memory_size_gb: number | null
+          max_memory_gb: number | null
           max_power_watt: number | null
           performance_core: number | null
           product_id: number | null
@@ -478,7 +478,7 @@ export type Database = {
           integrated_gpu_id?: number | null
           max_clock_ghz?: number | null
           max_memory_channel?: number | null
-          max_memory_size_gb?: number | null
+          max_memory_gb?: number | null
           max_power_watt?: number | null
           performance_core?: number | null
           product_id?: number | null
@@ -494,7 +494,7 @@ export type Database = {
           integrated_gpu_id?: number | null
           max_clock_ghz?: number | null
           max_memory_channel?: number | null
-          max_memory_size_gb?: number | null
+          max_memory_gb?: number | null
           max_power_watt?: number | null
           performance_core?: number | null
           product_id?: number | null
@@ -1069,8 +1069,8 @@ export type Database = {
           chipset_id: number | null
           form_factor_id: number
           id: number
+          max_memory_gb: number | null
           memory_channel_count: number | null
-          memory_max_gb: number | null
           memory_slot: number | null
           memory_type_id: number | null
           pcie_m2_slot: number | null
@@ -1084,8 +1084,8 @@ export type Database = {
           chipset_id?: number | null
           form_factor_id: number
           id?: number
+          max_memory_gb?: number | null
           memory_channel_count?: number | null
-          memory_max_gb?: number | null
           memory_slot?: number | null
           memory_type_id?: number | null
           pcie_m2_slot?: number | null
@@ -1099,8 +1099,8 @@ export type Database = {
           chipset_id?: number | null
           form_factor_id?: number
           id?: number
+          max_memory_gb?: number | null
           memory_channel_count?: number | null
-          memory_max_gb?: number | null
           memory_slot?: number | null
           memory_type_id?: number | null
           pcie_m2_slot?: number | null
@@ -1911,6 +1911,7 @@ export type Database = {
           expansion_slot: number | null
           fan_slots: number | null
           height_mm: number | null
+          image_filenames: string[] | null
           io_port: string | null
           length_mm: number | null
           lowest_price: number | null
@@ -1950,12 +1951,13 @@ export type Database = {
           cpu_socket_id: number | null
           description: string | null
           efficiency_core: number | null
+          image_filenames: string[] | null
           integrated_gpu: string | null
           integrated_gpu_id: number | null
           lowest_price: number | null
           max_clock_ghz: number | null
           max_memory_channel: number | null
-          max_memory_size_gb: number | null
+          max_memory_gb: number | null
           max_power_watt: number | null
           model_line: string | null
           performance_core: number | null
@@ -1997,6 +1999,7 @@ export type Database = {
           gpu_chipset_id: number | null
           gpu_memory_type: Database["public"]["Enums"]["gpu_memory_type"] | null
           height_mm: number | null
+          image_filenames: string[] | null
           length_mm: number | null
           lowest_price: number | null
           memory_bus_bit: number | null
@@ -2027,6 +2030,7 @@ export type Database = {
           category_name: string | null
           description: string | null
           form_factor: string | null
+          image_filenames: string[] | null
           interface: string | null
           lowest_price: number | null
           product_id: number | null
@@ -2051,6 +2055,7 @@ export type Database = {
           has_ecc: boolean | null
           has_heatsink: boolean | null
           has_rgb: boolean | null
+          image_filenames: string[] | null
           lowest_price: number | null
           memory_type: Database["public"]["Enums"]["memory_type"] | null
           overclocked: boolean | null
@@ -2084,10 +2089,11 @@ export type Database = {
           cpu_socket_support: string | null
           description: string | null
           form_factor: string | null
+          image_filenames: string[] | null
           lowest_price: number | null
+          max_memory_gb: number | null
           memory_channel_count: number | null
           memory_frequency_mhz: number | null
-          memory_max_gb: number | null
           memory_slot: number | null
           memory_type: Database["public"]["Enums"]["memory_type"] | null
           memory_type_id: number | null
@@ -2141,6 +2147,7 @@ export type Database = {
           efficiency_rating: string | null
           form_factor: string | null
           form_factor_id: number | null
+          image_filenames: string[] | null
           lowest_price: number | null
           modularity: Database["public"]["Enums"]["psu_modularity"] | null
           peripherals_connector: string | null

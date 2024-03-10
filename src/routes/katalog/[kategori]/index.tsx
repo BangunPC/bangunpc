@@ -29,10 +29,14 @@ import FilledButton from '~/components/common/filled-button';
 import { TbArrowLeft, TbLoader2 } from '@qwikest/icons/tablericons';
 import { useDebounce } from '~/lib/use-debounce';
 
-const getData = server$(async (search: string, kategori: string) => {
+const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
+const storageUrl = '/storage/v1/object/public/product-images/';
 
-  const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
-  const storageUrl = '/storage/v1/object/public/product-images/';
+const componentImage = function(component: any) {
+  return `${supabaseUrl}${storageUrl}${component.product_id}/${component.image_filenames[0]}`
+}
+
+const getData = server$(async (search: string, kategori: string) => {
 
   const category = categories[kategori];
   const client = await supabase();
@@ -56,36 +60,13 @@ const getData = server$(async (search: string, kategori: string) => {
       .from(category)
       .select()
       .order('product_name', { ascending: true })
-      .textSearch('product_name', `'${search}'`, {type: 'websearch', config: 'english'})
+      .textSearch('product_name', `'${search}'`, { type: 'websearch', config: 'english' })
       .then((res) => {
         data = res.data !== null ? res.data : undefined;
       });
   }
 
-  const imageUrls: (string | undefined)[] = []
-
-  if (data) {
-    const promises = data.map(async (component: any) => {
-      const { data: imageData } = await client.schema('product').from('v_product_images')
-        .select("image_filenames")
-        .eq('product_id', component['product_id'])
-        .single()
-
-      if (imageData?.image_filenames?.length == 0) {
-        imageUrls.push(undefined)
-      }
-      else {
-        imageUrls.push(imageData?.image_filenames?.map((name: string) => {
-          const url = `${supabaseUrl}${storageUrl}${component['product_id']}/${name}`
-          return url;
-        })[0])
-      }
-    })
-
-    await Promise.all(promises)
-  }
-
-  return { data, imageUrls, total }
+  return { data, total }
 })
 
 export default component$(() => {
@@ -119,9 +100,10 @@ export default component$(() => {
     const kateg = track(() => location.params.kategori);
 
     isLoading.value = true;
-    const { data: categoryData, imageUrls, total: productAmount } = await getData(url.searchParams.get("value") ?? '', kateg);
+    const { data: categoryData, total: productAmount } = await getData(url.searchParams.get("value") ?? '', kateg);
     isLoading.value = false;
-    return { categoryData, imageUrls, productAmount };
+    console.log(categoryData);
+    return { categoryData, productAmount };
   })
 
   const defaultHeadersStart = ['', 'Nama', '']; // The first '' is for the checkbox, the second for the image
@@ -244,7 +226,7 @@ export default component$(() => {
           </main>
         </div>
       </div>}
-      onResolved={({ categoryData, imageUrls, productAmount }) => (
+      onResolved={({ categoryData, productAmount }) => (
         <>
           <input
             type="checkbox"
@@ -310,49 +292,47 @@ export default component$(() => {
                       'flex flex-col w-[calc(100vw-70px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]',
                     ]}
                   >
-                    {categoryData?.map((component: any, index: number) => (
-                      <Link
-                        href={`/detail/${kategori}/${component.slug}`}
-                        key={component.product_id}
-                        class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
-                      >
-                        <div class="flex flex-row items-center gap-1">
-                          <input type="checkbox" />
-                          <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
-                            <img
-                              src={
-                                imageUrls[index]?.length == 0 ? '' : imageUrls[index]
-                              }
-                              alt={`Gambar ${component.product_name}`}
-                              width={80}
-                              height={80}
-                            />
-                            <div class="flex flex-col">
-                              <span class="text-lg font-bold leading-none">
-                                {component.product_name}
-                              </span>
-                              <span class="font-bold mt-2">
-                                Rp{' '}
-                                {(
-                                  component.lowest_price as number | null
-                                )?.toLocaleString('id-ID') ?? '-'}
-                              </span>
+                    {categoryData?.map((component: any) => {
+                      return (
+                        <Link
+                          href={`/detail/${kategori}/${component.slug}`}
+                          key={component.product_id}
+                          class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
+                        >
+                          <div class="flex flex-row items-center gap-1">
+                            <input type="checkbox" />
+                            <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
+                              {component.image_filenames.length > 0 && (<img
+                                src={componentImage(component)}
+                                alt={`Gambar ${component.product_name}`}
+                                width={80}
+                                height={80} />)}
+                              <div class="flex flex-col">
+                                <span class="text-lg font-bold leading-none">
+                                  {component.product_name}
+                                </span>
+                                <span class="font-bold mt-2">
+                                  Rp{' '}
+                                  {(
+                                    component.lowest_price as number | null
+                                  )?.toLocaleString('id-ID') ?? '-'}
+                                </span>
+                              </div>
+                            </div>
+                            <div>
+                              <FilledButton>Tambah</FilledButton>
                             </div>
                           </div>
-                          <div>
-                            <FilledButton>Tambah</FilledButton>
+                          <div class="grid sm:grid-cols-4 grid-cols-3 gap-1">
+                            <ComponentFallback
+                              headers={headers}
+                              kategori={kategori}
+                              component={component}
+                              isMobile={true} />
                           </div>
-                        </div>
-                        <div class="grid sm:grid-cols-4 grid-cols-3 gap-1">
-                          <ComponentFallback
-                            headers={headers}
-                            kategori={kategori}
-                            component={component}
-                            isMobile={true}
-                          />
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      );
+                    })}
                   </div>
 
                   <table class='hidden md:table'>
@@ -365,7 +345,7 @@ export default component$(() => {
                     </thead>
                     <tbody class={styles.tableBody}>
                       <tr class="h-4"></tr>
-                      {categoryData?.map((component: any, index: number) => (
+                      {categoryData?.map((component: any) => (
                         <>
                           <tr
                             data-href={`/detail/${kategori}/${component.slug}`}
@@ -386,18 +366,14 @@ export default component$(() => {
                               />
                             </td>
                             <td>
-                              {imageUrls[index] && (
-                                <>
-                                  <img
-                                    src={
-                                      imageUrls[index]?.length == 0 ? '' : imageUrls[index]
-                                    }
-                                    alt={`Gambar ${component.product_name}`}
-                                    width={64}
-                                    height={64}
-                                  />
-                                </>
-                              )}
+                              {component.image_filenames.length > 0 && (<img
+                                src={
+                                  componentImage(component)
+                                }
+                                alt={`Gambar ${component.product_name}`}
+                                width={64}
+                                height={64}
+                              />)}
                             </td>
                             <td>{component.product_name ?? '-'}</td>
 

@@ -33,6 +33,8 @@ export default component$(() => {
         { icon: <SimulasiRouter width="27" height="27" />, title: 'Router' },
     ]
 
+    // TODO: change to 'Tambah' instead of 'Pilih' for all/certain component
+
     return <div class='mt-1 p-4'>
         <header class='font-semibold text-3xl'>
             Simulasi Rakit PC

@@ -84,7 +84,7 @@ table {
     backdrop-filter: blur(10px);
 
     position: sticky;
-    top: 70px;
+    top: 64px;
     z-index: 50;
 }
 

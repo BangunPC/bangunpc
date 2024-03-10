@@ -10,13 +10,13 @@ import DocumentText from "../icons/document-text";
 import { TbMenu2 } from "@qwikest/icons/tablericons";
 import LogoHeader from "./logo-header";
 import User2 from "../icons/user-2";
-
+import { kToggleKatalogModal } from "~/lib/constant";
 
 const headersItems = [
   {
     icon: <ShoppingCart width="24" height="24" />,
     title: "Katalog",
-    labelFor: "toggleKatalogModal",
+    labelFor: kToggleKatalogModal,
   },
   {
     icon: <DocumentText width="24" height="24" />,

@@ -70,7 +70,7 @@ export const motherboardHeaders = [
     'Brand Name',
     'CPU Socket',
     'Form Factor',
-    'Memory Max (GB)',
+    'Max Memory (GB)',
     'Memory Type',
 ]
 
@@ -78,7 +78,7 @@ export const motherboardKeys = [
     'brand_name',
     'cpu_socket',
     'form_factor',
-    'memory_max_gb',
+    'max_memory_gb',
     'memory_type',
 ]
 

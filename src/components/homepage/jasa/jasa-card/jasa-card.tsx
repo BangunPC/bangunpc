@@ -1,12 +1,14 @@
 import { Slot, component$ } from "@builder.io/qwik";
 import style from "./jasa-card.module.css";
 import { HiArrowUpSolid } from "@qwikest/icons/heroicons";
+import { Link } from "@builder.io/qwik-city";
 
 export type JasaProps = {
     title: string
     description: string
     iconNumber: number
     labelFor?: string | undefined
+    href?: string | undefined
 }
 
 export default component$<JasaProps>((props) => {
@@ -14,7 +16,7 @@ export default component$<JasaProps>((props) => {
     const arrow = <footer
         class={`mx-auto rounded-full ${borderClass} w-fit px-6 text-2xl transition-colors bg-white hover:bg-button-hover  hover:border-[#a6afce] hover:text-white cursor-pointer translate-y-[-50%]`}
 
-        onClick$={() => props.labelFor ? undefined : alert('Coming Soon!')}
+        onClick$={() => props.labelFor || props.href ? undefined : alert('Coming Soon!')}
     >
         <HiArrowUpSolid class="rotate-45" />
     </footer>
@@ -40,7 +42,12 @@ export default component$<JasaProps>((props) => {
                     {arrow}
                 </label>
             )}
-            {!props.labelFor && arrow}
+            {props.href && (
+                <Link href={props.href} class='text-black'>
+                    {arrow}
+                </Link>
+            )}
+            {!props.labelFor && !props.href && arrow}
         </div>
     )
 })

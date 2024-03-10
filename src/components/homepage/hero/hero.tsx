@@ -1,8 +1,9 @@
 import { component$ } from "@builder.io/qwik";
 import Image from "~/content/images/hero-image.webp?jsx";
 import styles from "./hero.module.css";
-import FilledButton from "~/components/common/filled-button";
+import { filledButtonClass } from "~/components/common/filled-button";
 import Computer from "~/components/starter/icons/computer";
+import { Link } from "@builder.io/qwik-city";
 
 
 export default component$(() => {
@@ -34,13 +35,12 @@ export default component$(() => {
                     </div>
                 </div>
                 <div class={styles['hero-section-left-buttons']}>
-                    <FilledButton class="w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center"
-                        onClick$={() => alert('Coming Soon!')}
+                    <Link href="/simulasi" class={[filledButtonClass, "w-[180px] h-[54px] flex py-[8px] px-[18px] rounded-xl items-center justify-center"]}
                     >
                         <span class="text-white font-semibold text-[15px]">
                             <Computer class='inline w-5 h-5 fill-transparent -translate-y-[3px]' />{' Rakit Sekarang '}
                         </span>
-                    </FilledButton>
+                    </Link>
                 </div>
             </div>
             <Image class={styles["hero-section-right"]} alt="hero image which contains components" />
