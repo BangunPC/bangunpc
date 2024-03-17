@@ -14,6 +14,18 @@ import { kToggleKatalogModal } from "~/lib/constant";
 
 const headersItems = [
   {
+    icon: <Devices width="24" height="24" />,
+    title: "Simulasi Rakit PC",
+    href: "/simulasi",
+  },
+  {
+    icon: <User2 width="24" height="24" />,
+    title: "Jasa",
+    altTitle: "Jasa",
+    href: "/jasa",
+    // disabled: true,
+  },
+  {
     icon: <ShoppingCart width="24" height="24" />,
     title: "Katalog",
     labelFor: kToggleKatalogModal,
@@ -24,17 +36,6 @@ const headersItems = [
     // href: "https://static-bangunpc.pages.dev/artikel/",
     href: "/blog",
   },
-  {
-    icon: <Devices width="24" height="24" />,
-    title: "Simulasi Rakit PC",
-    href: "/simulasi",
-  },
-  // {
-  //   icon: <User width="24" height="24" />,
-  //   title: "Jasa Rakit PC",
-  //   altTitle: "Jasa Servis PC",
-  //   disabled: true,
-  // },
 ];
 
 export default component$(() => {
@@ -102,8 +103,12 @@ export default component$(() => {
         </Link> */}
             <div
               class='m-auto tablet:m-0 mt-4 w-32 tablet:w-28 bg-button hover:bg-button-hover transition-colors hover:cursor-pointer rounded-full flex flex-row text-white items-center py-2 px-4 justify-evenly tablet:justify-between font-semibold'
+              onClick$={() => {
+                // toast("Coming Soon!")
+                alert('Coming Soon!')
+              }}
             >
-              <User2 width="24" height="24" class="fill-none" />
+              <User2 width="24" height="24" class="fill-none stroke-white" />
               <span class='ml-1 -translate-x-1'>
                 Login
               </span>

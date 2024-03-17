@@ -142,8 +142,9 @@
   .toggle:checked~*>.buttons {
     gap: 20px;
     /* This is height with login button */
+    height: 220px;
     /* height: 200px; */
-    height: 172px;
+    /* height: 172px; */
     /* height: 156px; */
     /* height: 128px; */
     animation: overflow 0.3s;
