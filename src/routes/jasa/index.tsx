@@ -47,33 +47,19 @@ export default component$(() => {
                     </span>
                 </div>
 
-                <div class='bg-white flex flex-col rounded-2xl shadow-bm w-[210px] h-[380px] overflow-clip'>
-                    <div class='h-1/2 bg-primary'>
-                    </div>
-                    <div class='flex flex-col gap-4 p-4'>
-                        <span class='font-semibold'>
-                            Service Keyboard Acer Swift 3 SF314
-                        </span>
-                        <div class='flex flex-col gap-2'>
-                            <span class='font-bold'>
-                                Rp 15.200.000
-                            </span>
-                            <span class='flex text-[#74738A] items-center'>
-                                <Shop width="20" height="20" class="fill-primary stroke-white mr-1" />Pahlawan Gadget
-                            </span>
-                            <span class='flex text-[#74738A] items-center'>
-                                <LocationMarker width="20" height="20" class="fill-primary stroke-white mr-1" />Kota Bandung
-                            </span>
-                            <div class='flex flex-row'>
-                                <TbStarFilled color="#F9C06B" />
-                                <TbStarFilled color="#F9C06B" />
-                                <TbStarFilled color="#F9C06B" />
-                                <TbStarFilled color="#F9C06B" />
-                                <TbStar />
-                                (20)
-                            </div>
-                        </div>
-                    </div>
+                <div class='flex flex-row flex-wrap gap-8 mx-auto justify-center'>
+                    {Array.from(Array(15), (_, i) => (
+                        <ServisCard
+                            key={i}
+                            title="Service Keyboard Acer Swift 3 SF314"
+                            price="Rp 15.200.000"
+                            shop="Pahlawan Gadget"
+                            location="Kota Bandung"
+                            stars={4}
+                            reviews={20}
+                            image=""
+                        />
+                    ))}
                 </div>
 
                 <OutlinedButton class='w-44 h-14 mx-auto'>
@@ -89,22 +75,10 @@ export default component$(() => {
                     </span>
                 </div>
 
-                <div class='bg-white flex flex-col rounded-2xl shadow-br w-[256px] h-[256px]'>
-                    <div class='flex flex-col m-auto justify-evenly text-center gap-8'>
-                        <div>
-                            <div class='m-auto rounded-full w-[128px] h-[128px] bg-primary'>
-                            </div>
-                        </div>
-                        <div class='flex flex-col'>
-                            <span class='flex text-[#74738A] items-center text-lg'>
-                                <LocationMarker width="28" height="28" class="fill-primary stroke-white mr-1" />
-                                Kota Bandung
-                            </span>
-                            <span class='text-xl font-semibold'>
-                                Servis Laptop.ID
-                            </span>
-                        </div>
-                    </div>
+                <div class='flex flex-row flex-wrap gap-8 mx-auto justify-center'>
+                    {Array.from(Array(8), (_, i) => (
+                        <MitraCard key={i} />
+                    ))}
                 </div>
 
                 <OutlinedButton class='w-44 h-14 mx-auto'>
@@ -160,6 +134,77 @@ export default component$(() => {
                             <FaChevronDownSolid class={['inline-block ml-auto transition-transform ', index.value == 2 ? 'rotate-180' : 'rotate-0']} />
                         </span>
                         {index.value == 2 && 'Proses pengerjaan rakit PC bervariasi tergantung pada spesifikasi yang Anda pilih. Hubungi kami untuk penawaran yang tepat.'}
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+})
+
+type ServisCardProps = {
+    title: string
+    price: string
+    shop: string
+    location: string
+    image: string
+    stars: number
+    reviews: number
+}
+
+const ServisCard = component$<ServisCardProps>(({ title, price, shop, location, image, stars }) => {
+    return (
+        <>
+            <div class='bg-white flex flex-col rounded-2xl shadow-bm w-[210px] h-[380px] overflow-clip'>
+                <div class='h-1/2 bg-primary'>
+                </div>
+                <div class='flex flex-col gap-4 p-4'>
+                    <span class='font-semibold'>
+                        {title}
+                    </span>
+                    <div class='flex flex-col gap-2'>
+                        <span class='font-bold'>
+                            {price}
+                        </span>
+                        <span class='flex text-[#74738A] items-center'>
+                            <Shop width="20" height="20" class="fill-primary stroke-white mr-1" />{shop}
+                        </span>
+                        <span class='flex text-[#74738A] items-center'>
+                            <LocationMarker width="20" height="20" class="fill-primary stroke-white mr-1" />{location}
+                        </span>
+                        <div class='flex flex-row'>
+                            {Array.from({ length: stars }, (_, i) => (
+                                <TbStarFilled key={i} color="#F9C06B" />
+                            ))}
+                            {Array.from({ length: 5 - stars }, (_, i) => (
+                                <TbStar key={i} color="#808080" />
+                            ))}
+                            ({20})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+)
+
+const MitraCard = component$(() => {
+    return (
+        <>
+            <div class='bg-white flex flex-col rounded-2xl shadow-br w-[256px] h-[256px]'>
+                <div class='flex flex-col m-auto justify-evenly text-center gap-8'>
+                    <div>
+                        <div class='m-auto rounded-full w-[128px] h-[128px] bg-primary'>
+                        </div>
+                    </div>
+                    <div class='flex flex-col'>
+                        <span class='flex text-[#74738A] items-center text-lg'>
+                            <LocationMarker width="28" height="28" class="fill-primary stroke-white mr-1" />
+                            Kota Bandung
+                        </span>
+                        <span class='text-xl font-semibold'>
+                            Servis Laptop.ID
+                        </span>
                     </div>
                 </div>
             </div>

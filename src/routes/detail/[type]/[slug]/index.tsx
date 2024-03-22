@@ -178,7 +178,7 @@ export default component$(() => {
                 <span class="text-lg">Dari Rp{lowest_price}</span>
               </div>}
             <FilledButton
-              class="flex lg:block lg:w-fit font-normal text-sm px-2 py-3 justify-center rounded-xl"
+              class="flex lg:block lg:w-fit font-normal text-sm px-2 py-3 justify-center rounded-xl bg-primary"
               onClick$={() => alert('Coming soon')}
             >
               + Tambahkan ke Simulasi Rakit PC
@@ -342,7 +342,7 @@ export default component$(() => {
                             <td class="bg-white p-2 rounded-e-lg">
                               <a
                                 href={detail.url}
-                                class={[filledButtonClass]}
+                                class={[filledButtonClass, 'bg-primary']}
                                 target="_blank" rel="noopener noreferrer"
                               >
                                 Beli disini

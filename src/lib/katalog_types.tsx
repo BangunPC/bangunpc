@@ -39,7 +39,7 @@ export const gpuHeaders = [
     'Length (mm)',
     'TDP (Watt)',
     'VRAM (GB)'
-]  
+]
 
 export const gpuKeys = [
     'boost_clock_mhz',
@@ -116,8 +116,7 @@ export const storageKeys = [
     'category_name',
     'form_factor',
     'interface',
-  ];
-
+];
 
 export const categories: { [key: string]: string } = {
     headphone: '',
@@ -142,10 +141,10 @@ export const categories: { [key: string]: string } = {
     storage: 'v_internal_storages',
     casing: 'v_casings',
     casefan: '',
-  };
+};
 
 
-  export const titlesKategori: { [key: string]: string } = {
+export const titlesKategori: { [key: string]: string } = {
     headphone: 'Headphone',
     keyboard: 'Keyboard',
     mouse: 'Mouse',
@@ -168,7 +167,58 @@ export const categories: { [key: string]: string } = {
     cable: 'Cable',
     storage: 'Internal Storage',
     casing: 'PC Casing',
-  };
+};
+
+export enum ComponentCategory {
+    Headphone,
+    Keyboard,
+    Mouse,
+    Speaker,
+    Webcam,
+    Printer,
+    Monitor,
+    OS,
+    SoundCard,
+    WiredNetwork,
+    WirelessNetwork,
+    Cable,
+    ExternalDrive,
+    Motherboard,
+    CPU,
+    GPU,
+    Memory,
+    Cooler,
+    PSU,
+    Storage,
+    Casing,
+    CaseFan
+}
+
+export const categoriesEnum: { [key: string]: ComponentCategory } = {
+    headphone: ComponentCategory.Headphone,
+    keyboard: ComponentCategory.Keyboard,
+    mouse: ComponentCategory.Mouse,
+    speaker: ComponentCategory.Speaker,
+    webcam: ComponentCategory.Webcam,
+    printer: ComponentCategory.Printer,
+    monitor: ComponentCategory.Monitor,
+    os: ComponentCategory.OS,
+    soundcard: ComponentCategory.SoundCard,
+    wirednetwork: ComponentCategory.WiredNetwork,
+    wirelessnetwork: ComponentCategory.WirelessNetwork,
+    cable: ComponentCategory.Cable,
+    externaldrive: ComponentCategory.ExternalDrive,
+    motherboard: ComponentCategory.Motherboard,
+    cpu: ComponentCategory.CPU,
+    gpu: ComponentCategory.GPU,
+    memory: ComponentCategory.Memory,
+    cooler: ComponentCategory.Cooler,
+    psu: ComponentCategory.PSU,
+    storage: ComponentCategory.Storage,
+    casing: ComponentCategory.Casing,
+    casefan: ComponentCategory.CaseFan,
+};
+
 // export type All = { isMobile: boolean, all: Database['product']['Views']['v_all_products']['Row'] }
 
 // export type Casing = { isMobile: boolean, casing: Database['product']['Views']['v_casings']['Row'] }

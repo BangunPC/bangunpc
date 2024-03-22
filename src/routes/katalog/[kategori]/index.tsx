@@ -11,6 +11,7 @@ import {
   casingHeaders,
   casingKeys,
   categories,
+  categoriesEnum,
   cpuHeaders,
   cpuKeys,
   gpuHeaders,
@@ -28,11 +29,12 @@ import {
 import FilledButton from '~/components/common/filled-button';
 import { TbArrowLeft, TbLoader2 } from '@qwikest/icons/tablericons';
 import { useDebounce } from '~/lib/use-debounce';
+import { ComponentStorage, ComponentStorageType } from '~/lib/storage_helper';
 
 const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
 const storageUrl = '/storage/v1/object/public/product-images/';
 
-const componentImage = function(component: any) {
+const componentImage = function (component: any) {
   return `${supabaseUrl}${storageUrl}${component.product_id}/${component.image_filenames[0]}`
 }
 
@@ -293,6 +295,18 @@ export default component$(() => {
                     ]}
                   >
                     {categoryData?.map((component: any) => {
+                      const handleAddComponent = $(() => {
+                        const componentAdded: ComponentStorageType = {
+                          id: component.product_id,
+                          name: component.product_name,
+                          price: component.lowest_price,
+                          image: componentImage(component),
+                          category: categoriesEnum[kategori],
+                          quantity: 1,
+                        }
+                        ComponentStorage.addComponent(componentAdded)
+                        alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')
+                      })
                       return (
                         <Link
                           href={`/detail/${kategori}/${component.slug}`}
@@ -320,7 +334,7 @@ export default component$(() => {
                               </div>
                             </div>
                             <div>
-                              <FilledButton>Tambah</FilledButton>
+                              <FilledButton onClick$={handleAddComponent}>Tambah</FilledButton>
                             </div>
                           </div>
                           <div class="grid sm:grid-cols-4 grid-cols-3 gap-1">
@@ -345,56 +359,63 @@ export default component$(() => {
                     </thead>
                     <tbody class={styles.tableBody}>
                       <tr class="h-4"></tr>
-                      {categoryData?.map((component: any) => (
-                        <>
-                          <tr
-                            data-href={`/detail/${kategori}/${component.slug}`}
-                            key={component.product_id}
-                            class={[
-                              styles.tableRow,
-                              'transition-transform hover:scale-[1.01] hover:z-10 cursor-pointer',
-                            ]}
-                            onClick$={() =>
-                              (window.location.href = `/detail/${kategori}/${component.slug}`)
-                            }
-                          >
-                            <td>
-                              <input
-                                type="checkbox"
-                                id={component.product_id!.toString()}
-                                class={[styles.toggle, 'z-20']}
-                              />
-                            </td>
-                            <td>
-                              {component.image_filenames.length > 0 && (<img
-                                src={
-                                  componentImage(component)
-                                }
-                                alt={`Gambar ${component.product_name}`}
-                                width={64}
-                                height={64}
-                              />)}
-                            </td>
-                            <td>{component.product_name ?? '-'}</td>
+                      {categoryData?.map((component: any) => {
+                        const handleAddComponent = $(() => {
+                          const componentAdded: ComponentStorageType = {
+                            id: component.product_id,
+                            name: component.product_name,
+                            price: component.lowest_price,
+                            image: componentImage(component),
+                            category: categoriesEnum[kategori],
+                            quantity: 1,
+                          }
+                          ComponentStorage.addComponent(componentAdded)
+                          alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')
+                        })
+                        return (
+                          <>
+                            <tr
+                              data-href={`/detail/${kategori}/${component.slug}`}
+                              key={component.product_id}
+                              class={[
+                                styles.tableRow,
+                                'transition-transform hover:scale-[1.01] hover:z-10 cursor-pointer',
+                              ]}
+                              onClick$={() => (window.location.href = `/detail/${kategori}/${component.slug}`)}
+                            >
+                              <td>
+                                <input
+                                  type="checkbox"
+                                  id={component.product_id!.toString()}
+                                  class={[styles.toggle, 'z-20']} />
+                              </td>
+                              <td>
+                                {component.image_filenames.length > 0 && (<img
+                                  src={componentImage(component)}
+                                  alt={`Gambar ${component.product_name}`}
+                                  width={64}
+                                  height={64} />)}
+                              </td>
+                              <td>{component.product_name ?? '-'}</td>
 
-                            <ComponentFallback
-                              headers={headers}
-                              kategori={kategori}
-                              component={component}
-                              isMobile={false}
-                            />
+                              <ComponentFallback
+                                headers={headers}
+                                kategori={kategori}
+                                component={component}
+                                isMobile={false} />
 
-                            <td>
-                              {component.lowest_price?.toLocaleString('id-ID') ??
-                                '-'}
-                            </td>
-                            <td>
-                              <FilledButton>Tambah</FilledButton>
-                            </td>
-                          </tr>
-                          <tr key={component.product_id + 'gap'} class="h-2"></tr>
-                        </>
-                      ))}
+                              <td>
+                                {component.lowest_price?.toLocaleString('id-ID') ??
+                                  '-'}
+                              </td>
+                              <td>
+                                <FilledButton onClick$={handleAddComponent}>Tambah</FilledButton>
+                              </td>
+                            </tr>
+                            <tr key={component.product_id + 'gap'} class="h-2"></tr>
+                          </>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </main>
