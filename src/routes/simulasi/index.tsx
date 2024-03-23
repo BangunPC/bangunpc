@@ -90,7 +90,7 @@ export default component$(() => {
             Simulasi Rakit PC
         </header>
         <main class='p-4 max-w-7xl w-full m-auto'>
-            <div class='rounded-xl shadow-md shadow-black/5 bg-white p-4'>
+            <div class='rounded-xl shadow-bm shadow-black/5 bg-white p-4'>
                 <table class="w-full ">
                     <thead class='border-b border-black text-left h-8'>
                         <tr>
@@ -102,8 +102,8 @@ export default component$(() => {
                     <tbody>
                         {components.map((item) => (
                             <tr key={item.title} class='h-12 border-b border-zinc-500'>
-                                <td class='text-primary font-bold'>
-                                    <div class='flex flex-row items-center'>
+                                <td class='text-primary font-bold flex'>
+                                    <div class='flex flex-row items-center mb-auto mt-2'>
                                         {item.icon}
                                         <span class='ml-1'>
                                             {item.title}
@@ -111,51 +111,91 @@ export default component$(() => {
                                     </div>
                                 </td>
                                 <td>
-                                    {item.components.value.map((component) => (
-                                        <div
-                                            key={component.id}
-                                            class='flex flex-row items-center'
-                                        >
-                                            <span class='ml-1'>
-                                                {component.name}
-                                            </span>
-
-                                            <OutlinedButton
-                                                class='ml-2'
-                                                onClick$={() => {
-                                                    if (item.components.value.length > 0) {
-                                                        ComponentStorage.removeComponentById(item.components.value[0].id);
-                                                        refresh();
-                                                    }
-                                                }}
+                                    <div class='flex flex-col gap-1'>
+                                        {item.components.value.map((component) => (
+                                            <div
+                                                key={component.id}
+                                                class='flex flex-row items-center'
                                             >
-                                                Hapus
-                                            </OutlinedButton>
-                                        </div>
-                                    ))}
-                                    {item.components.value.length == 0 ? (
-                                        <FilledButton>
-                                            + Pilih {item.title}
-                                        </FilledButton>
-                                    ) : (
-                                        <></>
-                                        // <OutlinedButton>
-                                        //     + {item.title}
-                                        // </OutlinedButton>
-                                    )}
+                                                <img src={component.image} alt={component.name} width={32} height={32} />
+                                                <span class='ml-1'>
+                                                    {component.name}
+                                                </span>
+
+                                                <OutlinedButton
+                                                    class='ml-auto mr-4'
+                                                    onClick$={() => {
+                                                        if (item.components.value.length > 0) {
+                                                            ComponentStorage.removeComponentById(item.components.value[0].id);
+                                                            refresh();
+                                                        }
+                                                    }}
+                                                >
+                                                    Hapus
+                                                </OutlinedButton>
+                                            </div>
+                                        ))}
+                                        {item.components.value.length == 0 ? (
+                                            <FilledButton class='w-fit'>
+                                                + Pilih {item.title}
+                                            </FilledButton>
+                                        ) : (
+                                            <></>
+                                            // <OutlinedButton>
+                                            //     + {item.title}
+                                            // </OutlinedButton>
+                                        )}
+                                    </div>
                                 </td>
-                                <td>{item.components.value[0]?.price ? `Rp ${(item.components.value[0]?.price ?? 0).toLocaleString('id-ID')}` : '-'}</td>
-                                <td>{item.components.value[0]?.quantity ?? '-'}</td>
-                                <td>{(item.components.value[0]?.price && item.components.value[0]?.quantity) ? `Rp ${(item.components.value[0]?.price ?? 0).toLocaleString('id-ID')}` : '-'}</td>
-                                <td></td>
+                                <td>
+                                    <div class='flex flex-col gap-1'>
+                                        {item.components.value.map(component =>
+                                            <div key={component.id} class='flex h-[38px]'>
+                                                <span class='my-auto text-start'>
+                                                    {component.price ? `Rp ${component.price.toLocaleString('id-ID')}` : '-'}
+                                                </span>
+                                            </div>
+                                        )
+
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class='flex flex-col gap-1 h-full'>
+                                        {item.components.value.map(component =>
+                                            <div key={component.id} class='flex h-[38px]'>
+                                                <span class='my-auto text-start'>
+                                                    {component.quantity}
+                                                </span>
+                                            </div>
+                                        )
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class='flex flex-col gap-1 h-full'>
+                                        {item.components.value.map(component =>
+                                            <div key={component.id} class='flex h-[38px]'>
+                                                <span class='my-auto text-start'>
+                                                    {(component.price && component.quantity) ? `Rp ${((component.price ?? 0) * (component.quantity ?? 0)).toLocaleString('id-ID')}` : '-'}
+                                                </span>
+                                            </div>
+                                        )
+
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
             <div class='ml-auto w-fit mt-4'>
-                <div class='rounded-xl bg-white shadow-md shadow-black/5 p-4 '>
-                    Total: Rp {components.reduce((a, b) => a + ((b.components.value[0]?.price ?? 0 * (b.components.value[0]?.quantity ?? 0))), 0).toLocaleString('id-ID')}
+                <div class='rounded-xl bg-white shadow-bm shadow-black/5 p-4 '>
+                    Total: Rp {components.reduce((a, b) => a + ((b.components.value.reduce((a, b) => a + (b.price * b.quantity), 0))), 0).toLocaleString('id-ID')}
                 </div>
             </div>
         </main>
