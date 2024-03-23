@@ -151,7 +151,7 @@ type ServisCardProps = {
     reviews: number
 }
 
-const ServisCard = component$<ServisCardProps>(({ title, price, shop, location, image, stars }) => {
+const ServisCard = component$<ServisCardProps>(({ title, price, shop, location, stars }) => {
     return (
         <>
             <div class='bg-white flex flex-col rounded-2xl shadow-bm w-[210px] h-[380px] overflow-clip'>
