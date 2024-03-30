@@ -14,3 +14,10 @@ export const supabase = server$(function () {
 
   return noSerialize(supabaseClient)!;
 })
+
+const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
+const storageUrl = '/storage/v1/object/public/product-images/';
+
+export const componentImage = function (component: any) {
+  return `${supabaseUrl}${storageUrl}${component.product_id}/${component.image_filenames[0]}`
+}

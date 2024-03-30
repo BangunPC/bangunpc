@@ -1,5 +1,5 @@
 import { component$, Slot, useStyles$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { routeLoader$, useLocation } from "@builder.io/qwik-city";
 import type { RequestHandler } from "@builder.io/qwik-city";
 
 import Header from "~/components/starter/header/header";
@@ -29,16 +29,21 @@ export const useServerTimeLoader = routeLoader$(() => {
 
 export default component$(() => {
   useStyles$(styles);
+
+  const loc = useLocation();
+
+  const isNotIframe = loc.url.searchParams.get('iframe') !== 'true';
+
   return (
     <>
-      <Header />
+      {isNotIframe && <Header />}
       <QwikCityNprogress />
-      <main class='pt-16'>
-        <Feedback />
-        <ModalKatalog />
+      <main class={isNotIframe && 'pt-16'}>
+        {isNotIframe && <Feedback />}
+        {isNotIframe && <ModalKatalog />}
         <Slot />
       </main>
-      <Footer />
+      {isNotIframe && <Footer />}
     </>
   );
 });

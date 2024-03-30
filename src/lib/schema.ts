@@ -6,6 +6,8 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
+type CpuType = Database['product']['Views']['v_cpus']['Row']
+
 export type Database = {
   product: {
     Tables: {
@@ -122,7 +124,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       casing_types: {
@@ -278,7 +280,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "casing_types"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       categories: {
@@ -394,7 +396,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       cpu_families: {
@@ -598,7 +600,7 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       gpu_chipsets: {
@@ -749,7 +751,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       internal_storages: {
@@ -853,7 +855,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       marketplaces: {
@@ -985,7 +987,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "memory_types"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       memory_types: {
@@ -1042,7 +1044,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_cpus"
             referencedColumns: ["cpu_socket_id"]
-          }
+          },
         ]
       }
       motherboard_form_factors: {
@@ -1200,7 +1202,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       pc_builds: {
@@ -1340,7 +1342,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       power_supplies: {
@@ -1467,7 +1469,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       product_detail_descriptions: {
@@ -1600,7 +1602,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       products: {
@@ -1665,7 +1667,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["category_id"]
-          }
+          },
         ]
       }
       psu_efficiency_ratings: {
@@ -1799,7 +1801,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       wireless_network_cards: {
@@ -1894,7 +1896,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
     }
@@ -1936,7 +1938,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "casing_types"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       v_cpus: {
@@ -1983,7 +1985,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "cpu_integrated_gpus"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       v_gpus: {
@@ -2020,7 +2022,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "gpu_chipsets"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       v_internal_storages: {
@@ -2074,7 +2076,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "memory_types"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       v_motherboards: {
@@ -2135,7 +2137,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "memory_types"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       v_power_supplies: {
@@ -2168,7 +2170,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "psu_form_factors"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       v_product_details: {
@@ -2252,7 +2254,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_products"
             referencedColumns: ["product_id"]
-          }
+          },
         ]
       }
       v_product_images: {
@@ -2376,7 +2378,7 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       partners: {
@@ -2452,7 +2454,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       service_orders: {
@@ -2500,7 +2502,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       services: {
@@ -2521,6 +2523,21 @@ export type Database = {
           id?: number
           name?: string | null
           price?: number | null
+        }
+        Relationships: []
+      }
+      test: {
+        Row: {
+          created_at: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
         }
         Relationships: []
       }
@@ -2564,7 +2581,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
     }
@@ -2602,14 +2619,16 @@ export type Database = {
   }
 }
 
+type PublicSchema = Database[Extract<keyof Database, "public">]
+
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
@@ -2617,67 +2636,67 @@ export type Tables<
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-      Database["public"]["Views"])
-  ? (Database["public"]["Tables"] &
-      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-    ? R
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
     : never
-  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
-    }
-    ? I
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
     : never
-  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
-    }
-    ? U
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
     : never
-  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
+    | keyof PublicSchema["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never

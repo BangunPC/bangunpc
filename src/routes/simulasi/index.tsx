@@ -1,6 +1,6 @@
 import { $, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { TbEdit, TbTrash, TbX } from "@qwikest/icons/tablericons";
 import FilledButton from "~/components/common/filled-button";
-import OutlinedButton from "~/components/common/outlined-button";
 import SimulasiCasing from "~/components/icons/simulasi/simulasi-casing";
 import SimulasiCpu from "~/components/icons/simulasi/simulasi-cpu";
 import SimulasiGpu from "~/components/icons/simulasi/simulasi-gpu";
@@ -8,15 +8,14 @@ import SimulasiMemory from "~/components/icons/simulasi/simulasi-memory";
 import SimulasiMotherboard from "~/components/icons/simulasi/simulasi-motherboard";
 import SimulasiPsu from "~/components/icons/simulasi/simulasi-psu";
 import SimulasiStorage from "~/components/icons/simulasi/simulasi-storage";
+import { getCpu } from "~/lib/component_api/cpu";
 import { ComponentCategory } from "~/lib/katalog_types";
 import type { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentStorage } from "~/lib/storage_helper";
 
 export default component$(() => {
 
-    const headers = ['Kategori Komponen', 'Komponen Dipilih', 'Harga Satuan', 'Kuantitas', 'Harga Total', 'E-Commerce',]
-
-    // TODO: change to 'Tambah' instead of 'Pilih' for all/certain component
+    const headers = ['Kategori Komponen', 'Komponen Dipilih', 'Harga Satuan', 'Kuantitas', 'Harga Total', 'Aksi',]
 
     const cpu = useSignal([] as ComponentStorageType[]);
     const cooler = useSignal([] as ComponentStorageType[]);
@@ -67,24 +66,61 @@ export default component$(() => {
             printer.value = ComponentStorage.getComponentsByCategory(ComponentCategory.Printer);
         })
 
-    useVisibleTask$(() => { refresh() })
+    useVisibleTask$(() => {
+        refresh();
+        setInterval(refresh, 2000);
+    })
+
+    type motherboardUrlQuery = {};
+    type cpuUrlQuery = { motherboardId: number | undefined, memories: { id: number, amount: number }[] | undefined };
+    type gpuUrlQuery = {};
+    type memoryUrlQuery = {};
+    type psuUrlQuery = {};
+    type storageUrlQuery = {};
+    type casingUrlQuery = {};
+
+    const urlQuery = useSignal('');
 
     const components = [
-        { icon: <SimulasiMotherboard width="27" height="27" />, title: 'Motherboard', components: motherboard, },
-        { icon: <SimulasiCpu width="27" height="27" />, title: 'CPU', components: cpu, },
-        { icon: <SimulasiGpu width="27" height="27" />, title: 'GPU', components: gpu, },
-        { icon: <SimulasiMemory width="27" height="27" />, title: 'Memory', components: memory, },
-        { icon: <SimulasiPsu width="27" height="27" />, title: 'Power Supply', components: psu, },
-        { icon: <SimulasiStorage width="27" height="27" />, title: 'Storage', components: storage, },
-        // { icon: <SimulasiCpuCooler width="27" height="27" />, title: 'CPU Cooler', components: cooler, },
-        { icon: <SimulasiCasing width="27" height="27" />, title: 'PC Case', components: casing, },
-        // { icon: <SimulasiMonitor width="27" height="27" />, title: 'Monitor', components: monitor, },
-        // { icon: <SimulasiCable width="27" height="27" />, title: 'Cable', components: cable, },
-        // { icon: <SimulasiMouse width="27" height="27" />, title: 'Mouse', components: mouse, },
-        // { icon: <SimulasiSpeaker width="27" height="27" />, title: 'Speaker', components: speaker, },
-        // { icon: <SimulasiRouter width="27" height="27" />, title: 'Router', components: wirelessNetwork, },
+        { icon: <SimulasiMotherboard width="27" height="27" />, title: 'Motherboard', components: motherboard, iframe: `/katalog/motherboard` },
+        { icon: <SimulasiCpu width="27" height="27" />, title: 'CPU', components: cpu, iframe: `/katalog/cpu` },
+        { icon: <SimulasiGpu width="27" height="27" />, title: 'GPU', components: gpu, iframe: `/katalog/gpu` },
+        { icon: <SimulasiMemory width="27" height="27" />, title: 'Memory', components: memory, iframe: `/katalog/memory` },
+        { icon: <SimulasiPsu width="27" height="27" />, title: 'Power Supply', components: psu, iframe: `/katalog/psu` },
+        { icon: <SimulasiStorage width="27" height="27" />, title: 'Storage', components: storage, iframe: `/katalog/storage` },
+        { icon: <SimulasiCasing width="27" height="27" />, title: 'PC Case', components: casing, iframe: `/katalog/casing` },
     ]
 
+    const iframePath = useSignal('');
+
+    const convertToUrlQuery = $(function convertToUrlQuery(object: any) {
+        const isObject = (val: any) => val && typeof val === 'object';
+
+        const transformObject = (obj: any) => Object.entries(obj).map(([key, value]) => {
+            const transformedKey = isObject(key) ? JSON.stringify(key) : key;
+            const transformedValue = isObject(value) ? JSON.stringify(value) : value;
+            return `${transformedKey}=${transformedValue as string}`;
+        }).join('&');
+
+        return transformObject(object);
+    })
+
+    const handleAddComponent = $(function handleAddComponent(item: typeof components[number]) {
+        iframePath.value = item.iframe;
+        let query = {} as any;
+        switch (item.title) {
+            case 'CPU':
+                query = {} as cpuUrlQuery;
+                if (motherboard.value.length > 0) {
+                    query.motherboardId = parseInt(motherboard.value[0].id);
+                }
+                if (memory.value.length > 0) {
+                    query.memories = memory.value.map((item) => ({ id: parseInt(item.id), amount: item.quantity }));
+                }
+                break;
+        }
+        convertToUrlQuery(query).then(result => { urlQuery.value = result; iframePath.value = item.iframe });
+    })
     return <div class='mt-1 p-4'>
         <header class='font-semibold text-3xl'>
             Simulasi Rakit PC
@@ -112,7 +148,8 @@ export default component$(() => {
                                 </td>
                                 <td>
                                     <div class='flex flex-col gap-1'>
-                                        {item.components.value.map((component) => (
+                                        {item.components.value.map((component) =>
+                                        (
                                             <div
                                                 key={component.id}
                                                 class='flex flex-row items-center'
@@ -121,22 +158,11 @@ export default component$(() => {
                                                 <span class='ml-1'>
                                                     {component.name}
                                                 </span>
-
-                                                <OutlinedButton
-                                                    class='ml-auto mr-4'
-                                                    onClick$={() => {
-                                                        if (item.components.value.length > 0) {
-                                                            ComponentStorage.removeComponentById(item.components.value[0].id);
-                                                            refresh();
-                                                        }
-                                                    }}
-                                                >
-                                                    Hapus
-                                                </OutlinedButton>
                                             </div>
-                                        ))}
+                                        )
+                                        )}
                                         {item.components.value.length == 0 ? (
-                                            <FilledButton class='w-fit'>
+                                            <FilledButton class='w-fit' onClick$={() => handleAddComponent(item)}>
                                                 + Pilih {item.title}
                                             </FilledButton>
                                         ) : (
@@ -177,7 +203,7 @@ export default component$(() => {
                                         {item.components.value.map(component =>
                                             <div key={component.id} class='flex h-[38px]'>
                                                 <span class='my-auto text-start'>
-                                                    {(component.price && component.quantity) ? `Rp ${((component.price ?? 0) * (component.quantity ?? 0)).toLocaleString('id-ID')}` : '-'}
+                                                    {(component.price && component.quantity) ? `Rp ${((component.price) * (component.quantity)).toLocaleString('id-ID')}` : '-'}
                                                 </span>
                                             </div>
                                         )
@@ -186,7 +212,23 @@ export default component$(() => {
                                     </div>
                                 </td>
                                 <td>
-
+                                    {
+                                        item.components.value.map(component =>
+                                            <div key={component.id} class='flex flex-row gap-1 items-center py-1'>
+                                                <FilledButton
+                                                    class='bg-red-600 flex items-center'
+                                                    onClick$={() => {
+                                                        if (item.components.value.length > 0) {
+                                                            ComponentStorage.removeComponentById(item.components.value[0].id);
+                                                            refresh();
+                                                        }
+                                                    }}
+                                                >
+                                                    <TbTrash class='inline-block' />
+                                                    Hapus
+                                                </FilledButton>
+                                            </div>)
+                                    }
                                 </td>
                             </tr>
                         ))}
@@ -196,6 +238,21 @@ export default component$(() => {
             <div class='ml-auto w-fit mt-4'>
                 <div class='rounded-xl bg-white shadow-bm shadow-black/5 p-4 '>
                     Total: Rp {components.reduce((a, b) => a + ((b.components.value.reduce((a, b) => a + (b.price * b.quantity), 0))), 0).toLocaleString('id-ID')}
+                </div>
+            </div>
+            <div role="dialog" aria-modal="true"
+                class={`fixed z-10 inset-0 overflow-y-hidden ${iframePath.value === '' ? 'hidden' : 'block'}`}
+            >
+                <div class="p-4 mt-navbar-min-h pb-20 h-full text-center">
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                    <div class="flex flex-col align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all h-full">
+                        <div class="flex justify-end bg-white">
+                            <FilledButton onClick$={() => { iframePath.value = '' }} class='aspect-square fixed ml-auto mt-4 mr-4'>
+                                <TbX />
+                            </FilledButton>
+                        </div>
+                        <iframe class="w-full h-full" src={iframePath.value + `?${urlQuery.value}&iframe=true`}></iframe>
+                    </div>
                 </div>
             </div>
         </main>

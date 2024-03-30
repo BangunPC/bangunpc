@@ -1,0 +1,77 @@
+
+table {
+    width: 100%;
+}
+
+.tableHead {
+    height: 32px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: visible;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+    text-align: left;
+    border-bottom-width: 1px;
+
+    background-color: rgba(245, 245, 245, 0.5);
+    backdrop-filter: blur(10px);
+
+    z-index: 50;
+}
+
+/* 
+.tableHead tr :first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.tableHead tr :last-child {
+    border-radius: 0 8px 8px 0;
+} */
+
+.tableHead tr th {
+    font-size: small;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+.tableBody {
+    padding: 20px;
+    height: min-content;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: visible;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 3px;
+
+    td:first-child {
+        padding-left: 12px;
+        /* box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14); */
+        background-color: #ffffff;
+        overflow: hidden;
+        border-radius: 8px 0 0 8px;
+    }
+
+    td {
+        padding: 10px 0;
+        padding-right: 4px;
+        /* box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14); */
+        background-color: #ffffff;
+        overflow: hidden;
+    }
+
+    td:last-child {
+        padding-right: 12px;
+        /* box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14); */
+        background-color: #ffffff;
+        overflow: hidden;
+        border-radius: 0 8px 8px 0;
+    }
+
+}
+
+.tableRow {
+    height: 56px;
+}

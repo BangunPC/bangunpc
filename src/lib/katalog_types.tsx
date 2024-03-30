@@ -118,6 +118,31 @@ export const storageKeys = [
     'interface',
 ];
 
+export const categoryHeaders: { [key: string]: string[] } = {
+    headphone: [],
+    keyboard: [],
+    mouse: [],
+    speaker: [],
+    webcam: [],
+    printer: [],
+    monitor: [],
+    os: [],
+    soundcard: [],
+    wirednetwork: [],
+    wirelessnetwork: [],
+    cable: [],
+    externaldrive: [],
+    motherboard: motherboardHeaders,
+    cpu: cpuHeaders,
+    gpu: gpuHeaders,
+    memory: memoryHeaders,
+    cooler: [],
+    psu: psuHeaders,
+    storage: storageHeaders,
+    casing: casingHeaders,
+    casefan: [],
+};
+
 export const categories: { [key: string]: string } = {
     headphone: '',
     keyboard: '',

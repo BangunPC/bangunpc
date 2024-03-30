@@ -1,5 +1,5 @@
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { Link, server$, useLocation, useNavigate } from '@builder.io/qwik-city';
+import { server$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import styles from './kategori.module.css';
 
 import { $, Resource, component$, useResource$, useSignal } from '@builder.io/qwik';
@@ -9,34 +9,20 @@ import Sidebar from '~/components/katalog/sidebar/sidebar';
 import SearchBox from '~/components/common/search-box';
 import {
   casingHeaders,
-  casingKeys,
   categories,
-  categoriesEnum,
   cpuHeaders,
-  cpuKeys,
   gpuHeaders,
-  gpuKeys,
   memoryHeaders,
-  memoryKeys,
   motherboardHeaders,
-  motherboardKeys,
   psuHeaders,
-  psuKeys,
   storageHeaders,
-  storageKeys,
   titlesKategori,
 } from '~/lib/katalog_types';
 import FilledButton from '~/components/common/filled-button';
 import { TbArrowLeft, TbLoader2 } from '@qwikest/icons/tablericons';
 import { useDebounce } from '~/lib/use-debounce';
-import { ComponentStorage, ComponentStorageType } from '~/lib/storage_helper';
-
-const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
-const storageUrl = '/storage/v1/object/public/product-images/';
-
-const componentImage = function (component: any) {
-  return `${supabaseUrl}${storageUrl}${component.product_id}/${component.image_filenames[0]}`
-}
+import MobileTable from '~/components/catalogue/mobile-table/mobile-table';
+import DesktopTable from '~/components/catalogue/desktop-table/desktop-table';
 
 const getData = server$(async (search: string, kategori: string) => {
 
@@ -61,8 +47,8 @@ const getData = server$(async (search: string, kategori: string) => {
       .schema('product')
       .from(category)
       .select()
-      .order('product_name', { ascending: true })
       .textSearch('product_name', `'${search}'`, { type: 'websearch', config: 'english' })
+      .order('product_name', { ascending: true })
       .then((res) => {
         data = res.data !== null ? res.data : undefined;
       });
@@ -73,6 +59,7 @@ const getData = server$(async (search: string, kategori: string) => {
 
 export default component$(() => {
   const location = useLocation();
+  const isIframe = location.url.searchParams.get('iframe') === 'true';
   const nav = useNavigate();
 
   const inputSig = useSignal('');
@@ -80,7 +67,7 @@ export default component$(() => {
   const handleDebounce = $(async (value: string) => {
     if (typeof window !== 'undefined') {
       const url = location.url;
-      url.searchParams.set("value", value.replace(/ +/g, ' '));
+      url.searchParams.set('q', value.replace(/ +/g, ' '));
       window.history.pushState({}, '', url);
 
       await nav();
@@ -102,9 +89,8 @@ export default component$(() => {
     const kateg = track(() => location.params.kategori);
 
     isLoading.value = true;
-    const { data: categoryData, total: productAmount } = await getData(url.searchParams.get("value") ?? '', kateg);
+    const { data: categoryData, total: productAmount } = await getData(url.searchParams.get('q') ?? '', kateg);
     isLoading.value = false;
-    console.log(categoryData);
     return { categoryData, productAmount };
   })
 
@@ -166,7 +152,7 @@ export default component$(() => {
                 Tersedia ... produk yang siap kamu pilih
               </div>
               <div class="w-64 ml-auto mt-4 md:mr-4">
-                <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get("value") || ''} onInput$={handleSearch} />
+                <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get('q') || ''} onInput$={handleSearch} />
               </div>
             </header>
             <aside class="block sticky md:hidden top-[calc(70px+1rem)] mb-4 z-10">
@@ -207,7 +193,7 @@ export default component$(() => {
               </div>
 
               <table class='hidden md:table'>
-                <thead class={styles.tableHead}>
+                <thead class='top-0 sticky'>
                   <tr>
                     {headers.map((item) => (
                       <th key={item}>{item}</th>
@@ -248,7 +234,7 @@ export default component$(() => {
                     Tersedia {productAmount} produk yang siap kamu pilih
                   </div>
                   <div class="w-64 ml-auto mt-4 md:mr-4">
-                    <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get("value") || ''} onInput$={handleSearch} />
+                    <SearchBox placeholder="Temukan komponen di sini" defaultValue={location.url.searchParams.get('q') || ''} onInput$={handleSearch} />
                   </div>
                 </header>
                 <aside class="block sticky md:hidden top-[calc(70px+1rem)] mb-4 z-10">
@@ -288,141 +274,15 @@ export default component$(() => {
                     </div>
                   </div>
 
-                  <div
-                    class={[
-                      styles.mobileKatalog,
-                      'flex flex-col w-[calc(100vw-70px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]',
-                    ]}
-                  >
-                    {categoryData?.map((component: any) => {
-                      const handleAddComponent = $(() => {
-                        const componentAdded: ComponentStorageType = {
-                          id: component.product_id,
-                          name: component.product_name,
-                          price: component.lowest_price,
-                          image: componentImage(component),
-                          category: categoriesEnum[kategori],
-                          quantity: 1,
-                        }
-                        ComponentStorage.addComponent(componentAdded)
-                        alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')
-                      })
-                      return (
-                        <Link
-                          href={`/detail/${kategori}/${component.slug}`}
-                          key={component.product_id}
-                          class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
-                        >
-                          <div class="flex flex-row items-center gap-1">
-                            <input type="checkbox" />
-                            <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
-                              {component.image_filenames.length > 0 && (<img
-                                src={componentImage(component)}
-                                alt={`Gambar ${component.product_name}`}
-                                width={80}
-                                height={80} />)}
-                              <div class="flex flex-col">
-                                <span class="text-lg font-bold leading-none">
-                                  {component.product_name}
-                                </span>
-                                <span class="font-bold mt-2">
-                                  Rp{' '}
-                                  {(
-                                    component.lowest_price as number | null
-                                  )?.toLocaleString('id-ID') ?? '-'}
-                                </span>
-                              </div>
-                            </div>
-                            <div>
-                              <FilledButton onClick$={handleAddComponent}>Tambah</FilledButton>
-                            </div>
-                          </div>
-                          <div class="grid sm:grid-cols-4 grid-cols-3 gap-1">
-                            <ComponentFallback
-                              headers={headers}
-                              kategori={kategori}
-                              component={component}
-                              isMobile={true} />
-                          </div>
-                        </Link>
-                      );
-                    })}
+                  <MobileTable data={categoryData} headers={headers} kategori={kategori} isIframe={isIframe} />
+                  <div class='m-auto'>
+                    <DesktopTable data={categoryData} headers={headers} kategori={kategori} isIframe={isIframe} />
                   </div>
-
-                  <table class='hidden md:table'>
-                    <thead class={styles.tableHead}>
-                      <tr>
-                        {headers.map((item) => (
-                          <th key={item}>{item}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody class={styles.tableBody}>
-                      <tr class="h-4"></tr>
-                      {categoryData?.map((component: any) => {
-                        const handleAddComponent = $(() => {
-                          const componentAdded: ComponentStorageType = {
-                            id: component.product_id,
-                            name: component.product_name,
-                            price: component.lowest_price,
-                            image: componentImage(component),
-                            category: categoriesEnum[kategori],
-                            quantity: 1,
-                          }
-                          ComponentStorage.addComponent(componentAdded)
-                          alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')
-                        })
-                        return (
-                          <>
-                            <tr
-                              data-href={`/detail/${kategori}/${component.slug}`}
-                              key={component.product_id}
-                              class={[
-                                styles.tableRow,
-                                'transition-transform hover:scale-[1.01] hover:z-10 cursor-pointer',
-                              ]}
-                              onClick$={() => (window.location.href = `/detail/${kategori}/${component.slug}`)}
-                            >
-                              <td>
-                                <input
-                                  type="checkbox"
-                                  id={component.product_id!.toString()}
-                                  class={[styles.toggle, 'z-20']} />
-                              </td>
-                              <td>
-                                {component.image_filenames.length > 0 && (<img
-                                  src={componentImage(component)}
-                                  alt={`Gambar ${component.product_name}`}
-                                  width={64}
-                                  height={64} />)}
-                              </td>
-                              <td>{component.product_name ?? '-'}</td>
-
-                              <ComponentFallback
-                                headers={headers}
-                                kategori={kategori}
-                                component={component}
-                                isMobile={false} />
-
-                              <td>
-                                {component.lowest_price?.toLocaleString('id-ID') ??
-                                  '-'}
-                              </td>
-                              <td>
-                                <FilledButton onClick$={handleAddComponent}>Tambah</FilledButton>
-                              </td>
-                            </tr>
-                            <tr key={component.product_id + 'gap'} class="h-2"></tr>
-                          </>
-                        );
-                      })}
-                    </tbody>
-                  </table>
                 </main>
                 {categoryData == null || categoryData.length == 0 && (
                   <div class="flex text-center text-lg font-bold w-full justify-center m-auto">
-                    {location.url.searchParams.get('value') ?
-                      `${title} "${location.url.searchParams.get('value')}" tidak ditemukan`
+                    {location.url.searchParams.get('q') ?
+                      `${title} "${location.url.searchParams.get('q')}" tidak ditemukan`
                       : `Tidak ada ${title.toLowerCase()} yang ditemukan`
                     }
                   </div>
@@ -436,79 +296,6 @@ export default component$(() => {
 
   );
 });
-
-type ComponentFallbackProps = {
-  headers: string[];
-  kategori: string;
-  component: any;
-  isMobile: boolean;
-};
-
-const ComponentFallback = component$<ComponentFallbackProps>(
-  ({ headers, kategori, component, isMobile }) => {
-    let keys: any[] = [];
-    switch (kategori) {
-      // case "headphone":
-      // case "keyboard":
-      // case "mouse":
-      // case "speaker":
-      // case "webcam":
-      // case "printer":
-      // case "monitor":
-      // case "os":
-      // case "soundcard":
-      // case "wirednetwork":
-      // case "wirelessnetwork":
-      // case "casefan":
-      // case "externaldrive":
-      case 'motherboard':
-        keys = motherboardKeys;
-        break;
-      case 'cpu':
-        keys = cpuKeys;
-        break;
-      case 'gpu':
-        keys = gpuKeys;
-        break;
-      case 'memory':
-        keys = memoryKeys;
-        break;
-      // case "cooler":
-      case 'psu':
-        keys = psuKeys;
-        break;
-      // case "cable":
-      case 'storage':
-        keys = storageKeys;
-        break;
-      case 'casing':
-        keys = casingKeys;
-        break;
-      default:
-        break;
-    }
-
-    if (isMobile)
-      return (
-        <>
-          {keys.map((key, index) => (
-            <div key={key} class="flex flex-col">
-              <div class="text-sm mt-1 mb-2">{headers[index + 3]}</div>
-              <div class="font-semibold">{component[key] ?? '-'}</div>
-            </div>
-          ))}
-        </>
-      );
-
-    return (
-      <>
-        {keys.map((key) => (
-          <td key={key}>{component[key] ?? '-'}</td>
-        ))}
-      </>
-    );
-  }
-);
 
 export const head: DocumentHead = ({ params }) => {
   return {

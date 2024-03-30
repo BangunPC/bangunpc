@@ -28,7 +28,7 @@ export type ComponentStorageType = {
     category: ComponentCategory
 }
 
-class ComponentStorage {
+export class ComponentStorageHelper {
     static addComponent(component: ComponentStorageType) {
         let components = this.getComponents();
         const index = components.findIndex(c => c.id === component.id);
@@ -63,6 +63,16 @@ class ComponentStorage {
             LocalStorageHelper.setItem('components', components);
         }
     }
+
+    /**
+     * Calculates the total price of all components in the cart.
+     *
+     * @return {number} The total price of all components.
+     */
+    static totalPrice() {
+        let components = this.getComponents();
+        return components.reduce((total, component) => total + (component.price * component.quantity), 0);
+    }
 }
 
-export { LocalStorageHelper, ComponentStorage };
+export { LocalStorageHelper, ComponentStorageHelper as ComponentStorage };

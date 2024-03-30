@@ -189,7 +189,7 @@ export default component$(() => {
               </span>
               <span q:slot='main'>
                 {/* TODO: component specs */}
-                <Dropdown>
+                {data['description'] && <Dropdown>
 
                   <span q:slot='header'
                     class='text-lg font-semibold'
@@ -197,7 +197,7 @@ export default component$(() => {
                     Tentang Produk
                   </span>
                   <span q:slot='main' class='mt-4 gap-2'>{data['description']}</span>
-                </Dropdown>
+                </Dropdown>}
                 <Dropdown>
                   <span q:slot='header'
                     class='text-lg font-semibold mt-4 ${dropdownClass}'
