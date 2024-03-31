@@ -72,9 +72,10 @@ export default component$(() => {
                         <label for="min-price" class='mx-1'>
                             Rp
                         </label>
-                        <input id="min-price" class="w-full h-10" type="number" value={filters.minPrice} onInput$={$(e => {
-                            url.searchParams.set('min-price', e.target.value);
-                        })} placeholder="Min Price" />
+                        <input id="min-price" class="w-full h-10" type="number" value={filters.minPrice} onInput$={$((e: InputEvent) => {
+                            const target = e.target as HTMLInputElement;
+                        url.searchParams.set('min-price', target.value);
+                        }) as any} placeholder="Min Price" />
                     </div>
 
                     <span class="text-sm font-semibold text-gray-700"> Max Price</span>
@@ -82,9 +83,10 @@ export default component$(() => {
                         <label for="max-price" class='mx-1'>
                             Rp
                         </label>
-                        <input id="max-price" class="w-full h-10" type="number" value={filters.maxPrice} onInput$={$(e => {
-                            url.searchParams.set('max-price', e.target.value);
-                        })} placeholder="Max Price" />
+                        <input id="min-price" class="w-full h-10" type="number" value={filters.maxPrice} onInput$={$((e: InputEvent) => {
+                            const target = e.target as HTMLInputElement;
+                        url.searchParams.set('max-price', target.value);
+                        }) as any} placeholder="Max Price" />
                     </div>
                 </div>
             </SidebarSection>
