@@ -14,7 +14,7 @@ export type TableType = {
     kategori: string
 }
 
-export default component$<TableType>(({ headers, data, kategori }) => {
+const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
 
     const header = ['', '', 'Product Name', ...headers, 'Price (Rp)', 'Action']
 
@@ -45,10 +45,14 @@ export default component$<TableType>(({ headers, data, kategori }) => {
                             image: componentImage(component),
                             category: categoriesEnum[kategori],
                             quantity: 1,
+                            slug: component.slug
                         }
                         ComponentStorage.addComponent(componentAdded)
                         alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')
                     })
+
+                    const handleRedirect = $(() => (window.location.href = `/detail/${kategori}/${component.slug}`))
+
                     return (
                         <>
                             <tr
@@ -58,34 +62,42 @@ export default component$<TableType>(({ headers, data, kategori }) => {
                                     styles.tableRow,
                                     'transition-transform hover:scale-[1.01] hover:z-10 cursor-pointer',
                                 ]}
-                                onClick$={() => (window.location.href = `/detail/${kategori}/${component.slug}`)}
                             >
-                                <td>
+                                <td class='cursor-default'>
                                     <input
                                         type="checkbox"
                                         id={component.product_id!.toString()}
                                         class={[styles.toggle, 'z-20']} />
                                 </td>
-                                <td class='w-16'>
+                                <td class='w-16'
+                                    onClick$={handleRedirect}
+                                >
                                     {component.image_filenames.length > 0 && (<img
                                         src={componentImage(component)}
                                         alt={`Gambar ${component.product_name}`}
                                         width={64}
                                         height={64} />)}
                                 </td>
-                                <td>{component.product_name ?? '-'}</td>
+                                <td
+                                    onClick$={handleRedirect}
+                                >{component.product_name ?? '-'}</td>
 
                                 <ComponentFallback
                                     headers={headers}
                                     kategori={kategori}
                                     component={component}
-                                    isMobile={false} />
+                                    isMobile={false}
+                                    onClick$={handleRedirect}
 
-                                <td>
+                                />
+
+                                <td
+                                    onClick$={handleRedirect}
+                                >
                                     {component.lowest_price?.toLocaleString('id-ID') ??
                                         '-'}
                                 </td>
-                                <td>
+                                <td class='cursor-default'>
                                     <FilledButton onClick$={handleAddComponent}>Tambah</FilledButton>
                                 </td>
                             </tr>
@@ -97,3 +109,5 @@ export default component$<TableType>(({ headers, data, kategori }) => {
         </table>
     )
 })
+
+export default DesktopTable

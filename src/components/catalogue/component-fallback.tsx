@@ -6,10 +6,11 @@ type ComponentFallbackProps = {
     kategori: string;
     component: any;
     isMobile: boolean;
+    onClick$?: any;
 };
 
 export const ComponentFallback = component$<ComponentFallbackProps>(
-    ({ headers, kategori, component, isMobile }) => {
+    ({ headers, kategori, component, isMobile, onClick$ }) => {
         let keys: any[] = [];
         switch (kategori) {
             // case "headphone":
@@ -67,7 +68,12 @@ export const ComponentFallback = component$<ComponentFallbackProps>(
         return (
             <>
                 {keys.map((key) => (
-                    <td key={key}>{component[key] ?? '-'}</td>
+                    <td
+                        key={key}
+                        onClick$={onClick$}
+                    >
+                        {component[key] ?? '-'}
+                    </td>
                 ))}
             </>
         );

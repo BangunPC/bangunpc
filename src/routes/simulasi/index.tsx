@@ -1,4 +1,5 @@
 import { $, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { Link, useNavigate } from "@builder.io/qwik-city";
 import { TbTrash, TbX } from "@qwikest/icons/tablericons";
 import FilledButton from "~/components/common/filled-button";
 import SimulasiCasing from "~/components/icons/simulasi/simulasi-casing";
@@ -8,11 +9,13 @@ import SimulasiMemory from "~/components/icons/simulasi/simulasi-memory";
 import SimulasiMotherboard from "~/components/icons/simulasi/simulasi-motherboard";
 import SimulasiPsu from "~/components/icons/simulasi/simulasi-psu";
 import SimulasiStorage from "~/components/icons/simulasi/simulasi-storage";
-import { ComponentCategory } from "~/lib/katalog_types";
+import { categoriesFromEnum, ComponentCategory } from "~/lib/katalog_types";
 import type { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentStorage } from "~/lib/storage_helper";
 
 export default component$(() => {
+
+    const nav = useNavigate();
 
     const headers = ['Kategori Komponen', 'Komponen Dipilih', 'Harga Satuan', 'Kuantitas', 'Harga Total', 'Aksi',]
 
@@ -149,15 +152,16 @@ export default component$(() => {
                                     <div class='flex flex-col gap-1'>
                                         {item.components.value.map((component) =>
                                         (
-                                            <div
+                                            <Link
                                                 key={component.id}
-                                                class='flex flex-row items-center'
+                                                class='text-black flex flex-row items-center cursor-pointer hover:bg-zinc-200 rounded-md p-1'
+                                                href={`/detail/${categoriesFromEnum[component.category]}/${component.slug}`}
                                             >
                                                 <img src={component.image} alt={component.name} width={32} height={32} />
                                                 <span class='ml-1'>
                                                     {component.name}
                                                 </span>
-                                            </div>
+                                            </Link>
                                         )
                                         )}
                                         {item.components.value.length == 0 ? (

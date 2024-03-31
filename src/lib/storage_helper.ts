@@ -26,6 +26,7 @@ export type ComponentStorageType = {
     quantity: number
     image: string
     category: ComponentCategory
+    slug: string
 }
 
 export class ComponentStorageHelper {

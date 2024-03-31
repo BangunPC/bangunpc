@@ -244,6 +244,29 @@ export const categoriesEnum: { [key: string]: ComponentCategory } = {
     casefan: ComponentCategory.CaseFan,
 };
 
+export const categoriesFromEnum: { [key: string]: string } = {
+    [ComponentCategory.Headphone]: 'headphone',
+    [ComponentCategory.Keyboard]: 'keyboard',
+    [ComponentCategory.Mouse]: 'mouse',
+    [ComponentCategory.Speaker]: 'speaker',
+    [ComponentCategory.Webcam]: 'webcam',
+    [ComponentCategory.Printer]: 'printer',
+    [ComponentCategory.Monitor]: 'monitor',
+    [ComponentCategory.OS]: 'os',
+    [ComponentCategory.SoundCard]: 'soundcard',
+    [ComponentCategory.WiredNetwork]: 'wirednetwork',
+    [ComponentCategory.WirelessNetwork]: 'wirelessnetwork',
+    [ComponentCategory.Cable]: 'cable',
+    [ComponentCategory.ExternalDrive]: 'externaldrive',
+    [ComponentCategory.Motherboard]: 'motherboard',
+    [ComponentCategory.CPU]: 'cpu',
+    [ComponentCategory.GPU]: 'gpu',
+    [ComponentCategory.Memory]: 'memory',
+    [ComponentCategory.Cooler]: 'cooler',
+    [ComponentCategory.PSU]: 'psu',
+    [ComponentCategory.Storage]: 'storage',
+}
+
 // export type All = { isMobile: boolean, all: Database['product']['Views']['v_all_products']['Row'] }
 
 // export type Casing = { isMobile: boolean, casing: Database['product']['Views']['v_casings']['Row'] }
