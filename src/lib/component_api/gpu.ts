@@ -79,7 +79,7 @@ export const getGpu = server$(async (
     }
 
     if (motherboardId) {
-        todo()
+        TODO: implement filter
     }
 
     // compatibility end

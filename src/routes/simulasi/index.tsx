@@ -1,5 +1,5 @@
 import { $, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { TbEdit, TbTrash, TbX } from "@qwikest/icons/tablericons";
+import { TbTrash, TbX } from "@qwikest/icons/tablericons";
 import FilledButton from "~/components/common/filled-button";
 import SimulasiCasing from "~/components/icons/simulasi/simulasi-casing";
 import SimulasiCpu from "~/components/icons/simulasi/simulasi-cpu";
@@ -8,7 +8,6 @@ import SimulasiMemory from "~/components/icons/simulasi/simulasi-memory";
 import SimulasiMotherboard from "~/components/icons/simulasi/simulasi-motherboard";
 import SimulasiPsu from "~/components/icons/simulasi/simulasi-psu";
 import SimulasiStorage from "~/components/icons/simulasi/simulasi-storage";
-import { getCpu } from "~/lib/component_api/cpu";
 import { ComponentCategory } from "~/lib/katalog_types";
 import type { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentStorage } from "~/lib/storage_helper";
@@ -71,13 +70,13 @@ export default component$(() => {
         setInterval(refresh, 2000);
     })
 
-    type motherboardUrlQuery = {};
+    // type motherboardUrlQuery = {};
     type cpuUrlQuery = { motherboardId: number | undefined, memories: { id: number, amount: number }[] | undefined };
-    type gpuUrlQuery = {};
-    type memoryUrlQuery = {};
-    type psuUrlQuery = {};
-    type storageUrlQuery = {};
-    type casingUrlQuery = {};
+    // type gpuUrlQuery = {};
+    // type memoryUrlQuery = {};
+    // type psuUrlQuery = {};
+    // type storageUrlQuery = {};
+    // type casingUrlQuery = {};
 
     const urlQuery = useSignal('');
 

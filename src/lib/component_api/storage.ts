@@ -50,7 +50,7 @@ export const getStorage = server$(async (
 
     // compatibility start
 
-    todo()
+    TODO: implement filter
 
     // compatibility end
 
