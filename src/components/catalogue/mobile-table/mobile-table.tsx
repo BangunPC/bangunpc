@@ -28,6 +28,7 @@ export default component$<TableType>(({ headers, data: categoryData, kategori })
                         image: componentImage(component),
                         category: categoriesEnum[kategori],
                         quantity: 1,
+                        slug: component.slug
                     }
                     ComponentStorage.addComponent(componentAdded)
                     alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')

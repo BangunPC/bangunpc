@@ -15,8 +15,6 @@ import { ComponentStorage } from "~/lib/storage_helper";
 
 export default component$(() => {
 
-    const nav = useNavigate();
-
     const headers = ['Kategori Komponen', 'Komponen Dipilih', 'Harga Satuan', 'Kuantitas', 'Harga Total', 'Aksi',]
 
     const cpu = useSignal([] as ComponentStorageType[]);
