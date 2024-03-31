@@ -7,15 +7,15 @@ export enum SidebarItemType {
 // Motherboard
 
 export type MotherboardCompatibility = {
-    
+    casingId?: number | undefined
+    cpuSocketId?: number | undefined
+    memories?: { id: number, amount: number }[] | undefined
 }
 
 export type MotherboardFilter = {
-    query: string
+    query?: string
     min_price?: number | null
     max_price?: number | null
-    //
-
 }
 
 // ^------[Motherboard]------^
@@ -131,3 +131,83 @@ export const cpuSidebarItems = [
 ]
 
 // ^------[CPU]------^
+
+
+// GPU
+
+export type GpuCompatibility = {
+    casingId?: number | undefined
+    psuId?: number | undefined
+    motherboardId?: number | undefined
+}
+
+export type GpuFilter = {
+    query?: string | null
+    min_price?: number | null
+    max_price?: number | null
+}
+
+// ^------[GPU]------^
+
+// Memory
+
+export type MemoryCompatibility = {
+    motherboardId?: number | undefined
+    memories?: { id: number, amount: number }[] | undefined
+}
+
+export type MemoryFilter = {
+    query?: string | null
+    min_price?: number | null
+    max_price?: number | null
+}
+
+// ^------[Memory]------^
+
+// PSU
+
+export type PsuCompatibility = {
+    cpuId?: number | undefined
+    gpuId?: number | undefined
+    motherboardId?: number | undefined
+    memories?: { id: number, amount: number }[] | undefined
+    storages?: { id: number, amount: number }[] | undefined
+}
+
+export type PsuFilter = {
+    query?: string | null
+    min_price?: number | null
+    max_price?: number | null
+}
+
+// ^------[PSU]------^
+
+// Storage
+
+export type StorageCompatibility = {
+    motherboardId?: number | undefined
+    storages?: { id: number, amount: number }[] | undefined
+}
+
+export type StorageFilter = {
+    query?: string | null
+    min_price?: number | null
+    max_price?: number | null
+}
+
+// ^------[Storage]------^
+
+// Casing
+
+export type CasingCompatibility = {
+    motherboardId?: number | undefined
+    gpus?: { id: number, amount: number }[] | undefined   
+}
+
+export type CasingFilter = {
+    query?: string | null
+    min_price?: number | null
+    max_price?: number | null
+}
+
+// ^------[Casing]------^

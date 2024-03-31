@@ -6,15 +6,15 @@ import { CatalogueHeader } from "~/components/catalogue/header";
 import MobileTable from "~/components/catalogue/mobile-table/mobile-table";
 import { CatalogueSidebar, SidebarSection } from "~/components/catalogue/sidebar";
 import FilledButton from "~/components/common/filled-button";
-import { getCpu } from "~/lib/component_api/cpu";
+import { getGpu } from "~/lib/component_api/gpu";
 import { categoryHeaders } from "~/lib/katalog_types";
 import type { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentStorage } from "~/lib/storage_helper";
 
 export default component$(() => {
 
-    const kategori = 'cpu';
-    const katalogTitle = 'CPU';
+    const kategori = 'gpu';
+    const katalogTitle = 'GPU';
 
     const url = useLocation().url;
     const nav = useNavigate();
@@ -33,7 +33,7 @@ export default component$(() => {
 
     const components = useResource$(async ({ track }) => {
         track(update);
-        return await getCpu(
+        return await getGpu(
             {},
             {
                 min_price: filters.minPrice ? parseFloat(filters.minPrice) : undefined,
@@ -53,7 +53,7 @@ export default component$(() => {
     )
 
     const refresh = $(
-        function refresh() {
+        function refresh() { 
             localComponents.value = ComponentStorage.getComponents();
         })
 
