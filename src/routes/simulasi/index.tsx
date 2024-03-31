@@ -1,5 +1,5 @@
 import { $, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { Link, useNavigate } from "@builder.io/qwik-city";
+import { Link } from "@builder.io/qwik-city";
 import { TbTrash, TbX } from "@qwikest/icons/tablericons";
 import FilledButton from "~/components/common/filled-button";
 import SimulasiCasing from "~/components/icons/simulasi/simulasi-casing";
