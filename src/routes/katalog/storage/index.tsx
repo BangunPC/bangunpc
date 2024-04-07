@@ -7,7 +7,7 @@ import MobileTable from "~/components/catalogue/mobile-table/mobile-table";
 import { CatalogueSidebar, SidebarSection } from "~/components/catalogue/sidebar";
 import FilledButton from "~/components/common/filled-button";
 import { getStorage } from "~/lib/component_api/storage";
-import { categoryHeaders } from "~/lib/katalog_types";
+import { categoryHeaders, ComponentCategory } from "~/lib/katalog_types";
 import type { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentStorage } from "~/lib/storage_helper";
 
@@ -62,7 +62,10 @@ export default component$(() => {
             return [] as any;
         }
         return await getStorage(
-            {},
+            {
+                motherboardId: localComponents.value.filter(c => c.category === ComponentCategory.Motherboard).map(c => parseInt(c.id))[0],
+                storages: localComponents.value.filter(c => c.category === ComponentCategory.Storage).map(c => ({ id: parseInt(c.id), amount: c.quantity })),
+            },
             {
                 min_price: filters.minPrice ? parseFloat(filters.minPrice) : undefined,
                 max_price: filters.maxPrice ? parseFloat(filters.maxPrice) : undefined

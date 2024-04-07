@@ -7,7 +7,7 @@ import MobileTable from "~/components/catalogue/mobile-table/mobile-table";
 import { CatalogueSidebar, SidebarSection } from "~/components/catalogue/sidebar";
 import FilledButton from "~/components/common/filled-button";
 import { getCasing } from "~/lib/component_api/casing";
-import { categoryHeaders } from "~/lib/katalog_types";
+import { categoryHeaders, ComponentCategory } from "~/lib/katalog_types";
 import type { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentStorage } from "~/lib/storage_helper";
 
@@ -41,7 +41,7 @@ export default component$(() => {
     )
 
     const refresh = $(
-        function refresh() { 
+        function refresh() {
             localComponents.value = ComponentStorage.getComponents();
         })
 
@@ -61,7 +61,10 @@ export default component$(() => {
             return [] as any;
         }
         return await getCasing(
-            {},
+            {
+                motherboardId: localComponents.value.filter(c => c.category === ComponentCategory.Motherboard).map(c => parseInt(c.id))[0],
+                // TODO(katalog): gpus
+            },
             {
                 min_price: filters.minPrice ? parseFloat(filters.minPrice) : undefined,
                 max_price: filters.maxPrice ? parseFloat(filters.maxPrice) : undefined
@@ -82,7 +85,7 @@ export default component$(() => {
                         </label>
                         <input id="min-price" class="w-full h-10" type="number" value={filters.minPrice} onInput$={$((e: InputEvent) => {
                             const target = e.target as HTMLInputElement;
-                        url.searchParams.set('min-price', target.value);
+                            url.searchParams.set('min-price', target.value);
                         }) as any} placeholder="Min Price" />
                     </div>
 
@@ -93,7 +96,7 @@ export default component$(() => {
                         </label>
                         <input id="min-price" class="w-full h-10" type="number" value={filters.maxPrice} onInput$={$((e: InputEvent) => {
                             const target = e.target as HTMLInputElement;
-                        url.searchParams.set('max-price', target.value);
+                            url.searchParams.set('max-price', target.value);
                         }) as any} placeholder="Max Price" />
                     </div>
                 </div>

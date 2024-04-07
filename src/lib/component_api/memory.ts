@@ -50,7 +50,56 @@ export const getMemory = server$(async (
 
     // compatibility start
 
-    // TODO(damywise): implement filter
+    if (motherboardId) {
+        // Fetching mobo required data
+        const { data: motherboardData, error } = await client
+            .schema('product')
+            .from('v_motherboards')
+            .select('memory_type, memory_slot, max_memory_gb, memory_frequency_mhz')
+            .eq('product_id', motherboardId)
+            .limit(1)
+            .single()
+        if (error) {
+            throw error
+        }
+
+        // Filter by mobo form factor
+        filteredData = filteredData.filter((item) => {
+            return (
+                item.memory_type === motherboardData.memory_type &&
+                item.frequency_mhz! <= motherboardData?.memory_frequency_mhz!
+            )
+        })
+
+        // TODO(katalog): account for quantity, not amount
+        if (memories) {
+            // Fetching memory required data
+            const { data: memoryData, error } = await client
+                .schema('product')
+                .from('v_memories')
+                .select('memory_type, capacity_gb, amount')
+                .in('product_id', memories.map((memory) => memory.id))
+            if (error) {
+                throw error
+            }
+
+            const totalMemorySize = memoryData.reduce((accumulator, memory) => {
+                if (memory.capacity_gb !== null && memory.amount !== null) {
+                    return accumulator + (memory.capacity_gb * memory.amount)
+                }
+                return accumulator;
+            }, 0)
+            const memoryCount = memories.length
+
+            filteredData = filteredData.filter((item) => {
+                return (
+                    motherboardData.memory_type === item.memory_type &&
+                    motherboardData.memory_slot! >= memoryCount &&
+                    motherboardData.max_memory_gb! >= totalMemorySize
+                )
+            })
+        }
+    }
 
     // compatibility end
 

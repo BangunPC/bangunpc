@@ -2,6 +2,7 @@ import { $, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import { TbTrash, TbX } from "@qwikest/icons/tablericons";
 import FilledButton from "~/components/common/filled-button";
+import OutlinedButton from "~/components/common/outlined-button";
 import SimulasiCasing from "~/components/icons/simulasi/simulasi-casing";
 import SimulasiCpu from "~/components/icons/simulasi/simulasi-cpu";
 import SimulasiGpu from "~/components/icons/simulasi/simulasi-gpu";
@@ -39,7 +40,7 @@ export default component$(() => {
     const speaker = useSignal([] as ComponentStorageType[]);
     const webcam = useSignal([] as ComponentStorageType[]);
     const printer = useSignal([] as ComponentStorageType[]);
-    
+
     const refresh = $(
         function refresh() {
             cpu.value = ComponentStorage.getComponentsByCategory(ComponentCategory.CPU);
@@ -152,7 +153,7 @@ export default component$(() => {
                                         (
                                             <Link
                                                 key={component.id}
-                                                class='text-black flex flex-row items-center cursor-pointer hover:bg-zinc-200 rounded-md p-1'
+                                                class='h-[38px] text-black flex flex-row items-center cursor-pointer hover:bg-zinc-200 rounded-md p-1'
                                                 href={`/detail/${categoriesFromEnum[component.category]}/${component.slug}`}
                                             >
                                                 <img src={component.image} alt={component.name} width={32} height={32} />
@@ -166,11 +167,10 @@ export default component$(() => {
                                             <FilledButton class='w-fit' onClick$={() => handleAddComponent(item)}>
                                                 + Pilih {item.title}
                                             </FilledButton>
-                                        ) : (
-                                            <></>
-                                            // <OutlinedButton>
-                                            //     + {item.title}
-                                            // </OutlinedButton>
+                                        ) : (item.title == 'Memory' || item.title == 'Storage') && (
+                                            <OutlinedButton class='w-fit' onClick$={() => handleAddComponent(item)}>
+                                                + {item.title}
+                                            </OutlinedButton>
                                         )}
                                     </div>
                                 </td>
@@ -183,8 +183,8 @@ export default component$(() => {
                                                 </span>
                                             </div>
                                         )
-
                                         }
+                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='h-[38px]' />)}
                                     </div>
                                 </td>
                                 <td>
@@ -197,6 +197,7 @@ export default component$(() => {
                                             </div>
                                         )
                                         }
+                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='h-[38px]' />)}
                                     </div>
                                 </td>
                                 <td>
@@ -208,28 +209,31 @@ export default component$(() => {
                                                 </span>
                                             </div>
                                         )
-
                                         }
+                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='h-[38px]' />)}
                                     </div>
                                 </td>
                                 <td>
-                                    {
-                                        item.components.value.map(component =>
-                                            <div key={component.id} class='flex flex-row gap-1 items-center py-1'>
-                                                <FilledButton
-                                                    class='bg-red-600 flex items-center'
-                                                    onClick$={() => {
-                                                        if (item.components.value.length > 0) {
-                                                            ComponentStorage.removeComponentById(item.components.value[0].id);
-                                                            refresh();
-                                                        }
-                                                    }}
-                                                >
-                                                    <TbTrash class='inline-block' />
-                                                    Hapus
-                                                </FilledButton>
-                                            </div>)
-                                    }
+                                    <div class='flex flex-col gap-1 h-full'>
+                                        {
+                                            item.components.value.map(component =>
+                                                <div key={component.id} class='flex flex-row gap-1 items-center'>
+                                                    <FilledButton
+                                                        class='h-[38px] bg-red-600 flex items-center'
+                                                        onClick$={() => {
+                                                            if (item.components.value.length > 0) {
+                                                                ComponentStorage.removeComponentById(component.id);
+                                                                refresh();
+                                                            }
+                                                        }}
+                                                    >
+                                                        <TbTrash class='inline-block' />
+                                                        Hapus
+                                                    </FilledButton>
+                                                </div>)
+                                        }
+                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='h-[38px]' />)}
+                                    </div>
                                 </td>
                             </tr>
                         ))}

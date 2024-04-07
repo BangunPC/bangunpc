@@ -188,7 +188,6 @@ export default component$(() => {
                 Informasi
               </span>
               <span q:slot='main'>
-                {/* TODO: component specs */}
                 {data['description'] && <Dropdown>
 
                   <span q:slot='header'
