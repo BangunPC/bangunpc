@@ -31,17 +31,6 @@ export default component$(() => {
 
     const update = useSignal(false);
 
-    const components = useResource$(async ({ track }) => {
-        track(update);
-        return await getGpu(
-            {},
-            {
-                min_price: filters.minPrice ? parseFloat(filters.minPrice) : undefined,
-                max_price: filters.maxPrice ? parseFloat(filters.maxPrice) : undefined
-            }
-        )
-    })
-
     const localComponents = useSignal([] as ComponentStorageType[]);
 
     const price = useComputed$(() =>
@@ -57,9 +46,28 @@ export default component$(() => {
             localComponents.value = ComponentStorage.getComponents();
         })
 
+    const init = useSignal(false);
     useVisibleTask$(() => {
         refresh();
+        setTimeout(() => {
+            init.value = true;
+        }, 100);
         setInterval(refresh, 2000);
+    })
+
+    const components = useResource$(async ({ track }) => {
+        track(init);
+        track(update);
+        if (init.value === false) {
+            return [] as any;
+        }
+        return await getGpu(
+            {},
+            {
+                min_price: filters.minPrice ? parseFloat(filters.minPrice) : undefined,
+                max_price: filters.maxPrice ? parseFloat(filters.maxPrice) : undefined
+            }
+        )
     })
 
     const sidebarComponent = (

@@ -30,7 +30,6 @@ export default component$(() => {
     })
 
     const update = useSignal(false);
-    const init = useSignal(false);
 
     const localComponents = useSignal([] as ComponentStorageType[]);
 
@@ -47,6 +46,7 @@ export default component$(() => {
             localComponents.value = ComponentStorage.getComponents();
         })
 
+    const init = useSignal(false);
     useVisibleTask$(() => {
         refresh();
         setTimeout(() => {
