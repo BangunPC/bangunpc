@@ -39,7 +39,7 @@ export default component$(() => {
     const speaker = useSignal([] as ComponentStorageType[]);
     const webcam = useSignal([] as ComponentStorageType[]);
     const printer = useSignal([] as ComponentStorageType[]);
-
+    
     const refresh = $(
         function refresh() {
             cpu.value = ComponentStorage.getComponentsByCategory(ComponentCategory.CPU);
@@ -68,7 +68,7 @@ export default component$(() => {
 
     useVisibleTask$(() => {
         refresh();
-        setInterval(refresh, 2000);
+        setInterval(refresh, 100);
     })
 
     // type motherboardUrlQuery = {};

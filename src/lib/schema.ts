@@ -6,8 +6,6 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-type CpuType = Database['product']['Views']['v_cpus']['Row']
-
 export type Database = {
   product: {
     Tables: {
@@ -403,18 +401,21 @@ export type Database = {
         Row: {
           code_name: string | null
           id: number
+          memory_type: Database["public"]["Enums"]["memory_type"] | null
           model_line: string | null
           release_date: string | null
         }
         Insert: {
           code_name?: string | null
           id?: number
+          memory_type?: Database["public"]["Enums"]["memory_type"] | null
           model_line?: string | null
           release_date?: string | null
         }
         Update: {
           code_name?: string | null
           id?: number
+          memory_type?: Database["public"]["Enums"]["memory_type"] | null
           model_line?: string | null
           release_date?: string | null
         }

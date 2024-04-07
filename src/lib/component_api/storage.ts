@@ -50,7 +50,45 @@ export const getStorage = server$(async (
 
     // compatibility start
 
-    // TODO(damywise): implement filter
+    if (motherboardId) {
+        const { data: motherboardData, error } = await client
+            .schema('product')
+            .from('v_motherboards')
+            .select('sata3_slot, pcie_m2_slot')
+            .eq('product_id', motherboardId)
+            .limit(1)
+            .single()
+        if (error) {
+            throw error
+        }
+
+        filteredData = filteredData.filter((item) => {
+            if (motherboardData.pcie_m2_slot === 0)
+                return item.form_factor?.toLowerCase() !== 'm.2 nvme'
+            else
+                return item
+        })
+
+        if (storages) {
+            const { data: storageData, error } = await client
+                .schema('product')
+                .from('v_internal_storages')
+                .select('form_factor')
+                .in('product_id', storages.map((storage) => storage.id))
+            
+            if (error) {
+                throw error
+            }
+
+            const totalSata = storageData.filter((item) => item.form_factor?.toLowerCase() === 'm.2 nvme').length
+            const totalNvme = storageData.filter((item) => item.form_factor?.toLowerCase() !== 'm.2 nvme').length
+
+            filteredData = filteredData.filter(() => {
+                return totalSata >= motherboardData.sata3_slot! && totalNvme >= motherboardData.pcie_m2_slot!
+            })
+        }
+
+    }
 
     // compatibility end
 

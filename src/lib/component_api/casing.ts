@@ -50,7 +50,33 @@ export const getCasing = server$(async (
 
     // compatibility start
 
-    // TODO(damywise): implement filter
+    if (motherboardId) {
+        const { data: motherboardData, error } = await client
+        .schema('product')
+        .from('v_motherboards')
+        .select('form_factor')
+        .eq('product_id', motherboardId)
+        .limit(1)
+        .single()
+        if (error) {
+            throw error
+        }
+        filteredData = filteredData.filter((item) => item.mobo_supports?.includes(motherboardData.form_factor!))
+    }
+
+    if (gpus) {
+        const { data: gpuData, error } = await client
+        .schema('product')
+        .from('v_gpus')
+        .select('length_mm')
+        .in('product_id', gpus.map(gpu => gpu.id))
+        .limit(1)
+        .single()
+        if (error) {
+            throw error
+        }
+        filteredData = filteredData.filter((item) => item.max_gpu_length_mm! >=  gpuData.length_mm!)
+    }
 
     // compatibility end
 

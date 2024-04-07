@@ -16,7 +16,7 @@ export type TableType = {
 
 const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
 
-    const header = ['', '', 'Product Name', ...headers, 'Price (Rp)', 'Action']
+    const header = ['', 'Product Name', ...headers, 'Price (Rp)', 'Action']
 
     const isIframe = useLocation().url.searchParams.get('iframe') === 'true';
     return (
@@ -63,12 +63,6 @@ const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
                                     'transition-transform hover:scale-[1.01] hover:z-10 cursor-pointer',
                                 ]}
                             >
-                                <td class='cursor-default'>
-                                    <input
-                                        type="checkbox"
-                                        id={component.product_id!.toString()}
-                                        class={[styles.toggle, 'z-20']} />
-                                </td>
                                 <td class='w-16'
                                     onClick$={handleRedirect}
                                 >

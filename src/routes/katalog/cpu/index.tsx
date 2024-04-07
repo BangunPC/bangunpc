@@ -7,7 +7,7 @@ import MobileTable from "~/components/catalogue/mobile-table/mobile-table";
 import { CatalogueSidebar, SidebarSection } from "~/components/catalogue/sidebar";
 import FilledButton from "~/components/common/filled-button";
 import { getCpu } from "~/lib/component_api/cpu";
-import { categoryHeaders } from "~/lib/katalog_types";
+import { categoryHeaders, ComponentCategory } from "~/lib/katalog_types";
 import type { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentStorage } from "~/lib/storage_helper";
 
@@ -30,17 +30,7 @@ export default component$(() => {
     })
 
     const update = useSignal(false);
-
-    const components = useResource$(async ({ track }) => {
-        track(update);
-        return await getCpu(
-            {},
-            {
-                min_price: filters.minPrice ? parseFloat(filters.minPrice) : undefined,
-                max_price: filters.maxPrice ? parseFloat(filters.maxPrice) : undefined
-            }
-        )
-    })
+    const init = useSignal(false);
 
     const localComponents = useSignal([] as ComponentStorageType[]);
 
@@ -59,7 +49,28 @@ export default component$(() => {
 
     useVisibleTask$(() => {
         refresh();
+        setTimeout(() => {
+            init.value = true;
+        }, 100);
         setInterval(refresh, 2000);
+    })
+
+    const components = useResource$(async ({ track }) => {
+        track(init);
+        track(update);
+        if (init.value === false) {
+            return [] as any;
+        }
+        return await getCpu(
+            {
+                memories: localComponents.value.filter(c => c.category === ComponentCategory.Memory).map(c => ({ id: parseInt(c.id), amount: c.quantity })),
+                motherboardId: localComponents.value.filter(c => c.category === ComponentCategory.Motherboard).map(c => parseInt(c.id))[0],
+            },
+            {
+                min_price: filters.minPrice ? parseFloat(filters.minPrice) : undefined,
+                max_price: filters.maxPrice ? parseFloat(filters.maxPrice) : undefined
+            }
+        )
     })
 
     const sidebarComponent = (
@@ -73,9 +84,9 @@ export default component$(() => {
                         <label for="min-price" class='mx-1'>
                             Rp
                         </label>
-                        <input id="min-price" class="w-full h-10" type="number" value={filters.minPrice} onInput$={$((e: InputEvent) => {
+                        <input disabled={components.loading} id="min-price" class="w-full h-10" type="number" value={filters.minPrice} onInput$={$((e: InputEvent) => {
                             const target = e.target as HTMLInputElement;
-                        url.searchParams.set('min-price', target.value);
+                            url.searchParams.set('min-price', target.value);
                         }) as any} placeholder="Min Price" />
                     </div>
 
@@ -84,9 +95,9 @@ export default component$(() => {
                         <label for="max-price" class='mx-1'>
                             Rp
                         </label>
-                        <input id="min-price" class="w-full h-10" type="number" value={filters.maxPrice} onInput$={$((e: InputEvent) => {
+                        <input disabled={components.loading} id="min-price" class="w-full h-10" type="number" value={filters.maxPrice} onInput$={$((e: InputEvent) => {
                             const target = e.target as HTMLInputElement;
-                        url.searchParams.set('max-price', target.value);
+                            url.searchParams.set('max-price', target.value);
                         }) as any} placeholder="Max Price" />
                     </div>
                 </div>

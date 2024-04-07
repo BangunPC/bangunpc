@@ -145,15 +145,13 @@ export const getCpu = server$(async (
             .select('product_id, memory_type, capacity_gb, amount')
             .in('product_id', memories.map(memory => memory.id))
 
-        if (!memoryData) {
-            throw new Error('Memory data is null')
-        }
-        if (error) {
-            throw error
+        if (!memoryData || error || memoryData.length === 0) {
+            return { filteredData, count: filteredData.length }
         }
 
         const memoryType = memoryData[0].memory_type
         if (memoryData.some(memory => memory.memory_type !== memoryType)) {
+            console.log('Memory type mismatch')
             filteredData = []
         } else {
             filteredData = filteredData.filter(cpu => {
@@ -171,6 +169,6 @@ export const getCpu = server$(async (
 
     // compatibility end
 
-    return { filteredData, count }
+    return { filteredData, count: filteredData.length }
 })
 
