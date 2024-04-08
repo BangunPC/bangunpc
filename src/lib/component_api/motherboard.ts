@@ -3,7 +3,7 @@ import { supabase } from "../db"
 import { MotherboardCompatibility, MotherboardFilter } from "./filter"
 
 export const getMotherboard = server$(async (
-    { casingId, cpuSocketId, memories }: MotherboardCompatibility,
+    { casingId, cpuId, memories }: MotherboardCompatibility,
     { query,
         min_price,
         max_price,
@@ -65,11 +65,18 @@ export const getMotherboard = server$(async (
         filteredData = filteredData.filter(motherboard => casingData?.mobo_supports?.includes(motherboard.form_factor || ''))
     }
 
-    if (cpuSocketId) {
-        filteredData = filteredData.filter(motherboard => motherboard.cpu_socket_id === cpuSocketId)
+    if (cpuId) {
+        const { data: cpuData, error } = await client
+            .schema('product')
+            .from('v_cpus')
+            .select('cpu_socket_id')
+            .eq('product_id', cpuId)
+            .limit(1)
+            .single()
+        filteredData = filteredData.filter(motherboard => motherboard.cpu_socket_id === cpuData?.cpu_socket_id)
     }
 
-    if (memories) {
+    if (memories && memories.length > 0) {
         const { data: memoryData, error } = await client
             .schema('product')
             .from('v_memories')
@@ -80,23 +87,23 @@ export const getMotherboard = server$(async (
             throw new Error('Memory data is null')
         }
 
-        filteredData = filteredData.filter(motherboard => {
-
-
-            const memoryCount = memories.reduce((total, memory) =>
-                total + memory.amount, 0)
-
-            const totalMemoryGb = memoryData.reduce((total, memory) => {
-                return total + ((memory.capacity_gb ?? 0) * (memories.find(inputMemory => inputMemory.id === memory.product_id)?.amount ?? 0))
-            }, 0)
-
-            return (
-                motherboard.memory_type === memoryData[0].memory_type &&
-                (motherboard.memory_slot ?? 0) >= memoryCount &&
-                (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
-                (motherboard.memory_frequency_mhz ?? 0) >= (memoryData[0].frequency_mhz ?? -1)
-            )
-        })
+        if (memoryData && memoryData.length > 0) {
+            filteredData = filteredData.filter(motherboard => {
+                const memoryCount = memories.reduce((total, memory) =>
+                    total + memory.amount, 0)
+        
+                const totalMemoryGb = memoryData.reduce((total, memory) => {
+                    return total + ((memory.capacity_gb ?? 0) * (memories.find(inputMemory => inputMemory.id === memory.product_id)?.amount ?? 0))
+                }, 0)
+        
+                return (
+                    (motherboard.memory_type ? motherboard.memory_type : '_') === (memoryData[0].memory_type ? memoryData[0].memory_type : '') &&
+                    (motherboard.memory_slot ?? 0) >= memoryCount &&
+                    (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
+                    (motherboard.memory_frequency_mhz ?? 0) >= (memoryData[0].frequency_mhz ?? -1)
+                )
+            })
+        }
     }
 
     if (error) {

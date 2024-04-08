@@ -8,7 +8,7 @@ export enum SidebarItemType {
 
 export type MotherboardCompatibility = {
     casingId?: number | undefined
-    cpuSocketId?: number | undefined
+    cpuId?: number | undefined
     memories?: { id: number, amount: number }[] | undefined
 }
 

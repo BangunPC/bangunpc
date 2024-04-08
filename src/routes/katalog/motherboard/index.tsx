@@ -63,7 +63,7 @@ export default component$(() => {
         }
         return await getMotherboard(
             {
-                // TODO(katalog): cpu socket -> cpu id
+                cpuId: parseInt(localComponents.value.find(c => c.category === ComponentCategory.CPU)?.id ?? ''),
                 memories: localComponents.value.filter(c => c.category === ComponentCategory.Memory).map(c => ({ id: parseInt(c.id), amount: c.quantity })),
                 casingId: localComponents.value.filter(c => c.category === ComponentCategory.Casing).map(c => parseInt(c.id))[0],
             },

@@ -123,8 +123,8 @@ export default component$(() => {
         convertToUrlQuery(query).then(result => { urlQuery.value = result; iframePath.value = item.iframe });
     })
     return <div class='mt-1 p-4'>
-        <header class='font-semibold text-3xl'>
-            Simulasi Rakit PC
+        <header class='font-semibold text-3xl flex'>
+            <span class='whitespace-nowrap'>Simulasi Rakit PC</span> <span class="ml-2 text-base italic">Versi Alpha, kompatibilitas tidak dijamin 100%</span>
         </header>
         <main class='p-4 max-w-7xl w-full m-auto'>
             <div class='rounded-xl shadow-bm shadow-black/5 bg-white p-4'>
@@ -178,13 +178,13 @@ export default component$(() => {
                                     <div class='flex flex-col gap-1'>
                                         {item.components.value.map(component =>
                                             <div key={component.id} class='flex h-[38px]'>
-                                                <span class='my-auto text-start'>
+                                                <span class='my-auto text-start whitespace-nowrap'>
                                                     {component.price ? `Rp ${component.price.toLocaleString('id-ID')}` : '-'}
                                                 </span>
                                             </div>
                                         )
                                         }
-                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='h-[38px]' />)}
+                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='f[38px]' />)}
                                     </div>
                                 </td>
                                 <td>
@@ -204,7 +204,7 @@ export default component$(() => {
                                     <div class='flex flex-col gap-1 h-full'>
                                         {item.components.value.map(component =>
                                             <div key={component.id} class='flex h-[38px]'>
-                                                <span class='my-auto text-start'>
+                                                <span class='my-auto text-start whitespace-nowrap'>
                                                     {(component.price && component.quantity) ? `Rp ${((component.price) * (component.quantity)).toLocaleString('id-ID')}` : '-'}
                                                 </span>
                                             </div>

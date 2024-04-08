@@ -64,6 +64,7 @@ export const getCasing = server$(async (
         filteredData = filteredData.filter((item) => item.mobo_supports?.includes(motherboardData.form_factor!))
     }
 
+    // TODO(katalog): multiple gpu
     if (gpus) {
         const { data: gpuData, error } = await client
         .schema('product')

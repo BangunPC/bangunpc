@@ -63,7 +63,7 @@ export default component$(() => {
         return await getCasing(
             {
                 motherboardId: localComponents.value.filter(c => c.category === ComponentCategory.Motherboard).map(c => parseInt(c.id))[0],
-                // TODO(katalog): gpus
+                gpus: localComponents.value.filter(c => c.category === ComponentCategory.GPU).map(c => ({ id: parseInt(c.id), amount: c.quantity })),
             },
             {
                 min_price: filters.minPrice ? parseFloat(filters.minPrice) : undefined,

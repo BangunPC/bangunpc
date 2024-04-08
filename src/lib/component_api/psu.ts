@@ -1,7 +1,6 @@
 import { server$ } from "@builder.io/qwik-city"
 import { supabase } from "../db"
 import { PsuCompatibility, PsuFilter } from "./filter"
-import { todo } from "node:test"
 
 export const getPsu = server$(async (
     { cpuId, gpuId, memories, motherboardId, storages }: PsuCompatibility,
