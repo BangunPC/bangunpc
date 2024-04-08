@@ -18,13 +18,13 @@ const headersItems = [
     title: "Simulasi Rakit PC",
     href: "/simulasi",
   },
-  {
-    icon: <User2 width="24" height="24" />,
-    title: "Jasa",
-    altTitle: "Jasa",
-    href: "/jasa",
-    // disabled: true,
-  },
+  // {
+  //   icon: <User2 width="24" height="24" />,
+  //   title: "Jasa",
+  //   altTitle: "Jasa",
+  //   href: "/jasa",
+  //   // disabled: true,
+  // },
   {
     icon: <ShoppingCart width="24" height="24" />,
     title: "Katalog",
