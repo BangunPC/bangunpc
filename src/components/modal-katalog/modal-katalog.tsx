@@ -206,7 +206,7 @@ export default component$(() => {
                             ))}
                         </div>
                     </main>
-                    <Link
+                    {/* <Link
                         href='/katalog'
                         class={[filledButtonClass, style['lihat-semua-button'], 'text-center']}
                         onClick$={() => {
@@ -215,7 +215,7 @@ export default component$(() => {
                         }}
                     >
                         Lihat Semua
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
         </>
