@@ -77,7 +77,7 @@ export default component$(() => {
       ).price?.toLocaleString('id-ID') ?? undefined;
 
   return (
-    <div class='flex flex-col p-6 lg:max-w-6xl max-w-3xl m-auto'>
+    <div class='flex flex-col gap-4 p-6 lg:max-w-6xl max-w-3xl m-auto'>
       <div class="flex flex-col lg:grid lg:grid-cols-2 lg:auto-rows-fr gap-2">
         <div class="pb-0 lg:pb-6 lg:max-w-lg">
           <div class="border border-[#1C1F24] border-opacity-40 rounded-md aspect-square max-w-xl mx-auto items-center overflow-hidden">
@@ -227,7 +227,7 @@ export default component$(() => {
             </a>
           )}
         </span>
-        <span q:slot='main' class='mt-4 flex flex-col gap-2'>
+        <span q:slot='main' class='flex flex-col gap-2'>
           {componentInfo?.map((info: any, index) => (
             <div key={'componentinfo-' + index} class="flex flex-col gap-1">
               <span class="font-semibold">{info.title}</span>
