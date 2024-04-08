@@ -11,7 +11,7 @@ import KPsu from '~/content/images/katalog_psu.svg?jsx';
 import KStorage from '~/content/images/katalog_storage.svg?jsx';
 import KCasing from '~/content/images/katalog_casing.svg?jsx';
 import { Link } from '@builder.io/qwik-city';
-import { filledButtonClass } from '../common/filled-button';
+// import { filledButtonClass } from '../common/filled-button';
 import { kToggleKatalogModal } from '~/lib/constant';
 
 
