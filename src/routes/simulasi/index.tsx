@@ -3,6 +3,7 @@ import { Link } from "@builder.io/qwik-city";
 import { TbTrash, TbX } from "@qwikest/icons/tablericons";
 import FilledButton from "~/components/common/filled-button";
 import OutlinedButton from "~/components/common/outlined-button";
+import Money from "~/components/icons/common/money";
 import SimulasiCasing from "~/components/icons/simulasi/simulasi-casing";
 import SimulasiCpu from "~/components/icons/simulasi/simulasi-cpu";
 import SimulasiGpu from "~/components/icons/simulasi/simulasi-gpu";
@@ -241,7 +242,8 @@ export default component$(() => {
                 </table>
             </div>
             <div class='ml-auto w-fit mt-4'>
-                <div class='rounded-xl bg-white shadow-bm shadow-black/5 p-4 '>
+                <div class='flex rounded-xl bg-white shadow-bm shadow-black/5 p-4 items-center'>
+                    <Money width="20" height="20" class="inline-block mr-1" />
                     Total: Rp {components.reduce((a, b) => a + ((b.components.value.reduce((a, b) => a + (b.price * b.quantity), 0))), 0).toLocaleString('id-ID')}
                 </div>
             </div>

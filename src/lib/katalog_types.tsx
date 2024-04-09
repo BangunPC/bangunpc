@@ -104,7 +104,6 @@ export const storageHeaders = [
     'Brand Name',
     'Type',
     'Capacity (GB)',
-    'Category Name',
     'Form Factor',
     'Interface',
 ]
@@ -113,7 +112,6 @@ export const storageKeys = [
     'brand_name',
     'type',
     'capacity_gb',
-    'category_name',
     'form_factor',
     'interface',
 ];
