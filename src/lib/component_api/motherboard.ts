@@ -112,6 +112,6 @@ export const getMotherboard = server$(async (
 
     // compatibility end
 
-    return { filteredData, count }
+    return { filteredData, count: filteredData.length }
 })
 

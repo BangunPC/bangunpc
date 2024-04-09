@@ -173,5 +173,5 @@ export const getPsu = server$(async (
         throw error
     }
 
-    return { filteredData, count }
+    return { filteredData, count: filteredData.length }
 })
