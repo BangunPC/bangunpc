@@ -4,7 +4,7 @@ import { Link, routeLoader$ } from '@builder.io/qwik-city';
 import styles from './posts.module.css';
 import Image1 from '/src/content/images/1.webp?jsx';
 import Image2 from '/src/content/images/2.webp?jsx';
-import SearchBox from '~/components/common/search-box';
+// import SearchBox from '~/components/common/search-box';
 
 const images = [
   <Image1 key={1} />,
@@ -39,11 +39,12 @@ export default component$(() => {
   return (
     <div>
       <h1 class="text-center font-semibold font-sans my-4 text-4xl">Tech Blog</h1>
-      <aside class="w-full max-w-7xl m-auto top-[calc(70px+1rem)] sticky z-10">
+      {/* TODO: search blog entry */}
+      {/* <aside class="w-full max-w-7xl m-auto top-[calc(70px+1rem)] sticky z-10">
         <div class="w-80 ml-auto my-4 mr-4 drop-shadow-sm">
           <SearchBox placeholder='Cari entri blog yang ingin kamu baca' />
         </div>
-      </aside>
+      </aside> */}
       <main class="flex flex-col m-auto max-w-[800px] w-fit gap-2 mb-8 px-2">
         {metas.value.map((meta, index) => (
           <Link

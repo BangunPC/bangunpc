@@ -1,6 +1,6 @@
 import { $, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
-import { TbTrash, TbX } from "@qwikest/icons/tablericons";
+import { TbArrowBack, TbTrash, TbX } from "@qwikest/icons/tablericons";
 import FilledButton from "~/components/common/filled-button";
 import OutlinedButton from "~/components/common/outlined-button";
 import Money from "~/components/icons/common/money";
@@ -94,6 +94,7 @@ export default component$(() => {
     ]
 
     const iframePath = useSignal('');
+    const currentIframePath = useSignal('')
 
     const convertToUrlQuery = $(function convertToUrlQuery(object: any) {
         const isObject = (val: any) => val && typeof val === 'object';
@@ -109,6 +110,7 @@ export default component$(() => {
 
     const handleAddComponent = $(function handleAddComponent(item: typeof components[number]) {
         iframePath.value = item.iframe;
+        currentIframePath.value = ' '
         let query = {} as any;
         switch (item.title) {
             case 'CPU':
@@ -248,17 +250,35 @@ export default component$(() => {
                 </div>
             </div>
             <div role="dialog" aria-modal="true"
-                class={`fixed z-10 inset-0 overflow-y-hidden ${iframePath.value === '' ? 'hidden' : 'block'}`}
+                class={`fixed mt-navbar-min-h z-10 inset-0 overflow-y-hidden ${iframePath.value === '' || currentIframePath.value.startsWith('/simulasi/') || currentIframePath.value === '/' ? 'hidden' : 'block'}`}
             >
-                <div class="p-4 mt-navbar-min-h pb-20 h-full text-center">
+                <div class="p-4 h-full text-center">
                     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
                     <div class="flex flex-col align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all h-full">
+                        {currentIframePath.value.startsWith('/detail/') &&
+                            <div class="flex justify-start bg-white">
+                                <FilledButton
+                                    onClick$={() => window.history.back()}
+                                    class='aspect-square fixed mr-auto mt-4 ml-4'
+                                >
+                                    <TbArrowBack />
+                                </FilledButton>
+                            </div>
+                        }
+
                         <div class="flex justify-end bg-white">
                             <FilledButton onClick$={() => { iframePath.value = '' }} class='aspect-square fixed ml-auto mt-4 mr-4'>
                                 <TbX />
                             </FilledButton>
                         </div>
-                        <iframe class="w-full h-full" src={iframePath.value + `?${urlQuery.value}&iframe=true`}></iframe>
+                        <iframe
+                            id="iframe"
+                            class="w-full h-full"
+                            onLoad$={(_: Event, element: HTMLIFrameElement) => {
+                                currentIframePath.value = element.contentWindow?.location.pathname ?? ''
+                            }}
+                            src={iframePath.value + `?${urlQuery.value}&iframe=true`}
+                        />
                     </div>
                 </div>
             </div>

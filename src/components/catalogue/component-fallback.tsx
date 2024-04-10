@@ -69,6 +69,7 @@ export const ComponentFallback = component$<ComponentFallbackProps>(
             <>
                 {keys.map((key) => (
                     <td
+                        
                         key={key}
                         onClick$={onClick$}
                     >

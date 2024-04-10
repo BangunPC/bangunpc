@@ -51,7 +51,7 @@ const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
                         alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')
                     })
 
-                    const handleRedirect = $(() => (window.location.href = `/detail/${kategori}/${component.slug}`))
+                    const handleRedirect = $(() => (window.location.href = `/detail/${kategori}/${component.slug}${isIframe ? '?iframe=true' : ''}`))
 
                     return (
                         <>

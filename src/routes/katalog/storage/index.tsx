@@ -1,13 +1,10 @@
-import { $, component$, Resource, useComputed$, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { $, component$, useComputed$, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
-import { TbLoader2 } from "@qwikest/icons/tablericons";
-import DesktopTable from "~/components/catalogue/desktop-table/desktop-table";
-import { CatalogueHeader } from "~/components/catalogue/header";
-import MobileTable from "~/components/catalogue/mobile-table/mobile-table";
+import CataloguePage from "~/components/catalogue/catalogue-page";
 import { CatalogueSidebar, SidebarSection } from "~/components/catalogue/sidebar";
 import FilledButton from "~/components/common/filled-button";
 import { getStorage } from "~/lib/component_api/storage";
-import { categoryHeaders, ComponentCategory } from "~/lib/katalog_types";
+import { ComponentCategory } from "~/lib/katalog_types";
 import type { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentStorage } from "~/lib/storage_helper";
 
@@ -42,7 +39,7 @@ export default component$(() => {
     )
 
     const refresh = $(
-        function refresh() { 
+        function refresh() {
             localComponents.value = ComponentStorage.getComponents();
         })
 
@@ -86,7 +83,7 @@ export default component$(() => {
                         </label>
                         <input id="min-price" class="w-full h-10" type="number" value={filters.minPrice} onInput$={$((e: InputEvent) => {
                             const target = e.target as HTMLInputElement;
-                        url.searchParams.set('min-price', target.value);
+                            url.searchParams.set('min-price', target.value);
                         }) as any} placeholder="Min Price" />
                     </div>
 
@@ -97,7 +94,7 @@ export default component$(() => {
                         </label>
                         <input id="min-price" class="w-full h-10" type="number" value={filters.maxPrice} onInput$={$((e: InputEvent) => {
                             const target = e.target as HTMLInputElement;
-                        url.searchParams.set('max-price', target.value);
+                            url.searchParams.set('max-price', target.value);
                         }) as any} placeholder="Max Price" />
                     </div>
                 </div>
@@ -116,31 +113,13 @@ export default component$(() => {
     )
 
     return (
-        <Resource
-            value={components}
-            onPending={() => (
-                <div class='flex flex-row py-4'>
-                    {sidebarComponent}
-                    <div class='w-full'>
-                        <CatalogueHeader katalog={katalogTitle} itemCount={0} />
-                        <div class="flex w-full justify-center items-center">
-                            <div class="inline-block rounded-full m-auto" role="status">
-                                <TbLoader2 class="h-8 w-8 animate-spin " />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-            onResolved={(data) => (
-                <div class='flex flex-row py-4'>
-                    {sidebarComponent}
-                    <div class='flex-1'>
-                        <CatalogueHeader katalog={katalogTitle} itemCount={data.count || 0} />
-                        <MobileTable key={`${url.search}`} data={data.filteredData} headers={categoryHeaders[kategori]} kategori={kategori} />
-                        <DesktopTable key={`${url.search}`} data={data.filteredData} headers={categoryHeaders[kategori]} kategori={kategori} />
-                    </div>
-                </div>
-            )}
-        />
+        <CataloguePage
+            components={components}
+            katalogTitle={katalogTitle}
+            url={url}
+            kategori={kategori}
+        >
+            {sidebarComponent}
+        </CataloguePage>
     )
 })
