@@ -6,7 +6,7 @@ import { ComponentFallback } from "../component-fallback";
 import styles from './desktop-table.module.css';
 import { componentImage } from "~/lib/db";
 import { categoriesEnum } from "~/lib/katalog_types";
-import { useLocation } from "@builder.io/qwik-city";
+import { Link, useLocation } from "@builder.io/qwik-city";
 
 export type TableType = {
     headers: string[]
@@ -64,15 +64,16 @@ const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
                                 ]}
                             >
                                 <td class='w-16'
-                                    onClick$={handleRedirect}
                                 >
-                                    {component.image_filenames.length > 0 && (<img
-                                        src={componentImage(component)}
-                                        alt={`Gambar ${component.product_name}`}
-                                        width={64}
-                                        height={64}
-                                        class='aspect-square min-w-[64px]'
-                                    />)}
+                                    <Link href={`/detail/${kategori}/${component.slug}${isIframe ? '?iframe=true' : ''}`}>
+                                        {component.image_filenames.length > 0 && (<img
+                                            src={componentImage(component)}
+                                            alt={`Gambar ${component.product_name}`}
+                                            width={64}
+                                            height={64}
+                                            class='aspect-square min-w-[64px]'
+                                        />)}
+                                    </Link>
                                 </td>
                                 <td
                                     onClick$={handleRedirect}

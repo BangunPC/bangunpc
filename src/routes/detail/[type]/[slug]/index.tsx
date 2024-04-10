@@ -236,140 +236,141 @@ export default component$(() => {
           ))}
         </span>
       </Dropdown>
-      {(product_details.data?.length ?? -1) > 0 &&
-        <Dropdown>
+      <Dropdown>
+        <span q:slot='header'>
+          <div id='compare' class="text-3xl font-semibold">Bandingkan Produk</div>
+        </span>
+        <span q:slot='main'>{
 
-          <span q:slot='header'>
-            <div id='compare' class="text-3xl font-semibold">Bandingkan Produk</div>
-          </span>
-          <span q:slot='main'>
-            <div class="flex flex-col w-full md:hidden gap-2">
-              {product_details.data?.map((detail: any) => (
-                <div
-                  key={'marketplacemobile-' + detail.id}
-                  class="
-                    flex
-                    flex-col
-                    gap-2
-                    text-black
-                    border
-                    transition-all
-                    rounded-xl
-                    shadow-lg
-                    bg-white
-                    p-2
-                    "
-                >
-
-                  {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
-                  {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
-                  {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
-
-                  <span class='font-semibold text-xl'>
-                    Rp{detail.price.toLocaleString('id-ID')}
-                  </span>
-
-                  <div class='flex flex-row gap-1'>
-                    <TbMapPin />
-                    {detail.seller_city}
-                  </div>
-
-                  <a
-                    href={detail.url}
-                    class={[filledButtonClass, 'text-center bg-green-600']}
-                    target="_blank" rel="noopener noreferrer"
-                  >
-                    Beli Sekarang
-                  </a>
-                </div>
-              ))}
-            </div>
-            <table class="w-full hidden md:table">
-              <thead class="drop-shadow-sm">
-                <tr>
-                  <td
-                    class="bg-white rounded-s-lg p-2"
-                  >
-                    Merchant
-                  </td>
-                  <td
-                    class=" bg-white p-2"
-                  >
-                    Harga
-                  </td>
-                  <td
-                    class=" bg-white p-2"
-                  >
-                    Lokasi Toko
-                  </td>
-                  <td
-                    class="bg-white p-2"
-                  >
-                    Stok
-                  </td>
-                  <td
-                    class="bg-white p-2"
-                  >
-                    Details
-                  </td>
-                  <td
-                    class="bg-white rounded-e-lg p-2"
-                  >
-                  </td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class='h-4' />
-                {product_details.data?.map((detail: any) => (
-                  // [detail.id,
-                  // detail.marketplace_id,
-                  // detail.price,
-                  // detail.product_detail_description_id,
-                  // detail.product_id,
-                  // detail.seller_city,
-                  // detail.stock,
-                  // detail.url].map((detail: any) => (
-                  //   <div>
-                  //     <div class="text-lg font-semibold">{detail}</div>
-                  //   </div>
-                  // ))
-                  <>
-                    <tr key={'marketplate-' + detail.id} class="drop-shadow-sm">
-                      <td class="bg-white p-2 rounded-s-lg">
-                        {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
-                        {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
-                        {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
-                      </td>
-                      <td class="bg-white p-2 font-semibold">
+          (product_details.data?.length ?? 0) == 0 ?
+            <span class='font-semibold text-lg'>Belum ada link produk</span>
+            :
+            (
+              <>
+                <div class="flex flex-col w-full md:hidden gap-2">
+                  {product_details.data?.map((detail: any) => (
+                    <div
+                      key={'marketplacemobile-' + detail.id}
+                      class="
+                      flex
+                      flex-col
+                      gap-2
+                      text-black
+                      border
+                      transition-all
+                      rounded-xl
+                      shadow-lg
+                      bg-white
+                      p-2
+                      "
+                    >
+                      {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
+                      {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
+                      {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
+                      <span class='font-semibold text-xl'>
                         Rp{detail.price.toLocaleString('id-ID')}
-                      </td>
-                      <td class="bg-white p-2">
+                      </span>
+                      <div class='flex flex-row gap-1'>
+                        <TbMapPin />
                         {detail.seller_city}
+                      </div>
+                      <a
+                        href={detail.url}
+                        class={[filledButtonClass, 'text-center bg-green-600']}
+                        target="_blank" rel="noopener noreferrer"
+                      >
+                        Beli Sekarang
+                      </a>
+                    </div>
+                  ))}
+                </div>
+                <table class="w-full hidden md:table">
+                  <thead class="drop-shadow-sm">
+                    <tr>
+                      <td
+                        class="bg-white rounded-s-lg p-2"
+                      >
+                        Merchant
                       </td>
-                      <td class="bg-white p-2">
-                        {detail.stock}
+                      <td
+                        class=" bg-white p-2"
+                      >
+                        Harga
                       </td>
-                      <td class="bg-white p-2">
-                        {detail.product_detail_description ?? '-'}
+                      <td
+                        class=" bg-white p-2"
+                      >
+                        Lokasi Toko
                       </td>
-                      <td class="bg-white p-2 rounded-e-lg">
-                        <a
-                          href={detail.url}
-                          class={[filledButtonClass, 'bg-green-600']}
-                          target="_blank" rel="noopener noreferrer"
-                        >
-                          Beli Sekarang
-                        </a>
+                      <td
+                        class="bg-white p-2"
+                      >
+                        Stok
+                      </td>
+                      <td
+                        class="bg-white p-2"
+                      >
+                        Details
+                      </td>
+                      <td
+                        class="bg-white rounded-e-lg p-2"
+                      >
                       </td>
                     </tr>
-                    <tr key={'marketplategap-' + detail.id} class='h-1' />
-                  </>
-                ))}
-              </tbody>
-            </table>
-          </span>
-        </Dropdown>
-      }
+                  </thead>
+                  <tbody>
+                    <tr class='h-4' />
+                    {product_details.data?.map((detail: any) => (
+                      // [detail.id,
+                      // detail.marketplace_id,
+                      // detail.price,
+                      // detail.product_detail_description_id,
+                      // detail.product_id,
+                      // detail.seller_city,
+                      // detail.stock,
+                      // detail.url].map((detail: any) => (
+                      //   <div>
+                      //     <div class="text-lg font-semibold">{detail}</div>
+                      //   </div>
+                      // ))
+                      <>
+                        <tr key={'marketplate-' + detail.id} class="drop-shadow-sm">
+                          <td class="bg-white p-2 rounded-s-lg">
+                            {detail.marketplace_name === "Tokopedia" && <TokopediaSvg class='h-8 w-fit' />}
+                            {detail.marketplace_name === "Shopee" && <ShopeeSvg class='h-8 w-fit' />}
+                            {detail.marketplace_name === "Blibli" && <BlibliSvg class='h-8 w-fit' />}
+                          </td>
+                          <td class="bg-white p-2 font-semibold">
+                            Rp{detail.price.toLocaleString('id-ID')}
+                          </td>
+                          <td class="bg-white p-2">
+                            {detail.seller_city}
+                          </td>
+                          <td class="bg-white p-2">
+                            {detail.stock}
+                          </td>
+                          <td class="bg-white p-2">
+                            {detail.product_detail_description ?? '-'}
+                          </td>
+                          <td class="bg-white p-2 rounded-e-lg">
+                            <a
+                              href={detail.url}
+                              class={[filledButtonClass, 'bg-green-600']}
+                              target="_blank" rel="noopener noreferrer"
+                            >
+                              Beli Sekarang
+                            </a>
+                          </td>
+                        </tr>
+                        <tr key={'marketplategap-' + detail.id} class='h-1' />
+                      </>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )
+        }</span>
+      </Dropdown>
       {review_urls?.length > 0 &&
         <Dropdown>
           <span q:slot='header' class='text-3xl font-semibold'>
