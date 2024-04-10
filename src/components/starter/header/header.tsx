@@ -110,7 +110,7 @@ export default component$(() => {
             >
               <User2 width="24" height="24" class="fill-none stroke-white" />
               <span class='ml-1 -translate-x-1'>
-                Login
+                Log In
               </span>
             </div>
           </div>
