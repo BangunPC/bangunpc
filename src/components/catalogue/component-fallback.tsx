@@ -58,7 +58,7 @@ export const ComponentFallback = component$<ComponentFallbackProps>(
                 <>
                     {keys.map((key, index) => (
                         <div key={key} class="flex flex-col">
-                            <div class="text-sm mt-1 mb-2">{headers[index + 3]}</div>
+                            <div class="text-sm mt-1 mb-2">{headers[index]}</div>
                             <div class="font-semibold">{component[key] ?? '-'}</div>
                         </div>
                     ))}
