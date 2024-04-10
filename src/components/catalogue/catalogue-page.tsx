@@ -24,7 +24,7 @@ export const CataloguePage = component$<CataloguePageProps>(({ components, katal
             class='hidden tablet:block tablet:w-10 tablet:h-10 tablet:my-auto tablet:mr-2'
             onClick$={() => { hideSidebar.value = !hideSidebar.value }}
         >
-            {hideSidebar.value ?
+            {!hideSidebar.value ?
                 <TbLayoutSidebarLeftExpand class='m-auto' />
                 :
                 <TbLayoutSidebarLeftCollapse class='m-auto' />
@@ -53,10 +53,10 @@ export const CataloguePage = component$<CataloguePageProps>(({ components, katal
             <div class='py-4'>
                 {mobileSidebarButton}
                 <div class='flex flex-row pt-4 tablet:pt-0'>
-                    <div class={`${hideSidebar.value ? 'hidden' : ''} m-auto desktop:block`}>
+                    <div class={`${hideSidebar.value ? 'hidden tablet:block' : 'tablet:hidden'} m-auto desktop:block`}>
                         <Slot />
                     </div>
-                    <div class={`flex-1 w-full px-3 desktop:p-0 ${hideSidebar.value ? '' : 'hidden'} desktop:block`}>
+                    <div class={`flex-1 w-full px-3 desktop:p-0 ${hideSidebar.value ? '' : 'hidden'} tablet:block`}>
                         <div class='flex flex-col tablet:flex-row'>
                             {desktopSidebarButton}
                             <CatalogueHeader katalog={katalogTitle} itemCount={0} />
@@ -74,10 +74,10 @@ export const CataloguePage = component$<CataloguePageProps>(({ components, katal
             <div class='py-4'>
                 {mobileSidebarButton}
                 <div class='flex flex-row pt-4 tablet:pt-0'>
-                    <div class={`${hideSidebar.value ? 'hidden' : ''} m-auto desktop:block desktop:m-0`}>
+                    <div class={`${hideSidebar.value ? 'hidden tablet:block' : 'tablet:hidden'} m-auto desktop:block desktop:m-0`}>
                         <Slot />
                     </div>
-                    <div class={`flex-1 w-full px-3 desktop:p-0 ${hideSidebar.value ? '' : 'hidden'} desktop:block`}>
+                    <div class={`flex-1 w-full px-3 desktop:p-0 ${hideSidebar.value ? '' : 'hidden'} tablet:block`}>
                         <div class='flex flex-col tablet:flex-row'>
                             {desktopSidebarButton}
                             <CatalogueHeader katalog={katalogTitle} itemCount={data.count || 0} />
