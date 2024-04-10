@@ -70,7 +70,9 @@ const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
                                         src={componentImage(component)}
                                         alt={`Gambar ${component.product_name}`}
                                         width={64}
-                                        height={64} />)}
+                                        height={64}
+                                        class='aspect-square min-w-[64px]'
+                                    />)}
                                 </td>
                                 <td
                                     onClick$={handleRedirect}

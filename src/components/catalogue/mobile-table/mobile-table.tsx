@@ -16,7 +16,7 @@ export default component$<TableType>(({ headers, data: categoryData, kategori })
         <div
             class={[
                 styles.mobileKatalog,
-                'flex flex-col w-[calc(100vw-70px)] md:hidden gap-1 transition-all duration-200 -translate-x-[50%]',
+                'flex flex-col md:hidden gap-1 transition-all duration-200',
             ]}
         >
             {categoryData?.map((component: any) => {
@@ -34,20 +34,21 @@ export default component$<TableType>(({ headers, data: categoryData, kategori })
                     alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')
                 })
                 return (
-                    <Link
-                        href={`/detail/${kategori}/${component.slug}`}
+                    <div
                         key={component.product_id}
                         class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
                     >
-                        <div class="flex flex-row items-center gap-1">
-                            <input type="checkbox" />
-                            <div class="justify-evenly flex flex-1 flex-row items-center gap-2">
+                        <Link
+                            href={`/detail/${kategori}/${component.slug}`}
+                            class="flex flex-row items-center gap-1 text-black"
+                        >
+                            <div class="flex flex-1 flex-row items-center gap-2">
                                 {component.image_filenames.length > 0 && (<img
                                     src={componentImage(component)}
                                     alt={`Gambar ${component.product_name}`}
                                     width={80}
                                     height={80} />)}
-                                <div class="flex flex-col">
+                                <div class="flex flex-1 flex-col">
                                     <span class="text-lg font-bold leading-none">
                                         {component.product_name}
                                     </span>
@@ -62,7 +63,7 @@ export default component$<TableType>(({ headers, data: categoryData, kategori })
                             <div>
                                 <FilledButton onClick$={handleAddComponent}>Tambah</FilledButton>
                             </div>
-                        </div>
+                        </Link>
                         <div class="grid sm:grid-cols-4 grid-cols-3 gap-1">
                             <ComponentFallback
                                 headers={headers}
@@ -70,7 +71,7 @@ export default component$<TableType>(({ headers, data: categoryData, kategori })
                                 component={component}
                                 isMobile={true} />
                         </div>
-                    </Link>
+                    </div>
                 );
             })}
         </div>
