@@ -11,7 +11,7 @@ import { TbMenu2 } from "@qwikest/icons/tablericons";
 import LogoHeader from "./logo-header";
 import User2 from "../icons/user-2";
 import { kToggleKatalogModal } from "~/lib/constant";
-import { ThemeSwitch } from "./theme-switch/theme-switch";
+// import { ThemeSwitch } from "./theme-switch/theme-switch";
 
 const headersItems = [
   {
