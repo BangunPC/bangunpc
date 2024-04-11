@@ -45,7 +45,7 @@ export default component$(() => {
           <SearchBox placeholder='Cari entri blog yang ingin kamu baca' />
         </div>
       </aside> */}
-      <main class="flex flex-col m-auto max-w-[800px] w-fit gap-2 mb-8 px-2">
+      <main class="flex flex-col tablet:grid tablet:grid-cols-3 m-auto max-w-screen-desktop w-fit gap-2 tablet:gap-4 mb-8 px-2">
         {metas.value.map((meta, index) => (
           <Link
             onMouseEnter$={(_: any, element: HTMLAnchorElement) => {
@@ -101,6 +101,7 @@ export default component$(() => {
             <br />
           </Link>
         ))}
+        
       </main>
     </div>
   );

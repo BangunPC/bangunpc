@@ -18,7 +18,7 @@ export default component$<TableType>(({ headers, data: categoryData, kategori })
         <div
             class={[
                 styles.mobileKatalog,
-                'flex flex-col md:hidden gap-1 transition-all duration-200',
+                'flex flex-col tablet:hidden gap-1 transition-all duration-200',
             ]}
         >
             {categoryData?.map((component: any) => {

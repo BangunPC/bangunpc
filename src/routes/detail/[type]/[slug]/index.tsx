@@ -163,7 +163,7 @@ export default component$(() => {
             </TextButton>
           </div>
         </div>
-        <div class="flex flex-col gap-2 pt-0 tablet:pt-6 tablet:max-w-2xl w-full m-auto md:m-0">
+        <div class="flex flex-col gap-2 pt-0 tablet:pt-6 tablet:max-w-2xl w-full m-auto tablet:m-0">
           <header>
             <h1 class="tablet:font-bold text-4xl">{name}</h1>
           </header>
@@ -247,7 +247,7 @@ export default component$(() => {
             :
             (
               <>
-                <div class="flex flex-col w-full md:hidden gap-2">
+                <div class="flex flex-col w-full tablet:hidden gap-2">
                   {product_details.data?.map((detail: any) => (
                     <div
                       key={'marketplacemobile-' + detail.id}
@@ -284,7 +284,7 @@ export default component$(() => {
                     </div>
                   ))}
                 </div>
-                <table class="w-full hidden md:table">
+                <table class="w-full hidden tablet:table">
                   <thead class="drop-shadow-sm">
                     <tr>
                       <td
@@ -376,7 +376,7 @@ export default component$(() => {
           <span q:slot='header' class='text-3xl font-semibold'>
             Video Review
           </span>
-          <span q:slot='main' class='flex flex-col tablet:flex-row gap-1'>
+          <span q:slot='main' class='flex flex-col tablet:grid tablet:grid-cols-3 gap-1'>
             {
               review_urls?.map((url: any) => (
                 <iframe
@@ -384,7 +384,7 @@ export default component$(() => {
                   src={`https://www.youtube.com/embed${new URL(url).pathname}`}
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  class="w-full tablet:w-1/3 rounded-xl mb-1 aspect-video"
+                  class="w-full rounded-xl mb-1 aspect-video"
                   allowFullScreen
                 ></iframe>
               ))

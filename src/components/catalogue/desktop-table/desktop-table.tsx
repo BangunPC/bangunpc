@@ -20,7 +20,7 @@ const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
 
     const isIframe = useLocation().url.searchParams.get('iframe') === 'true';
     return (
-        <table class='hidden md:table'>
+        <table class='hidden tablet:table'>
             <thead class={['sticky text-xs backdrop-blur z-10', isIframe ? 'top-0' : 'top-navbar-min-h']}>
                 <tr>
                     {header.map((item) => (
