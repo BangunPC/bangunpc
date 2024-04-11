@@ -7,8 +7,8 @@ export const CatalogueSidebar = component$(({ price, totalComponents }: { price:
 
     return (
         <aside class={['self-start sticky', isIframe ? 'top-0' : 'top-navbar-min-h']}>
-            <div class='flex flex-col w-56 mx-4 gap-2'>
-                <div class='flex flex-col gap-2 bg-white rounded-lg h-fit shadow-br font-semibold p-2'>
+            <div class={`flex flex-col w-56 mx-4 gap-2 `}>
+                <div class={`flex flex-col gap-2 bg-white rounded-lg h-fit shadow-br font-semibold p-2 ${isIframe && 'hidden'}`}>
                     <div class='text-xl leading-5 rounded-lg border border-black/40 p-2'>Rincian Komponen yang Dipilih</div>
                     <div class='flex flex-col'>
                         <span class='text-sm'>Jumlah komponen</span>
