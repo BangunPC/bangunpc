@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
       boxShadow: {
@@ -15,7 +18,7 @@ module.exports = {
       screens: {
         'tablet': '810px',
         // => @media (min-width: 640px) { ... }
-  
+
         'desktop': '1200px',
         // => @media (min-width: 1280px) { ... }
       },

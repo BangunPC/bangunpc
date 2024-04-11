@@ -7,6 +7,7 @@ import {
 import { RouterHead } from "./components/router-head/router-head";
 
 import "./global.css";
+import { ThemeScript } from "./components/router-head/theme-script";
 
 export default component$(() => {
   /**
@@ -23,6 +24,7 @@ export default component$(() => {
         <link rel="manifest" href="/manifest.json" />
         <RouterHead />
         <ServiceWorkerRegister />
+        <ThemeScript />
       </head>
       <body lang="en">
         <RouterOutlet />

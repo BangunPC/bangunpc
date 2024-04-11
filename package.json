@@ -53,6 +53,7 @@
     "@qwikest/icons": "^0.0.13",
     "@supabase/supabase-js": "^2.36.0",
     "supabase-auth-helpers-qwik": "^0.0.3",
+    "update-browserslist-db": "latest",
     "uuid": "^9.0.1"
   },
   "prettier": {

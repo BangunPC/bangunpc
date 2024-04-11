@@ -1,5 +1,5 @@
 import { $, component$ } from "@builder.io/qwik";
-import { Link } from "@builder.io/qwik-city";
+import { Link, useLocation } from "@builder.io/qwik-city";
 import FilledButton from "~/components/common/filled-button";
 import { componentImage } from "~/lib/db";
 import type { ComponentStorageType } from "~/lib/storage_helper";
@@ -10,6 +10,8 @@ import styles from './mobile-table.module.css';
 import { categoriesEnum } from "~/lib/katalog_types";
 
 export default component$<TableType>(({ headers, data: categoryData, kategori }) => {
+
+    const isIframe = useLocation().url.searchParams.get('iframe') === 'true';
 
     return (
 
@@ -32,6 +34,9 @@ export default component$<TableType>(({ headers, data: categoryData, kategori })
                     }
                     ComponentStorage.addComponent(componentAdded)
                     alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')
+                    if (isIframe) {
+                        window.history.back()
+                    }
                 })
                 return (
                     <div

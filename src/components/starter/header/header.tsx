@@ -11,6 +11,7 @@ import { TbMenu2 } from "@qwikest/icons/tablericons";
 import LogoHeader from "./logo-header";
 import User2 from "../icons/user-2";
 import { kToggleKatalogModal } from "~/lib/constant";
+import { ThemeSwitch } from "./theme-switch/theme-switch";
 
 const headersItems = [
   {
@@ -101,6 +102,10 @@ export default component$(() => {
           <Profile width="24" height="24" class="inline-block fill-white" />
           <span>Login</span>
         </Link> */}
+
+            {/* TODO: dark mode */}
+            {/* <ThemeSwitch /> */}
+
             <div
               class='m-auto tablet:m-0 mt-4 w-32 tablet:w-28 bg-button hover:bg-button-hover transition-colors hover:cursor-pointer rounded-full flex flex-row text-white items-center py-2 px-4 justify-evenly tablet:justify-between font-semibold'
               onClick$={() => {
@@ -116,7 +121,7 @@ export default component$(() => {
           </div>
         </div>
         {/* </div> */}
-      </header>
+      </header >
     </>
   );
 });

@@ -49,6 +49,10 @@ const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
                         }
                         ComponentStorage.addComponent(componentAdded)
                         alert('Komponen ' + component.product_name + ' berhasil ditambahkan. ')
+                        // back
+                        if (isIframe) {
+                            window.history.back()
+                        }
                     })
 
                     const handleRedirect = $(() => (window.location.href = `/detail/${kategori}/${component.slug}${isIframe ? '?iframe=true' : ''}`))
