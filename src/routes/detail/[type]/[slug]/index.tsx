@@ -77,9 +77,9 @@ export default component$(() => {
       ).price?.toLocaleString('id-ID') ?? undefined;
 
   return (
-    <div class='flex flex-col gap-4 p-6 lg:max-w-6xl max-w-3xl m-auto'>
-      <div class="flex flex-col lg:grid lg:grid-cols-2 lg:auto-rows-fr gap-2">
-        <div class="pb-0 lg:pb-6 lg:max-w-lg">
+    <div class='flex flex-col gap-4 p-6 tablet:max-w-screen-desktop max-w-3xl m-auto'>
+      <div class="flex flex-col tablet:grid tablet:grid-cols-2 tablet:auto-rows-fr gap-2">
+        <div class="pb-0 tablet:pb-6 tablet:max-w-lg">
           <div class="border border-[#1C1F24] border-opacity-40 rounded-md aspect-square max-w-xl mx-auto items-center overflow-hidden">
             <div
               class="flex items-center justify-center w-full h-full"
@@ -114,7 +114,7 @@ export default component$(() => {
             </div>
           </div>
 
-          <div class="grid grid-cols-4 lg:grid-cols-3 auto-rows-fr my-4 gap-4 justify-center">
+          <div class="grid grid-cols-4 tablet:grid-cols-3 auto-rows-fr my-4 gap-4 justify-center">
             {imageUrls.map((url: string | undefined) => (
               <img
                 onMouseEnter$={() => {
@@ -163,9 +163,9 @@ export default component$(() => {
             </TextButton>
           </div>
         </div>
-        <div class="flex flex-col gap-2 pt-0 lg:pt-6 lg:max-w-2xl w-full m-auto md:m-0">
+        <div class="flex flex-col gap-2 pt-0 tablet:pt-6 tablet:max-w-2xl w-full m-auto md:m-0">
           <header>
-            <h1 class="lg:font-bold text-4xl">{name}</h1>
+            <h1 class="tablet:font-bold text-4xl">{name}</h1>
           </header>
           <main class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
@@ -181,13 +181,13 @@ export default component$(() => {
               </div>}
             <div class='flex flex-row gap-2'>
               <FilledButton
-                class="flex lg:block lg:w-fit font-normal text-sm px-2 py-3 justify-center rounded-lg bg-green-600"
+                class="flex tablet:block tablet:w-fit font-normal text-sm px-2 py-3 justify-center rounded-lg bg-green-600"
                 onClick$={() => nav('#compare', { scroll: true })}
               >
                 Beli Sekarang
               </FilledButton>
               <FilledButton
-                class="flex lg:block lg:w-fit font-normal text-sm px-2 py-3 justify-center rounded-lg"
+                class="flex tablet:block tablet:w-fit font-normal text-sm px-2 py-3 justify-center rounded-lg"
                 onClick$={() => alert('Coming soon')}
               >
                 + Tambahkan ke Simulasi Rakit PC
@@ -376,17 +376,15 @@ export default component$(() => {
           <span q:slot='header' class='text-3xl font-semibold'>
             Video Review
           </span>
-          <span q:slot='main'>
+          <span q:slot='main' class='flex flex-col tablet:flex-row gap-1'>
             {
               review_urls?.map((url: any) => (
                 <iframe
                   key={url}
-                  width="100%"
-                  height="315"
                   src={`https://www.youtube.com/embed${new URL(url).pathname}`}
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  class="rounded-xl mb-1"
+                  class="w-full tablet:w-1/3 rounded-xl mb-1 aspect-video"
                   allowFullScreen
                 ></iframe>
               ))
