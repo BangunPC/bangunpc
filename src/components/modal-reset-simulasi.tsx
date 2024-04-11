@@ -10,7 +10,6 @@ export type ModalResetProps = {
 
 export const ModalReset = component$<ModalResetProps>(({ onConfirm$ }) => {
     const showModalReset = useSignal(false)
-    const isSignupMode = useSignal(false)
 
     return (
         <>
