@@ -9,7 +9,6 @@ import DocumentText from "../icons/document-text";
 // import Profile from "../icons/profile";
 import { TbMenu2 } from "@qwikest/icons/tablericons";
 import LogoHeader from "./logo-header";
-import User2 from "../icons/user-2";
 import { kToggleKatalogModal } from "~/lib/constant";
 import { ModalLogin } from "~/components/modal-login";
 // import { ThemeSwitch } from "./theme-switch/theme-switch";
