@@ -277,7 +277,7 @@ export default component$(() => {
                             onLoad$={(_: Event, element: HTMLIFrameElement) => {
                                 currentIframePath.value = element.contentWindow?.location.pathname ?? ''
                             }}
-                            src={iframePath.value + `?${urlQuery.value}&iframe=true`}
+                            src={urlQuery.value ? iframePath.value + `?${urlQuery.value}&iframe=true` : iframePath.value + '?iframe=true'}
                         />
                     </div>
                 </div>

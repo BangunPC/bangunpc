@@ -51,6 +51,7 @@ export const getStorage = server$(async (
     // compatibility start
 
     if (motherboardId) {
+        console.log(`Filtering storage by motherboard id: ${motherboardId}`)
         const { data: motherboardData, error } = await client
             .schema('product')
             .from('v_motherboards')
@@ -59,17 +60,22 @@ export const getStorage = server$(async (
             .limit(1)
             .single()
         if (error) {
+            console.error(error)
             throw error
         }
 
+        console.log('Motherboard data:', motherboardData)
+
         filteredData = filteredData.filter((item) => {
+            console.log(`Filtering storage by form factor: ${item.form_factor}`)
             if (motherboardData.pcie_m2_slot === 0)
-                return item.form_factor?.toLowerCase() !== 'm.2 nvme'
+                return item.form_factor?.toUpperCase() !== 'M.2 NVME'
             else
                 return item
         })
 
-        if (storages) {
+        if (storages && storages.length > 0) {
+            console.log(`Filtering storage by storages: ${storages.map((storage) => storage.id)}`)
             const { data: storageData, error } = await client
                 .schema('product')
                 .from('v_internal_storages')
@@ -77,14 +83,18 @@ export const getStorage = server$(async (
                 .in('product_id', storages.map((storage) => storage.id))
             
             if (error) {
+                console.error(error)
                 throw error
             }
 
-            const totalSata = storageData.filter((item) => item.form_factor?.toLowerCase() === 'm.2 nvme').length
-            const totalNvme = storageData.filter((item) => item.form_factor?.toLowerCase() !== 'm.2 nvme').length
+            const totalNvme = storageData.filter((item) => item.form_factor?.toUpperCase() === 'M.2 NVME').length
+            const totalSata = storageData.filter((item) => item.form_factor?.toUpperCase() !== 'M.2 NVME').length
 
-            filteredData = filteredData.filter(() => {
-                return totalSata >= motherboardData.sata3_slot! && totalNvme >= motherboardData.pcie_m2_slot!
+            console.log(`Total SATA: ${totalSata}, Total NVMe: ${totalNvme}`)
+
+            filteredData = filteredData.filter((item) => {
+                if (item.form_factor?.toUpperCase() === 'M.2 NVME') return totalNvme < motherboardData.pcie_m2_slot!
+                return totalSata < motherboardData.sata3_slot!
             })
         }
 

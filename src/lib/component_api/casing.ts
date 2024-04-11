@@ -1,7 +1,6 @@
 import { server$ } from "@builder.io/qwik-city"
 import { supabase } from "../db"
 import { CasingCompatibility, CasingFilter } from "./filter"
-import { todo } from "node:test"
 
 export const getCasing = server$(async (
     { gpus, motherboardId }: CasingCompatibility,
@@ -13,6 +12,7 @@ export const getCasing = server$(async (
     const client = await supabase()
 
     if (!client) {
+        console.log('ERROR!')
         throw new Error('Supabase client is null')
     }
 
@@ -42,6 +42,7 @@ export const getCasing = server$(async (
     const { data: memoryData, error, count } = await client_query;
 
     if (!memoryData) {
+        console.log('ERROR! DATA NULL')
         throw new Error('Casing data is null')
     }
 
@@ -59,13 +60,14 @@ export const getCasing = server$(async (
         .limit(1)
         .single()
         if (error) {
+            console.log('ERROR! MOTHERBOARD')
             throw error
         }
         filteredData = filteredData.filter((item) => item.mobo_supports?.includes(motherboardData.form_factor!))
     }
 
     // TODO(katalog): multiple gpu
-    if (gpus) {
+    if (gpus && gpus.length > 0) {
         const { data: gpuData, error } = await client
         .schema('product')
         .from('v_gpus')
@@ -74,6 +76,7 @@ export const getCasing = server$(async (
         .limit(1)
         .single()
         if (error) {
+            console.log(`ERROR! GPU`)
             throw error
         }
         filteredData = filteredData.filter((item) => item.max_gpu_length_mm! >=  gpuData.length_mm!)
@@ -82,6 +85,7 @@ export const getCasing = server$(async (
     // compatibility end
 
     if (error) {
+        console.log('ERROR! FILTER')
         throw error
     }
 

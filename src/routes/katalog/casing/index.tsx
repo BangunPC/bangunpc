@@ -45,11 +45,10 @@ export default component$(() => {
     const init = useSignal(false);
     useVisibleTask$(() => {
         refresh();
-        setTimeout(() => {
-            init.value = true;
-        }, 100);
+        init.value = true;
         setInterval(refresh, 2000);
-    })
+    },
+        { strategy: "document-idle" })
 
     const components = useResource$(async ({ track }) => {
         track(init);

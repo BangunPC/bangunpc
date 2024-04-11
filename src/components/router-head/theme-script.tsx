@@ -8,7 +8,7 @@ export const ThemeScript = () => {
             localStorage.setItem('theme', theme);
             }
             var theme = localStorage.getItem('theme');
-            console.log(theme);
+            // console.log(theme);
             if (theme) {
             setTheme(theme);
             } else {
