@@ -8,7 +8,7 @@ import Heart from '~/components/starter/icons/heart';
 import Moneys from '~/components/starter/icons/moneys';
 import Send2 from '~/components/starter/icons/send-2';
 import Shop from '~/components/starter/icons/shop';
-import { supabase } from '~/lib/db';
+import { productImage, supabase } from '~/lib/db';
 import { categories, titlesKategori } from '~/lib/katalog_types';
 import ShopeeSvg from "~/components/homepage/affiliate/shopee-svg/shopee-svg";
 // import LazadaSvg from "~/components/homepage/affiliate/lazada.svg?jsx";
@@ -20,42 +20,31 @@ import Dropdown from '~/components/common/dropdown';
 import OutlinedButton from '~/components/common/outlined-button';
 
 export const useComponentDetail = routeLoader$(async (requestEvent) => {
-  const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
-  const storageUrl = '/storage/v1/object/public/product-images/';
 
   const params = requestEvent.params;
   const type = params.type;
   const slug = params.slug;
+  const id = params.id;
   const client = await supabase();
-  const { data } = await client
-    .schema('product')
-    .from(categories[type])
-    .select()
-    .eq('slug', slug)
-    .single();
+  const future = await Promise.all([
+    client
+      .schema('product')
+      .from(categories[type])
+      .select()
+      .eq('slug', slug)
+      .single(),
 
-  let imageUrls = [];
-
-  const { data: imageData } = await client
-    .schema('product')
-    .from('v_product_images')
-    .select('image_filenames')
-    .eq('product_id', data['product_id'])
-    .single();
-
-  imageUrls =
-    imageData?.image_filenames?.map((name: string) => {
-      const url = `${supabaseUrl}${storageUrl}${data['product_id']}/${name}`;
-      return url;
-    }) ?? [];
-
-  const product_details = await client
-    .schema('product')
-    .from('v_product_details')
-    .select()
-    .filter('product_id', 'eq', data['product_id']);
-
-  return { data, imageUrls, product_details, review_urls: data['review_urls'], spec_url: data['spec_url'], name: data['product_name'] };
+    client
+      .schema('product')
+      .from('v_product_details')
+      .select()
+      .eq('product_id', id)
+  ]).then(([dataResult, productDetailsResult]) => {
+    const data = dataResult.data;
+    const product_details = productDetailsResult.data;
+    return { data, product_details, review_urls: data['review_urls'], spec_url: data['spec_url'], name: data['product_name'] };
+  });
+  return {...future};
 });
 
 export default component$(() => {
@@ -63,16 +52,18 @@ export default component$(() => {
   const nav = useNavigate();
   const component = useComponentDetail();
 
-  const { data, imageUrls, product_details, review_urls, spec_url, name } = component.value;
+  const { data, product_details, review_urls, spec_url, name } = component.value;
+
+  const imageUrls = data.image_filenames.map((image: string) => productImage(data['product_id'], image));
 
   const { type } = useLocation().params;
 
   const componentInfo = v_spec[type]?.flatMap((v) => ({ title: v[1], value: data[v[0]] }));
 
   let lowest_price = undefined;
-  if ((product_details.data?.length ?? -1) > 0)
+  if ((product_details?.length ?? -1) > 0)
     lowest_price =
-      product_details.data?.reduce(
+      product_details?.reduce(
         (a, b) => (a.price ?? 0) < (b.price ?? 0) ? a : b,
       ).price?.toLocaleString('id-ID') ?? undefined;
 
@@ -143,25 +134,6 @@ export default component$(() => {
             ))}
           </div>
 
-          <div class="flex flex-row gap-2">
-            <TextButton
-              class="flex items-center gap-2"
-              onClick$={() => alert('Coming Soon')}
-            >
-              <Heart class="fill-none " width="24" height="24" />
-              <span class="text-lg">Favoritkan</span>
-            </TextButton>
-            <TextButton
-              class="flex items-center gap-2"
-              onClick$={() => {
-                navigator.clipboard.writeText(window.location.href);
-                alert('Link copied to clipboard');
-              }}
-            >
-              <Send2 class="fill-none" width="24" height="24" />
-              <span class="text-lg">Bagikan</span>
-            </TextButton>
-          </div>
         </div>
         <div class="flex flex-col gap-2 pt-0 tablet:pt-6 tablet:max-w-2xl w-full m-auto tablet:m-0">
           <header>
@@ -171,7 +143,7 @@ export default component$(() => {
             <div class="flex items-center gap-2">
               <Shop class="fill-none stroke-black" width="24" height="24" />
               <span class="text-lg">
-                {product_details.data!.length} penjual dari Tokopedia, Shopee & lainnya
+                {product_details!.length} penjual dari Tokopedia, Shopee & lainnya
               </span>
             </div>
             {lowest_price &&
@@ -192,6 +164,25 @@ export default component$(() => {
               >
                 + Tambahkan ke Simulasi Rakit PC
               </FilledButton>
+            </div>
+            <div class="flex flex-row gap-2">
+              <TextButton
+                class="flex items-center gap-2"
+                onClick$={() => alert('Coming Soon')}
+              >
+                <Heart class="fill-none " width="24" height="24" />
+                <span class="text-lg">Tambah ke wishlist</span>
+              </TextButton>
+              <TextButton
+                class="flex items-center gap-2"
+                onClick$={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert('Link copied to clipboard');
+                }}
+              >
+                <Send2 class="fill-none" width="24" height="24" />
+                <span class="text-lg">Bagikan</span>
+              </TextButton>
             </div>
             <Dropdown>
               <span q:slot="header" class='w-full text-3xl font-semibold'>
@@ -242,13 +233,13 @@ export default component$(() => {
         </span>
         <span q:slot='main'>{
 
-          (product_details.data?.length ?? 0) == 0 ?
+          (product_details?.length ?? 0) == 0 ?
             <span class='font-semibold text-lg'>Belum ada link produk</span>
             :
             (
               <>
                 <div class="flex flex-col w-full tablet:hidden gap-2">
-                  {product_details.data?.map((detail: any) => (
+                  {product_details?.map((detail: any) => (
                     <div
                       key={'marketplacemobile-' + detail.id}
                       class="
@@ -320,7 +311,7 @@ export default component$(() => {
                   </thead>
                   <tbody>
                     <tr class='h-4' />
-                    {product_details.data?.map((detail: any) => (
+                    {product_details?.map((detail: any) => (
                       // [detail.id,
                       // detail.marketplace_id,
                       // detail.price,

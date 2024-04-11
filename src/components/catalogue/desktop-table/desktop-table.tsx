@@ -55,7 +55,7 @@ const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
                         }
                     })
 
-                    const handleRedirect = $(() => (window.location.href = `/detail/${kategori}/${component.slug}${isIframe ? '?iframe=true' : ''}`))
+                    const handleRedirect = $(() => (window.location.href = `/detail/${kategori}/${component.slug}/${component.product_id}${isIframe ? '?iframe=true' : ''}`))
 
                     return (
                         <>
@@ -69,7 +69,7 @@ const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
                             >
                                 <td class='w-16'
                                 >
-                                    <Link href={`/detail/${kategori}/${component.slug}${isIframe ? '?iframe=true' : ''}`}>
+                                    <Link href={`/detail/${kategori}/${component.slug}/${component.product_id}${isIframe ? '?iframe=true' : ''}`}>
                                         {component.image_filenames.length > 0 && (<img
                                             src={componentImage(component)}
                                             alt={`Gambar ${component.product_name}`}

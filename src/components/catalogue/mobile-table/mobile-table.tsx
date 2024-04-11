@@ -44,7 +44,7 @@ export default component$<TableType>(({ headers, data: categoryData, kategori })
                         class="text-black hover:bg-zinc-200 border hover:border-zinc-300 transition-all rounded-xl shadow-lg bg-white p-2"
                     >
                         <Link
-                            href={`/detail/${kategori}/${component.slug}`}
+                            href={`/detail/${kategori}/${component.slug}/${component.product_id}`}
                             class="flex flex-row items-center gap-1 text-black"
                         >
                             <div class="flex flex-1 flex-row items-center gap-2">
