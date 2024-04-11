@@ -11,6 +11,7 @@ import SimulasiMemory from "~/components/icons/simulasi/simulasi-memory";
 import SimulasiMotherboard from "~/components/icons/simulasi/simulasi-motherboard";
 import SimulasiPsu from "~/components/icons/simulasi/simulasi-psu";
 import SimulasiStorage from "~/components/icons/simulasi/simulasi-storage";
+import { ModalReset } from "~/components/modal-reset-simulasi";
 import { categoriesFromEnum, ComponentCategory } from "~/lib/katalog_types";
 import type { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentStorage } from "~/lib/storage_helper";
@@ -131,17 +132,9 @@ export default component$(() => {
         </header>
         <main class='flex flex-col gap-4 p-4 max-w-screen-desktop w-full m-auto'>
             <div class='ml-auto'>
-                <FilledButton
-                    class='bg-rose-500 flex items-center gap-1'
-                    onClick$={() => {
-                        ComponentStorage.clear();
-                    }}
-                >
-                    <TbArrowBack class='-scale-y-100 inline-block' />
-                    <span>
-                        Reset
-                    </span>
-                </FilledButton>
+                <ModalReset onConfirm$={() => {
+                    ComponentStorage.clear();
+                }} />
             </div>
             <div class='rounded-xl shadow-bm shadow-black/5 bg-white p-4'>
                 <table class="w-full ">
@@ -171,7 +164,7 @@ export default component$(() => {
                                                 <Link
                                                     key={component.id}
                                                     class='h-[38px] text-black flex flex-row items-center cursor-pointer hover:bg-zinc-200 rounded-md p-1'
-                                                    href={`/detail/${categoriesFromEnum[component.category]}/${component.slug}`}
+                                                    href={`/detail/${categoriesFromEnum[component.category]}/${component.slug}/${component.id}`}
                                                 >
                                                     <img src={component.image} alt={component.name} width={32} height={32} />
                                                     <span class='ml-1'>

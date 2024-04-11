@@ -11,6 +11,7 @@ import { TbMenu2 } from "@qwikest/icons/tablericons";
 import LogoHeader from "./logo-header";
 import User2 from "../icons/user-2";
 import { kToggleKatalogModal } from "~/lib/constant";
+import { ModalLogin } from "~/components/modal-login";
 // import { ThemeSwitch } from "./theme-switch/theme-switch";
 
 const headersItems = [
@@ -106,18 +107,7 @@ export default component$(() => {
             {/* TODO: dark mode */}
             {/* <ThemeSwitch /> */}
 
-            <div
-              class='m-auto tablet:m-0 mt-4 w-32 tablet:w-28 bg-button hover:bg-button-hover transition-colors hover:cursor-pointer rounded-full flex flex-row text-white items-center py-2 px-4 justify-evenly tablet:justify-between font-semibold'
-              onClick$={() => {
-                // toast("Coming Soon!")
-                alert('Coming Soon!')
-              }}
-            >
-              <User2 width="24" height="24" class="fill-none stroke-white" />
-              <span class='ml-1 -translate-x-1'>
-                Log In
-              </span>
-            </div>
+            <ModalLogin />
           </div>
         </div>
         {/* </div> */}
