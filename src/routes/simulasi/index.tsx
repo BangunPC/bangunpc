@@ -17,7 +17,7 @@ import { ComponentStorage } from "~/lib/storage_helper";
 
 export default component$(() => {
 
-    const headers = ['Kategori Komponen', 'Komponen Dipilih', 'Harga Satuan', 'Kuantitas', 'Harga Total', 'Aksi',]
+    const headers = ['Kategori Komponen', 'Komponen Dipilih', 'Harga Satuan', 'Aksi',]
 
     const cpu = useSignal([] as ComponentStorageType[]);
     const cooler = useSignal([] as ComponentStorageType[]);
@@ -129,7 +129,20 @@ export default component$(() => {
         <header class='font-semibold text-3xl flex'>
             <span class='whitespace-nowrap'>Simulasi Rakit PC</span> <span class="ml-2 text-base italic">Versi Alpha, kompatibilitas tidak dijamin 100%</span>
         </header>
-        <main class='p-4 max-w-7xl w-full m-auto'>
+        <main class='flex flex-col gap-4 p-4 max-w-screen-desktop w-full m-auto'>
+            <div class='ml-auto'>
+                <FilledButton
+                    class='bg-rose-500 flex items-center gap-1'
+                    onClick$={() => {
+                        ComponentStorage.clear();
+                    }}
+                >
+                    <TbArrowBack class='-scale-y-100 inline-block' />
+                    <span>
+                        Reset
+                    </span>
+                </FilledButton>
+            </div>
             <div class='rounded-xl shadow-bm shadow-black/5 bg-white p-4'>
                 <table class="w-full ">
                     <thead class='border-b border-black text-left h-8'>
@@ -140,110 +153,103 @@ export default component$(() => {
                         </tr>
                     </thead>
                     <tbody>
-                        {components.map((item) => (
-                            <tr key={item.title} class='h-12 border-b border-zinc-500'>
-                                <td class='text-primary font-bold flex'>
-                                    <div class='flex flex-row items-center mb-auto mt-2'>
-                                        {item.icon}
-                                        <span class='ml-1'>
-                                            {item.title}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class='flex flex-col gap-1'>
-                                        {item.components.value.map((component) =>
-                                        (
-                                            <Link
-                                                key={component.id}
-                                                class='h-[38px] text-black flex flex-row items-center cursor-pointer hover:bg-zinc-200 rounded-md p-1'
-                                                href={`/detail/${categoriesFromEnum[component.category]}/${component.slug}`}
-                                            >
-                                                <img src={component.image} alt={component.name} width={32} height={32} />
-                                                <span class='ml-1'>
-                                                    {component.name}
-                                                </span>
-                                            </Link>
-                                        )
-                                        )}
-                                        {item.components.value.length == 0 ? (
-                                            <FilledButton class='w-fit' onClick$={() => handleAddComponent(item)}>
-                                                + Pilih {item.title}
-                                            </FilledButton>
-                                        ) : (item.title == 'Memory' || item.title == 'Storage') && (
-                                            <OutlinedButton class='w-fit' onClick$={() => handleAddComponent(item)}>
-                                                + {item.title}
-                                            </OutlinedButton>
-                                        )}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class='flex flex-col gap-1'>
-                                        {item.components.value.map(component =>
-                                            <div key={component.id} class='flex h-[38px]'>
+                        {components.map((item) => {
+                            const bottomSpace = (item.title == 'Memory' || item.title == 'Storage') && (<div class='h-[38px]' />)
+                            return (
+                                <tr key={item.title} class='h-12 border-b border-zinc-500'>
+                                    <td class='text-primary font-bold flex'>
+                                        <div class='flex flex-row items-center mb-auto mt-2'>
+                                            {item.icon}
+                                            <span class='ml-1'>
+                                                {item.title}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class='flex flex-col gap-1'>
+                                            {item.components.value.map((component) => (
+                                                <Link
+                                                    key={component.id}
+                                                    class='h-[38px] text-black flex flex-row items-center cursor-pointer hover:bg-zinc-200 rounded-md p-1'
+                                                    href={`/detail/${categoriesFromEnum[component.category]}/${component.slug}`}
+                                                >
+                                                    <img src={component.image} alt={component.name} width={32} height={32} />
+                                                    <span class='ml-1'>
+                                                        {component.name}
+                                                    </span>
+                                                </Link>
+                                            )
+                                            )}
+                                            {item.components.value.length == 0 ? (
+                                                <FilledButton class='w-fit' onClick$={() => handleAddComponent(item)}>
+                                                    + Pilih {item.title}
+                                                </FilledButton>
+                                            ) : (item.title == 'Memory' || item.title == 'Storage') && (
+                                                <OutlinedButton class='w-fit' onClick$={() => handleAddComponent(item)}>
+                                                    + {item.title}
+                                                </OutlinedButton>
+                                            )}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class='flex flex-col gap-1'>
+                                            {item.components.value.map(component => <div key={component.id} class='flex h-[38px]'>
                                                 <span class='my-auto text-start whitespace-nowrap'>
                                                     {component.price ? `Rp ${component.price.toLocaleString('id-ID')}` : '-'}
                                                 </span>
                                             </div>
-                                        )
-                                        }
-                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='f[38px]' />)}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class='flex flex-col gap-1 h-full'>
-                                        {item.components.value.map(component =>
-                                            <div key={component.id} class='flex h-[38px]'>
+                                            )}
+                                            {bottomSpace}
+                                        </div>
+                                    </td>
+                                    {/* <td>
+                                        <div class='flex flex-col gap-1 h-full'>
+                                            {item.components.value.map(component => <div key={component.id} class='flex h-[38px]'>
                                                 <span class='my-auto text-start'>
                                                     {component.quantity}
                                                 </span>
                                             </div>
-                                        )
-                                        }
-                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='h-[38px]' />)}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class='flex flex-col gap-1 h-full'>
-                                        {item.components.value.map(component =>
-                                            <div key={component.id} class='flex h-[38px]'>
+                                            )}
+                                            {bottomSpace}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class='flex flex-col gap-1 h-full'>
+                                            {item.components.value.map(component => <div key={component.id} class='flex h-[38px]'>
                                                 <span class='my-auto text-start whitespace-nowrap'>
                                                     {(component.price && component.quantity) ? `Rp ${((component.price) * (component.quantity)).toLocaleString('id-ID')}` : '-'}
                                                 </span>
                                             </div>
-                                        )
-                                        }
-                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='h-[38px]' />)}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class='flex flex-col gap-1 h-full'>
-                                        {
-                                            item.components.value.map(component =>
-                                                <div key={component.id} class='flex flex-row gap-1 items-center'>
-                                                    <FilledButton
-                                                        class='h-[38px] bg-red-600 flex items-center'
-                                                        onClick$={() => {
-                                                            if (item.components.value.length > 0) {
-                                                                ComponentStorage.removeComponentById(component.id);
-                                                                refresh();
-                                                            }
-                                                        }}
-                                                    >
-                                                        <TbTrash class='inline-block' />
-                                                        Hapus
-                                                    </FilledButton>
-                                                </div>)
-                                        }
-                                        {(item.title == 'Memory' || item.title == 'Storage') && (<div class='h-[38px]' />)}
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                                            )}
+                                            {bottomSpace}
+                                        </div>
+                                    </td> */}
+                                    <td>
+                                        <div class='flex flex-col gap-1 h-full'>
+                                            {item.components.value.map(component => <div key={component.id} class='flex flex-row gap-1 items-center'>
+                                                <FilledButton
+                                                    class='h-[32px] bg-red-600 flex items-center'
+                                                    onClick$={() => {
+                                                        if (item.components.value.length > 0) {
+                                                            ComponentStorage.removeComponentById(component.id);
+                                                            refresh();
+                                                        }
+                                                    }}
+                                                >
+                                                    <TbTrash class='inline-block' />
+                                                    Hapus
+                                                </FilledButton>
+                                            </div>)}
+                                            {bottomSpace}
+                                        </div>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
-            <div class='ml-auto w-fit mt-4'>
+            <div class='ml-auto w-fit'>
                 <div class='flex rounded-xl bg-white shadow-bm shadow-black/5 p-4 items-center'>
                     <Money width="20" height="20" class="inline-block mr-1" />
                     Total: Rp {components.reduce((a, b) => a + ((b.components.value.reduce((a, b) => a + (b.price * b.quantity), 0))), 0).toLocaleString('id-ID')}

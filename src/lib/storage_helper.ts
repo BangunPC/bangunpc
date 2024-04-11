@@ -33,11 +33,11 @@ export class ComponentStorageHelper {
     static addComponent(component: ComponentStorageType) {
         let components = this.getComponents();
         const index = components.findIndex(c => c.id === component.id);
-        if (index !== -1) {
-            components[index].quantity += component.quantity;
-        } else {
-            components.push(component);
-        }
+        // if (index !== -1) {
+        //     components[index].quantity += component.quantity;
+        // } else {
+        components.push(component);
+        // }
         LocalStorageHelper.setItem('components', components);
     }
 
@@ -73,6 +73,10 @@ export class ComponentStorageHelper {
     static totalPrice() {
         let components = this.getComponents();
         return components.reduce((total, component) => total + (component.price * component.quantity), 0);
+    }
+
+    static clear() {
+        LocalStorageHelper.removeItem('components');
     }
 }
 
