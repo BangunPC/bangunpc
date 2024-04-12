@@ -21,7 +21,11 @@ module.exports = {
         // => @media (min-width: 1280px) { ... }
       },
       spacing: {
-        'navbar-min-h': '64px',
+        'navbar-min-h': '70px',
+      },
+      animation: {
+        'accordion-down': '0.2s ease-out 0s 1 normal forwards accordion-open',
+        'accordion-up': '0.2s ease-out 0s 1 normal forwards accordion-close',
       },
     },
   },

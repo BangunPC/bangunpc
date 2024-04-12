@@ -2,13 +2,12 @@ import { component$, Slot, useStyles$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import type { RequestHandler } from '@builder.io/qwik-city';
 
-import Header from '~/components/starter/header/header';
-import Footer from '~/components/starter/footer/footer';
-
 import styles from './styles.css?inline';
 import ModalKatalog from '~/components/modal-katalog/modal-katalog';
 import { QwikCityNprogress } from '@quasarwork/qwik-city-nprogress';
 import Feedback from '~/components/feedback';
+import Footer from '~/components/footer/footer';
+import { Navbar } from '~/components/header/navbar';
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -36,7 +35,7 @@ export default component$(() => {
 
   return (
     <>
-      {isNotIframe && <Header />}
+      {isNotIframe && <Navbar />}
       <QwikCityNprogress />
       <main class={isNotIframe && 'pt-16'}>
         {isNotIframe && <Feedback />}

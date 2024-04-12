@@ -2,7 +2,7 @@ import { component$ } from '@builder.io/qwik';
 import Image from '~/content/images/hero-image.webp?jsx';
 import styles from './hero.module.css';
 import { filledButtonClass } from '~/components/common/filled-button';
-import Computer from '~/components/starter/icons/computer';
+import Computer from '~/components/icons/common/computer';
 import { Link } from '@builder.io/qwik-city';
 
 export default component$(() => {

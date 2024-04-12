@@ -6,10 +6,10 @@ import FilledButton, {
   filledButtonClass,
 } from '~/components/common/filled-button';
 import TextButton from '~/components/common/text-button';
-import Heart from '~/components/starter/icons/heart';
-import Moneys from '~/components/starter/icons/moneys';
-import Send2 from '~/components/starter/icons/send-2';
-import Shop from '~/components/starter/icons/shop';
+import Heart from '~/components/icons/common/heart';
+import Moneys from '~/components/icons/common/moneys';
+import Send2 from '~/components/icons/common/send-2';
+import Shop from '~/components/icons/common/shop';
 import { productImage, supabase } from '~/lib/db';
 import { categories, titlesKategori } from '~/lib/katalog_types';
 import ShopeeSvg from '~/components/homepage/affiliate/shopee-svg/shopee-svg';

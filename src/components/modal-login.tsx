@@ -1,7 +1,6 @@
 import { component$, useSignal } from '@builder.io/qwik';
 import OutlinedButton from './common/outlined-button';
 import { Modal, ModalContent, ModalHeader } from '@qwik-ui/headless';
-import User2 from './starter/icons/user-2';
 import FilledButton from './common/filled-button';
 import { TbX } from '@qwikest/icons/tablericons';
 
@@ -12,13 +11,12 @@ export const ModalLogin = component$(() => {
   return (
     <>
       <div
-        class="m-auto tablet:m-0 mt-4 w-32 tablet:w-28 bg-button hover:bg-button-hover transition-colors hover:cursor-pointer rounded-full flex flex-row text-white items-center py-2 px-4 justify-evenly tablet:justify-between font-semibold"
+        class="h-12 w-20 justify-center m-auto tablet:m-0 bg-button hover:bg-button-hover transition-colors hover:cursor-pointer rounded-lg flex flex-row text-white items-center font-semibold"
         onClick$={() => {
           showModalLogin.value = true;
         }}
       >
-        <User2 width="24" height="24" class="fill-none stroke-white" />
-        <span class="ml-1 -translate-x-1">Log In</span>
+        <span class="inline">Masuk</span>
       </div>
       <Modal
         bind:show={showModalLogin}

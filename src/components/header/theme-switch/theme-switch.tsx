@@ -4,7 +4,7 @@ import styles from './style.css?inline';
 export const ThemeSwitch = component$(() => {
   useStylesScoped$(styles);
   return (
-    <div class="flex items-center gap-3 mr-2">
+    <div class="flex items-center gap-3 mx-2">
       <input
         type="checkbox"
         id="hide-checkbox"
@@ -20,6 +20,7 @@ export const ThemeSwitch = component$(() => {
           }
         }}
       />
+      {/* ---------------------------------------------- */}
       <label for="hide-checkbox" class="switch">
         <span class="slider round"></span>
       </label>

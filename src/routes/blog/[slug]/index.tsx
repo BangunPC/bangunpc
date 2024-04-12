@@ -2,7 +2,7 @@ import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import styles from './blog.module.css';
-import Profile from '~/components/starter/icons/profile';
+import Profile from '~/components/icons/common/profile';
 import BigImage1 from '/src/content/images/1.webp?jsx';
 import BigImage2 from '/src/content/images/2.webp?jsx';
 

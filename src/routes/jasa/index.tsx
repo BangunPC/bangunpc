@@ -3,8 +3,8 @@ import { FaChevronDownSolid } from '@qwikest/icons/font-awesome';
 import { TbStar, TbStarFilled } from '@qwikest/icons/tablericons';
 import FilledButton from '~/components/common/filled-button';
 import OutlinedButton from '~/components/common/outlined-button';
-import LocationMarker from '~/components/starter/icons/location-marker';
-import Shop from '~/components/starter/icons/shop';
+import LocationMarker from '~/components/icons/common/location-marker';
+import Shop from '~/components/icons/common/shop';
 import HeroImage from '~/content/images/jasa-hero.svg?jsx';
 
 export default component$(() => {
