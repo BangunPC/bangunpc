@@ -11,7 +11,7 @@ export const ModalLogin = component$(() => {
   return (
     <>
       <div
-        class="h-12 w-20 justify-center m-auto tablet:m-0 bg-button hover:bg-button-hover transition-colors hover:cursor-pointer rounded-lg flex flex-row text-white items-center font-semibold"
+        class="h-10 w-20 justify-center m-auto tablet:m-0 bg-button hover:bg-button-hover transition-colors hover:cursor-pointer rounded-lg flex flex-row text-white items-center font-semibold"
         onClick$={() => {
           showModalLogin.value = true;
         }}

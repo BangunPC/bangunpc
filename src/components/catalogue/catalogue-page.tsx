@@ -24,15 +24,15 @@ export const CataloguePage = component$<CataloguePageProps>(
 
     const desktopSidebarButton = (
       <OutlinedButton
-        class="hidden tablet:block desktop:hidden tablet:w-10 tablet:h-10 tablet:mr-2"
+        class="hidden tablet:flex justify-center items-center desktop:hidden h-10 aspect-square mr-2 mt-[6px]"
         onClick$={() => {
           hideSidebar.value = !hideSidebar.value;
         }}
       >
         {hideSidebar.value ? (
-          <TbLayoutSidebarLeftExpand class="mx-auto" />
+          <TbLayoutSidebarLeftExpand />
         ) : (
-          <TbLayoutSidebarLeftCollapse class="mx-auto" />
+          <TbLayoutSidebarLeftCollapse />
         )}
       </OutlinedButton>
     );

@@ -23,10 +23,6 @@ module.exports = {
       spacing: {
         'navbar-min-h': '70px',
       },
-      animation: {
-        'accordion-down': '0.2s ease-out 0s 1 normal forwards accordion-open',
-        'accordion-up': '0.2s ease-out 0s 1 normal forwards accordion-close',
-      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

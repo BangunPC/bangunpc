@@ -219,26 +219,6 @@ export default component$(() => {
       </div>
 
       <Dropdown>
-        <span q:slot="header" class="w-full text-3xl font-semibold">
-          Spesifikasi
-          {spec_url && (
-            <a href={spec_url} target="_blank" rel="noreferrer" class="ml-1">
-              <OutlinedButton class=" text-sm">
-                Buka Spesifikasi Resmi
-              </OutlinedButton>
-            </a>
-          )}
-        </span>
-        <span q:slot="main" class="flex flex-col gap-2">
-          {componentInfo?.map((info: any, index) => (
-            <div key={'componentinfo-' + index} class="flex flex-col gap-1">
-              <span class="font-semibold">{info.title}</span>
-              <span class="">{info.value ?? '-'}</span>
-            </div>
-          ))}
-        </span>
-      </Dropdown>
-      <Dropdown>
         <span q:slot="header">
           <div id="compare" class="text-3xl font-semibold">
             Bandingkan Produk
@@ -362,6 +342,41 @@ export default component$(() => {
             </>
           )}
         </span>
+      </Dropdown>
+
+      <Dropdown>
+        <span q:slot="header" class="w-full text-3xl font-semibold">
+          Spesifikasi
+          {spec_url && (
+            <a href={spec_url} target="_blank" rel="noreferrer" class="ml-1">
+              <OutlinedButton class=" text-sm">
+                Buka Spesifikasi Resmi
+              </OutlinedButton>
+            </a>
+          )}
+        </span>
+        <table
+          q:slot="main"
+          class="flex flex-col gap-2 bg-white border rounded-lg drop-shadow-sm"
+        >
+          <thead class='hidden'>
+            <tr>
+              <td />
+              <td />
+            </tr>
+          </thead>
+          <tbody>
+            {componentInfo?.map((info: any, index) => (
+              <tr
+                key={'componentinfo-' + index}
+                class="last:border-none border-b"
+              >
+                <td class="whitespace-nowrap border-r p-4">{info.title}</td>
+                <td class="p-4 font-semibold">{info.value ?? '-'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </Dropdown>
       {review_urls?.length > 0 && (
         <Dropdown>

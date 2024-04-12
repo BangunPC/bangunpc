@@ -8,10 +8,6 @@ import { ThemeSwitch } from './theme-switch/theme-switch';
 import MenuNavbar from '../icons/common/menu-navbar';
 
 const headersItems = [
-  {
-    title: 'Simulasi Rakit PC',
-    href: '/simulasi',
-  },
   // {
   //   title: "Jasa",
   //   altTitle: "Jasa",
@@ -21,6 +17,10 @@ const headersItems = [
   {
     title: 'Katalog',
     labelFor: kToggleKatalogModal,
+  },
+  {
+    title: 'Simulasi Rakit PC',
+    href: '/simulasi',
   },
   {
     title: 'Blog',
@@ -55,7 +55,7 @@ export const Navbar = component$(() => {
       <header
         class={`flex backdrop-blur-3xl pr-[20px] fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]`}
       >
-        <div class="w-full flex flex-col tablet:flex-row">
+        <div class="w-full tablet:max-w-screen-desktop m-auto flex flex-col tablet:flex-row">
           {/* <div class={["container", ]}> */}
           <div
             class={
