@@ -1,119 +1,119 @@
 .banding-section {
-    width: 100%;
-    margin: auto;
-    max-width: 1280px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    padding: 24px 12px;
+  width: 100%;
+  margin: auto;
+  max-width: 1280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding: 24px 12px;
 }
 
 .banding-left {
-    flex: 1;
-    height: min-content;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    max-width: 400px;
-    align-content: flex-start;
-    flex-wrap: nowrap;
-    gap: 20px;
+  flex: 1;
+  height: min-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 400px;
+  align-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 20px;
 }
 
 .banding-left-wrapper {
-    box-sizing: border-box;
-    flex: 1;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 0px 50px 0px;
-    overflow: hidden;
-    align-content: center;
-    flex-wrap: nowrap;
-    gap: 10px;
+  box-sizing: border-box;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0px 50px 0px;
+  overflow: hidden;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 10px;
 }
 
 .banding-header {
-    width: 100%;
-    height: auto;
-    word-wrap: break-word;
-    word-break: break-word;
-    font-weight: bold;
-    font-style: normal;
-    font-family: "Inter", sans-serif;
-    color: #1C1F24;
-    font-size: 32px;
-    letter-spacing: -0.5px;
-    line-height: 1.5;
-    text-align: left;
+  width: 100%;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-word;
+  font-weight: bold;
+  font-style: normal;
+  font-family: 'Inter', sans-serif;
+  color: #1c1f24;
+  font-size: 32px;
+  letter-spacing: -0.5px;
+  line-height: 1.5;
+  text-align: left;
 }
 
 .banding-main {
-    width: 100%;
-    height: auto;
-    word-wrap: break-word;
-    word-break: break-word;
-    font-weight: 500;
-    font-style: normal;
-    font-family: "Inter", sans-serif;
-    color: var(--grey_description, #74738a);
-    font-size: 24px;
-    letter-spacing: -0.5px;
-    line-height: 1.5;
-    text-align: left;
+  width: 100%;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-word;
+  font-weight: 500;
+  font-style: normal;
+  font-family: 'Inter', sans-serif;
+  color: var(--grey_description, #74738a);
+  font-size: 24px;
+  letter-spacing: -0.5px;
+  line-height: 1.5;
+  text-align: left;
 }
 
 .banding-image-wrapper {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    flex: 1;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    align-content: center;
-    flex-wrap: nowrap;
-    gap: 20px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  flex: 1;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 20px;
 }
 
 .banding-image {
-    width: 100%;
-    height: 100%;
-    max-width: 560px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    align-content: center;
-    flex-wrap: nowrap;
-    gap: 20px;
-    border-radius: 16px;
-    /* border: 2px solid rgba(34, 34, 34, 0.13); */
-    aspect-ratio: 1;
-    /* background-color: hsla(227, 11%, 67%, 0.4); */
+  width: 100%;
+  height: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 20px;
+  border-radius: 16px;
+  /* border: 2px solid rgba(34, 34, 34, 0.13); */
+  aspect-ratio: 1;
+  /* background-color: hsla(227, 11%, 67%, 0.4); */
 }
 
 @media screen and (max-width: 810px) {
-    .banding-section {
-        order: 1;
-        flex-direction: column;
-    }
+  .banding-section {
+    order: 1;
+    flex-direction: column;
+  }
 
-    .banding-left-wrapper {
-        order: 2;
-    }
+  .banding-left-wrapper {
+    order: 2;
+  }
 }
 
 @media screen and (min-width: 810px) {
-    .banding-section {
-        flex-direction: row;
-    }
+  .banding-section {
+    flex-direction: row;
+  }
 }

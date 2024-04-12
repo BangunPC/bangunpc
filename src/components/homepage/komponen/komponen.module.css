@@ -1,139 +1,139 @@
 .komponen-section {
-    box-sizing: border-box;
-    height: min-content;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 12px;
-    overflow: hidden;
-    align-content: center;
-    flex-wrap: nowrap;
-    max-width: 1200px;
-    margin: auto;
+  box-sizing: border-box;
+  height: min-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 12px;
+  overflow: hidden;
+  align-content: center;
+  flex-wrap: nowrap;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .komponen-image {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    align-content: center;
-    flex-wrap: nowrap;
-    gap: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 20px;
 }
 
 .komponen-content-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    align-content: center;
-    flex-wrap: nowrap;
-    gap: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 10px;
 }
 
 .komponen-content {
-    max-width: 594px;
-    height: min-content;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    max-width: 2018px;
-    align-content: flex-start;
-    flex-wrap: nowrap;
-    gap: 20px;
+  max-width: 594px;
+  height: min-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 2018px;
+  align-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 20px;
 }
 
 .komponen-header {
-    width: 100%;
-    height: auto;
-    word-wrap: break-word;
-    word-break: break-word;
-    font-weight: bold;
-    font-style: normal;
-    font-family: "Inter", sans-serif;
-    color: #1C1F24;
-    font-size: 32px;
-    letter-spacing: -0.5px;
-    line-height: 1.5;
-    text-align: left;
+  width: 100%;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-word;
+  font-weight: bold;
+  font-style: normal;
+  font-family: 'Inter', sans-serif;
+  color: #1c1f24;
+  font-size: 32px;
+  letter-spacing: -0.5px;
+  line-height: 1.5;
+  text-align: left;
 }
 
 .komponen-main {
-    width: 100%;
-    height: auto;
-    word-wrap: break-word;
-    word-break: break-word;
-    font-weight: 500;
-    font-style: normal;
-    font-family: "Inter", sans-serif;
-    color: #888888;
-    font-size: 24px;
-    letter-spacing: -0.5px;
-    line-height: 1.5;
-    text-align: left;
+  width: 100%;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-word;
+  font-weight: 500;
+  font-style: normal;
+  font-family: 'Inter', sans-serif;
+  color: #888888;
+  font-size: 24px;
+  letter-spacing: -0.5px;
+  line-height: 1.5;
+  text-align: left;
 }
 
 .komponen-subtitle {
-    width: 100%;
-    height: auto;
-    word-wrap: break-word;
-    word-break: break-word;
-    font-weight: 500;
-    font-style: normal;
-    font-family: "Inter", sans-serif;
-    color: #888888;
-    font-size: 16px;
-    letter-spacing: 0;
-    line-height: 118.5%;
-    text-align: left;
+  width: 100%;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-word;
+  font-weight: 500;
+  font-style: normal;
+  font-family: 'Inter', sans-serif;
+  color: #888888;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 118.5%;
+  text-align: left;
 }
 
 .komponen-checkbox {
-    width: 313px;
-    height: min-content;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    align-content: center;
-    flex-wrap: nowrap;
-    font-size: 24px;
-    gap: 15px;
-    color: rgb(var(--color-primary));
+  width: 313px;
+  height: min-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  font-size: 24px;
+  gap: 15px;
+  color: rgb(var(--color-primary));
 }
 
 .komponen-checkbox span {
-    width: auto;
-    height: auto;
-    font-weight: 700;
-    font-style: normal;
-    font-family: "Inter-Bold", "Inter", "Inter Placeholder", sans-serif;
-    color: #000000;
-    font-size: 20px;
-    letter-spacing: 0em;
-    line-height: 1.2;
+  width: auto;
+  height: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-family: 'Inter-Bold', 'Inter', 'Inter Placeholder', sans-serif;
+  color: #000000;
+  font-size: 20px;
+  letter-spacing: 0em;
+  line-height: 1.2;
 }
 
 @media screen and (max-width: 810px) {
-    .komponen-section {
-        order: 1;
-        flex-direction: column;
-    }
+  .komponen-section {
+    order: 1;
+    flex-direction: column;
+  }
 
-    .komponen-button-wrapper {
-        margin: auto;
-    }
+  .komponen-button-wrapper {
+    margin: auto;
+  }
 }
 
 @media screen and (min-width: 810px) {
-    .komponen-section {
-        flex-direction: row;
-    }
+  .komponen-section {
+    flex-direction: row;
+  }
 }

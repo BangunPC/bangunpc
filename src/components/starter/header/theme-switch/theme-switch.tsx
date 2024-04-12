@@ -1,5 +1,5 @@
-import { component$, useStylesScoped$ } from "@builder.io/qwik";
-import styles from "./style.css?inline";
+import { component$, useStylesScoped$ } from '@builder.io/qwik';
+import styles from './style.css?inline';
 
 export const ThemeSwitch = component$(() => {
   useStylesScoped$(styles);
@@ -11,12 +11,12 @@ export const ThemeSwitch = component$(() => {
         class="hidden"
         onClick$={() => {
           const theme = document.documentElement.className;
-          if (theme === "light") {
-            document.documentElement.className = "dark";
-            localStorage.setItem("theme", "dark");
+          if (theme === 'light') {
+            document.documentElement.className = 'dark';
+            localStorage.setItem('theme', 'dark');
           } else {
-            document.documentElement.className = "light";
-            localStorage.setItem("theme", "light");
+            document.documentElement.className = 'light';
+            localStorage.setItem('theme', 'light');
           }
         }}
       />

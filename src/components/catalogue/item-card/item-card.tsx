@@ -44,7 +44,7 @@ export default component$<Props>((props) => {
           'https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/' +
           image_path
         }
-        alt={product_name  || 'Gambar Produk'}
+        alt={product_name || 'Gambar Produk'}
       />
       <div class={styles['brand-wrapper']}>
         <span class={styles['brand']}>{brand_name}</span>

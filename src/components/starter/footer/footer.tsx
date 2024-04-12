@@ -1,85 +1,85 @@
-import { component$ } from "@builder.io/qwik";
+import { component$ } from '@builder.io/qwik';
 // import { useServerTimeLoader } from "~/routes/layout";
-import styles from "./footer.module.css";
-import { FaInstagram, FaXTwitter } from "@qwikest/icons/font-awesome";
-import { Link } from "@builder.io/qwik-city";
-import { kToggleKatalogModal } from "~/lib/constant";
+import styles from './footer.module.css';
+import { FaInstagram, FaXTwitter } from '@qwikest/icons/font-awesome';
+import { Link } from '@builder.io/qwik-city';
+import { kToggleKatalogModal } from '~/lib/constant';
 
 export default component$(() => {
   // const serverTime = useServerTimeLoader();
 
   const konten = [
     {
-      title: "Bangun PC",
+      title: 'Bangun PC',
       list: [
         {
-          title: "irham.bangunpc@gmail.com",
-          link: "mailto:irham.bangunpc@gmail.com"
-        }
-      ]
+          title: 'irham.bangunpc@gmail.com',
+          link: 'mailto:irham.bangunpc@gmail.com',
+        },
+      ],
     },
     {
-      title: "Layanan Kami",
+      title: 'Layanan Kami',
       list: [
         {
-          title: "Beranda",
-          link: "/"
+          title: 'Beranda',
+          link: '/',
         },
         {
-          title: "Simulasi Rakit PC",
-          link: "/simulasi",
+          title: 'Simulasi Rakit PC',
+          link: '/simulasi',
         },
         {
-          title: "Katalog Komponen PC",
+          title: 'Katalog Komponen PC',
           labelFor: kToggleKatalogModal,
         },
         {
-          title: "Jasa Rakit PC",
-          link: "/",
+          title: 'Jasa Rakit PC',
+          link: '/',
           disabled: true,
         },
         {
-          title: "Jasa Servis PC",
-          link: "/",
+          title: 'Jasa Servis PC',
+          link: '/',
           disabled: true,
         },
         {
-          title: "Blog",
-          link: "/blog"
+          title: 'Blog',
+          link: '/blog',
         },
       ],
     },
     {
-      title: "Tentang Kami",
+      title: 'Tentang Kami',
       list: [
         {
-          title: "Tentang Kami",
-          link: "/",
+          title: 'Tentang Kami',
+          link: '/',
           disabled: true,
         },
         {
-          title: "Hubungi Kami",
-          link: "/",
+          title: 'Hubungi Kami',
+          link: '/',
           disabled: true,
         },
         {
-          title: "Syarat dan Ketentuan",
-          link: "/",
+          title: 'Syarat dan Ketentuan',
+          link: '/',
           disabled: true,
         },
         {
-          title: "Privasi",
-          link: "/",
+          title: 'Privasi',
+          link: '/',
           disabled: true,
         },
         {
-          title: "Dukung Kami",
-          link: "/",
+          title: 'Dukung Kami',
+          link: '/',
           disabled: true,
         },
       ],
     },
-  ]
+  ];
 
   return (
     <footer class={styles.footer}>
@@ -93,32 +93,32 @@ export default component$(() => {
           <div key={item.title} class={styles.kontenColumn}>
             <header>{item.title}</header>
             <main class={styles.kontenList}>
-
               {item.list.map((listItem) => {
                 if (listItem.disabled) {
                   return (
                     <div key={listItem.title}>
-                      <Link preventdefault:click
+                      <Link
+                        preventdefault:click
                         onClick$={() => alert('Coming Soon!')}
                         href={listItem.link}
                       >
                         {listItem.title}
                       </Link>
                     </div>
-                  )
+                  );
                 }
                 if (listItem.labelFor) {
                   return (
                     <label key={listItem.title} for={listItem.labelFor}>
                       {listItem.title}
                     </label>
-                  )
+                  );
                 }
                 return (
                   <div key={listItem.title}>
                     <Link href={listItem.link}>{listItem.title}</Link>
                   </div>
-                )
+                );
               })}
             </main>
           </div>
@@ -130,14 +130,14 @@ export default component$(() => {
           <Link
             target="_blank"
             href="https://www.instagram.com/bangunpc"
-            style={"font-size: 24px"}
+            style={'font-size: 24px'}
           >
             <FaInstagram />
           </Link>
           <Link
             target="_blank"
             href="https://twitter.com/bangunpc"
-            style={"font-size: 24px"}
+            style={'font-size: 24px'}
           >
             <FaXTwitter />
           </Link>

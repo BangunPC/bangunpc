@@ -1,6 +1,7 @@
 # BangunPC
 
 This repository contains the front-end side of the bangunpc website which contains the following:
+
 - Home Page
 - Simulasi Rakit PC
 - Jasa Rakit/Servis PC

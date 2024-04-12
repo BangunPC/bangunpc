@@ -1,42 +1,42 @@
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 31px;
-    background-color: rgb(238, 16, 90);
-    border-radius: 100px;
-    cursor: pointer;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 31px;
+  background-color: rgb(238, 16, 90);
+  border-radius: 100px;
+  cursor: pointer;
 }
 
 .slider {
-    width: 50px;
-    height: 25px;
-    border-radius: 25px;
-    background-color: #ccc;
-    position: relative;
-    cursor: pointer;
-    transition: all .3s linear;
+  width: 50px;
+  height: 25px;
+  border-radius: 25px;
+  background-color: #ccc;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s linear;
 }
 
 .slider:before {
-    content: "";
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    background-size: cover;
-    border-radius: 50%;
-    background-color: #fff;
-    top: 16px;
-    left: 3px;
-    bottom: 0;
-    margin: auto;
-    transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-size: cover;
+  border-radius: 50%;
+  background-color: #fff;
+  top: 16px;
+  left: 3px;
+  bottom: 0;
+  margin: auto;
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-input:checked~.switch {
-    background-color: rgb(var(--color-primary));
+input:checked ~ .switch {
+  background-color: rgb(var(--color-primary));
 }
 
-input:checked~*>.slider:before {
-    left: 22px;
+input:checked ~ * > .slider:before {
+  left: 22px;
 }

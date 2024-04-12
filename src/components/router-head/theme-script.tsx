@@ -1,7 +1,7 @@
 export const themeStorageKey = 'theme-preference';
 
 export const ThemeScript = () => {
-    const themeScript = `
+  const themeScript = `
         (function() {
             function setTheme(theme) {
             document.documentElement.className = theme;
@@ -21,5 +21,5 @@ export const ThemeScript = () => {
         }
         );
         `;
-    return <script dangerouslySetInnerHTML={themeScript} />;
+  return <script dangerouslySetInnerHTML={themeScript} />;
 };

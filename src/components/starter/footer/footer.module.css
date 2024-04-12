@@ -43,7 +43,7 @@
 
   font-weight: 600;
   font-style: normal;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
   letter-spacing: 0em;
   line-height: 1.6;
@@ -70,7 +70,7 @@
   white-space: pre;
   font-weight: 500;
   font-style: normal;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: var(--token-ba0f8505-1870-43c0-8d4e-7d4bc5406462, #999999);
   font-size: 16px;
   letter-spacing: 0em;
@@ -109,7 +109,7 @@
   white-space: pre;
   font-weight: 500;
   font-style: normal;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: var(--token-ba0f8505-1870-43c0-8d4e-7d4bc5406462, #999999);
   font-size: 14px;
   letter-spacing: 0em;
@@ -128,7 +128,6 @@
   flex-wrap: nowrap;
   gap: 10px;
 }
-
 
 @media screen and (max-width: 768px) {
   .konten {

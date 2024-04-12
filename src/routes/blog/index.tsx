@@ -6,10 +6,7 @@ import Image1 from '/src/content/images/1.webp?jsx';
 import Image2 from '/src/content/images/2.webp?jsx';
 // import SearchBox from '~/components/common/search-box';
 
-const images = [
-  <Image1 key={1} />,
-  <Image2 key={2} />,
-];
+const images = [<Image1 key={1} />, <Image2 key={2} />];
 
 export const useFrontmatter = routeLoader$(async () => {
   const modules = import.meta.glob('/src/content/blogs/*.mdx', { eager: true });
@@ -38,7 +35,9 @@ export default component$(() => {
 
   return (
     <div>
-      <h1 class="text-center font-semibold font-sans my-4 text-4xl">Tech Blog</h1>
+      <h1 class="text-center font-semibold font-sans my-4 text-4xl">
+        Tech Blog
+      </h1>
       {/* TODO: search blog entry */}
       {/* <aside class="w-full max-w-7xl m-auto top-[calc(70px+1rem)] sticky z-10">
         <div class="w-80 ml-auto my-4 mr-4 drop-shadow-sm">
@@ -49,29 +48,34 @@ export default component$(() => {
         {metas.value.map((meta, index) => (
           <Link
             onMouseEnter$={(_: any, element: HTMLAnchorElement) => {
-              const image = document.getElementById('imagewrap' + (index));
+              const image = document.getElementById('imagewrap' + index);
               if (image !== null) {
-                element.style.transform = `scale(1.02)`
+                element.style.transform = `scale(1.02)`;
                 image.style.height = `20rem`;
                 element.style.margin = `8px 0px`;
               }
               hovered.value = index;
             }}
             onMouseLeave$={(_: any, element: HTMLAnchorElement) => {
-              const image = document.getElementById('imagewrap' + (index));
+              const image = document.getElementById('imagewrap' + index);
               if (image !== null) {
-                element.style.transform = ``
+                element.style.transform = ``;
                 image.style.height = `16rem`;
                 element.style.margin = ``;
-               }
-              hovered.value = -1
+              }
+              hovered.value = -1;
             }}
             key={meta.slug}
             href={`/blog/${meta.slug}`}
             class="rounded-xl bg-white shadow-2xl shadow-zinc-200 transition-all overflow-hidden z-0"
           >
-            <div id={`imagewrap${index}`} class="h-64 transition-all object-contain overflow-hidden">{images[index]}</div>
-            <div class='flex flex-col gap-2 p-2'>
+            <div
+              id={`imagewrap${index}`}
+              class="h-64 transition-all object-contain overflow-hidden"
+            >
+              {images[index]}
+            </div>
+            <div class="flex flex-col gap-2 p-2">
               <span class="text-sm text-slate-600">
                 {new Date(meta.created_at).toLocaleDateString('id-ID', {
                   weekday: 'long',
@@ -101,7 +105,6 @@ export default component$(() => {
             <br />
           </Link>
         ))}
-        
       </main>
     </div>
   );

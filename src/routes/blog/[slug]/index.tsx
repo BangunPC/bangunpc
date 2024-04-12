@@ -67,7 +67,9 @@ export default component$(() => {
 
   return (
     <div class="max-w-[680px] mx-4 tablet:mx-auto mt-8 ">
-      <article class={['prose tablet:prose-xl xl:prose-xl text-left', styles.mdx]}>
+      <article
+        class={['prose tablet:prose-xl xl:prose-xl text-left', styles.mdx]}
+      >
         <div>
           <h1 class="font-extrabold text-left">{title}</h1>
           <h4>{description}</h4>

@@ -1,5 +1,5 @@
-import { component$ } from "@builder.io/qwik";
-import type { IconProps } from "../../common/icons";
+import { component$ } from '@builder.io/qwik';
+import type { IconProps } from '../../common/icons';
 
 export default component$<IconProps>((props) => (
   // vuesax/linear/profile
@@ -12,15 +12,15 @@ export default component$<IconProps>((props) => (
   >
     <path
       d="M12.1596 10.87C12.0596 10.86 11.9396 10.86 11.8296 10.87C9.44957 10.79 7.55957 8.84 7.55957 6.44C7.55957 3.99 9.53957 2 11.9996 2C14.4496 2 16.4396 3.99 16.4396 6.44C16.4296 8.84 14.5396 10.79 12.1596 10.87Z"
-    //   stroke="white"
-    //   stroke-width="1.5"
+      //   stroke="white"
+      //   stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"
     ></path>
     <path
       d="M7.15973 14.56C4.73973 16.18 4.73973 18.82 7.15973 20.43C9.90973 22.27 14.4197 22.27 17.1697 20.43C19.5897 18.81 19.5897 16.17 17.1697 14.56C14.4297 12.73 9.91973 12.73 7.15973 14.56Z"
-    //   stroke="white"
-    //   stroke-width="1.5"
+      //   stroke="white"
+      //   stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"
     ></path>
