@@ -359,7 +359,7 @@ export default component$(() => {
           q:slot="main"
           class="flex flex-col gap-2 bg-white border rounded-lg drop-shadow-sm"
         >
-          <thead class='hidden'>
+          <thead class="hidden">
             <tr>
               <td />
               <td />
