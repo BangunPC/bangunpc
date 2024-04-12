@@ -1,21 +1,21 @@
 .filter {
-    display: flex;
-    flex-direction: column;
-    gap: 8px
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
 }
 
 .main {
-    display: flex;
-    flex-direction: column;
-    gap: 4px
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .toggleLabel {
-    padding-left: 6px;
+  padding-left: 6px;
 }

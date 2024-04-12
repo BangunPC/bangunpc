@@ -1,5 +1,5 @@
 import { component$ } from '@builder.io/qwik';
-import type { IconProps } from './icons';
+import type { IconProps } from '../../common/icons';
 
 export default component$<IconProps>((props) => (
   // vuesax/linear/tag-2

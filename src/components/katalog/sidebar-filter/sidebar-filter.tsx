@@ -1,21 +1,21 @@
 import { TbChevronUp } from '@qwikest/icons/tablericons';
 import style from './sidebar-filter.module.css';
-import { component$ } from "@builder.io/qwik";
-import { v4 as uuidv4 } from "uuid";
+import { component$ } from '@builder.io/qwik';
+import { v4 as uuidv4 } from 'uuid';
 
 type SidebarFilterType = {
-    title: string
-    items: Array<string>
-}
+  title: string;
+  items: Array<string>;
+};
 
 export default component$<SidebarFilterType>((props) => {
-    const id = props.title.replace(/\s/g, '_') + uuidv4();
+  const id = props.title.replace(/\s/g, '_') + uuidv4();
 
-    return (
-        <div class={style.filter}>
-            <input type="checkbox" id={id + "filtertoggle"} hidden />
-            <style dangerouslySetInnerHTML=
-                {`
+  return (
+    <div class={style.filter}>
+      <input type="checkbox" id={id + 'filtertoggle'} hidden />
+      <style
+        dangerouslySetInnerHTML={`
                     .${id}main {
                         animation: overflow 0.3s;
                         transition: all;
@@ -36,21 +36,24 @@ export default component$<SidebarFilterType>((props) => {
                     #${id}filtertoggle:checked ~ label .${id}chevron {
                         rotate: 180deg;
                     }
-                `} />
-            <label for={id + "filtertoggle"} class={id + 'filterLabel'}>
-                <header class={style.header}>
-                    {props.title}
-                    <TbChevronUp class={id + 'chevron'} />
-                </header>
+                `}
+      />
+      <label for={id + 'filtertoggle'} class={id + 'filterLabel'}>
+        <header class={style.header}>
+          {props.title}
+          <TbChevronUp class={id + 'chevron'} />
+        </header>
+      </label>
+      <main class={[style.main, id + 'main']}>
+        {props.items.map((item) => (
+          <div key={item} class={style.item}>
+            <input type="checkbox" id={item} class={style.toggle} />
+            <label for={item} class={style.toggleLabel}>
+              {item}
             </label>
-            <main class={[style.main, id + 'main']}>
-                {props.items.map((item) => (
-                    <div key={item} class={style.item}>
-                        <input type="checkbox" id={item} class={style.toggle} />
-                        <label for={item} class={style.toggleLabel}>{item}</label>
-                    </div>
-                ))}
-            </main>
-        </div>
-    )
-})
+          </div>
+        ))}
+      </main>
+    </div>
+  );
+});

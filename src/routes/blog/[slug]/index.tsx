@@ -66,8 +66,10 @@ export default component$(() => {
   });
 
   return (
-    <div class="max-w-[680px] mx-4 md:mx-auto mt-8 ">
-      <article class={['prose md:prose-xl xl:prose-xl text-left', styles.mdx]}>
+    <div class="max-w-[680px] mx-4 tablet:mx-auto mt-8 ">
+      <article
+        class={['prose tablet:prose-xl xl:prose-xl text-left', styles.mdx]}
+      >
         <div>
           <h1 class="font-extrabold text-left">{title}</h1>
           <h4>{description}</h4>
@@ -83,7 +85,7 @@ export default component$(() => {
               <div
                 class={[
                   styles.metain,
-                  'flex-col sm:flex-row md:gap-1 leading-tight',
+                  'flex-col sm:flex-row tablet:gap-1 leading-tight',
                 ]}
               >
                 <div class={styles.metacol}>

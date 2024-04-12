@@ -1,64 +1,80 @@
-import { component$ } from "@builder.io/qwik";
+import { component$ } from '@builder.io/qwik';
 // import { QwikLogo } from "../icons/qwik";
-import styles from "./header.module.css";
-import { Link } from "@builder.io/qwik-city";
-import ShoppingCart from "../icons/shopping-cart";
-import Devices from "../icons/devices";
+import styles from './header.module.css';
+import { Link } from '@builder.io/qwik-city';
+import ShoppingCart from '../icons/shopping-cart';
+import Devices from '../icons/devices';
 // import User from "../icons/user";
-import DocumentText from "../icons/document-text";
+import DocumentText from '../icons/document-text';
 // import Profile from "../icons/profile";
-import { TbMenu2 } from "@qwikest/icons/tablericons";
-
+import { TbMenu2 } from '@qwikest/icons/tablericons';
+import LogoHeader from './logo-header';
+// import User2 from "../icons/user-2";
+import { kToggleKatalogModal } from '~/lib/constant';
+import { ModalLogin } from '~/components/modal-login';
+// import { ThemeSwitch } from "./theme-switch/theme-switch";
 
 const headersItems = [
   {
+    icon: <Devices width="24" height="24" />,
+    title: 'Simulasi Rakit PC',
+    href: '/simulasi',
+  },
+  // {
+  //   icon: <User2 width="24" height="24" />,
+  //   title: "Jasa",
+  //   altTitle: "Jasa",
+  //   href: "/jasa",
+  //   // disabled: true,
+  // },
+  {
     icon: <ShoppingCart width="24" height="24" />,
-    title: "Katalog",
-    labelFor: "toggleKatalogModal",
+    title: 'Katalog',
+    labelFor: kToggleKatalogModal,
   },
   {
     icon: <DocumentText width="24" height="24" />,
-    title: "Blog",
+    title: 'Blog',
     // href: "https://static-bangunpc.pages.dev/artikel/",
-    href: "/blog",
+    href: '/blog',
   },
-  {
-    icon: <Devices width="24" height="24" />,
-    title: "Simulasi Rakit PC",
-    disabled: true,
-  },
-  // {
-  //   icon: <User width="24" height="24" />,
-  //   title: "Jasa Rakit PC",
-  //   altTitle: "Jasa Servis PC",
-  //   disabled: true,
-  // },
 ];
 
 export default component$(() => {
   return (
     <>
-      <header class={['flex backdrop-blur-3xl pr-[20px] px-2 fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]']}>
+      <header
+        class={[
+          'flex backdrop-blur-3xl pr-[20px] fixed w-full z-[100] bg-[#f5f5f573] justify-center border-b border-b-[#00000014]',
+        ]}
+      >
         <input type="checkbox" id="toggle" class={styles.toggle} />
-        <div class={[styles.header, 'max-w-6xl']}>
-
+        <div class={[styles.header]}>
           {/* <div class={["container", styles.wrapper]}> */}
-          <div class={[styles.logoAndToggle, 'mr-auto  min-h-[56px]']}>
-            <Link href="/" title="Bangun PC">
+          <div class={[styles.logoAndToggle, ' min-h-[56px]']}>
+            <Link
+              href="/"
+              title="Bangun PC"
+              class="bg-primary aspect-square w-16"
+            >
               {/* <QwikLogo height={50} width={143} /> */}
-              <span class="text-2xl font-semibold text-black">Bangun PC</span>
+              <LogoHeader
+                width="44"
+                height="64"
+                class="m-auto aspect-[44/64] w-7 outline-none stroke-none"
+              />
             </Link>
             <div>
               <label for="toggle" class={styles.toggleButton}>
-                <TbMenu2 class='w-6 h-6' />
+                <TbMenu2 class="w-6 h-6" />
               </label>
             </div>
           </div>
-          <div class={styles.buttons}>
-            <div class={[styles.iconswrapper, 'm-auto']}>
+          <div class={[styles.buttons, 'w-full']}>
+            <div class={[styles.iconswrapper, 'mr-auto']}>
               {headersItems.map((item) => (
                 <div key={item.title} class={styles.link}>
-                  {item.disabled && (
+                  {/* {item.disabled && (
                     <Link
                       preventdefault:click
                       title={item.title}
@@ -71,21 +87,21 @@ export default component$(() => {
                       {item.icon}
                       {item.title}
                     </Link>
-                  )}
+                  )} */}
                   {item.href && (
                     <Link
                       href={item.href}
                       title={item.title}
-                      class={[styles.link, "transition duration-200"]}
+                      class={[styles.link, 'transition duration-200']}
                     >
                       {item.icon}
                       {item.title}
                     </Link>
                   )}
                   {item.labelFor && (
-
-                    <label for={item.labelFor}
-                      class={[styles.link, "transition duration-200"]}
+                    <label
+                      for={item.labelFor}
+                      class={[styles.link, 'transition duration-200']}
                     >
                       {item.icon}
                       {item.title}
@@ -98,6 +114,11 @@ export default component$(() => {
           <Profile width="24" height="24" class="inline-block fill-white" />
           <span>Login</span>
         </Link> */}
+
+            {/* TODO: dark mode */}
+            {/* <ThemeSwitch /> */}
+
+            <ModalLogin />
           </div>
         </div>
         {/* </div> */}

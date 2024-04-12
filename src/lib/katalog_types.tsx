@@ -39,7 +39,7 @@ export const gpuHeaders = [
     'Length (mm)',
     'TDP (Watt)',
     'VRAM (GB)'
-]  
+]
 
 export const gpuKeys = [
     'boost_clock_mhz',
@@ -70,7 +70,7 @@ export const motherboardHeaders = [
     'Brand Name',
     'CPU Socket',
     'Form Factor',
-    'Memory Max (GB)',
+    'Max Memory (GB)',
     'Memory Type',
 ]
 
@@ -78,7 +78,7 @@ export const motherboardKeys = [
     'brand_name',
     'cpu_socket',
     'form_factor',
-    'memory_max_gb',
+    'max_memory_gb',
     'memory_type',
 ]
 
@@ -104,7 +104,6 @@ export const storageHeaders = [
     'Brand Name',
     'Type',
     'Capacity (GB)',
-    'Category Name',
     'Form Factor',
     'Interface',
 ]
@@ -113,11 +112,34 @@ export const storageKeys = [
     'brand_name',
     'type',
     'capacity_gb',
-    'category_name',
     'form_factor',
     'interface',
-  ];
+];
 
+export const categoryHeaders: { [key: string]: string[] } = {
+    headphone: [],
+    keyboard: [],
+    mouse: [],
+    speaker: [],
+    webcam: [],
+    printer: [],
+    monitor: [],
+    os: [],
+    soundcard: [],
+    wirednetwork: [],
+    wirelessnetwork: [],
+    cable: [],
+    externaldrive: [],
+    motherboard: motherboardHeaders,
+    cpu: cpuHeaders,
+    gpu: gpuHeaders,
+    memory: memoryHeaders,
+    cooler: [],
+    psu: psuHeaders,
+    storage: storageHeaders,
+    casing: casingHeaders,
+    casefan: [],
+};
 
 export const categories: { [key: string]: string } = {
     headphone: '',
@@ -142,10 +164,10 @@ export const categories: { [key: string]: string } = {
     storage: 'v_internal_storages',
     casing: 'v_casings',
     casefan: '',
-  };
+};
 
 
-  export const titlesKategori: { [key: string]: string } = {
+export const titlesKategori: { [key: string]: string } = {
     headphone: 'Headphone',
     keyboard: 'Keyboard',
     mouse: 'Mouse',
@@ -168,7 +190,81 @@ export const categories: { [key: string]: string } = {
     cable: 'Cable',
     storage: 'Internal Storage',
     casing: 'PC Casing',
-  };
+};
+
+export enum ComponentCategory {
+    Headphone,
+    Keyboard,
+    Mouse,
+    Speaker,
+    Webcam,
+    Printer,
+    Monitor,
+    OS,
+    SoundCard,
+    WiredNetwork,
+    WirelessNetwork,
+    Cable,
+    ExternalDrive,
+    Motherboard,
+    CPU,
+    GPU,
+    Memory,
+    Cooler,
+    PSU,
+    Storage,
+    Casing,
+    CaseFan
+}
+
+export const categoriesEnum: { [key: string]: ComponentCategory } = {
+    headphone: ComponentCategory.Headphone,
+    keyboard: ComponentCategory.Keyboard,
+    mouse: ComponentCategory.Mouse,
+    speaker: ComponentCategory.Speaker,
+    webcam: ComponentCategory.Webcam,
+    printer: ComponentCategory.Printer,
+    monitor: ComponentCategory.Monitor,
+    os: ComponentCategory.OS,
+    soundcard: ComponentCategory.SoundCard,
+    wirednetwork: ComponentCategory.WiredNetwork,
+    wirelessnetwork: ComponentCategory.WirelessNetwork,
+    cable: ComponentCategory.Cable,
+    externaldrive: ComponentCategory.ExternalDrive,
+    motherboard: ComponentCategory.Motherboard,
+    cpu: ComponentCategory.CPU,
+    gpu: ComponentCategory.GPU,
+    memory: ComponentCategory.Memory,
+    cooler: ComponentCategory.Cooler,
+    psu: ComponentCategory.PSU,
+    storage: ComponentCategory.Storage,
+    casing: ComponentCategory.Casing,
+    casefan: ComponentCategory.CaseFan,
+};
+
+export const categoriesFromEnum: { [key: string]: string } = {
+    [ComponentCategory.Headphone]: 'headphone',
+    [ComponentCategory.Keyboard]: 'keyboard',
+    [ComponentCategory.Mouse]: 'mouse',
+    [ComponentCategory.Speaker]: 'speaker',
+    [ComponentCategory.Webcam]: 'webcam',
+    [ComponentCategory.Printer]: 'printer',
+    [ComponentCategory.Monitor]: 'monitor',
+    [ComponentCategory.OS]: 'os',
+    [ComponentCategory.SoundCard]: 'soundcard',
+    [ComponentCategory.WiredNetwork]: 'wirednetwork',
+    [ComponentCategory.WirelessNetwork]: 'wirelessnetwork',
+    [ComponentCategory.Cable]: 'cable',
+    [ComponentCategory.ExternalDrive]: 'externaldrive',
+    [ComponentCategory.Motherboard]: 'motherboard',
+    [ComponentCategory.CPU]: 'cpu',
+    [ComponentCategory.GPU]: 'gpu',
+    [ComponentCategory.Memory]: 'memory',
+    [ComponentCategory.Cooler]: 'cooler',
+    [ComponentCategory.PSU]: 'psu',
+    [ComponentCategory.Storage]: 'storage',
+}
+
 // export type All = { isMobile: boolean, all: Database['product']['Views']['v_all_products']['Row'] }
 
 // export type Casing = { isMobile: boolean, casing: Database['product']['Views']['v_casings']['Row'] }

@@ -1,5 +1,4 @@
 .header {
-  min-height: 68px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -16,7 +15,7 @@
   position: relative;
   font-weight: 700;
   font-style: normal;
-  font-family: "Inter", "Inter Placeholder", sans-serif;
+  font-family: 'Inter', 'Inter Placeholder', sans-serif;
   color: black;
   font-size: 20px;
   letter-spacing: 1px;
@@ -54,7 +53,7 @@
   position: relative;
   font-weight: 500;
   font-style: normal;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: hsl(0, 0%, 0%);
   font-size: 18px;
   letter-spacing: 0em;
@@ -85,7 +84,7 @@
   align-content: center;
   flex-wrap: nowrap;
   gap: 10px;
-  border-radius: 69px;
+  border-radius: 70px;
 }
 
 .login span {
@@ -94,7 +93,7 @@
   position: relative;
   font-weight: 600;
   font-style: normal;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #ffffff;
   font-size: 14px;
   letter-spacing: 0em;
@@ -140,19 +139,21 @@
 }
 
 @media screen {
-  .toggle:checked~*>.buttons {
+  .toggle:checked ~ * > .buttons {
     gap: 20px;
     /* This is height with login button */
+    height: 220px;
     /* height: 200px; */
+    /* height: 172px; */
     /* height: 156px; */
-    height: 128px;
+    /* height: 128px; */
     animation: overflow 0.3s;
   }
-  
+
   .header {
     width: 100%;
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
     align-items: center;
   }
 
@@ -169,8 +170,7 @@
 }
 
 @media screen and (min-width: 810px) {
-
-  .toggle:checked~*>.buttons {
+  .toggle:checked ~ * > .buttons {
     gap: 0;
     height: fit-content;
     animation: none;

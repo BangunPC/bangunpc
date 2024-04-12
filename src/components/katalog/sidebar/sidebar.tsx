@@ -1,25 +1,21 @@
 // import styles from './sidebar.module.css';
 
-import { component$ } from "@builder.io/qwik";
+import { component$ } from '@builder.io/qwik';
 // import SidebarFilter from "../sidebar-filter/sidebar-filter";
 // import { TbFilterSearch } from "@qwikest/icons/tablericons";
 
 type SidebarProps = {
-    filters: Array<Filter>
-}
+  filters: Array<Filter>;
+};
 
 export type Filter = {
-    title: string
-    items: Array<string>
-}
+  title: string;
+  items: Array<string>;
+};
 
 export default component$<SidebarProps>(() => {
-
-    return (
-        <div>
-        </div>
-    )
-})
+  return <div></div>;
+});
 
 // export default component$<SidebarProps>(({filters}) => {
 
@@ -35,7 +31,6 @@ export default component$<SidebarProps>(() => {
 //                     ))
 //                 }
 //             </main>
-
 
 //         </div>
 //     )
