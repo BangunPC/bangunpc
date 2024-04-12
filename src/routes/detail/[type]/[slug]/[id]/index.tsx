@@ -1,7 +1,7 @@
 import type { QwikMouseEvent } from '@builder.io/qwik';
 import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
+import { Link, routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import FilledButton, {
   filledButtonClass,
 } from '~/components/common/filled-button';
@@ -11,7 +11,11 @@ import Moneys from '~/components/icons/common/moneys';
 import Send2 from '~/components/icons/common/send-2';
 import Shop from '~/components/icons/common/shop';
 import { productImage, supabase } from '~/lib/db';
-import { categories, titlesKategori } from '~/lib/katalog_types';
+import {
+  categories,
+  categoryHeaders,
+  titlesKategori,
+} from '~/lib/katalog_types';
 import ShopeeSvg from '~/components/homepage/affiliate/shopee-svg/shopee-svg';
 // import LazadaSvg from "~/components/homepage/affiliate/lazada.svg?jsx";
 import TokopediaSvg from '~/components/homepage/affiliate/tokopedia.svg?jsx';
@@ -151,19 +155,30 @@ export default component$(() => {
             <h1 class="tablet:font-bold text-4xl">{name}</h1>
           </header>
           <main class="flex flex-col gap-2">
-            <div class="flex items-center gap-2">
+            {/* <div class="flex items-center gap-2">
               <Shop class="fill-none stroke-black" width="24" height="24" />
               <span class="text-lg">
                 {product_details!.length} penjual dari Tokopedia, Shopee &
                 lainnya
               </span>
-            </div>
+            </div> */}
             {lowest_price && (
-              <div class="flex items-center gap-2">
-                <Moneys class="fill-none stroke-black" width="24" height="24" />
-                <span class="text-lg">Dari Rp{lowest_price}</span>
-              </div>
+              <span class="">
+                <span class="text-4xl text-primary font-bold">
+                  Rp {lowest_price}
+                </span>
+                <span> (Harga Termurah)</span>
+              </span>
             )}
+            <span>
+              Kategori:{' '}
+              <Link
+                class="text-primary"
+                href={'/katalog/' + type}
+              >
+                {titlesKategori[type]}
+              </Link>
+            </span>
             <div class="flex flex-row gap-2">
               <FilledButton
                 class="flex tablet:block tablet:w-fit font-normal text-sm px-2 py-2 justify-center rounded-lg bg-green-600"
@@ -365,7 +380,7 @@ export default component$(() => {
                 class="last:border-none border-b"
               >
                 <td class="whitespace-nowrap border-r p-4">{info.title}</td>
-                <td class="p-4 font-semibold">{info.value ?? '-'}</td>
+                <td class="p-4 font-semibold w-full">{info.value ?? '-'}</td>
               </tr>
             ))}
           </tbody>

@@ -6,7 +6,7 @@ import { ComponentFallback } from '../component-fallback';
 import styles from './desktop-table.module.css';
 import { componentImage } from '~/lib/db';
 import { categoriesEnum } from '~/lib/katalog_types';
-import { Link, useLocation } from '@builder.io/qwik-city';
+import { Link, useLocation, useNavigate } from '@builder.io/qwik-city';
 
 export type TableType = {
   headers: string[];
@@ -16,6 +16,8 @@ export type TableType = {
 
 const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
   const header = ['', 'Product Name', ...headers, 'Price (Rp)', 'Action'];
+
+  const nav = useNavigate();
 
   const isIframe = useLocation().url.searchParams.get('iframe') === 'true';
   return (
@@ -59,11 +61,13 @@ const DesktopTable = component$<TableType>(({ headers, data, kategori }) => {
             }
           });
 
-          const handleRedirect = $(
-            () =>
-              (window.location.href = `/detail/${kategori}/${component.slug}/${
-                component.product_id
-              }${isIframe ? '?iframe=true' : ''}`)
+          const handleRedirect = $(() =>
+            nav(
+              `/detail/${kategori}/${component.slug}/${component.product_id}${
+                isIframe ? '?iframe=true' : ''
+              }`,
+              { type: 'link' }
+            )
           );
 
           return (
