@@ -1,7 +1,12 @@
 import type { QwikMouseEvent } from '@builder.io/qwik';
 import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { Link, routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
+import {
+  Link,
+  routeLoader$,
+  useLocation,
+  useNavigate,
+} from '@builder.io/qwik-city';
 import FilledButton, {
   filledButtonClass,
 } from '~/components/common/filled-button';
@@ -172,10 +177,7 @@ export default component$(() => {
             )}
             <span>
               Kategori:{' '}
-              <Link
-                class="text-primary"
-                href={'/katalog/' + type}
-              >
+              <Link class="text-primary" href={'/katalog/' + type}>
                 {titlesKategori[type]}
               </Link>
             </span>
