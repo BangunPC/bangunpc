@@ -132,9 +132,9 @@ export default component$(() => {
         </header>
         <main class='flex flex-col gap-4 p-4 max-w-screen-desktop w-full m-auto'>
             <div class='ml-auto'>
-                <ModalReset onConfirm$={() => {
+                <ModalReset onConfirm$={$(() => {
                     ComponentStorage.clear();
-                }} />
+                })} />
             </div>
             <div class='rounded-xl shadow-bm shadow-black/5 bg-white p-4'>
                 <table class="w-full ">
@@ -174,11 +174,11 @@ export default component$(() => {
                                             )
                                             )}
                                             {item.components.value.length == 0 ? (
-                                                <FilledButton class='w-fit' onClick$={() => handleAddComponent(item)}>
+                                                <FilledButton class='w-fit' onClick$={$(() => handleAddComponent(item))}>
                                                     + Pilih {item.title}
                                                 </FilledButton>
                                             ) : (item.title == 'Memory' || item.title == 'Storage') && (
-                                                <OutlinedButton class='w-fit' onClick$={() => handleAddComponent(item)}>
+                                                <OutlinedButton class='w-fit' onClick$={$(() => handleAddComponent(item))}>
                                                     + {item.title}
                                                 </OutlinedButton>
                                             )}
