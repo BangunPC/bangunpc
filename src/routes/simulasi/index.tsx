@@ -217,7 +217,7 @@ export default component$(() => {
     });
   });
   return (
-    <div class="mt-1 p-4">
+    <div class="mt-1 p-4 max-w-screen-desktop w-full m-auto">
       <header class="font-semibold text-3xl flex">
         <span class="whitespace-nowrap">Simulasi Rakit PC</span>{' '}
         <span class="ml-2 text-base italic">
