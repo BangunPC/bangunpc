@@ -41,7 +41,7 @@ export const Navbar = component$(() => {
           const navbarMenu = document.getElementById(
             'show-navbar-menu'
           ) as HTMLInputElement;
-          if (navbarMenu.checked) {
+          if (!navbarMenu.checked) {
             document
               .getElementById('navbar')
               ?.classList.add('hidden', 'tablet:flex');
@@ -83,7 +83,7 @@ export const Navbar = component$(() => {
           </div>
           <div
             id="navbar"
-            class={`flex flex-col tablet:flex-row mb-4 tablet:mb-0 text-center w-full items-center gap-4`}
+            class={`hidden tablet:flex flex flex-col tablet:flex-row mb-4 tablet:mb-0 text-center w-full items-center gap-4`}
           >
             <div
               class={`flex flex-col tablet:flex-row gap-4 tablet:gap-8 m-auto`}

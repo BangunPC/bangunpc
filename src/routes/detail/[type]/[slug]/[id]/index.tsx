@@ -81,9 +81,9 @@ export default component$(() => {
 
   return (
     <div class="flex flex-col gap-4 p-6 tablet:max-w-screen-desktop max-w-3xl m-auto">
-      <div class="flex flex-col tablet:grid tablet:grid-cols-2 tablet:auto-rows-fr gap-2">
-        <div class="pb-0 tablet:pb-6 tablet:max-w-lg">
-          <div class="border border-[#1C1F24] border-opacity-40 rounded-md aspect-square max-w-xl mx-auto items-center overflow-hidden">
+      <div class="flex flex-col tablet:flex-row gap-2 tablet:gap-8">
+        <div class="pb-0 tablet:pb-6 tablet:max-w-sm">
+          <div class="border border-[#1C1F24] border-opacity-40 rounded-md aspect-square max-w-sm mx-auto items-center overflow-hidden">
             <div
               class="flex items-center justify-center w-full h-full"
               onMouseMove$={(
@@ -110,24 +110,24 @@ export default component$(() => {
                   src={imageUrls[0]}
                   alt={`Gambar ${name}`}
                   class="object-fill"
-                  width={600}
-                  height={600}
+                  width={360}
+                  height={360}
                 ></img>
               )}
             </div>
           </div>
 
-          <div class="grid grid-cols-4 tablet:grid-cols-3 auto-rows-fr my-4 gap-4 justify-center">
+          <div class="grid grid-cols-4 tablet:grid-cols-5 auto-rows-fr my-4 gap-1 justify-center">
             {imageUrls.map((url: string | undefined) => (
               <img
-                onMouseEnter$={() => {
-                  const compimg = document.getElementById(
-                    'compimg'
-                  ) as HTMLImageElement | null;
-                  if (compimg && url) {
-                    compimg.src = url;
-                  }
-                }}
+                // onMouseEnter$={() => {
+                //   const compimg = document.getElementById(
+                //     'compimg'
+                //   ) as HTMLImageElement | null;
+                //   if (compimg && url) {
+                //     compimg.src = url;
+                //   }
+                // }}
                 onClick$={() => {
                   const compimg = document.getElementById(
                     'compimg'
@@ -146,7 +146,7 @@ export default component$(() => {
             ))}
           </div>
         </div>
-        <div class="flex flex-col gap-2 pt-0 tablet:pt-6 tablet:max-w-2xl w-full m-auto tablet:m-0">
+        <div class="flex flex-col gap-2 pt-0 tablet:pt-6 tablet:max-w-4xl w-full m-auto tablet:m-0">
           <header>
             <h1 class="tablet:font-bold text-4xl">{name}</h1>
           </header>
@@ -166,28 +166,28 @@ export default component$(() => {
             )}
             <div class="flex flex-row gap-2">
               <FilledButton
-                class="flex tablet:block tablet:w-fit font-normal text-sm px-2 py-3 justify-center rounded-lg bg-green-600"
+                class="flex tablet:block tablet:w-fit font-normal text-sm px-2 py-2 justify-center rounded-lg bg-green-600"
                 onClick$={() => nav('#compare', { scroll: true })}
               >
                 Beli Sekarang
               </FilledButton>
               <FilledButton
-                class="flex tablet:block tablet:w-fit font-normal text-sm px-2 py-3 justify-center rounded-lg"
+                class="flex tablet:block tablet:w-fit font-normal text-sm px-2 py-2 justify-center rounded-lg"
                 onClick$={() => alert('Coming soon')}
               >
                 + Tambahkan ke Simulasi Rakit PC
               </FilledButton>
             </div>
-            <div class="flex flex-row gap-2">
+            <div class="flex flex-row gap-6">
               <TextButton
-                class="flex items-center gap-2"
+                class="flex items-center gap-2 font-semibold"
                 onClick$={() => alert('Coming Soon')}
               >
                 <Heart class="fill-none " width="24" height="24" />
                 <span class="text-lg">Tambah ke wishlist</span>
               </TextButton>
               <TextButton
-                class="flex items-center gap-2"
+                class="flex items-center gap-2 font-semibold"
                 onClick$={() => {
                   navigator.clipboard.writeText(window.location.href);
                   alert('Link copied to clipboard');
@@ -199,19 +199,10 @@ export default component$(() => {
             </div>
             <Dropdown>
               <span q:slot="header" class="w-full text-3xl font-semibold">
-                Informasi Produk
+                Tentang Produk
               </span>
-              <span q:slot="main">
-                {data['description'] && (
-                  <Dropdown>
-                    <span q:slot="header" class="text-lg font-semibold">
-                      Tentang Produk
-                    </span>
-                    <span q:slot="main" class="mt-4 gap-2">
-                      {data['description']}
-                    </span>
-                  </Dropdown>
-                )}
+              <span q:slot="main" class="mt-4 gap-2 leading-[120%]">
+                {data['description']}
               </span>
             </Dropdown>
           </main>
@@ -274,14 +265,15 @@ export default component$(() => {
                 ))}
               </div>
               <table class="w-full hidden tablet:table">
-                <thead class="drop-shadow-sm">
+                <thead class="drop-shadow-sm text-white font-bold">
                   <tr>
-                    <td class="bg-white rounded-s-lg p-2">Merchant</td>
-                    <td class=" bg-white p-2">Harga</td>
-                    <td class=" bg-white p-2">Lokasi Toko</td>
-                    <td class="bg-white p-2">Stok</td>
-                    <td class="bg-white p-2">Details</td>
-                    <td class="bg-white rounded-e-lg p-2"></td>
+                    <td class="bg-primary rounded-s-lg p-2 pl-8">Merchant</td>
+                    <td class="bg-primary p-2">Nama Toko</td>
+                    <td class="bg-primary p-2">Lokasi Toko</td>
+                    <td class="bg-primary p-2">Harga</td>
+                    <td class="bg-primary p-2">Stok</td>
+                    <td class="bg-primary p-2">Details</td>
+                    <td class="bg-primary rounded-e-lg p-2 pr-8"></td>
                   </tr>
                 </thead>
                 <tbody>
@@ -304,7 +296,7 @@ export default component$(() => {
                         key={'marketplate-' + detail.id}
                         class="drop-shadow-sm"
                       >
-                        <td class="bg-white p-2 rounded-s-lg">
+                        <td class="bg-white p-2 rounded-s-lg pl-8">
                           {detail.marketplace_name === 'Tokopedia' && (
                             <TokopediaSvg class="h-8 w-fit" />
                           )}
@@ -315,22 +307,23 @@ export default component$(() => {
                             <BlibliSvg class="h-8 w-fit" />
                           )}
                         </td>
-                        <td class="bg-white p-2 font-semibold">
-                          Rp{detail.price.toLocaleString('id-ID')}
-                        </td>
+                        <td class="bg-white p-2">{detail.seller_name}</td>
                         <td class="bg-white p-2">{detail.seller_city}</td>
+                        <td class="bg-white p-2 font-semibold">
+                          Rp {detail.price.toLocaleString('id-ID')}
+                        </td>
                         <td class="bg-white p-2">{detail.stock}</td>
                         <td class="bg-white p-2">
                           {detail.product_detail_description ?? '-'}
                         </td>
-                        <td class="bg-white p-2 rounded-e-lg">
+                        <td class="bg-white p-2 rounded-e-lg pr-8 flex justify-end">
                           <a
                             href={detail.url}
-                            class={[filledButtonClass, 'bg-green-600']}
+                            class={[filledButtonClass, 'bg-green-600 px-4']}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            Beli Sekarang
+                            Beli
                           </a>
                         </td>
                       </tr>
