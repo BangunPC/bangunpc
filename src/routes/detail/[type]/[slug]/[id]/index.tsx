@@ -26,10 +26,13 @@ export const useComponentDetail = routeLoader$(async (requestEvent) => {
   const slug = params.slug;
   const id = params.id;
   const client = await supabase();
+
+  type ExpectedCategories = "v_casings" | "v_cpus" | "v_gpus" | "v_internal_storages" | "v_memories" | "v_motherboards" | "v_power_supplies";
+
   const future = await Promise.all([
     client
       .schema('product')
-      .from(categories[type])
+      .from(categories[type] as ExpectedCategories)
       .select()
       .eq('slug', slug)
       .single(),
@@ -42,9 +45,9 @@ export const useComponentDetail = routeLoader$(async (requestEvent) => {
   ]).then(([dataResult, productDetailsResult]) => {
     const data = dataResult.data;
     const product_details = productDetailsResult.data;
-    return { data, product_details, review_urls: data['review_urls'], spec_url: data['spec_url'], name: data['product_name'] };
+    return { data, product_details, review_urls: data?.['review_urls'], spec_url: data?.['spec_url'], name: data?.['product_name'] };
   });
-  return {...future};
+  return { ...future };
 });
 
 export default component$(() => {
@@ -54,11 +57,13 @@ export default component$(() => {
 
   const { data, product_details, review_urls, spec_url, name } = component.value;
 
-  const imageUrls = data.image_filenames.map((image: string) => productImage(data['product_id'], image));
+  // @ts-ignore
+  const imageUrls = data?.image_filenames?.map((image: string) => productImage(data?.['product_id'], image));
 
   const { type } = useLocation().params;
 
-  const componentInfo = v_spec[type]?.flatMap((v) => ({ title: v[1], value: data[v[0]] }));
+  // @ts-ignore
+  const componentInfo = v_spec[type]?.flatMap((v) => ({ title: v[1], value: data?.[v[0]] }));
 
   let lowest_price = undefined;
   if ((product_details?.length ?? -1) > 0)
@@ -92,9 +97,11 @@ export default component$(() => {
                 child.style.transform = ``;
               }}
             >
+              {/* @ts-ignore */}
               {imageUrls[0] && (
                 <img
                   id="compimg"
+                  // @ts-ignore
                   src={imageUrls[0]}
                   alt={`Gambar ${name}`}
                   class="object-fill"
@@ -106,6 +113,7 @@ export default component$(() => {
           </div>
 
           <div class="grid grid-cols-4 tablet:grid-cols-3 auto-rows-fr my-4 gap-4 justify-center">
+            {/* @ts-ignore */}
             {imageUrls.map((url: string | undefined) => (
               <img
                 onMouseEnter$={() => {
@@ -189,14 +197,14 @@ export default component$(() => {
                 Informasi Produk
               </span>
               <span q:slot='main'>
-                {data['description'] && <Dropdown>
+                {data?.['description'] && <Dropdown>
 
                   <span q:slot='header'
                     class='text-lg font-semibold'
                   >
                     Tentang Produk
                   </span>
-                  <span q:slot='main' class='mt-4 gap-2'>{data['description']}</span>
+                  <span q:slot='main' class='mt-4 gap-2'>{data?.['description']}</span>
                 </Dropdown>}
               </span>
             </Dropdown>
@@ -362,6 +370,7 @@ export default component$(() => {
             )
         }</span>
       </Dropdown>
+      {/* @ts-ignore */}
       {review_urls?.length > 0 &&
         <Dropdown>
           <span q:slot='header' class='text-3xl font-semibold'>
@@ -392,7 +401,7 @@ export const head: DocumentHead = ({ resolveValue, params }) => {
 
   const data = component.data;
 
-  const name = data['product_name'];
+  const name = data?.['product_name'];
   const type = params.type;
 
   return {
