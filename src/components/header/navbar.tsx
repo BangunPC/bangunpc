@@ -73,7 +73,10 @@ export const Navbar = component$(() => {
                 height="36"
                 class="m-auto aspect-square h-9 outline-none stroke-none"
               />
-              <span class="whitespace-nowrap text-[#040B32] font-semibold text-2xl">
+              <span
+                class="whitespace-nowrap text-[#040B32] font-semibold text-2xl"
+                style={{ 'font-family': 'Urbanist' }}
+              >
                 Bangun PC
               </span>
             </Link>
