@@ -99,7 +99,7 @@ export default component$(() => {
                   return (
                     <div key={listItem.title}>
                       <Link preventdefault:click
-                        onclick$={() => alert('Coming Soon!')}
+                        onClick$={() => alert('Coming Soon!')}
                         href={listItem.link}
                       >
                         {listItem.title}

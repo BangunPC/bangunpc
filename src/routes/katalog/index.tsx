@@ -45,7 +45,7 @@ export default component$(() => {
                                 class='border-2 rounded-md'
                                 onChange$={(event) => {
                                     const url = loc.url;
-                                    url.searchParams.set('page', event.target.value);
+                                    url.searchParams.set('page', (event.target as HTMLSelectElement).value);
                                     window.history.pushState({}, '', url);
 
                                     nav();
