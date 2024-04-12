@@ -2,7 +2,7 @@
   "name": "bangunpc",
   "description": "BangunPC",
   "engines": {
-    "node": ">=15.0.0"
+    "node": ">=18.17.0"
   },
   "private": true,
   "trustedDependencies": [
