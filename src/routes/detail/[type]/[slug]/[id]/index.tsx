@@ -376,7 +376,7 @@ export default component$(() => {
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   class="w-full rounded-xl mb-1 aspect-video"
-                  allowFullScreen
+                  allowFullscreen
                 ></iframe>
               ))
             }
