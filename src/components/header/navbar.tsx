@@ -68,17 +68,7 @@ export const Navbar = component$(() => {
               class="flex gap-3 items-center h-navbar-min-h mx-4"
             >
               {/* <QwikLogo height={50} width={143} /> */}
-              <LogoHeader
-                width="36"
-                height="36"
-                class="m-auto aspect-square h-9 outline-none stroke-none"
-              />
-              <span
-                class="whitespace-nowrap text-[#040B32] font-semibold text-2xl"
-                style={{ 'font-family': 'Urbanist' }}
-              >
-                Bangun PC
-              </span>
+              <LogoHeader class="m-auto aspect-square h-9 outline-none stroke-none" />
             </Link>
             <label for="show-navbar-menu" class="tablet:hidden">
               <MenuNavbar class="w-10 h-10 cursor-pointer" />
