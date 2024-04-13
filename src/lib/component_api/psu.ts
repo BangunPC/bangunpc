@@ -1,5 +1,5 @@
 import { server$ } from "@builder.io/qwik-city"
-import { supabase } from "../db"
+import { getSupabaseServerClient } from "../db"
 import { PsuCompatibility, PsuFilter } from "./filter"
 
 export const getPsu = server$(async (
@@ -9,7 +9,7 @@ export const getPsu = server$(async (
         max_price,
     }: PsuFilter,
 ) => {
-    const client = await supabase()
+    const client = await getSupabaseServerClient()
 
     if (!client) {
         throw new Error('Supabase client is null')

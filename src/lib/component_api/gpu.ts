@@ -1,5 +1,5 @@
 import { server$ } from "@builder.io/qwik-city"
-import { supabase } from "../db"
+import { getSupabaseServerClient } from "../db"
 import { GpuCompatibility, GpuFilter } from "./filter"
 import { todo } from "node:test"
 
@@ -10,7 +10,7 @@ export const getGpu = server$(async (
         max_price,
     }: GpuFilter,
 ) => {
-    const client = await supabase()
+    const client = await getSupabaseServerClient()
 
     if (!client) {
         throw new Error('Supabase client is null')
