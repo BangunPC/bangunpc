@@ -15,7 +15,7 @@ import Heart from '~/components/icons/common/heart';
 import Moneys from '~/components/icons/common/moneys';
 import Send2 from '~/components/icons/common/send-2';
 import Shop from '~/components/icons/common/shop';
-import { productImage, supabase } from '~/lib/db';
+import { productImage, getSupabaseServerClient } from '~/lib/db';
 import {
   categories,
   categoryHeaders,
@@ -35,7 +35,7 @@ export const useComponentDetail = routeLoader$(async (requestEvent) => {
   const type = params.type;
   const slug = params.slug;
   const id = params.id;
-  const client = await supabase();
+  const client = await getSupabaseServerClient();
   const future = await Promise.all([
     client
       .schema('product')

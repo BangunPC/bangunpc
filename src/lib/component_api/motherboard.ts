@@ -1,5 +1,5 @@
 import { server$ } from "@builder.io/qwik-city"
-import { supabase } from "../db"
+import { getSupabaseServerClient } from "../db"
 import { MotherboardCompatibility, MotherboardFilter } from "./filter"
 
 export const getMotherboard = server$(async (
@@ -9,7 +9,7 @@ export const getMotherboard = server$(async (
         max_price,
     }: MotherboardFilter,
 ) => {
-    const client = await supabase()
+    const client = await getSupabaseServerClient()
 
     if (!client) {
         throw new Error('Supabase client is null')

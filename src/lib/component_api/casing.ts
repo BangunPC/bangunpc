@@ -1,5 +1,5 @@
 import { server$ } from "@builder.io/qwik-city"
-import { supabase } from "../db"
+import { getSupabaseServerClient } from "../db"
 import { CasingCompatibility, CasingFilter } from "./filter"
 
 export const getCasing = server$(async (
@@ -9,7 +9,7 @@ export const getCasing = server$(async (
         max_price,
     }: CasingFilter,
 ) => {
-    const client = await supabase()
+    const client = await getSupabaseServerClient()
 
     if (!client) {
         console.log('ERROR!')

@@ -4,7 +4,7 @@ import { RequestEventBase, server$ } from "@builder.io/qwik-city";
 import { noSerialize } from "@builder.io/qwik";
 import { Database } from "./schema";
 
-export const supabase = server$(function () {
+export const getSupabaseServerClient = server$(function () {
   const outer_this: RequestEventBase = this
   const supabaseClient: SupabaseClient<Database> = createServerClient(
     this.env.get("SUPABASE_URL")!,
@@ -14,6 +14,13 @@ export const supabase = server$(function () {
 
   return noSerialize(supabaseClient)!;
 })
+
+export const getSupabaseBrowserClient = () => {
+  return createClient<Database>(
+    import.meta.env.PUBLIC_SUPABASE_URL,
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
+  )
+}
 
 const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
 const storageUrl = '/storage/v1/object/public/product-images/';

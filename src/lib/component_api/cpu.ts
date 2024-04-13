@@ -1,5 +1,5 @@
 import { server$ } from "@builder.io/qwik-city"
-import { supabase } from "../db"
+import { getSupabaseServerClient } from "../db"
 import { CpuCompatibility, CpuFilter } from "./filter"
 
 export const getCpu = server$(async (
@@ -27,7 +27,7 @@ export const getCpu = server$(async (
         total_thread,
     }: CpuFilter,
 ) => {
-    const client = await supabase()
+    const client = await getSupabaseServerClient()
 
     if (!client) {
         throw new Error('Supabase client is null')

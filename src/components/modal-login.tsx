@@ -1,8 +1,9 @@
-import { component$, useSignal } from '@builder.io/qwik';
+import { $, component$, useSignal } from '@builder.io/qwik';
 import OutlinedButton from './common/outlined-button';
 import { Modal, ModalContent, ModalHeader } from '@qwik-ui/headless';
 import FilledButton from './common/filled-button';
 import { TbX } from '@qwikest/icons/tablericons';
+import { getSupabaseBrowserClient, getSupabaseServerClient } from '~/lib/db';
 
 export const ModalLogin = component$(() => {
   const showModalLogin = useSignal(false);
@@ -62,6 +63,25 @@ export const ModalLogin = component$(() => {
               class={[
                 'cursor-pointer transition-colors duration-200 hover:bg-button-hover justify-center items-center px-12 py-2 mt-5 text-base font-bold leading-5 text-white whitespace-nowrap bg-blue-700 rounded-lg max-md:px-5 text-center shadow-bm',
               ]}
+              onClick$={$(async () => {
+                const client = getSupabaseBrowserClient();
+                const { error } = await client.auth.initialize();
+                if (error) {
+                  console.error(error);
+                }
+                if (isSignupMode.value) {
+                  // client.auth.signUp({
+                  //   email: 'yourname@example.com',
+                  //   password: 'Secure-P@ssw0rd',
+                  // });
+                } else {
+                  // const { data, error } = await client.auth.signInWithPassword({
+                  //   email: 'damywise@duck.com',
+                  //   password: 'Secure-P@ssw0rd',
+                  // });
+                  // console.log(data, error);
+                }
+              })}
             >
               {isSignupMode.value ? 'Buat Akun' : 'Masuk'}
             </div>
