@@ -7,8 +7,8 @@ import { Database } from "./schema";
 export const getSupabaseServerClient = server$(function () {
   const outer_this: RequestEventBase = this
   const supabaseClient: SupabaseClient<Database> = createServerClient(
-    this.env.get("SUPABASE_URL")!,
-    this.env.get("SUPABASE_ANON_KEY")!,
+    this.env.get("PUBLIC_SUPABASE_URL")!,
+    this.env.get("PUBLIC_SUPABASE_ANON_KEY")!,
     outer_this
   );
 
@@ -23,12 +23,12 @@ export const getSupabaseBrowserClient = () => {
 }
 
 const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
-const storageUrl = '/storage/v1/object/public/product-images/';
+const storageImageurl = '/storage/v1/object/public/public-images/products/';
 
 export const componentImage = function (component: any) {
-  return `${supabaseUrl}${storageUrl}${component.product_id}/${component.image_filenames[0]}`
+  return `${supabaseUrl}${storageImageurl}${component.product_id}/${component.image_filenames[0]}`
 }
 
 export const productImage = function (product_id: number, filename: string) {
-  return `${supabaseUrl}${storageUrl}${product_id}/${filename}`
+  return `${supabaseUrl}${storageImageurl}${product_id}/${filename}`
 }

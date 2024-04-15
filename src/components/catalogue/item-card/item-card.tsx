@@ -41,7 +41,7 @@ export default component$<Props>((props) => {
         height={400}
         class={styles.cardImage}
         src={
-          'https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/' +
+          'https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/public-images/products/' +
           image_path
         }
         alt={product_name || 'Gambar Produk'}
