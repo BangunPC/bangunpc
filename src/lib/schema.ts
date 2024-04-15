@@ -1067,10 +1067,10 @@ export type Database = {
       monitors: {
         Row: {
           aspect_ratio: string | null
-          has_ergonomic_stand: boolean | null
+          brightness_nits: number | null
           has_speaker: boolean | null
           id: number
-          inputs: string[] | null
+          inputs: string | null
           panel_type: Database["public"]["Enums"]["panel_type"] | null
           power_wattage: number | null
           product_id: number
@@ -1083,10 +1083,10 @@ export type Database = {
         }
         Insert: {
           aspect_ratio?: string | null
-          has_ergonomic_stand?: boolean | null
+          brightness_nits?: number | null
           has_speaker?: boolean | null
           id?: number
-          inputs?: string[] | null
+          inputs?: string | null
           panel_type?: Database["public"]["Enums"]["panel_type"] | null
           power_wattage?: number | null
           product_id: number
@@ -1099,10 +1099,10 @@ export type Database = {
         }
         Update: {
           aspect_ratio?: string | null
-          has_ergonomic_stand?: boolean | null
+          brightness_nits?: number | null
           has_speaker?: boolean | null
           id?: number
-          inputs?: string[] | null
+          inputs?: string | null
           panel_type?: Database["public"]["Enums"]["panel_type"] | null
           power_wattage?: number | null
           product_id?: number
@@ -2160,11 +2160,11 @@ export type Database = {
         Row: {
           aspect_ratio: string | null
           brand_name: string | null
+          brightness_nits: number | null
           category_name: string | null
           description: string | null
-          has_ergonomic_stand: boolean | null
           has_speaker: boolean | null
-          inputs: string[] | null
+          inputs: string | null
           lowest_price: number | null
           panel_type: Database["public"]["Enums"]["panel_type"] | null
           power_wattage: number | null

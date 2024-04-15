@@ -276,5 +276,3 @@ export const categoriesFromEnum: { [key: string]: string } = {
 // export type Psu = { isMobile: boolean, psu: Database['product']['Views']['v_power_supplies']['Row'] }
 
 export type Details = { isMobile: boolean, detalis: Database['product']['Views']['v_product_details']['Row'] }
-
-export const productImageUrl = 'https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/product-images/'
