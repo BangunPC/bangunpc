@@ -1,3 +1,0 @@
-.toggleKatalogFilter:checked ~ * .mobileKatalog {
-  translate: calc(100vw);
-}
