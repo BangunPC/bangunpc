@@ -19,8 +19,8 @@ const config = {
     },
     extend: {
       boxShadow: {
-        bm: '0 4px 4px 0 rgb(0 0 0 / 0.14)',
-        br: '3.48px 4.65px 4.65px 0 rgb(0 0 0 / 0.15)',
+        bm: "0 4px 4px 0 rgb(0 0 0 / 0.14)",
+        br: "3.48px 4.65px 4.65px 0 rgb(0 0 0 / 0.15)",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -56,7 +56,7 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        navbar: "rgb(var(--navbar))"
+        navbar: "rgb(var(--navbar))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -78,18 +78,18 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       screens: {
-        tablet: '810px',
+        tablet: "810px",
         // => @media (min-width: 640px) { ... }
 
-        desktop: '1200px',
+        desktop: "1200px",
         // => @media (min-width: 1280px) { ... }
       },
       spacing: {
-        'navbar-min-h': '70px',
+        "navbar-min-h": "70px",
       },
     },
   },
-  plugins: [require("tailwindcss-animate"),require('@tailwindcss/typography')],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
 
 export default config;

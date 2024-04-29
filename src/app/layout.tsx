@@ -1,11 +1,10 @@
-export const runtime = 'edge';
+export const runtime = "edge";
 
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { ModeToggle } from "~/components/ui/mode-toggle";
 import { Navbar } from "~/components/ui/navbar";
 
 const inter = Inter({
@@ -34,9 +33,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div
-            className={`${inter.variable} bg-background text-foreground`}
-          >
+          <div className={`${inter.variable} bg-background text-foreground`}>
             <Navbar />
             {children}
           </div>

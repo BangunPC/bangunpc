@@ -36,7 +36,8 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.js",
-    ".next/types/**/*.ts"
-, "src/components/ui/icon/navbar-icon.jsx"  ],
+    ".next/types/**/*.ts",
+    "src/components/ui/icon/navbar-icon.jsx"
+  ],
   "exclude": ["node_modules"]
 }

@@ -1,9 +1,3 @@
-import Link from "next/link";
-
 export default function HomePage() {
-  return (
-    <main className="flex flex-1">
-      hello
-    </main>
-  );
+  return <main className="flex flex-1">hello</main>;
 }

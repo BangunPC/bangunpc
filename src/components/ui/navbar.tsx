@@ -107,7 +107,7 @@ export function Navbar() {
                     Katalog
                   </NavigationMenuLink>{" "}
                 </DialogTrigger>
-                <DialogContent className="tablet:max-w-fit p-2 tablet:p-4">
+                <DialogContent className="p-2 tablet:max-w-fit tablet:p-4">
                   <DialogHeader className="border-b border-b-slate-200 pb-4">
                     <DialogTitle>Pilih Kategori Komponen PC</DialogTitle>
                   </DialogHeader>
@@ -118,7 +118,7 @@ export function Navbar() {
                     Kategori Lain
                   </Button>
                   <div className="flex w-full flex-row gap-2">
-                    <div className="shadow-bm hidden flex-col rounded-lg bg-white p-2 dark:bg-black tablet:flex">
+                    <div className="hidden flex-col rounded-lg bg-white p-2 shadow-bm dark:bg-black tablet:flex">
                       <span className="bold mb-2 border-b border-b-white">
                         Peripherals
                       </span>
@@ -146,8 +146,8 @@ export function Navbar() {
                         </Link>
                       ))}
                     </div>
-                    <div className="w-full shadow-bm rounded-lg bg-white p-4 dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
-                      <div className="m-auto w-fit grid grid-cols-2 gap-3 tablet:grid-cols-3 tablet:tablet:grid-rows-3">
+                    <div className="w-full rounded-lg bg-white p-4 shadow-bm dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
+                      <div className="m-auto grid w-fit grid-cols-2 gap-3 tablet:grid-cols-3 tablet:tablet:grid-rows-3">
                         {components.map((item) => (
                           <Link key={item.name} href={item.href}>
                             <Button
