@@ -31,13 +31,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function Navbar() {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  let katalog = searchParams.get("katalog") === "true";
+  const katalog = searchParams.get("katalog") === "true";
 
   const createQueryString = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
