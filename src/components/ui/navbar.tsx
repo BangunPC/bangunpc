@@ -24,8 +24,58 @@ import {
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 import { Button } from "./button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  let katalog = searchParams.get("katalog") === "true";
+
+  const createQueryString = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set(key, value);
+    return params.toString();
+  };
+
+  const removeQueryString = (key: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.delete(key);
+    return params.toString();
+  };
+
+  const peripherals = [
+    { name: "Headphones", href: "/?katalog=true" },
+    { name: "Keyboard", href: "/?katalog=true" },
+    { name: "Mouse", href: "/?katalog=true" },
+    { name: "Speaker", href: "/?katalog=true" },
+    { name: "Webcam", href: "/?katalog=true" },
+  ];
+
+  const accessories = [
+    { name: "Case Fan", href: "/?katalog=true" },
+    { name: "External Hard Drive", href: "/?katalog=true" },
+    { name: "Thermal Paste", href: "/?katalog=true" },
+  ];
+
+  const components = [
+    { name: "Memory / RAM", href: "/?katalog=true" },
+    { name: "Motherboard", href: "/?katalog=true" },
+    { name: "CPU", href: "/?katalog=true" },
+    { name: "CPU Cooler", href: "/?katalog=true" },
+    { name: "Video Card / GPU", href: "/?katalog=true" },
+    { name: "Power Supply", href: "/?katalog=true" },
+    { name: "Internal Storage", href: "/?katalog=true" },
+    { name: "PC Case", href: "/?katalog=true" },
+    { name: "Monitor", href: "/?katalog=true" },
+  ];
 
   return (
     <div className="fixed w-full bg-[#f5f5f573] px-4 backdrop-blur-3xl dark:bg-navbar">
@@ -36,13 +86,83 @@ export function Navbar() {
         <NavigationMenu className="m-auto hidden tablet:block">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
-                <NavigationMenuLink
-                  className={cn(navigationMenuTriggerStyle(), "bg-transparent")}
-                >
-                  Katalog
-                </NavigationMenuLink>
-              </Link>
+              <Dialog
+                open={katalog}
+                onOpenChange={(open) => {
+                  router.push(
+                    "/?" +
+                      (open
+                        ? createQueryString("katalog", open.toString())
+                        : removeQueryString("katalog")),
+                  );
+                }}
+              >
+                <DialogTrigger>
+                  <NavigationMenuLink
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "bg-transparent",
+                    )}
+                  >
+                    Katalog
+                  </NavigationMenuLink>{" "}
+                </DialogTrigger>
+                <DialogContent className="tablet:max-w-fit p-2 tablet:p-4">
+                  <DialogHeader className="border-b border-b-slate-200 pb-4">
+                    <DialogTitle>Pilih Kategori Komponen PC</DialogTitle>
+                  </DialogHeader>
+                  <Button
+                    variant="outline"
+                    className="border-primary text-primary tablet:hidden"
+                  >
+                    Kategori Lain
+                  </Button>
+                  <div className="flex w-full flex-row gap-2">
+                    <div className="shadow-bm hidden flex-col rounded-lg bg-white p-2 dark:bg-black tablet:flex">
+                      <span className="bold mb-2 border-b border-b-white">
+                        Peripherals
+                      </span>
+                      {peripherals.map((item) => (
+                        <Link key={item.name} href={item.href}>
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start"
+                          >
+                            {item.name}
+                          </Button>
+                        </Link>
+                      ))}
+                      <span className="bold mb-2 border-b border-b-white">
+                        Accessories / Lainnya
+                      </span>
+                      {accessories.map((item) => (
+                        <Link key={item.name} href={item.href}>
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start"
+                          >
+                            {item.name}
+                          </Button>
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="w-full shadow-bm rounded-lg bg-white p-4 dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
+                      <div className="m-auto w-fit grid grid-cols-2 gap-3 tablet:grid-cols-3 tablet:tablet:grid-rows-3">
+                        {components.map((item) => (
+                          <Link key={item.name} href={item.href}>
+                            <Button
+                              variant="outline"
+                              className="h-[156px] w-[147px]"
+                            >
+                              {item.name}
+                            </Button>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuTrigger className={"bg-transparent"}>
@@ -105,15 +225,25 @@ export function Navbar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="tablet:hidden">
-              <DropdownMenuItem className="p-4 cursor-pointer" onClick={() => {}}>Katalog</DropdownMenuItem>
+              <Link href={`/?${createQueryString("katalog", "true")}`} passHref>
+                <DropdownMenuItem className="cursor-pointer p-4">
+                  Katalog
+                </DropdownMenuItem>
+              </Link>
               <Link href="/jasa" passHref>
-                <DropdownMenuItem className="p-4 cursor-pointer">Jasa</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer p-4">
+                  Jasa
+                </DropdownMenuItem>
               </Link>
               <Link href="/simulasi" passHref>
-                <DropdownMenuItem className="p-4 cursor-pointer">Rakit PC</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer p-4">
+                  Rakit PC
+                </DropdownMenuItem>
               </Link>
               <Link href="/blog" passHref>
-                <DropdownMenuItem className="p-4 cursor-pointer">Blog</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer p-4">
+                  Blog
+                </DropdownMenuItem>
               </Link>
             </DropdownMenuContent>
           </DropdownMenu>
