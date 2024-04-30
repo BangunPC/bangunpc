@@ -32,6 +32,7 @@ import {
   DialogTrigger,
 } from "./dialog";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 export function Navbar() {
   const router = useRouter();
@@ -65,15 +66,15 @@ export function Navbar() {
   ];
 
   const components = [
-    { name: "Memory / RAM", href: "/?katalog=true" },
-    { name: "Motherboard", href: "/?katalog=true" },
-    { name: "CPU", href: "/?katalog=true" },
-    { name: "CPU Cooler", href: "/?katalog=true" },
-    { name: "Video Card / GPU", href: "/?katalog=true" },
-    { name: "Power Supply", href: "/?katalog=true" },
-    { name: "Internal Storage", href: "/?katalog=true" },
-    { name: "PC Case", href: "/?katalog=true" },
-    { name: "Monitor", href: "/?katalog=true" },
+    { name: "Memory / RAM", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_memory.svg" alt="katalog_ram" /> },
+    { name: "Motherboard", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_motherboard.svg" alt="katalog_motherboard" /> },
+    { name: "CPU", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_cpu.svg" alt="katalog_cpu" /> },
+    { name: "CPU Cooler", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_cpu_coolers.svg" alt="katalog_cpu_cooler" /> },
+    { name: "Video Card / GPU", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_gpu.svg" alt="katalog_gpu" /> },
+    { name: "Power Supply", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_psu.svg" alt="katalog_psu" /> },
+    { name: "Internal Storage", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_storage.svg" alt="katalog_internal_storage" /> },
+    { name: "PC Case", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_casing.svg" alt="katalog_casing" /> },
+    { name: "Monitor", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_monitor.svg" alt="katalog_monitor" /> },
   ];
 
   return (
@@ -90,9 +91,9 @@ export function Navbar() {
                 onOpenChange={(open) => {
                   router.push(
                     "/?" +
-                      (open
-                        ? createQueryString("katalog", open.toString())
-                        : removeQueryString("katalog")),
+                    (open
+                      ? createQueryString("katalog", open.toString())
+                      : removeQueryString("katalog")),
                   );
                 }}
               >
@@ -151,8 +152,9 @@ export function Navbar() {
                           <Link key={item.name} href={item.href}>
                             <Button
                               variant="outline"
-                              className="h-[156px] w-[147px]"
+                              className="h-[156px] w-[147px] flex flex-col"
                             >
+                              {item.icon}
                               {item.name}
                             </Button>
                           </Link>
