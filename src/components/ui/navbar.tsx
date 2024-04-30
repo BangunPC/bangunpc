@@ -79,7 +79,7 @@ export function Navbar() {
   ];
 
   return (
-    <div className="fixed w-full bg-[#f5f5f573] px-4 backdrop-blur-3xl dark:bg-navbar">
+    <div className="fixed top-0 z-10 w-full bg-[#f5f5f573] px-4 backdrop-blur-3xl dark:bg-navbar">
       <div className="m-auto flex max-w-screen-desktop items-center">
         <Link href="/">
           <NavbarIcon />
