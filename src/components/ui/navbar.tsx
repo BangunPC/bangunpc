@@ -33,6 +33,7 @@ import {
 } from "./dialog";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { ScrollArea } from "./scroll-area";
 
 export function Navbar() {
   const router = useRouter();
@@ -107,7 +108,7 @@ export function Navbar() {
                     Katalog
                   </NavigationMenuLink>{" "}
                 </DialogTrigger>
-                <DialogContent className="p-2 tablet:max-w-fit tablet:p-4">
+                <DialogContent className="p-2 tablet:max-w-fit h-full tablet:max-h-[642px] overflow-auto tablet:p-4">
                   <DialogHeader className="border-b border-b-slate-200 pb-4">
                     <DialogTitle>Pilih Kategori Komponen PC</DialogTitle>
                   </DialogHeader>
