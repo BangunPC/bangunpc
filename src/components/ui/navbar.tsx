@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/navigation-menu";
 import { NavbarIcon } from "./icon/navbar-icon";
 import { ModeToggle } from "./mode-toggle";
-import { cn } from "~/lib/utils";
+import { cn, createQueryString, removeQueryString } from "~/lib/utils";
 import { ChevronDown } from "lucide-react";
 import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
 import {
@@ -33,49 +33,135 @@ import {
 } from "./dialog";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { ScrollArea } from "./scroll-area";
 
 export function Navbar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const katalog = searchParams.get("katalog") === "true";
 
-  const createQueryString = (key: string, value: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set(key, value);
-    return params.toString();
-  };
-
-  const removeQueryString = (key: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.delete(key);
-    return params.toString();
-  };
-
   const peripherals = [
-    { name: "Headphones", href: "/?katalog=true" },
-    { name: "Keyboard", href: "/?katalog=true" },
-    { name: "Mouse", href: "/?katalog=true" },
-    { name: "Speaker", href: "/?katalog=true" },
-    { name: "Webcam", href: "/?katalog=true" },
+    { name: "Headphones", href: "?katalog=false" },
+    { name: "Keyboard", href: "?katalog=false" },
+    { name: "Mouse", href: "?katalog=false" },
+    { name: "Speaker", href: "?katalog=false" },
+    { name: "Webcam", href: "?katalog=false" },
   ];
 
   const accessories = [
-    { name: "Case Fan", href: "/?katalog=true" },
-    { name: "External Hard Drive", href: "/?katalog=true" },
-    { name: "Thermal Paste", href: "/?katalog=true" },
+    { name: "Case Fan", href: "?katalog=false" },
+    { name: "External Hard Drive", href: "?katalog=false" },
+    { name: "Thermal Paste", href: "?katalog=false" },
   ];
 
   const components = [
-    { name: "Memory / RAM", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_memory.svg" alt="katalog_ram" /> },
-    { name: "Motherboard", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_motherboard.svg" alt="katalog_motherboard" /> },
-    { name: "CPU", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_cpu.svg" alt="katalog_cpu" /> },
-    { name: "CPU Cooler", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_cpu_coolers.svg" alt="katalog_cpu_cooler" /> },
-    { name: "Video Card / GPU", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_gpu.svg" alt="katalog_gpu" /> },
-    { name: "Power Supply", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_psu.svg" alt="katalog_psu" /> },
-    { name: "Internal Storage", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_storage.svg" alt="katalog_internal_storage" /> },
-    { name: "PC Case", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_casing.svg" alt="katalog_casing" /> },
-    { name: "Monitor", href: "/?katalog=true", icon: <Image width={120} height={120} src="/images/katalog_monitor.svg" alt="katalog_monitor" /> },
+    {
+      name: "Memory / RAM",
+      href: "?katalog=false",
+      icon: (
+        <Image
+          width={120}
+          height={120}
+          src="/images/katalog_memory.svg"
+          alt="katalog_ram"
+        />
+      ),
+    },
+    {
+      name: "Motherboard",
+      href: "?katalog=false",
+      icon: (
+        <Image
+          width={120}
+          height={120}
+          src="/images/katalog_motherboard.svg"
+          alt="katalog_motherboard"
+        />
+      ),
+    },
+    {
+      name: "CPU",
+      href: "?katalog=false",
+      icon: (
+        <Image
+          width={120}
+          height={120}
+          src="/images/katalog_cpu.svg"
+          alt="katalog_cpu"
+        />
+      ),
+    },
+    {
+      name: "CPU Cooler",
+      href: "?katalog=false",
+      icon: (
+        <Image
+          width={120}
+          height={120}
+          src="/images/katalog_cpu_coolers.svg"
+          alt="katalog_cpu_cooler"
+        />
+      ),
+    },
+    {
+      name: "Video Card / GPU",
+      href: "?katalog=false",
+      icon: (
+        <Image
+          width={120}
+          height={120}
+          src="/images/katalog_gpu.svg"
+          alt="katalog_gpu"
+        />
+      ),
+    },
+    {
+      name: "Power Supply",
+      href: "?katalog=false",
+      icon: (
+        <Image
+          width={120}
+          height={120}
+          src="/images/katalog_psu.svg"
+          alt="katalog_psu"
+        />
+      ),
+    },
+    {
+      name: "Internal Storage",
+      href: "?katalog=false",
+      icon: (
+        <Image
+          width={120}
+          height={120}
+          src="/images/katalog_storage.svg"
+          alt="katalog_internal_storage"
+        />
+      ),
+    },
+    {
+      name: "PC Case",
+      href: "?katalog=false",
+      icon: (
+        <Image
+          width={120}
+          height={120}
+          src="/images/katalog_casing.svg"
+          alt="katalog_casing"
+        />
+      ),
+    },
+    {
+      name: "Monitor",
+      href: "?katalog=false",
+      icon: (
+        <Image
+          width={120}
+          height={120}
+          src="/images/katalog_monitor.svg"
+          alt="katalog_monitor"
+        />
+      ),
+    },
   ];
 
   return (
@@ -91,10 +177,14 @@ export function Navbar() {
                 open={katalog}
                 onOpenChange={(open) => {
                   router.push(
-                    "/?" +
-                    (open
-                      ? createQueryString("katalog", open.toString())
-                      : removeQueryString("katalog")),
+                    "?" +
+                      (open
+                        ? createQueryString(
+                            searchParams,
+                            "katalog",
+                            open.toString(),
+                          )
+                        : removeQueryString(searchParams, "katalog")),
                   );
                 }}
               >
@@ -108,7 +198,7 @@ export function Navbar() {
                     Katalog
                   </NavigationMenuLink>{" "}
                 </DialogTrigger>
-                <DialogContent className="p-2 tablet:max-w-fit h-full tablet:max-h-[642px] overflow-auto tablet:p-4">
+                <DialogContent className="h-full overflow-auto p-2 tablet:max-h-[642px] tablet:max-w-fit tablet:p-4">
                   <DialogHeader className="border-b border-b-slate-200 pb-4">
                     <DialogTitle>Pilih Kategori Komponen PC</DialogTitle>
                   </DialogHeader>
@@ -119,7 +209,7 @@ export function Navbar() {
                     Kategori Lain
                   </Button>
                   <div className="flex w-full flex-row gap-2">
-                    <div className="hidden flex-col rounded-lg bg-white p-2 shadow-bm dark:bg-black tablet:flex">
+                    <div className="shadow-bm hidden flex-col rounded-lg bg-white p-2 dark:bg-black tablet:flex">
                       <span className="bold mb-2 border-b border-b-white">
                         Peripherals
                       </span>
@@ -147,15 +237,15 @@ export function Navbar() {
                         </Link>
                       ))}
                     </div>
-                    <div className="w-full rounded-lg bg-white p-4 shadow-bm dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
+                    <div className="shadow-bm w-full rounded-lg bg-white p-4 dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
                       <div className="m-auto grid w-fit grid-cols-2 gap-3 tablet:grid-cols-3 tablet:tablet:grid-rows-3">
                         {components.map((item) => (
                           <Link key={item.name} href={item.href}>
                             <Button
                               variant="outline"
-                              className="h-[156px] w-[147px] flex flex-col"
+                              className="flex h-[156px] w-[147px] flex-col"
                             >
-                              {item.icon}
+                              <div className="m-auto">{item.icon}</div>
                               {item.name}
                             </Button>
                           </Link>
@@ -227,7 +317,10 @@ export function Navbar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="tablet:hidden">
-              <Link href={`/?${createQueryString("katalog", "true")}`} passHref>
+              <Link
+                href={`?${createQueryString(searchParams, "katalog", "true")}`}
+                passHref
+              >
                 <DropdownMenuItem className="cursor-pointer p-4">
                   Katalog
                 </DropdownMenuItem>
