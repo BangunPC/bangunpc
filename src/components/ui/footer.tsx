@@ -2,6 +2,7 @@ import React from "react";
 import { NavbarIcon } from "./icon/navbar-icon";
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "./button";
 
 const Footer = () => {
   const socialMedia = [
@@ -49,7 +50,7 @@ const Footer = () => {
       url: "/blog",
     },
   ];
-  
+
   const about = [
     {
       name: "Tentang Kami",
@@ -70,10 +71,10 @@ const Footer = () => {
   ];
 
   return (
-    <div className="bg-[#020617] text-slate-100 dark:bg-navbar w-full">
+    <div className="w-full bg-[#020617] text-slate-100 dark:bg-navbar">
       <div className="mx-auto mt-5 grid h-full max-w-screen-desktop gap-5 p-8 tablet:max-w-7xl tablet:grid-cols-3">
         <div className="flex flex-col items-center gap-5 text-center">
-          <NavbarIcon />
+          <NavbarIcon alwaysDark />
           <p className="text-sm">
             Platform yang membantumu untuk memilih, membeli, dan merawat
             komponen komputermu yang disesuaikan dengan kebutuhan dan budget
@@ -84,15 +85,22 @@ const Footer = () => {
                 <Link
                   key={item.alt}
                   href={item.url}
-                  className="flex items-center justify-center rounded-full bg-navbar p-2"
+                  className="flex items-center justify-center"
                   target="_blank"
+                  passHref
                 >
-                  <Image
-                    src={item.logo}
-                    width={16}
-                    height={16}
-                    alt={item.alt}
-                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="dark rounded-full hover:bg-zinc-600 hover:border-zinc-400 bg-zinc-700 m-0 p-2"
+                  >
+                    <Image
+                      src={item.logo}
+                      width={16}
+                      height={16}
+                      alt={item.alt}
+                    />
+                  </Button>
                 </Link>
               );
             })}
@@ -100,23 +108,27 @@ const Footer = () => {
         </div>
         <div className="flex flex-col gap-5 tablet:items-center">
           <h3 className="text-xl">Layanan Kami</h3>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col">
             {services.map((item) => {
               return (
-                <Link key={item.name} href={item.url}>
-                  <li>{item.name}</li>
+                <Link key={item.name} href={item.url} passHref>
+                  <Button variant="ghost" className="m-0 w-full justify-start">
+                    <li>{item.name}</li>
+                  </Button>
                 </Link>
               );
             })}
           </ul>
         </div>
         <div className="flex flex-col gap-5 tablet:items-center">
-          <h3 className="tablet:-ml-5 text-xl">Tentang Kami</h3>
-          <ul className="flex flex-col gap-2">
+          <h3 className="text-xl tablet:-ml-5">Tentang Kami</h3>
+          <ul className="flex flex-col">
             {about.map((item) => {
               return (
-                <Link key={item.name} href={item.url}>
-                  <li>{item.name}</li>
+                <Link key={item.name} href={item.url} passHref>
+                  <Button variant="ghost" className="m-0 w-full justify-start">
+                    <li>{item.name}</li>
+                  </Button>
                 </Link>
               );
             })}
@@ -124,7 +136,7 @@ const Footer = () => {
         </div>
       </div>
       <p className="p-6 text-center">
-        Copyright © 2021 Bangun PC. All rights reserved.
+        Copyright © {new Date().getFullYear()} Bangun PC. All rights reserved.
       </p>
     </div>
   );

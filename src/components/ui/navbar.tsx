@@ -286,17 +286,43 @@ export function Navbar() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/simulasi" legacyBehavior passHref>
-                <NavigationMenuLink
-                  className={cn(navigationMenuTriggerStyle(), "bg-transparent")}
-                >
-                  Rakit PC
-                  <ChevronDown
-                    className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
-                    aria-hidden="true"
-                  />
-                </NavigationMenuLink>
-              </Link>
+              <NavigationMenuTrigger className={"bg-transparent"}>
+                Rakit PC
+              </NavigationMenuTrigger>
+              <NavigationMenuContent className="">
+                <ul className="w-[240px] p-4">
+                  <Link href="/simulasi" legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full bg-transparent justify-start",
+                      )}
+                    >
+                      Simulasi Rakit PC
+                    </NavigationMenuLink>
+                  </Link>
+                  <Link href="/rekomendasi" legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full bg-transparent justify-start",
+                      )}
+                    >
+                      Rekomendasi Rakitan
+                    </NavigationMenuLink>
+                  </Link>
+                  <Link href="/showcase" legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full bg-transparent justify-start",
+                      )}
+                    >
+                      Showcase
+                    </NavigationMenuLink>
+                  </Link>
+                </ul>
+              </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/blog" legacyBehavior passHref>
@@ -330,7 +356,7 @@ export function Navbar() {
                   Jasa
                 </DropdownMenuItem>
               </Link>
-              <Link href="/simulasi" passHref>
+              <Link href="/rakit" passHref>
                 <DropdownMenuItem className="cursor-pointer p-4">
                   Rakit PC
                 </DropdownMenuItem>
