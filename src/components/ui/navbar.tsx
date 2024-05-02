@@ -13,9 +13,10 @@ import {
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { NavbarIcon } from "./icon/navbar-icon";
+import  FormLogin  from "~/components/login/form-login";
 import { ModeToggle } from "./mode-toggle";
 import { cn, createQueryString, removeQueryString } from "~/lib/utils";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
 import {
   DropdownMenu,
@@ -38,6 +39,7 @@ export function Navbar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const katalog = searchParams.get("katalog") === "true";
+  const login = searchParams.get("login") === "true";
 
   const peripherals = [
     { name: "Headphones", href: "?katalog=false" },
@@ -209,7 +211,7 @@ export function Navbar() {
                     Kategori Lain
                   </Button>
                   <div className="flex w-full flex-row gap-2">
-                    <div className="shadow-bm hidden flex-col rounded-lg bg-white p-2 dark:bg-black tablet:flex">
+                    <div className="hidden flex-col rounded-lg bg-white p-2 shadow-bm dark:bg-black tablet:flex">
                       <span className="bold mb-2 border-b border-b-white">
                         Peripherals
                       </span>
@@ -237,7 +239,7 @@ export function Navbar() {
                         </Link>
                       ))}
                     </div>
-                    <div className="shadow-bm w-full rounded-lg bg-white p-4 dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
+                    <div className="w-full rounded-lg bg-white p-4 shadow-bm dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
                       <div className="m-auto grid w-fit grid-cols-2 gap-3 tablet:grid-cols-3 tablet:tablet:grid-rows-3">
                         {components.map((item) => (
                           <Link key={item.name} href={item.href}>
@@ -295,7 +297,7 @@ export function Navbar() {
                     <NavigationMenuLink
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        "w-full bg-transparent justify-start",
+                        "w-full justify-start bg-transparent",
                       )}
                     >
                       Simulasi Rakit PC
@@ -305,7 +307,7 @@ export function Navbar() {
                     <NavigationMenuLink
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        "w-full bg-transparent justify-start",
+                        "w-full justify-start bg-transparent",
                       )}
                     >
                       Rekomendasi Rakitan
@@ -315,7 +317,7 @@ export function Navbar() {
                     <NavigationMenuLink
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        "w-full bg-transparent justify-start",
+                        "w-full justify-start bg-transparent",
                       )}
                     >
                       Showcase
@@ -336,9 +338,32 @@ export function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="ml-auto flex items-center gap-4">
+          <Dialog open={login}
+            onOpenChange={(open) => {
+              router.push(
+                "?" +
+                  (open
+                    ? createQueryString(
+                        searchParams,
+                        "login",
+                        "true",
+                      )
+                    : removeQueryString(searchParams, "login")),
+              );
+            }}
+          >
+            <DialogTrigger>
+              <Button className="bg-primary px-4 text-white hover:bg-primary/80">
+                Login
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="h-full overflow-auto bg-slate-100 p-4 tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
+              <FormLogin />
+            </DialogContent>
+          </Dialog>
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="tablet:hidden">
-              <Button variant="outline" size="icon">
+              <Button size="icon">
                 <NavbarMobileToggle />
               </Button>
             </DropdownMenuTrigger>
