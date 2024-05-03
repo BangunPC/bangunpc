@@ -6,7 +6,8 @@ import React from 'react'
 
 
 export const NavbarIcon = ({alwaysDark = false}) => {
-  const darkMode = alwaysDark || useTheme().resolvedTheme === "dark";
+  const theme = useTheme();
+  const darkMode = alwaysDark === true || theme.resolvedTheme === "dark"; // Use the value conditionally
   const fillColor = darkMode ? "#F1F1F1" : "#040b32";
   return (
     <svg
