@@ -30,11 +30,7 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
         setHideSidebar(!hideSidebar);
       }}
     >
-      {hideSidebar ? (
-        <SidebarOpen />
-      ) : (
-        <SidebarClose />
-      )}
+      {hideSidebar ? <SidebarOpen /> : <SidebarClose />}
     </Button>
   );
 

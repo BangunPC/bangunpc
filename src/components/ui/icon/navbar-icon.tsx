@@ -2,10 +2,9 @@
 
 import { useTheme } from "next-themes";
 
-import React from 'react'
+import React from "react";
 
-
-export const NavbarIcon = ({alwaysDark = false}) => {
+export const NavbarIcon = ({ alwaysDark = false }) => {
   const theme = useTheme();
   const darkMode = alwaysDark === true || theme.resolvedTheme === "dark"; // Use the value conditionally
   const fillColor = darkMode ? "#F1F1F1" : "#040b32";
@@ -47,4 +46,4 @@ export const NavbarIcon = ({alwaysDark = false}) => {
       />
     </svg>
   );
-}
+};

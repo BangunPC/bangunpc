@@ -1,8 +1,8 @@
-import React from 'react'
-import { Button } from '../ui/button'
-import { NavbarIcon } from '../ui/icon/navbar-icon'
-import Image from 'next/image'
-import Link from 'next/link'
+import React from "react";
+import { Button } from "../ui/button";
+import { NavbarIcon } from "../ui/icon/navbar-icon";
+import Image from "next/image";
+import Link from "next/link";
 
 const FormRegister = () => {
   return (
@@ -10,7 +10,7 @@ const FormRegister = () => {
       <div className="mx-auto mb-8 flex tablet:mb-2 tablet:pt-4">
         <NavbarIcon />
       </div>
-      <form className="flex flex-col gap-4 rounded-md bg-white px-4 py-10 tablet:py-8 shadow-md dark:bg-secondary">
+      <form className="flex flex-col gap-4 rounded-md bg-white px-4 py-10 shadow-md dark:bg-secondary tablet:py-8">
         <h3 className="mb-5 text-xl font-bold">Daftar Akun</h3>
         <div className="flex flex-col gap-4">
           <input
@@ -20,11 +20,10 @@ const FormRegister = () => {
             placeholder="Nama Lengkap"
             autoComplete="name"
             required
-            className="w-full rounded-md border border-slate-300  bg-transparent bg-white px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 tablet:py-2 dark:focus:border-secondary dark:focus:ring-secondary"
+            className="w-full rounded-md border border-slate-300 bg-transparent bg-white  px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-slate-600 dark:bg-navbar dark:focus:border-secondary dark:focus:ring-secondary tablet:py-2"
           />
         </div>
         <div className="flex flex-col gap-4">
-          
           <input
             type="email"
             name="email"
@@ -32,18 +31,17 @@ const FormRegister = () => {
             placeholder="Alamat email"
             autoComplete="email"
             required
-            className="w-full rounded-md border border-slate-300  bg-transparent bg-white px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 tablet:py-2 dark:focus:border-secondary dark:focus:ring-secondary"
+            className="w-full rounded-md border border-slate-300 bg-transparent bg-white  px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-slate-600 dark:bg-navbar dark:focus:border-secondary dark:focus:ring-secondary tablet:py-2"
           />
         </div>
         <div className="flex flex-col gap-4">
-        
           <input
             type="password"
             name="password"
             id="password"
             placeholder="Masukkan password"
             required
-            className="w-full rounded-md border bg-white border-slate-300 bg-transparent px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 tablet:py-2 dark:focus:border-secondary dark:focus:ring-secondary"
+            className="w-full rounded-md border border-slate-300 bg-transparent bg-white px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-slate-600 dark:bg-navbar dark:focus:border-secondary dark:focus:ring-secondary tablet:py-2"
           />
         </div>
         <div className="flex flex-col gap-4">
@@ -53,9 +51,9 @@ const FormRegister = () => {
             id="confirm-password"
             placeholder="Konfirmasi password"
             required
-            className="w-full rounded-md border bg-white border-slate-300 bg-transparent px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 tablet:py-2
-            dark:focus:border-secondary dark:focus:ring-secondary"
-          />          
+            className="w-full rounded-md border border-slate-300 bg-transparent bg-white px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-slate-600 dark:bg-navbar dark:focus:border-secondary
+            dark:focus:ring-secondary tablet:py-2"
+          />
         </div>
         <div className="flex flex-col gap-4">
           <Button
@@ -73,12 +71,9 @@ const FormRegister = () => {
         </p>
       </form>
       <p className="py-4 text-center tablet:py-0">
-        --------------------------------- atau
-        --------------------------------
+        --------------------------------- atau --------------------------------
       </p>
-      <Button
-        className="w-full gap-2 rounded-md border border-slate-300 bg-white dark:bg-navbar px-3 py-6 text-sm font-bold text-black dark:text-white"
-      >
+      <Button className="w-full gap-2 rounded-md border border-slate-300 bg-white px-3 py-6 text-sm font-bold text-black dark:bg-navbar dark:text-white">
         <Image
           src="/images/gmail.svg"
           width={21}
@@ -100,7 +95,7 @@ const FormRegister = () => {
         Masuk dengan Facebook
       </Button>
     </div>
-  )
-}
+  );
+};
 
-export default FormRegister
+export default FormRegister;

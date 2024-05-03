@@ -92,7 +92,7 @@ const Footer = () => {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="dark rounded-full hover:bg-zinc-600 hover:border-zinc-400 bg-zinc-700 m-0 p-2"
+                    className="dark m-0 rounded-full bg-zinc-700 p-2 hover:border-zinc-400 hover:bg-zinc-600"
                   >
                     <Image
                       src={item.logo}

@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 import { Button } from "~/components/ui/button";
 import { NavbarIcon } from "~/components/ui/icon/navbar-icon";
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 const FormLogin = () => {
   return (
@@ -21,20 +21,19 @@ const FormLogin = () => {
             placeholder="Masukkan email"
             autoComplete="email"
             required
-            className="w-full rounded-md border border-slate-300  bg-transparent bg-white px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 tablet:py-2
-            dark:focus:border-secondary dark:focus:ring-secondary"
+            className="w-full rounded-md border border-slate-300 bg-transparent bg-white px-3 py-4 text-sm placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-slate-600 dark:bg-navbar dark:focus:border-secondary
+            dark:focus:ring-secondary tablet:py-2"
           />
         </div>
         <div className="flex flex-col gap-4">
-          
           <input
             type="password"
             name="password"
             id="password"
             placeholder="Masukkan password"
             required
-            className="w-full rounded-md border border-slate-300 bg-transparent px-3 py-4 text-sm bg-white placeholder-gray-500 shadow-md focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 tablet:py-2
-            dark:focus:border-secondary dark:focus:ring-secondary"
+            className="w-full rounded-md border border-slate-300 bg-transparent bg-white px-3 py-4 text-sm placeholder-gray-500 shadow-md  focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-slate-600 dark:bg-navbar dark:focus:border-secondary
+            dark:focus:ring-secondary tablet:py-2"
           />
         </div>
         <div className="flex flex-col gap-4">
@@ -48,13 +47,12 @@ const FormLogin = () => {
         <p className="mt-4 text-center tablet:mt-0">
           Belum punya akun?{" "}
           <Link href={"?register=true"} className="font-semibold">
-            Daftar sekarang 
+            Daftar sekarang
           </Link>
         </p>
       </form>
       <p className="py-4 text-center tablet:py-0">
-        --------------------------------- atau
-        --------------------------------
+        --------------------------------- atau --------------------------------
       </p>
       <Button
         variant="outline"
@@ -81,8 +79,7 @@ const FormLogin = () => {
         Masuk dengan Facebook
       </Button>
     </div>
-  )
-}
+  );
+};
 
-
-export default FormLogin
+export default FormLogin;

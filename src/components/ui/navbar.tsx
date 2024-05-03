@@ -13,7 +13,7 @@ import {
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { NavbarIcon } from "./icon/navbar-icon";
-import  FormLogin  from "~/components/login/form-login";
+import FormLogin from "~/components/login/form-login";
 import { ModeToggle } from "./mode-toggle";
 import { cn, createQueryString, removeQueryString } from "~/lib/utils";
 import { ChevronDown, X } from "lucide-react";
@@ -345,27 +345,25 @@ export function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="ml-auto flex items-center gap-4">
-          <Dialog open={login || register}
+          <Dialog
+            open={login || register}
             onOpenChange={(open) => {
               router.push(
                 "?" +
                   (open
-                    ? createQueryString(
-                        searchParams,
-                        "login",
-                        "true", 
-                      ) || createQueryString(searchParams, "register", "true")
-                    : removeQueryString(searchParams, "login") && removeQueryString(searchParams, "register")),
+                    ? createQueryString(searchParams, "login", "true") ||
+                      createQueryString(searchParams, "register", "true")
+                    : removeQueryString(searchParams, "login") &&
+                      removeQueryString(searchParams, "register")),
               );
             }}
           >
-            
             <DialogTrigger>
               <Button className="bg-primary px-4 text-white hover:bg-primary/80">
                 Masuk
               </Button>
             </DialogTrigger>
-            <DialogContent className="h-full overflow-auto bg-slate-100 p-4 tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8 dark:bg-navbar">
+            <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
               {login ? <FormLogin /> : <FormRegister />}
             </DialogContent>
           </Dialog>
