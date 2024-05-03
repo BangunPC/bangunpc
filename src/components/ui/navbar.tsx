@@ -27,6 +27,7 @@ import {
 import { Button } from "./button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -34,12 +35,14 @@ import {
 } from "./dialog";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import FormRegister from "../register/form-register";
 
 export function Navbar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const katalog = searchParams.get("katalog") === "true";
   const login = searchParams.get("login") === "true";
+  const register = searchParams.get("register") === "true";
 
   const peripherals = [
     { name: "Headphones", href: "?katalog=false" },
@@ -338,7 +341,7 @@ export function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="ml-auto flex items-center gap-4">
-          <Dialog open={login}
+          <Dialog open={login || register}
             onOpenChange={(open) => {
               router.push(
                 "?" +
@@ -346,19 +349,20 @@ export function Navbar() {
                     ? createQueryString(
                         searchParams,
                         "login",
-                        "true",
-                      )
-                    : removeQueryString(searchParams, "login")),
+                        "true", 
+                      ) || createQueryString(searchParams, "register", "true")
+                    : removeQueryString(searchParams, "login") && removeQueryString(searchParams, "register")),
               );
             }}
           >
+            
             <DialogTrigger>
               <Button className="bg-primary px-4 text-white hover:bg-primary/80">
-                Login
+                Masuk
               </Button>
             </DialogTrigger>
-            <DialogContent className="h-full overflow-auto bg-slate-100 p-4 tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
-              <FormLogin />
+            <DialogContent className="h-full overflow-auto bg-slate-100 p-4 tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8 dark:bg-navbar">
+              {login ? <FormLogin /> : <FormRegister />}
             </DialogContent>
           </Dialog>
           <DropdownMenu>
