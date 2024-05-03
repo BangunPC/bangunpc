@@ -33,6 +33,7 @@ import {
 } from "./dialog";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
 
 export function Navbar() {
   const router = useRouter();
@@ -56,7 +57,7 @@ export function Navbar() {
   const components = [
     {
       name: "Memory / RAM",
-      href: "?katalog=false",
+      enum: ComponentCategory.Memory,
       icon: (
         <Image
           width={120}
@@ -68,7 +69,7 @@ export function Navbar() {
     },
     {
       name: "Motherboard",
-      href: "?katalog=false",
+      enum: ComponentCategory.Motherboard,
       icon: (
         <Image
           width={120}
@@ -80,7 +81,7 @@ export function Navbar() {
     },
     {
       name: "CPU",
-      href: "?katalog=false",
+      enum: ComponentCategory.CPU,
       icon: (
         <Image
           width={120}
@@ -92,7 +93,7 @@ export function Navbar() {
     },
     {
       name: "CPU Cooler",
-      href: "?katalog=false",
+      enum: ComponentCategory.Cooler,
       icon: (
         <Image
           width={120}
@@ -104,7 +105,7 @@ export function Navbar() {
     },
     {
       name: "Video Card / GPU",
-      href: "?katalog=false",
+      enum: ComponentCategory.GPU,
       icon: (
         <Image
           width={120}
@@ -116,7 +117,7 @@ export function Navbar() {
     },
     {
       name: "Power Supply",
-      href: "?katalog=false",
+      enum: ComponentCategory.PSU,
       icon: (
         <Image
           width={120}
@@ -128,7 +129,7 @@ export function Navbar() {
     },
     {
       name: "Internal Storage",
-      href: "?katalog=false",
+      enum: ComponentCategory.Storage,
       icon: (
         <Image
           width={120}
@@ -140,7 +141,7 @@ export function Navbar() {
     },
     {
       name: "PC Case",
-      href: "?katalog=false",
+      enum: ComponentCategory.Casing,
       icon: (
         <Image
           width={120}
@@ -152,7 +153,7 @@ export function Navbar() {
     },
     {
       name: "Monitor",
-      href: "?katalog=false",
+      enum: ComponentCategory.Monitor,
       icon: (
         <Image
           width={120}
@@ -240,7 +241,10 @@ export function Navbar() {
                     <div className="shadow-bm w-full rounded-lg bg-white p-4 dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
                       <div className="m-auto grid w-fit grid-cols-2 gap-3 tablet:grid-cols-3 tablet:tablet:grid-rows-3">
                         {components.map((item) => (
-                          <Link key={item.name} href={item.href}>
+                          <Link
+                            key={item.name}
+                            href={`/katalog/${categoriesFromEnum[item.enum]}`}
+                          >
                             <Button
                               variant="outline"
                               className="flex h-[156px] w-[147px] flex-col"

@@ -9,7 +9,8 @@
     "lint": "next lint",
     "start": "next start",
     "fmt": "prettier --write .",
-    "fmt.check": "prettier --check ."
+    "fmt.check": "prettier --check .",
+    "gentypes": "npx supabase gen types typescript --project-id \"onawoodgnwkncueeyusr\" > src/lib/schema.ts --schema public --schema product"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
@@ -17,6 +18,8 @@
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
+    "@supabase/ssr": "^0.3.0",
+    "@supabase/supabase-js": "^2.43.0",
     "@t3-oss/env-nextjs": "^0.9.2",
     "@tailwindcss/typography": "^0.5.12",
     "class-variance-authority": "^0.7.0",

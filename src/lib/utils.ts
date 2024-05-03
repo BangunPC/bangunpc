@@ -24,3 +24,30 @@ export function removeQueryString(
   params.delete(key);
   return params.toString();
 }
+
+export function batchUpdateQueryString({
+  searchParams,
+  add,
+  remove,
+}: {
+  searchParams: ReadonlyURLSearchParams;
+  add?: Record<string, string>[];
+  remove?: string[];
+}) {
+  const params = new URLSearchParams(searchParams);
+  if (add) {
+    for (const item of add) {
+      for (const key in item) {
+        if (item[key] !== undefined) {
+          params.set(key, item[key]);
+        }
+      }
+    }
+  }
+  if (remove) {
+    for (const item of remove) {
+      params.delete(item);
+    }
+  }
+  return params.toString();
+}

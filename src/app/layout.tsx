@@ -36,7 +36,7 @@ export default function RootLayout({
         >
           <div className={`${inter.variable} bg-background text-foreground`}>
             <Navbar />
-            {children}
+            <div className="mt-[54px]">{children}</div>
             <Footer />
           </div>
         </ThemeProvider>
