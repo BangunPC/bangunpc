@@ -70,8 +70,10 @@ const FormRegister = () => {
           </Link>
         </p>
       </form>
-      <p className="py-4 text-center tablet:py-0">
-        --------------------------------- atau --------------------------------
+      <p className="py-4 text-center tablet:py-0 flex items-center gap-3">
+        <span className="flex h-0 w-full border-b border-dashed border-slate-300" />
+        atau
+        <span className="flex h-0 w-full border-b border-dashed border-slate-300" />
       </p>
       <Button className="w-full gap-2 rounded-md border border-slate-300 bg-white px-3 py-6 text-sm font-bold text-black dark:bg-navbar dark:text-white">
         <Image
