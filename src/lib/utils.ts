@@ -39,7 +39,7 @@ export function batchUpdateQueryString({
     for (const item of add) {
       for (const key in item) {
         if (item[key] !== undefined) {
-          params.set(key, item[key]);
+          params.set(key, item[key] as string);
         }
       }
     }
