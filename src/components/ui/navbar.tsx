@@ -16,7 +16,7 @@ import { NavbarIcon } from "./icon/navbar-icon";
 import FormLogin from "~/components/login/form-login";
 import { ModeToggle } from "./mode-toggle";
 import { cn, createQueryString, removeQueryString } from "~/lib/utils";
-import { ChevronDown, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
 import {
   DropdownMenu,
@@ -27,7 +27,6 @@ import {
 import { Button } from "./button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -35,7 +34,6 @@ import {
 } from "./dialog";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import FormRegister from "../register/form-register";
 import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
 
 export function Navbar() {
@@ -43,7 +41,6 @@ export function Navbar() {
   const searchParams = useSearchParams();
   const katalog = searchParams.get("katalog") === "true";
   const login = searchParams.get("login") === "true";
-  const register = searchParams.get("register") === "true";
 
   const peripherals = [
     { name: "Headphones", href: "?katalog=false" },
@@ -346,15 +343,13 @@ export function Navbar() {
         </NavigationMenu>
         <div className="ml-auto flex items-center gap-4">
           <Dialog
-            open={login || register}
+            open={login}
             onOpenChange={(open) => {
               router.push(
                 "?" +
                   (open
-                    ? createQueryString(searchParams, "login", "true") ||
-                      createQueryString(searchParams, "register", "true")
-                    : removeQueryString(searchParams, "login") &&
-                      removeQueryString(searchParams, "register")),
+                    ? createQueryString(searchParams, "login", "true")
+                    : removeQueryString(searchParams, "login")),
               );
             }}
           >
@@ -364,7 +359,7 @@ export function Navbar() {
               </Button>
             </DialogTrigger>
             <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
-              {login ? <FormLogin /> : <FormRegister />}
+              <FormLogin />
             </DialogContent>
           </Dialog>
           <DropdownMenu>
