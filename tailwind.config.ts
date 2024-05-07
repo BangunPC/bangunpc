@@ -85,7 +85,7 @@ const config = {
         // => @media (min-width: 1280px) { ... }
       },
       spacing: {
-        "navbar-min-h": "70px",
+        "navbar-min-h": "54px",
       },
     },
   },

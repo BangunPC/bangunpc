@@ -635,15 +635,21 @@ export type Database = {
       gpu_chipsets: {
         Row: {
           id: number;
+          min_psu_watt: number | null;
           name: string;
+          tdp_watt: number | null;
         };
         Insert: {
           id?: number;
+          min_psu_watt?: number | null;
           name: string;
+          tdp_watt?: number | null;
         };
         Update: {
           id?: number;
+          min_psu_watt?: number | null;
           name?: string;
+          tdp_watt?: number | null;
         };
         Relationships: [];
       };
@@ -653,6 +659,7 @@ export type Database = {
           boost_clock_mhz: number | null;
           bus_interface: Database["public"]["Enums"]["bus_interface"] | null;
           core_count: number | null;
+          display_output: string | null;
           gpu_chipset_id: number | null;
           gpu_memory_type:
             | Database["public"]["Enums"]["gpu_memory_type"]
@@ -662,6 +669,7 @@ export type Database = {
           length_mm: number | null;
           memory_bus_bit: number | null;
           min_psu_watt: number | null;
+          power_input: string | null;
           product_id: number;
           tdp_watt: number | null;
           vram_gb: number | null;
@@ -672,6 +680,7 @@ export type Database = {
           boost_clock_mhz?: number | null;
           bus_interface?: Database["public"]["Enums"]["bus_interface"] | null;
           core_count?: number | null;
+          display_output?: string | null;
           gpu_chipset_id?: number | null;
           gpu_memory_type?:
             | Database["public"]["Enums"]["gpu_memory_type"]
@@ -681,6 +690,7 @@ export type Database = {
           length_mm?: number | null;
           memory_bus_bit?: number | null;
           min_psu_watt?: number | null;
+          power_input?: string | null;
           product_id: number;
           tdp_watt?: number | null;
           vram_gb?: number | null;
@@ -691,6 +701,7 @@ export type Database = {
           boost_clock_mhz?: number | null;
           bus_interface?: Database["public"]["Enums"]["bus_interface"] | null;
           core_count?: number | null;
+          display_output?: string | null;
           gpu_chipset_id?: number | null;
           gpu_memory_type?:
             | Database["public"]["Enums"]["gpu_memory_type"]
@@ -700,6 +711,7 @@ export type Database = {
           length_mm?: number | null;
           memory_bus_bit?: number | null;
           min_psu_watt?: number | null;
+          power_input?: string | null;
           product_id?: number;
           tdp_watt?: number | null;
           vram_gb?: number | null;
@@ -2009,6 +2021,7 @@ export type Database = {
           chipset: string | null;
           core_count: number | null;
           description: string | null;
+          display_output: string | null;
           gpu_chipset_id: number | null;
           gpu_id: number | null;
           gpu_memory_type:
@@ -2020,6 +2033,7 @@ export type Database = {
           lowest_price: number | null;
           memory_bus_bit: number | null;
           min_psu_watt: number | null;
+          power_input: string | null;
           product_id: number | null;
           product_name: string | null;
           review_urls: string[] | null;
@@ -2688,7 +2702,12 @@ export type Database = {
       };
     };
     Enums: {
-      bus_interface: "PCIe 3.0 ×16" | "PCIe 4.0 ×8" | "PCIe 4.0 ×16";
+      bus_interface:
+        | "PCIe 3.0 ×16"
+        | "PCIe 4.0 ×8"
+        | "PCIe 4.0 ×16"
+        | "PCIe 4.0 x4"
+        | "PCIe 3.0 x8";
       gpu_memory_type: "GDDR6" | "GDDR6X" | "GDDR5";
       memory_type: "DDR3" | "DDR4" | "DDR5";
       panel_type: "OLED" | "IPS" | "VA" | "TN";

@@ -52,13 +52,13 @@ export function batchUpdateQueryString({
   return params.toString();
 }
 
-const supabaseUrl = 'https://onawoodgnwkncueeyusr.supabase.co';
-const storageImageurl = '/storage/v1/object/public/public-images/products/';
+const supabaseUrl = "https://onawoodgnwkncueeyusr.supabase.co";
+const storageImageurl = "/storage/v1/object/public/public-images/products/";
 
 export const componentImage = function (component: any) {
-  return `${supabaseUrl}${storageImageurl}${component.product_id}/${component.image_filenames[0]}`
-}
+  return `${supabaseUrl}${storageImageurl}${component.product_id}/${component.image_filenames[0]}`;
+};
 
 export const productImage = function (product_id: number, filename: string) {
-  return `${supabaseUrl}${storageImageurl}${product_id}/${filename}`
-}
+  return `${supabaseUrl}${storageImageurl}${product_id}/${filename}`;
+};

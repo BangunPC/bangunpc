@@ -11,19 +11,86 @@ import {
   psuKeys,
   storageKeys,
   ComponentCategory,
+  categoryHeaders,
 } from "~/lib/db";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import { SidebarClose, SidebarOpen } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { componentImage } from "~/lib/utils";
 import Link from "next/link";
+import { getMotherboard } from "~/lib/component_api/motherboard";
+import Spinner from "~/components/ui/spinner-loading";
+import { getCpu } from "~/lib/component_api/cpu";
+import { getGpu } from "~/lib/component_api/gpu";
+import { getMemory } from "~/lib/component_api/memory";
+import { getPsu } from "~/lib/component_api/psu";
+import { getStorage } from "~/lib/component_api/storage";
+import { getCasing } from "~/lib/component_api/casing";
 
 const KategoriPage = ({ params }: { params: { kategori: string } }) => {
   const category = categoriesFromString[params.kategori]!;
-  const itemCount = "...";
   const [hideSidebar, setHideSidebar] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+  const [data, setData] = React.useState<any>();
+
+  // fetch with getMotherboard when starting to load
+
+  useEffect(() => {
+    setLoading(true);
+    const defaultQuery = {
+      query: "",
+      min_price: 0,
+      max_price: 0,
+    };
+    switch (category) {
+      case ComponentCategory.Motherboard:
+        getMotherboard({}, defaultQuery).then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+        break;
+      case ComponentCategory.CPU:
+        getCpu({}, defaultQuery).then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+        break;
+      case ComponentCategory.GPU:
+        getGpu({}, defaultQuery).then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+        break;
+      case ComponentCategory.Memory:
+        getMemory({}, defaultQuery).then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+        break;
+      case ComponentCategory.PSU:
+        getPsu({}, defaultQuery).then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+        break;
+      case ComponentCategory.Storage:
+        getStorage({}, defaultQuery).then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+        break;
+      case ComponentCategory.Casing:
+        getCasing({}, defaultQuery).then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+        break;
+      default:
+        break;
+    }
+  }, []);
 
   const desktopSidebarButton = (
     <Button
@@ -69,22 +136,31 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
           >
             <div className="flex flex-col tablet:flex-row">
               {desktopSidebarButton}
-              <Header category={category} itemCount={itemCount} />
+              <Header
+                category={category}
+                itemCount={data?.count ?? <Spinner />}
+              />
             </div>
-            <div>
-              {/* <MobileTable
+            {loading ? (
+              <div className="flex h-96 items-center justify-center">
+                <Spinner />
+              </div>
+            ) : (
+              <div>
+                {/* <MobileTable
                 key={`${url.search}`}
                 data={data.filteredData}
                 headers={categoryHeaders[kategori]}
                 kategori={kategori}
               /> */}
-              {/* <DesktopTable
-                key={`${url.search}`}
-                data={data.filteredData}
-                headers={categoryHeaders[kategori]}
-                kategori={kategori}
-              /> */}
-            </div>
+                <DesktopTable
+                  // key={`${url.search}`}
+                  data={data.filteredData}
+                  headers={categoryHeaders[category]}
+                  kategori={params.kategori}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -102,47 +178,34 @@ const ComponentFallback = ({
   onClick,
 }: {
   headers: string[];
-  kategori: string;
+  kategori: ComponentCategory;
   component: any;
   isMobile: boolean;
   onClick?: () => void;
 }) => {
   let keys: any[] = [];
   switch (kategori) {
-    // case "headphone":
-    // case "keyboard":
-    // case "mouse":
-    // case "speaker":
-    // case "webcam":
-    // case "printer":
-    // case "monitor":
-    // case "os":
-    // case "soundcard":
-    // case "wirednetwork":
-    // case "wirelessnetwork":
-    // case "casefan":
-    // case "externaldrive":
-    case "motherboard":
+    case ComponentCategory.Motherboard:
       keys = motherboardKeys;
       break;
-    case "cpu":
+    case ComponentCategory.CPU:
       keys = cpuKeys;
       break;
-    case "gpu":
+    case ComponentCategory.GPU:
       keys = gpuKeys;
       break;
-    case "memory":
+    case ComponentCategory.Memory:
       keys = memoryKeys;
       break;
     // case "cooler":
-    case "psu":
+    case ComponentCategory.PSU:
       keys = psuKeys;
       break;
     // case "cable":
-    case "storage":
+    case ComponentCategory.Storage:
       keys = storageKeys;
       break;
-    case "casing":
+    case ComponentCategory.Casing:
       keys = casingKeys;
       break;
     default:
@@ -183,7 +246,7 @@ const Header = ({
     <span className="text-5xl font-semibold">
       Pilih {categoryTitlesFromEnum[category]}
     </span>
-    <span className="text-lg font-semibold">
+    <span className="flex items-center gap-2 text-lg font-semibold">
       Tersedia {itemCount} produk siap kamu pilih
     </span>
   </div>
@@ -204,7 +267,7 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
   return (
     <table className="hidden tablet:table">
       <thead
-        className={`sticky z-10 text-xs backdrop-blur 
+        className={`sticky z-[1] text-xs backdrop-blur 
           ${isIframe ? "top-0" : "top-navbar-min-h"}
         `}
       >
@@ -277,7 +340,7 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
 
                 <ComponentFallback
                   headers={headers}
-                  kategori={kategori}
+                  kategori={categoriesFromString[kategori]!}
                   component={component}
                   isMobile={false}
                   onClick={handleRedirect}
@@ -287,7 +350,11 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
                   {component.lowest_price?.toLocaleString("id-ID") ?? "-"}
                 </td>
                 <td className="cursor-default">
-                  <Button variant="default" onClick={handleAddComponent}>
+                  <Button
+                    variant="default"
+                    onClick={handleAddComponent}
+                    className="text-foreground"
+                  >
                     Tambah
                   </Button>
                 </td>
