@@ -26,7 +26,7 @@ export enum ComponentCategory {
   CaseFan,
 }
 
-export const categoriesFromString: { [key: string]: ComponentCategory } = {
+export const categoriesFromString: Record<string, ComponentCategory> = {
   headphone: ComponentCategory.Headphone,
   keyboard: ComponentCategory.Keyboard,
   mouse: ComponentCategory.Mouse,
@@ -51,7 +51,7 @@ export const categoriesFromString: { [key: string]: ComponentCategory } = {
   casefan: ComponentCategory.CaseFan,
 };
 
-export const categoriesFromEnum: { [K in ComponentCategory]: string } = {
+export const categoriesFromEnum: Record<ComponentCategory, string> = {
   [ComponentCategory.Headphone]: "headphone",
   [ComponentCategory.Keyboard]: "keyboard",
   [ComponentCategory.Mouse]: "mouse",
@@ -76,7 +76,7 @@ export const categoriesFromEnum: { [K in ComponentCategory]: string } = {
   [ComponentCategory.CaseFan]: "casefan",
 };
 
-export const categoryTitlesFromEnum: { [K in ComponentCategory]: string } = {
+export const categoryTitlesFromEnum: Record<ComponentCategory, string> = {
   [ComponentCategory.Headphone]: "Headphone",
   [ComponentCategory.Keyboard]: "Keyboard",
   [ComponentCategory.Mouse]: "Mouse",
