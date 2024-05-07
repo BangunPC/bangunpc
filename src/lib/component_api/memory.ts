@@ -19,19 +19,19 @@ export const getMemory = async (
     .select("*", { count: "exact" });
 
   if (min_price) {
-    client_query.gte("lowest_price", min_price);
+    await client_query.gte("lowest_price", min_price);
   }
   if (max_price) {
-    client_query.lte("lowest_price", max_price);
+    await client_query.lte("lowest_price", max_price);
   }
   if (query) {
-    client_query.textSearch("product_name", `'${query}'`, {
+    await client_query.textSearch("product_name", `'${query}'`, {
       type: "websearch",
       config: "english",
     });
   }
 
-  client_query.order("product_name", { ascending: true });
+  await client_query.order("product_name", { ascending: true });
 
   // filter end
 
@@ -62,7 +62,8 @@ export const getMemory = async (
     filteredData = filteredData.filter((item) => {
       return (
         item.memory_type === motherboardData.memory_type &&
-        item.frequency_mhz! <= motherboardData?.memory_frequency_mhz!
+        (item.frequency_mhz ?? -1) <=
+          (motherboardData?.memory_frequency_mhz ?? 0)
       );
     });
 

@@ -41,74 +41,74 @@ export const getCpu = async (
     .select("*", { count: "exact" });
 
   if (min_price) {
-    client_query.gte("lowest_price", min_price);
+    await client_query.gte("lowest_price", min_price);
   }
   if (max_price) {
-    client_query.lte("lowest_price", max_price);
+    await client_query.lte("lowest_price", max_price);
   }
 
   if (base_clock_ghz) {
-    client_query.eq("base_clock_ghz", base_clock_ghz);
+    await client_query.eq("base_clock_ghz", base_clock_ghz);
   }
   if (base_power_watt) {
-    client_query.eq("base_power_watt", base_power_watt);
+    await client_query.eq("base_power_watt", base_power_watt);
   }
   if (brand_name) {
-    client_query.eq("brand_name", brand_name);
+    await client_query.eq("brand_name", brand_name);
   }
   if (code_name) {
-    client_query.eq("code_name", code_name);
+    await client_query.eq("code_name", code_name);
   }
   if (cpu_family_id) {
-    client_query.eq("cpu_family_id", cpu_family_id);
+    await client_query.eq("cpu_family_id", cpu_family_id);
   }
   if (cpu_socket_id) {
-    client_query.eq("cpu_socket_id", cpu_socket_id);
+    await client_query.eq("cpu_socket_id", cpu_socket_id);
   }
   if (efficiency_core) {
-    client_query.eq("efficiency_core", efficiency_core);
+    await client_query.eq("efficiency_core", efficiency_core);
   }
   if (integrated_gpu_id) {
-    client_query.eq("integrated_gpu_id", integrated_gpu_id);
+    await client_query.eq("integrated_gpu_id", integrated_gpu_id);
   }
   if (max_clock_ghz) {
-    client_query.eq("max_clock_ghz", max_clock_ghz);
+    await client_query.eq("max_clock_ghz", max_clock_ghz);
   }
   if (max_memory_channel) {
-    client_query.eq("max_memory_channel", max_memory_channel);
+    await client_query.eq("max_memory_channel", max_memory_channel);
   }
   if (max_memory_gb) {
-    client_query.eq("max_memory_gb", max_memory_gb);
+    await client_query.eq("max_memory_gb", max_memory_gb);
   }
   if (max_power_watt) {
-    client_query.eq("max_power_watt", max_power_watt);
+    await client_query.eq("max_power_watt", max_power_watt);
   }
   if (model_line) {
-    client_query.eq("model_line", model_line);
+    await client_query.eq("model_line", model_line);
   }
   if (performance_core) {
-    client_query.eq("performance_core", performance_core);
+    await client_query.eq("performance_core", performance_core);
   }
   if (product_id) {
-    client_query.eq("product_id", product_id);
+    await client_query.eq("product_id", product_id);
   }
   if (product_name) {
-    client_query.eq("product_name", product_name);
+    await client_query.eq("product_name", product_name);
   }
   if (total_core) {
-    client_query.eq("total_core", total_core);
+    await client_query.eq("total_core", total_core);
   }
   if (total_thread) {
-    client_query.eq("total_thread", total_thread);
+    await client_query.eq("total_thread", total_thread);
   }
   if (query) {
-    client_query.textSearch("product_name", `'${query}'`, {
+    await client_query.textSearch("product_name", `'${query}'`, {
       type: "websearch",
       config: "english",
     });
   }
 
-  client_query.order("product_name", { ascending: true });
+  await client_query.order("product_name", { ascending: true });
 
   // filter end
 
@@ -123,7 +123,7 @@ export const getCpu = async (
   // compatibility start
 
   if (motherboardId) {
-    let { data: motherboardData, error } = await client
+    const { data: motherboardData, error } = await client
       .schema("product")
       .from("v_motherboards")
       .select()
@@ -150,7 +150,7 @@ export const getCpu = async (
         memories.map((memory) => memory.id),
       );
 
-    if (!memoryData || error || memoryData.length === 0) {
+    if (!memoryData || error !== null || memoryData.length === 0) {
       return { filteredData, count: filteredData.length };
     }
 
@@ -161,7 +161,7 @@ export const getCpu = async (
     } else {
       filteredData = filteredData.filter((cpu) => {
         const totalMemory = memoryData.reduce((total, memory) => {
-          let inputMemory = memories.find(
+          const inputMemory = memories.find(
             (inputMemory) => inputMemory.id === memory.product_id,
           ) ?? { amount: 0 };
           return total + (memory.amount ?? 0) * inputMemory.amount;

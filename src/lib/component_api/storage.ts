@@ -19,19 +19,19 @@ export const getStorage = async (
     .select("*", { count: "exact" });
 
   if (min_price) {
-    client_query.gte("lowest_price", min_price);
+    await client_query.gte("lowest_price", min_price);
   }
   if (max_price) {
-    client_query.lte("lowest_price", max_price);
+    await client_query.lte("lowest_price", max_price);
   }
   if (query) {
-    client_query.textSearch("product_name", `'${query}'`, {
+    await client_query.textSearch("product_name", `'${query}'`, {
       type: "websearch",
       config: "english",
     });
   }
 
-  client_query.order("product_name", { ascending: true });
+  await client_query.order("product_name", { ascending: true });
 
   // filter end
 
@@ -70,7 +70,7 @@ export const getStorage = async (
 
     if (storages && storages.length > 0) {
       console.log(
-        `Filtering storage by storages: ${storages.map((storage) => storage.id)}`,
+        `Filtering storage by storages: ${storages.map((storage) => storage.id).join(", ")}`,
       );
       const { data: storageData, error } = await client
         .schema("product")

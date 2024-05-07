@@ -34,6 +34,7 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
   const [hideSidebar, setHideSidebar] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState<any>();
+  const [error, setError] = React.useState<any>();
 
   // fetch with getMotherboard when starting to load
 
@@ -46,46 +47,88 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
     };
     switch (category) {
       case ComponentCategory.Motherboard:
-        getMotherboard({}, defaultQuery).then((res) => {
-          setData(res);
-          setLoading(false);
-        });
+        getMotherboard({}, defaultQuery)
+          .then((res) => {
+            setData(res);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            setError(err);
+          });
         break;
       case ComponentCategory.CPU:
-        getCpu({}, defaultQuery).then((res) => {
-          setData(res);
-          setLoading(false);
-        });
+        getCpu({}, defaultQuery)
+          .then((res) => {
+            setData(res);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            setError(err);
+          });
         break;
       case ComponentCategory.GPU:
-        getGpu({}, defaultQuery).then((res) => {
-          setData(res);
-          setLoading(false);
-        });
+        getGpu({}, defaultQuery)
+          .then((res) => {
+            setData(res);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            setError(err);
+          });
         break;
       case ComponentCategory.Memory:
-        getMemory({}, defaultQuery).then((res) => {
-          setData(res);
-          setLoading(false);
-        });
+        getMemory({}, defaultQuery)
+          .then((res) => {
+            setData(res);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            setError(err);
+          });
         break;
       case ComponentCategory.PSU:
-        getPsu({}, defaultQuery).then((res) => {
-          setData(res);
-          setLoading(false);
-        });
+        getPsu({}, defaultQuery)
+          .then((res) => {
+            setData(res);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            setError(err);
+          });
         break;
       case ComponentCategory.Storage:
-        getStorage({}, defaultQuery).then((res) => {
-          setData(res);
-          setLoading(false);
-        });
+        getStorage({}, defaultQuery)
+          .then((res) => {
+            setData(res);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            setError(err);
+          });
         break;
       case ComponentCategory.Casing:
-        getCasing({}, defaultQuery).then((res) => {
-          setData(res);
-          setLoading(false);
-        });
+        getCasing({}, defaultQuery)
+          .then((res) => {
+            setData(res);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            setError(err);
+          });
         break;
       default:
         break;
@@ -144,6 +187,10 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
             {loading ? (
               <div className="flex h-96 items-center justify-center">
                 <Spinner />
+              </div>
+            ) : error ? (
+              <div className="flex h-96 items-center justify-center">
+                <span>{error}</span>
               </div>
             ) : (
               <div>
@@ -261,7 +308,7 @@ type TableType = {
 const DesktopTable = ({ data, headers, kategori }: TableType) => {
   const header = ["", "Product Name", ...headers, "Price (Rp)", "Action"];
 
-  const nav = useRouter().push;
+  const router = useRouter();
 
   const isIframe = useSearchParams().get("isIframe") === "true";
   return (
@@ -305,7 +352,7 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
           };
 
           const handleRedirect = () =>
-            nav(
+            router.push(
               `/detail/${kategori}/${component.slug}/${component.product_id}${
                 isIframe ? "?iframe=true" : ""
               }`,
