@@ -41,7 +41,7 @@ const Component = ({
     <div className="m-auto flex max-w-3xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
       <div className="flex flex-col gap-2 tablet:flex-row tablet:gap-8">
         <div className="pb-0 tablet:max-w-sm tablet:pb-6">
-          <div className="mx-auto aspect-square max-w-sm items-center overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40">
+          <div className="mx-auto aspect-square max-w-sm items-center overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40 dark:border-[#3d434e]">
             <div
               className="flex h-full w-full items-center justify-center"
               onMouseMove={(event: React.MouseEvent<HTMLDivElement>) => {
@@ -96,7 +96,7 @@ const Component = ({
                 key={url}
                 src={url}
                 alt={`Gambar ${name}`}
-                className="aspect-square rounded-md border border-[#1C1F24] border-opacity-40 object-scale-down hover:cursor-pointer hover:bg-zinc-200"
+                className="aspect-square rounded-md border border-[#1C1F24] border-opacity-40 object-scale-down hover:cursor-pointer hover:bg-zinc-200 dark:border-[#3d434e] dark:hover:bg-zinc-800"
                 width={240}
                 height={240}
               ></img>
@@ -132,7 +132,7 @@ const Component = ({
             <div className="flex flex-row gap-2">
               <Button
                 variant="default"
-                className="flex justify-center rounded-lg bg-green-600 px-2 py-2 text-sm font-normal tablet:block tablet:w-fit"
+                className="flex justify-center rounded-lg bg-green-600 px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
                 // onClick={() => router.replace("#compare", { scroll: true })}
                 // onClick={() => router.replace("#compare", { scroll: true })}
               >
@@ -140,7 +140,7 @@ const Component = ({
               </Button>
               <Button
                 variant="default"
-                className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal tablet:block tablet:w-fit"
+                className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
                 onClick={() => alert("Coming soon")}
               >
                 + Tambahkan ke Simulasi Rakit PC
@@ -328,7 +328,7 @@ const Component = ({
         <AccordionItem value="spec-details">
           <AccordionTrigger className="flex w-full justify-start text-3xl font-semibold">
             Spesifikasi
-            {spec_url && (
+            {spec_url ? (
               <a
                 href={spec_url}
                 target="_blank"
@@ -340,6 +340,8 @@ const Component = ({
                   Buka Spesifikasi Resmi
                 </Button>
               </a>
+            ) : (
+              <span className="mr-auto" />
             )}
           </AccordionTrigger>
           <AccordionContent>
@@ -360,7 +362,9 @@ const Component = ({
                       {info.title}
                     </td>
                     <td className="w-full p-4 font-semibold">
-                      {info.value ?? "-"}
+                      {info.value && typeof info.value === "object"
+                        ? JSON.stringify(info.value)
+                        : info.value ?? "-"}
                     </td>
                   </tr>
                 ))}

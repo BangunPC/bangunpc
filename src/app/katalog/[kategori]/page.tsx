@@ -396,7 +396,7 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
                   <Button
                     variant="default"
                     onClick={handleAddComponent}
-                    className="text-foreground"
+                    className="text-white"
                   >
                     Tambah
                   </Button>

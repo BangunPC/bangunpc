@@ -96,8 +96,8 @@ export const categoryTitlesFromEnum: Record<ComponentCategory, string> = {
   [ComponentCategory.Cooler]: "CPU Cooler",
   [ComponentCategory.PSU]: "Power Supply",
   [ComponentCategory.Storage]: "Internal Storage",
-  [ComponentCategory.Casing]: "Internal Storage",
-  [ComponentCategory.CaseFan]: "PC Casing",
+  [ComponentCategory.Casing]: "PC Casing",
+  [ComponentCategory.CaseFan]: "Case Fan",
 };
 
 type ViewKeys = keyof Database["product"]["Views"];
