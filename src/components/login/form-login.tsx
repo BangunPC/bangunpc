@@ -9,6 +9,7 @@ import Spinner from "../ui/spinner-loading";
 const FormLogin = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     try {

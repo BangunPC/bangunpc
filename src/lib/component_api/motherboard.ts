@@ -35,7 +35,7 @@ export const getMotherboard = async (
 
   // filter end
 
-  const { data: motherboardData, error, count } = await client_query;
+  const { data: motherboardData, error } = await client_query;
 
   if (!motherboardData) {
     throw new Error("Motherboard data is null");
@@ -46,7 +46,7 @@ export const getMotherboard = async (
   // compatibility start
 
   if (casingId) {
-    const { data: casingData, error } = await client
+    const { data: casingData } = await client
       .schema("product")
       .from("v_casings")
       .select("mobo_supports")
@@ -64,7 +64,7 @@ export const getMotherboard = async (
   }
 
   if (cpuId) {
-    const { data: cpuData, error } = await client
+    const { data: cpuData } = await client
       .schema("product")
       .from("v_cpus")
       .select("cpu_socket_id")
@@ -77,7 +77,7 @@ export const getMotherboard = async (
   }
 
   if (memories && memories.length > 0) {
-    const { data: memoryData, error } = await client
+    const { data: memoryData } = await client
       .schema("product")
       .from("v_memories")
       .select("product_id, memory_type, capacity_gb, frequency_mhz")

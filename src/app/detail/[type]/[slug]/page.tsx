@@ -1,8 +1,4 @@
-
-import {
-  categoriesFromString,
-  categoryViewsFromEnum,
-} from "~/lib/db";
+import { categoriesFromString, categoryViewsFromEnum } from "~/lib/db";
 import { v_spec } from "~/lib/katalog_types";
 import { createClient } from "~/lib/supabase/server";
 import { productImage } from "~/lib/utils";
@@ -10,8 +6,8 @@ import Component from "./client";
 import { redirect } from "next/navigation";
 
 async function getDetails(params: any) {
-  const type = params["type"]!;
-  const slug_param = params["slug"]!;
+  const type = params.type;
+  const slug_param = params.slug;
   const slug_split = slug_param.split("-");
   const id = slug_split[slug_split.length - 1]!;
   const slug = slug_param.replace(`-${id}`, "");
@@ -35,18 +31,18 @@ async function getDetails(params: any) {
   ]).then(([dataResult, productDetailsResult]) => {
     const data = dataResult.data;
     if (!data) {
-        redirect("/404")
+      redirect("/404");
     }
     const product_details = productDetailsResult.data;
     return {
       data,
       product_details,
-      // @ts-ignore
-      review_urls: data["review_urls"] ?? [],
-      // @ts-ignore
-      spec_url: data["spec_url"],
-      // @ts-ignore
-      name: data["product_name"],
+      // @ts-expect-error
+      review_urls: data.review_urls ?? [],
+      // @ts-expect-error
+      spec_url: data.spec_url,
+      // @ts-expect-error
+      name: data.product_name,
     };
   });
   return { ...future };
@@ -54,28 +50,26 @@ async function getDetails(params: any) {
 
 export default async function Page({
   params,
-  searchParams,
 }: {
   params: { slug: string; type: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
   //   const router = useRouter();
   const component = await getDetails(params);
 
-  //@ts-ignore
   const { data, product_details, review_urls, spec_url, name } = component;
 
-  // @ts-ignore
+  // @ts-expect-error
   const imageUrls = data.image_filenames.map((image: string) =>
     productImage(data!.product_id!, image),
   );
 
-  const type = params["type"];
+  const type = params.type;
   const category = categoriesFromString[type]!;
 
   const componentInfo = v_spec[type!]?.flatMap((v) => ({
     title: v[1],
-    // @ts-ignore
+    // @ts-expect-error
     value: data[v[0]],
   }));
 
@@ -83,7 +77,6 @@ export default async function Page({
   if ((product_details?.length ?? -1) > 0)
     lowest_price =
       product_details
-        // @ts-ignore
         ?.reduce((a, b) => ((a.price ?? 0) < (b.price ?? 0) ? a : b))
         .price?.toLocaleString("id-ID") ?? undefined;
 
@@ -114,7 +107,7 @@ export default async function Page({
 
 //   const category = categoriesFromString[type]!;
 
-//   // @ts-ignore
+//   // @ts-expect-error
 //   const name = data?.["product_name"];
 
 //   return (

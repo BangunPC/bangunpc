@@ -35,7 +35,7 @@ export const getMemory = async (
 
   // filter end
 
-  const { data: memoryData, error, count } = await client_query;
+  const { data: memoryData, error } = await client_query;
 
   if (!memoryData) {
     throw new Error("Memory data is null");

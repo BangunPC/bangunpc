@@ -111,7 +111,7 @@ export const v_internal_storages = [
   ["write_speed_mbs", "Write Speed (MB/s)"],
 ];
 
-export const v_spec: { [key: string]: string[][] | undefined } = {
+export const v_spec: Record<string, string[][] | undefined> = {
   headphone: undefined,
   keyboard: undefined,
   mouse: undefined,

@@ -36,7 +36,7 @@ export const getCasing = async (
 
   // filter end
 
-  const { data: memoryData, error, count } = await client_query;
+  const { data: memoryData, error } = await client_query;
 
   if (!memoryData) {
     console.log("ERROR! DATA NULL");

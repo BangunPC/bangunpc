@@ -112,7 +112,7 @@ export const getCpu = async (
 
   // filter end
 
-  const { data: cpuData, error, count } = await client_query;
+  const { data: cpuData, error } = await client_query;
 
   if (!cpuData) {
     throw new Error("CPU data is null");
@@ -123,7 +123,7 @@ export const getCpu = async (
   // compatibility start
 
   if (motherboardId) {
-    const { data: motherboardData, error } = await client
+    const { data: motherboardData } = await client
       .schema("product")
       .from("v_motherboards")
       .select()
@@ -159,7 +159,7 @@ export const getCpu = async (
       console.log("Memory type mismatch");
       filteredData = [];
     } else {
-      filteredData = filteredData.filter((cpu) => {
+      filteredData = filteredData.filter(() => {
         const totalMemory = memoryData.reduce((total, memory) => {
           const inputMemory = memories.find(
             (inputMemory) => inputMemory.id === memory.product_id,

@@ -35,7 +35,7 @@ export const getStorage = async (
 
   // filter end
 
-  const { data: psuData, error, count } = await client_query;
+  const { data: psuData, error } = await client_query;
 
   if (!psuData) {
     throw new Error("Internal Storage data is null");

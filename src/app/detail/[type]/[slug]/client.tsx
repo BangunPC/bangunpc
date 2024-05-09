@@ -158,8 +158,8 @@ const Component = ({
               <Button
                 variant="ghost"
                 className="flex items-center gap-2 font-semibold"
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
+                onClick={async () => {
+                  await navigator.clipboard.writeText(window.location.href);
                   alert("Link copied to clipboard");
                 }}
               >
@@ -173,7 +173,7 @@ const Component = ({
                   Tentang Produk
                 </AccordionTrigger>
                 <AccordionContent className="mt-4 gap-2 leading-[120%]">
-                  {/* @ts-ignore */}
+                  {/* @ts-expect-error */}
                   {data.description.split("\n").map((line, index) => (
                     <React.Fragment key={index}>
                       {line}
@@ -195,7 +195,6 @@ const Component = ({
             </div>
           </AccordionTrigger>
           <AccordionContent className="mt-4 gap-2 leading-[120%]">
-            {/* @ts-ignore */}
             {(product_details?.length ?? 0) == 0 ? (
               <span className="text-lg font-semibold">
                 Belum ada link produk
@@ -327,7 +326,7 @@ const Component = ({
 
       <Accordion type="single" collapsible>
         <AccordionItem value="spec-details">
-          <AccordionTrigger className="flex justify-start w-full text-3xl font-semibold">
+          <AccordionTrigger className="flex w-full justify-start text-3xl font-semibold">
             Spesifikasi
             {spec_url && (
               <a

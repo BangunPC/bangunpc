@@ -16,8 +16,6 @@ import { NavbarIcon } from "./icon/navbar-icon";
 import FormLogin from "~/components/login/form-login";
 import { ModeToggle } from "./mode-toggle";
 import { cn, createQueryString, removeQueryString } from "~/lib/utils";
-import { ChevronDown } from "lucide-react";
-import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,6 +33,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
+import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
 
 export function Navbar() {
   const router = useRouter();

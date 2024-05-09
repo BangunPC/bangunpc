@@ -35,7 +35,7 @@ export const getGpu = async (
 
   // filter end
 
-  const { data: gpuData, error, count } = await client_query;
+  const { data: gpuData, error } = await client_query;
 
   if (!gpuData) {
     throw new Error("GPU data is null");
@@ -46,7 +46,7 @@ export const getGpu = async (
   // compatibility start
 
   if (casingId) {
-    const { data: casingData, error } = await client
+    const { data: casingData } = await client
       .schema("product")
       .from("v_casings")
       .select("max_gpu_length_mm")
@@ -64,7 +64,7 @@ export const getGpu = async (
   }
 
   if (psuId) {
-    const { data: psuData, error } = await client
+    const { data: psuData } = await client
       .schema("product")
       .from("v_power_supplies")
       .select("wattage")

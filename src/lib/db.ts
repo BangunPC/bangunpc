@@ -1,8 +1,5 @@
 import { Database } from "./schema";
 
-const supabaseUrl = "https://onawoodgnwkncueeyusr.supabase.co";
-const storageImageurl = "/storage/v1/object/public/public-images/products/";
-
 export enum ComponentCategory {
   Headphone,
   Keyboard,

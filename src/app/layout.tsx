@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Navbar } from "~/components/ui/navbar";
 import Footer from "~/components/ui/footer";
+import React from "react";
 
 const inter = Inter({
   subsets: ["latin"],
