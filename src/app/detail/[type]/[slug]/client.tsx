@@ -1,0 +1,398 @@
+"use client";
+
+import { Heart, MapPin, Send } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~/components/ui/accordion";
+import { Button } from "~/components/ui/button";
+import { categoryTitlesFromEnum, ComponentCategory } from "~/lib/db";
+
+// TODO: fix colors
+
+const Component = ({
+  name,
+  data,
+  product_details,
+  imageUrls,
+  componentInfo,
+  lowest_price,
+  type,
+  category,
+  spec_url,
+  review_urls,
+}: {
+  name: string;
+  data: any;
+  product_details: any;
+  imageUrls: string[];
+  componentInfo: any[];
+  lowest_price: string | undefined;
+  type: string;
+  category: ComponentCategory;
+  spec_url: string | undefined;
+  review_urls: string[] | undefined;
+}) => {
+  return (
+    <div className="m-auto flex max-w-3xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
+      <div className="flex flex-col gap-2 tablet:flex-row tablet:gap-8">
+        <div className="pb-0 tablet:max-w-sm tablet:pb-6">
+          <div className="mx-auto aspect-square max-w-sm items-center overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40">
+            <div
+              className="flex h-full w-full items-center justify-center"
+              onMouseMove={(event: React.MouseEvent<HTMLDivElement>) => {
+                // zoom the image at mouse position
+                const rect = event.currentTarget.getBoundingClientRect();
+                const translate = {
+                  x: event.clientX - rect.x - rect.width / 2,
+                  y: event.clientY - rect.y - rect.height / 2,
+                };
+                const child = event.currentTarget
+                  .firstChild as HTMLImageElement;
+                child.style.transform = `translate(${-translate.x}px, ${-translate.y}px) scale(2)`;
+              }}
+              onMouseLeave={(event: React.MouseEvent<HTMLDivElement>) => {
+                const child = event.currentTarget
+                  .firstChild as HTMLImageElement;
+                child.style.transform = ``;
+              }}
+            >
+              {imageUrls[0] && (
+                <img
+                  id="compimg"
+                  src={imageUrls[0]}
+                  alt={`Gambar ${name}`}
+                  className="object-fill"
+                  width={360}
+                  height={360}
+                ></img>
+              )}
+            </div>
+          </div>
+
+          <div className="my-4 grid auto-rows-fr grid-cols-4 justify-center gap-1 tablet:grid-cols-5">
+            {imageUrls.map((url: string | undefined) => (
+              <img
+                // onMouseEnter={() => {
+                //   const compimg = document.getElementById(
+                //     'compimg'
+                //   ) as HTMLImageElement | null;
+                //   if (compimg && url) {
+                //     compimg.src = url;
+                //   }
+                // }}
+                onClick={() => {
+                  const compimg = document.getElementById(
+                    "compimg",
+                  ) as HTMLImageElement | null;
+                  if (compimg && url) {
+                    compimg.src = url;
+                  }
+                }}
+                key={url}
+                src={url}
+                alt={`Gambar ${name}`}
+                className="aspect-square rounded-md border border-[#1C1F24] border-opacity-40 object-scale-down hover:cursor-pointer hover:bg-zinc-200"
+                width={240}
+                height={240}
+              ></img>
+            ))}
+          </div>
+        </div>
+        <div className="m-auto flex w-full flex-col gap-2 pt-0 tablet:m-0 tablet:max-w-4xl tablet:pt-6">
+          <header>
+            <h1 className="text-4xl tablet:font-bold">{name}</h1>
+          </header>
+          <main className="flex flex-col gap-2">
+            {/* <div className="flex items-center gap-2">
+              <Shop className="fill-none stroke-black" width="24" height="24" />
+              <span className="text-lg">
+                {product_details!.length} penjual dari Tokopedia, Shopee &
+                lainnya
+              </span>
+            </div> */}
+            {lowest_price && (
+              <span className="">
+                <span className="text-4xl font-bold text-primary">
+                  Rp {lowest_price}
+                </span>
+                <span> (Harga Termurah)</span>
+              </span>
+            )}
+            <span>
+              Kategori:{" "}
+              <Link className="text-primary" href={"/katalog/" + type}>
+                {categoryTitlesFromEnum[category]}
+              </Link>
+            </span>
+            <div className="flex flex-row gap-2">
+              <Button
+                variant="default"
+                className="flex justify-center rounded-lg bg-green-600 px-2 py-2 text-sm font-normal tablet:block tablet:w-fit"
+                // onClick={() => router.replace("#compare", { scroll: true })}
+                // onClick={() => router.replace("#compare", { scroll: true })}
+              >
+                Beli Sekarang
+              </Button>
+              <Button
+                variant="default"
+                className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal tablet:block tablet:w-fit"
+                onClick={() => alert("Coming soon")}
+              >
+                + Tambahkan ke Simulasi Rakit PC
+              </Button>
+            </div>
+            <div className="flex flex-row gap-6">
+              <Button
+                variant="ghost"
+                className="flex items-center gap-2 font-semibold"
+                onClick={() => alert("Coming Soon")}
+              >
+                <Heart className="fill-none " width="24" height="24" />
+                <span className="text-lg">Tambah ke wishlist</span>
+              </Button>
+              <Button
+                variant="ghost"
+                className="flex items-center gap-2 font-semibold"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("Link copied to clipboard");
+                }}
+              >
+                <Send className="fill-none" width="24" height="24" />
+                <span className="text-lg">Bagikan</span>
+              </Button>
+            </div>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="product-details">
+                <AccordionTrigger className="w-full text-3xl font-semibold">
+                  Tentang Produk
+                </AccordionTrigger>
+                <AccordionContent className="mt-4 gap-2 leading-[120%]">
+                  {/* @ts-ignore */}
+                  {data.description.split("\n").map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </main>
+        </div>
+      </div>
+
+      <Accordion type="single" collapsible>
+        <AccordionItem value="product-details">
+          <AccordionTrigger>
+            <div id="compare" className="text-3xl font-semibold">
+              Bandingkan Produk
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="mt-4 gap-2 leading-[120%]">
+            {/* @ts-ignore */}
+            {(product_details?.length ?? 0) == 0 ? (
+              <span className="text-lg font-semibold">
+                Belum ada link produk
+              </span>
+            ) : (
+              <>
+                <div className="flex w-full flex-col gap-2 tablet:hidden">
+                  {product_details?.map((detail: any) => (
+                    <div
+                      key={"marketplacemobile-" + detail.id}
+                      className="
+                      flex
+                      flex-col
+                      gap-2
+                      rounded-xl
+                      border
+                      bg-slate-200 p-2
+                      text-black
+                      shadow-lg
+                      transition-all
+                      dark:bg-slate-800
+                      "
+                    >
+                      {/* {detail.marketplace_name === "Tokopedia" && (
+                        <TokopediaSvg className="h-8 w-fit" />
+                      )}
+                      {detail.marketplace_name === "Shopee" && (
+                        <ShopeeSvg className="h-8 w-fit" />
+                      )}
+                      {detail.marketplace_name === "Blibli" && (
+                        <BlibliSvg className="h-8 w-fit" />
+                      )} */}
+                      <span className="text-xl font-semibold">
+                        Rp{detail.price.toLocaleString("id-ID")}
+                      </span>
+                      <div className="flex flex-row gap-1">
+                        <MapPin />
+                        {detail.seller_city}
+                      </div>
+                      <Link href={detail.url} passHref>
+                        <Button className="bg-green-600 text-center">
+                          Beli Sekarang
+                        </Button>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+                <table className="hidden w-full tablet:table">
+                  <thead className="font-bold text-white drop-shadow-sm">
+                    <tr>
+                      <td className="rounded-s-lg bg-primary p-2 pl-8">
+                        Merchant
+                      </td>
+                      <td className="bg-primary p-2">Nama Toko</td>
+                      <td className="bg-primary p-2">Lokasi Toko</td>
+                      <td className="bg-primary p-2">Harga</td>
+                      <td className="bg-primary p-2">Stok</td>
+                      <td className="bg-primary p-2">Details</td>
+                      <td className="rounded-e-lg bg-primary p-2 pr-8"></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="h-4" />
+                    {product_details?.map((detail: any) => (
+                      // [detail.id,
+                      // detail.marketplace_id,
+                      // detail.price,
+                      // detail.product_detail_description_id,
+                      // detail.product_id,
+                      // detail.seller_city,
+                      // detail.stock,
+                      // detail.url].map((detail: any) => (
+                      //   <div>
+                      //     <div className="text-lg font-semibold">{detail}</div>
+                      //   </div>
+                      // ))
+                      <>
+                        <tr
+                          key={"marketplate-" + detail.id}
+                          className="drop-shadow-sm"
+                        >
+                          <td className="rounded-s-lg bg-slate-200 p-2 pl-8 dark:bg-slate-800">
+                            {/* {detail.marketplace_name === "Tokopedia" && (
+                              <TokopediaSvg className="h-8 w-fit" />
+                            )}
+                            {detail.marketplace_name === "Shopee" && (
+                              <ShopeeSvg className="h-8 w-fit" />
+                            )}
+                            {detail.marketplace_name === "Blibli" && (
+                              <BlibliSvg className="h-8 w-fit" />
+                            )} */}
+                          </td>
+                          <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                            {detail.seller_name}
+                          </td>
+                          <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                            {detail.seller_city}
+                          </td>
+                          <td className="bg-slate-200 p-2 font-semibold dark:bg-slate-800">
+                            Rp {detail.price.toLocaleString("id-ID")}
+                          </td>
+                          <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                            {detail.stock}
+                          </td>
+                          <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                            {detail.product_detail_description ?? "-"}
+                          </td>
+                          <td className="flex justify-end rounded-e-lg bg-slate-200 p-2 pr-8 dark:bg-slate-800">
+                            <Link href={detail.url} passHref>
+                              <Button className="bg-green-600 text-center">
+                                Beli
+                              </Button>
+                            </Link>
+                          </td>
+                        </tr>
+                        <tr
+                          key={"marketplategap-" + detail.id}
+                          className="h-1"
+                        />
+                      </>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      <Accordion type="single" collapsible>
+        <AccordionItem value="spec-details">
+          <AccordionTrigger className="flex justify-start w-full text-3xl font-semibold">
+            Spesifikasi
+            {spec_url && (
+              <a
+                href={spec_url}
+                target="_blank"
+                rel="noreferrer"
+                className="ml-2 mr-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Button variant="outline" className=" text-sm">
+                  Buka Spesifikasi Resmi
+                </Button>
+              </a>
+            )}
+          </AccordionTrigger>
+          <AccordionContent>
+            <table className="flex flex-col gap-2 rounded-lg border bg-slate-200 drop-shadow-sm dark:bg-slate-800">
+              <thead className="hidden">
+                <tr>
+                  <td />
+                  <td />
+                </tr>
+              </thead>
+              <tbody>
+                {componentInfo?.map((info: any, index) => (
+                  <tr
+                    key={"componentinfo-" + index}
+                    className="border-b last:border-none"
+                  >
+                    <td className="whitespace-nowrap border-r p-4">
+                      {info.title}
+                    </td>
+                    <td className="w-full p-4 font-semibold">
+                      {info.value ?? "-"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+      {(review_urls?.length ?? -1) > 0 && (
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-3xl font-semibold">
+              Video Review
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-1 tablet:grid tablet:grid-cols-3">
+              {review_urls?.map((url: any) => (
+                <iframe
+                  key={url}
+                  src={`https://www.youtube.com/embed${new URL(url).pathname}`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  className="mb-1 aspect-video w-full rounded-xl"
+                  allowFullScreen
+                ></iframe>
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      )}
+    </div>
+  );
+};
+
+export default Component;

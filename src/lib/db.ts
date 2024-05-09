@@ -1,3 +1,5 @@
+import { Database } from "./schema";
+
 const supabaseUrl = "https://onawoodgnwkncueeyusr.supabase.co";
 const storageImageurl = "/storage/v1/object/public/public-images/products/";
 
@@ -100,6 +102,34 @@ export const categoryTitlesFromEnum: Record<ComponentCategory, string> = {
   [ComponentCategory.Casing]: "Internal Storage",
   [ComponentCategory.CaseFan]: "PC Casing",
 };
+
+type ViewKeys = keyof Database["product"]["Views"];
+
+export const categoryViewsFromEnum: Record<ComponentCategory, ViewKeys | null> =
+  {
+    [ComponentCategory.Headphone]: null,
+    [ComponentCategory.Keyboard]: null,
+    [ComponentCategory.Mouse]: null,
+    [ComponentCategory.Speaker]: null,
+    [ComponentCategory.Webcam]: null,
+    [ComponentCategory.Printer]: null,
+    [ComponentCategory.Monitor]: null,
+    [ComponentCategory.OS]: null,
+    [ComponentCategory.SoundCard]: null,
+    [ComponentCategory.WiredNetwork]: null,
+    [ComponentCategory.WirelessNetwork]: null,
+    [ComponentCategory.Cable]: null,
+    [ComponentCategory.ExternalDrive]: null,
+    [ComponentCategory.Motherboard]: "v_motherboards",
+    [ComponentCategory.CPU]: "v_cpus",
+    [ComponentCategory.GPU]: "v_gpus",
+    [ComponentCategory.Memory]: "v_memories",
+    [ComponentCategory.Cooler]: null,
+    [ComponentCategory.PSU]: "v_power_supplies",
+    [ComponentCategory.Storage]: "v_internal_storages",
+    [ComponentCategory.Casing]: "v_casings",
+    [ComponentCategory.CaseFan]: null,
+  };
 
 export const casingHeaders = [
   "Brand Name",

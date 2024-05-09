@@ -1,0 +1,129 @@
+
+import {
+  categoriesFromString,
+  categoryViewsFromEnum,
+} from "~/lib/db";
+import { v_spec } from "~/lib/katalog_types";
+import { createClient } from "~/lib/supabase/server";
+import { productImage } from "~/lib/utils";
+import Component from "./client";
+import { redirect } from "next/navigation";
+
+async function getDetails(params: any) {
+  const type = params["type"]!;
+  const slug_param = params["slug"]!;
+  const slug_split = slug_param.split("-");
+  const id = slug_split[slug_split.length - 1]!;
+  const slug = slug_param.replace(`-${id}`, "");
+
+  const category = categoriesFromString[type]!;
+
+  const client = createClient();
+  const future = await Promise.all([
+    client
+      .schema("product")
+      .from(categoryViewsFromEnum[category]!)
+      .select()
+      .eq("slug", slug)
+      .single(),
+
+    client
+      .schema("product")
+      .from("v_product_details")
+      .select()
+      .eq("product_id", id),
+  ]).then(([dataResult, productDetailsResult]) => {
+    const data = dataResult.data;
+    if (!data) {
+        redirect("/404")
+    }
+    const product_details = productDetailsResult.data;
+    return {
+      data,
+      product_details,
+      // @ts-ignore
+      review_urls: data["review_urls"] ?? [],
+      // @ts-ignore
+      spec_url: data["spec_url"],
+      // @ts-ignore
+      name: data["product_name"],
+    };
+  });
+  return { ...future };
+}
+
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { slug: string; type: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  //   const router = useRouter();
+  const component = await getDetails(params);
+
+  //@ts-ignore
+  const { data, product_details, review_urls, spec_url, name } = component;
+
+  // @ts-ignore
+  const imageUrls = data.image_filenames.map((image: string) =>
+    productImage(data!.product_id!, image),
+  );
+
+  const type = params["type"];
+  const category = categoriesFromString[type]!;
+
+  const componentInfo = v_spec[type!]?.flatMap((v) => ({
+    title: v[1],
+    // @ts-ignore
+    value: data[v[0]],
+  }));
+
+  let lowest_price = undefined;
+  if ((product_details?.length ?? -1) > 0)
+    lowest_price =
+      product_details
+        // @ts-ignore
+        ?.reduce((a, b) => ((a.price ?? 0) < (b.price ?? 0) ? a : b))
+        .price?.toLocaleString("id-ID") ?? undefined;
+
+  return (
+    <>
+      <Component
+        name={name}
+        data={data}
+        product_details={product_details}
+        imageUrls={imageUrls}
+        componentInfo={componentInfo ?? []}
+        lowest_price={lowest_price}
+        type={type}
+        category={category}
+        spec_url={spec_url}
+        review_urls={review_urls}
+      />
+    </>
+  );
+}
+// export async function generateMetadata() {
+//     const params = useSearchParams();
+//   const type = params.get("type")!;
+
+//   const component = await getDetails(params);
+
+//   const data = component?.data;
+
+//   const category = categoriesFromString[type]!;
+
+//   // @ts-ignore
+//   const name = data?.["product_name"];
+
+//   return (
+//     <Head>
+//       <title>{`${name} | BangunPC`}</title>
+//       <meta
+//         name="description"
+//         content={`Cari ${categoriesFromEnum[category]} dari Tokopedia, Shopee, dan lainnya. Hanya di Bangun PC`}
+//       />
+//     </Head>
+//   );
+// };

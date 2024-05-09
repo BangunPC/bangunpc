@@ -353,22 +353,18 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
 
           const handleRedirect = () =>
             router.push(
-              `/detail/${kategori}/${component.slug}/${component.product_id}${
-                isIframe ? "?iframe=true" : ""
-              }`,
+              `/detail/${kategori}/${component.slug}-${component.product_id}${isIframe ? "?iframe=true" : ""}`,
             );
           return (
             <>
               <tr
-                data-href={`/detail/${kategori}/${component.slug}`}
+                data-href={`/detail/${kategori}/${component.slug}-${component.product_id}${isIframe ? "?iframe=true" : ""}`}
                 key={component.product_id}
                 className="h-[56px] cursor-pointer transition-transform hover:z-10 hover:scale-[1.01]"
               >
                 <td className="w-16">
                   <Link
-                    href={`/detail/${kategori}/${component.slug}/${
-                      component.product_id
-                    }${isIframe ? "?iframe=true" : ""}`}
+                    href={`/detail/${kategori}/${component.slug}-${component.product_id}${isIframe ? "?iframe=true" : ""}`}
                   >
                     {component.image_filenames.length > 0 && (
                       <img
