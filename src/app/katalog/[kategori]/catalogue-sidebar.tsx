@@ -1,6 +1,6 @@
 "use client";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 export function CatalogueSidebar({
   price,
@@ -9,7 +9,7 @@ export function CatalogueSidebar({
 }: {
   price: number;
   totalComponents: number;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const isIframe = typeof window !== "undefined" && window.parent !== window;
 
@@ -43,7 +43,7 @@ export function SidebarSection({
   children,
 }: {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const [open, setOpen] = useState(true);
 

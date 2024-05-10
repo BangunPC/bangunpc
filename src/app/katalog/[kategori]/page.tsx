@@ -191,9 +191,9 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
                       className="h-10 w-full"
                       type="number"
                       // value={filters.minPrice}
-                      onInput={(e: React.FormEvent<HTMLInputElement>) => {
-                        // url.searchParams.set("min-price", e.target.value);
-                      }}
+                      // onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                      //   url.searchParams.set("min-price", e.target.value);
+                      // }}
                       placeholder="Min Price"
                     />
                   </div>
@@ -211,10 +211,10 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
                       className="h-10 w-full"
                       type="number"
                       // value={filters.maxPrice}
-                      onInput={(e: React.FormEvent<HTMLInputElement>) => {
-                        const target = e.currentTarget;
-                        // url.searchParams.set("max-price", target.value);
-                      }}
+                      // onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                      //   const target = e.currentTarget;
+                      //   url.searchParams.set("max-price", target.value);
+                      // }}
                       placeholder="Max Price"
                     />
                   </div>
