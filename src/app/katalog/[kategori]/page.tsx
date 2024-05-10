@@ -28,6 +28,7 @@ import { getMemory } from "~/lib/component_api/memory";
 import { getPsu } from "~/lib/component_api/psu";
 import { getStorage } from "~/lib/component_api/storage";
 import { getCasing } from "~/lib/component_api/casing";
+import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
 
 const KategoriPage = ({ params }: { params: { kategori: string } }) => {
   const category = categoriesFromString[params.kategori]!;
@@ -160,6 +161,10 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
       </Button>
     </div>
   );
+
+  const price = 0;
+  const total = 0;
+
   return (
     <div>
       <div className="py-4">
@@ -170,7 +175,64 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
               hideSidebar ? "hidden" : ""
             } desktop:m-0 desktop:block`}
           >
-            {/* <Slot /> */}
+            <CatalogueSidebar price={price} totalComponents={total}>
+              <SidebarSection title="Price Range">
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold text-gray-700">
+                    {" "}
+                    Min Price
+                  </span>
+                  <div className="flex flex-row items-center overflow-clip rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 ">
+                    <label htmlFor="min-price" className="mx-1">
+                      Rp
+                    </label>
+                    <input
+                      id="min-price"
+                      className="h-10 w-full"
+                      type="number"
+                      // value={filters.minPrice}
+                      onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                        // url.searchParams.set("min-price", e.target.value);
+                      }}
+                      placeholder="Min Price"
+                    />
+                  </div>
+
+                  <span className="text-sm font-semibold text-gray-700">
+                    {" "}
+                    Max Price
+                  </span>
+                  <div className="flex flex-row items-center overflow-clip rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 ">
+                    <label htmlFor="max-price" className="mx-1">
+                      Rp
+                    </label>
+                    <input
+                      id="min-price"
+                      className="h-10 w-full"
+                      type="number"
+                      // value={filters.maxPrice}
+                      onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                        const target = e.currentTarget;
+                        // url.searchParams.set("max-price", target.value);
+                      }}
+                      placeholder="Max Price"
+                    />
+                  </div>
+                </div>
+              </SidebarSection>
+              <Button
+                variant="default"
+                onClick={() => {
+                  // updateFilters();
+                  // update.value = !update.value;
+                  // window.history.pushState({}, "", url);
+                  // nav();
+                }}
+                className="text-white"
+              >
+                Terapkan Filter
+              </Button>
+            </CatalogueSidebar>
           </div>
           <div
             className={`w-full flex-1 px-3 desktop:p-0 ${
