@@ -167,7 +167,7 @@ const Component = ({
                 <span className="text-lg">Bagikan</span>
               </Button>
             </div>
-            <Accordion type="single" collapsible>
+            <Accordion type="single" collapsible defaultValue="product-details">
               <AccordionItem value="product-details">
                 <AccordionTrigger className="w-full text-3xl font-semibold">
                   Tentang Produk
@@ -187,7 +187,7 @@ const Component = ({
         </div>
       </div>
 
-      <Accordion type="single" collapsible>
+      <Accordion type="single" collapsible defaultValue="product-details">
         <AccordionItem value="product-details">
           <AccordionTrigger>
             <div id="compare" className="text-3xl font-semibold">
@@ -324,7 +324,7 @@ const Component = ({
         </AccordionItem>
       </Accordion>
 
-      <Accordion type="single" collapsible>
+      <Accordion type="single" collapsible defaultValue="spec-details">
         <AccordionItem value="spec-details">
           <AccordionTrigger className="flex w-full justify-start text-3xl font-semibold">
             Spesifikasi
@@ -374,7 +374,7 @@ const Component = ({
         </AccordionItem>
       </Accordion>
       {(review_urls?.length ?? -1) > 0 && (
-        <Accordion type="single" collapsible>
+        <Accordion type="single" collapsible defaultValue="item-1">
           <AccordionItem value="item-1">
             <AccordionTrigger className="text-3xl font-semibold">
               Video Review

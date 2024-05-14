@@ -261,7 +261,7 @@ export function Navbar() {
                 </DialogContent>
               </Dialog>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <NavigationMenuTrigger className={"bg-transparent"}>
                 Jasa
               </NavigationMenuTrigger>
@@ -289,7 +289,7 @@ export function Navbar() {
                   </Link>
                 </ul>
               </NavigationMenuContent>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
             <NavigationMenuItem>
               <NavigationMenuTrigger className={"bg-transparent"}>
                 Rakit PC
