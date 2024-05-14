@@ -252,7 +252,7 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
               </div>
             ) : error ? (
               <div className="flex h-96 items-center justify-center">
-                <span>{error}</span>
+                <span>{JSON.stringify(error)}</span>
               </div>
             ) : (
               <div>
