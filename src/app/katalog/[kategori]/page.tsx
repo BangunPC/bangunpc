@@ -178,7 +178,7 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
             <CatalogueSidebar price={price} totalComponents={total}>
               <SidebarSection title="Price Range">
                 <div className="flex flex-col">
-                  <span className="text-sm font-semibold text-gray-700">
+                  <span className="text-sm font-semibold dark:text-gray-400 text-gray-700">
                     {" "}
                     Min Price
                   </span>
@@ -198,7 +198,7 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
                     />
                   </div>
 
-                  <span className="text-sm font-semibold text-gray-700">
+                  <span className="text-sm font-semibold dark:text-gray-400 text-gray-700">
                     {" "}
                     Max Price
                   </span>
