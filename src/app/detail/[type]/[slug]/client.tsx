@@ -158,9 +158,15 @@ const Component = ({
               <Button
                 variant="ghost"
                 className="flex items-center gap-2 font-semibold"
-                onClick={async () => {
-                  await navigator.clipboard.writeText(window.location.href);
-                  alert("Link copied to clipboard");
+                onClick={async (e) => {
+                  navigator.clipboard.writeText(window.location.href).then(
+                    () => {
+                      alert("Link copied to clipboard");
+                    },
+                    (err) => {
+                      console.error("Failed to copy link:", err);
+                    },
+                  );
                 }}
               >
                 <Send className="fill-none" width="24" height="24" />

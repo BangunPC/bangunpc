@@ -34,8 +34,31 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
 import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
+import { createClient } from "~/lib/supabase/client";
+import { User, User2 } from "lucide-react";
 
 export function Navbar() {
+  const supabase = createClient();
+
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
+  React.useEffect(() => {
+    supabase.auth.getSession().then((session) => {
+      if (session) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN") {
+        setLoggedIn(true);
+      } else if (event === "SIGNED_OUT") {
+        setLoggedIn(false);
+      }
+    });
+  }, []);
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const katalog = searchParams.get("katalog") === "true";
@@ -166,6 +189,34 @@ export function Navbar() {
     },
   ];
 
+  const profileButton = (
+    <Link href="/profile" passHref>
+      <User size={40} className="rounded-full cursor-pointer bg-primary p-2 text-white hover:bg-primary/80 dark:bg-primary/80" />
+    </Link>
+  );
+
+  const loginButton = (
+    <Dialog
+      open={login}
+      onOpenChange={(open) => {
+        router.push(
+          "?" +
+            (open
+              ? createQueryString(searchParams, "login", "true")
+              : removeQueryString(searchParams, "login")),
+        );
+      }}
+    >
+      <DialogTrigger>
+        <Button className="bg-primary px-4 text-white hover:bg-primary/80">
+          Masuk
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
+        <FormLogin />
+      </DialogContent>
+    </Dialog>
+  );
   return (
     <div className="fixed top-0 z-10 w-full bg-[#f5f5f573] px-4 backdrop-blur-3xl dark:bg-navbar">
       <div className="m-auto flex max-w-screen-desktop items-center">
@@ -341,26 +392,7 @@ export function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="ml-auto flex items-center gap-4">
-          <Dialog
-            open={login}
-            onOpenChange={(open) => {
-              router.push(
-                "?" +
-                  (open
-                    ? createQueryString(searchParams, "login", "true")
-                    : removeQueryString(searchParams, "login")),
-              );
-            }}
-          >
-            <DialogTrigger>
-              <Button className="bg-primary px-4 text-white hover:bg-primary/80">
-                Masuk
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
-              <FormLogin />
-            </DialogContent>
-          </Dialog>
+          {loggedIn ? profileButton : loginButton}
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="tablet:hidden">
               <Button size="icon">
