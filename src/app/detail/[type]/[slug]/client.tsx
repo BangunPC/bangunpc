@@ -158,7 +158,7 @@ const Component = ({
               <Button
                 variant="ghost"
                 className="flex items-center gap-2 font-semibold"
-                onClick={async (e) => {
+                onClick={() => {
                   navigator.clipboard.writeText(window.location.href).then(
                     () => {
                       alert("Link copied to clipboard");

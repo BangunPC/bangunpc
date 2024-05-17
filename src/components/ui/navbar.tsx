@@ -35,26 +35,37 @@ import Image from "next/image";
 import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
 import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
 import { createClient } from "~/lib/supabase/client";
-import { User, User2 } from "lucide-react";
+import {
+  Heart,
+  LogOut,
+  MonitorSmartphone,
+  Settings2,
+  User,
+} from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { User as SupabaseUser } from "@supabase/supabase-js";
+import Divider from "./divider";
 
 export function Navbar() {
   const supabase = createClient();
 
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [user, setUser] = React.useState<SupabaseUser | null>(null);
 
   React.useEffect(() => {
-    supabase.auth.getSession().then((session) => {
-      if (session) {
-        setLoggedIn(true);
-      } else {
-        setLoggedIn(false);
-      }
+    supabase.auth.getUser().then((user) => {
+      setUser(user.data?.user);
+    }).catch((err) => {
+      console.error(err);
     });
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN") {
-        setLoggedIn(true);
-      } else if (event === "SIGNED_OUT") {
-        setLoggedIn(false);
+    supabase.auth.onAuthStateChange((session) => {
+      if (session) {
+        supabase.auth.getUser().then((user) => {
+          setUser(user.data?.user);
+        }).catch((err) => {
+          console.error(err);
+        });
+      } else {
+        setUser(null);
       }
     });
   }, []);
@@ -190,9 +201,47 @@ export function Navbar() {
   ];
 
   const profileButton = (
-    <Link href="/profile" passHref>
-      <User size={40} className="rounded-full cursor-pointer bg-primary p-2 text-white hover:bg-primary/80 dark:bg-primary/80" />
-    </Link>
+    <Popover>
+      <PopoverTrigger>
+        <User
+          size={40}
+          className="cursor-pointer rounded-full bg-primary p-2 text-white hover:bg-primary/80 dark:bg-primary/80"
+        />
+      </PopoverTrigger>
+      <PopoverContent className="w-fit p-0">
+        <div className="flex flex-col items-start justify-start p-4">
+          {/* <h3 className="mb-4 text-lg font-bold">{ }</h3> */}
+          <p className="mb-4">{user?.email ?? ""}</p>
+          <Divider className="my-1" />
+          <Link href="/profile" passHref className="w-full justify-start">
+            <Button variant="ghost" className="w-full justify-start">
+              <Settings2 size={18} className="mr-2" /> Pengaturan Akun
+            </Button>
+          </Link>
+          {/* <Button variant="ghost" className="w-full justify-start">
+            <Lamp size={18} className="mr-2" /> Dark Mode
+            <span className="ml-2">
+              <ModeToggle switch />
+            </span>
+          </Button> */}
+          <Button variant="ghost" className="w-full justify-start">
+            <Heart size={18} className="mr-2" /> Wishlist
+          </Button>
+          <Button variant="ghost" className="w-full justify-start">
+            <MonitorSmartphone size={18} className="mr-2" /> Rakitan-ku
+          </Button>
+          <Divider className="my-1" />
+          <Link href="/signout" passHref className="w-full justify-start">
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+            >
+              <LogOut size={18} className="mr-2" /> Keluar
+            </Button>
+          </Link>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 
   const loginButton = (
@@ -392,7 +441,7 @@ export function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="ml-auto flex items-center gap-4">
-          {loggedIn ? profileButton : loginButton}
+          {user ? profileButton : loginButton}
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="tablet:hidden">
               <Button size="icon">
