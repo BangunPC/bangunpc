@@ -2,7 +2,7 @@
 
 import { ArrowLeft, Banknote, Trash, Undo2, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import KategoriCasing from "~/components/ui/icon/kategori-casing";
 import KategoriCpu from "~/components/ui/icon/kategori-cpu";
@@ -11,8 +11,8 @@ import KategoriInternalStorage from "~/components/ui/icon/kategori-internal-stor
 import KategoriMotherboard from "~/components/ui/icon/kategori-motherboard";
 import KategoriPsu from "~/components/ui/icon/kategori-psu";
 import KategoriRam from "~/components/ui/icon/kategori-ram";
-import { ComponentStorageType } from "~/lib/client_utils";
-import { categoriesFromEnum } from "~/lib/db";
+import { ComponentStorageType, useComponentStorage } from "~/lib/client_utils";
+import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
 
 const headers = [
   "Kategori Komponen",
@@ -62,6 +62,7 @@ export default function HomePage() {
   const [iframePath, setIframePath] = useState("");
   const [currentIframePath, setCurrentIframePath] = useState("");
   const [urlQuery, setUrlQuery] = useState("");
+  const {components: storageComponents} = useComponentStorage();
 
   const components = [
     {
@@ -107,6 +108,31 @@ export default function HomePage() {
       iframe: `/katalog/casing`,
     },
   ];
+
+  // useEffect(() => {
+  //   setComponentCpu(storageComponents.filter((c) => c.category === ComponentCategory.CPU));
+  //   setComponentCooler(storageComponents.filter((c) => c.category === ComponentCategory.Cooler));
+  //   setComponentMotherboard(storageComponents.filter((c) => c.category === ComponentCategory.Motherboard));
+  //   setComponentMemory(storageComponents.filter((c) => c.category === ComponentCategory.Memory));
+  //   setComponentStorage(storageComponents.filter((c) => c.category === ComponentCategory.Storage));
+  //   setComponentGpu(storageComponents.filter((c) => c.category === ComponentCategory.GPU));
+  //   setComponentPsu(storageComponents.filter((c) => c.category === ComponentCategory.PSU));
+  //   setComponentCasing(storageComponents.filter((c) => c.category === ComponentCategory.Casing));
+  //   setComponentCaseFan(storageComponents.filter((c) => c.category === ComponentCategory.CaseFan));
+  //   setComponentMonitor(storageComponents.filter((c) => c.category === ComponentCategory.Monitor));
+  //   setComponentOs(storageComponents.filter((c) => c.category === ComponentCategory.OS));
+  //   setComponentSoundCard(storageComponents.filter((c) => c.category === ComponentCategory.SoundCard));
+  //   setComponentWiredNetwork(storageComponents.filter((c) => c.category === ComponentCategory.WiredNetwork));
+  //   setComponentWirelessNetwork(storageComponents.filter((c) => c.category === ComponentCategory.WirelessNetwork));
+  //   setComponentCable(storageComponents.filter((c) => c.category === ComponentCategory.Cable));
+  //   setComponentExternalDrive(storageComponents.filter((c) => c.category === ComponentCategory.ExternalDrive));
+  //   setComponentHeadphone(storageComponents.filter((c) => c.category === ComponentCategory.Headphone));
+  //   setComponentKeyboard(storageComponents.filter((c) => c.category === ComponentCategory.Keyboard));
+  //   setComponentMouse(storageComponents.filter((c) => c.category === ComponentCategory.Mouse));
+  //   setComponentSpeaker(storageComponents.filter((c) => c.category === ComponentCategory.Speaker));
+  //   setComponentWebcam(storageComponents.filter((c) => c.category === ComponentCategory.Webcam));
+  //   setComponentPrinter(storageComponents.filter((c) => c.category === ComponentCategory.Printer));
+  // }, [storageComponents]);
 
   const handleAddComponent = (item: any) => {};
 
