@@ -52,18 +52,24 @@ export function Navbar() {
   const [user, setUser] = React.useState<SupabaseUser | null>(null);
 
   React.useEffect(() => {
-    supabase.auth.getUser().then((user) => {
-      setUser(user.data?.user);
-    }).catch((err) => {
-      console.error(err);
-    });
+    supabase.auth
+      .getUser()
+      .then((user) => {
+        setUser(user.data?.user);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     supabase.auth.onAuthStateChange((session) => {
       if (session) {
-        supabase.auth.getUser().then((user) => {
-          setUser(user.data?.user);
-        }).catch((err) => {
-          console.error(err);
-        });
+        supabase.auth
+          .getUser()
+          .then((user) => {
+            setUser(user.data?.user);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       } else {
         setUser(null);
       }
@@ -211,7 +217,13 @@ export function Navbar() {
       <PopoverContent className="w-fit p-0">
         <div className="flex flex-col items-start justify-start p-4">
           {/* <h3 className="mb-4 text-lg font-bold">{ }</h3> */}
-          <p className="mb-4">{user?.email ?? ""}</p>
+          <div className="flex items-center gap-2 mb-2">
+            <User
+              size={48}
+              className="rounded-full bg-primary p-2 text-white dark:bg-primary/80"
+            />
+            <p className="">{user?.email ?? ""}</p>
+          </div>
           <Divider className="my-1" />
           <Link href="/profile" passHref className="w-full justify-start">
             <Button variant="ghost" className="w-full justify-start">
@@ -232,10 +244,7 @@ export function Navbar() {
           </Button>
           <Divider className="my-1" />
           <Link href="/signout" passHref className="w-full justify-start">
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-            >
+            <Button variant="ghost" className="w-full justify-start">
               <LogOut size={18} className="mr-2" /> Keluar
             </Button>
           </Link>
