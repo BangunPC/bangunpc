@@ -29,6 +29,7 @@ import { getPsu } from "~/lib/component_api/psu";
 import { getStorage } from "~/lib/component_api/storage";
 import { getCasing } from "~/lib/component_api/casing";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
+import { ComponentStorageType, useComponentStorage } from "~/lib/client_utils";
 
 const KategoriPage = ({ params }: { params: { kategori: string } }) => {
   const category = categoriesFromString[params.kategori]!;
@@ -371,6 +372,7 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
   const header = ["", "Product Name", ...headers, "Price (Rp)", "Action"];
 
   const router = useRouter();
+  const { components, addComponent, removeComponent } = useComponentStorage();
 
   const isIframe = useSearchParams().get("isIframe") === "true";
   return (
@@ -394,23 +396,23 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
         <tr className="h-4"></tr>
         {data?.map((component: any) => {
           const handleAddComponent = () => {
-            // const componentAdded: ComponentStorageType = {
-            //   id: component.product_id,
-            //   name: component.product_name,
-            //   price: component.lowest_price,
-            //   image: componentImage(component),
-            //   category: categoriesFromString[kategori],
-            //   quantity: 1,
-            //   slug: component.slug,
-            // };
-            // ComponentStorage.addComponent(componentAdded);
-            // alert(
-            //   "Komponen " + component.product_name + " berhasil ditambahkan. ",
-            // );
-            // // back
-            // if (isIframe) {
-            //   window.history.back();
-            // }
+            const componentAdded: ComponentStorageType = {
+              id: component.product_id,
+              name: component.product_name,
+              price: component.lowest_price,
+              image: componentImage(component),
+              category: categoriesFromString[kategori]!,
+              quantity: 1,
+              slug: component.slug,
+            };
+            addComponent(componentAdded);
+            alert(
+              "Komponen " + component.product_name + " berhasil ditambahkan. ",
+            );
+            // back
+            if (isIframe) {
+              window.history.back();
+            }
           };
 
           const handleRedirect = () =>

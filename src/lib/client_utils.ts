@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ComponentCategory } from "./db";
 
 export function useLocalStorage<T>(key: string, fallbackValue: T) {
   const [value, setValue] = useState(fallbackValue);
@@ -14,4 +15,35 @@ export function useLocalStorage<T>(key: string, fallbackValue: T) {
   }, [key, value]);
 
   return [value, setValue] as const;
+}
+
+export type ComponentStorageType = {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  category: ComponentCategory;
+  quantity: number;
+  slug: string;
+};
+
+export function useComponentStorage() {
+  const [components, setComponents] = useLocalStorage<ComponentStorageType[]>(
+    "components",
+    [],
+  );
+
+  const addComponent = (component: ComponentStorageType) => {
+    setComponents((prev) => [...prev, component]);
+  };
+
+  const removeComponent = (id: string) => {
+    setComponents((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  return {
+    components,
+    addComponent,
+    removeComponent,
+  };
 }
