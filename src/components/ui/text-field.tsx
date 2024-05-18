@@ -11,7 +11,7 @@ const TextField = ({label, placeholder, type}: paramsProps) => {
     <div className='flex flex-col gap-4 w-full'> 
       <label className="text-lg font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{label}</label>
       <input
-        className="h-10 w-full rounded-lg bg-[#F9FAFB] p-3 text-sm outline-none" placeholder={placeholder} type={type}/>
+        className="h-10 w-full rounded-lg bg-[#F9FAFB] p-3 text-sm outline-none dark:bg-secondary" placeholder={placeholder} type={type}/>
     </div>
   )
 }

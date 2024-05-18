@@ -10,31 +10,31 @@ const ProfilePage = () => {
     setGender(e.target.value);
   };
   return (
-    <main className="flex h-screen  w-full justify-center py-10 ">
+    <main className="flex h-screen w-full justify-center py-10 ">
       <div className="flex h-fit max-w-7xl">
-        <aside className="flex w-[400px] flex-col gap-5 ">
+        <aside className="flex px-4 md:w-[400px] flex-col gap-5 ">
           <div className="flex items-center gap-4">
-            <UserRound className="h-8 w-8 text-primary" />
-            <p className="font-semibold">Akun saya</p>
+            <UserRound className="h-8 w-8 text-primary " />
+            <p className="font-semibold hidden md:block">Akun saya</p>
           </div>
           <div className="flex items-center gap-4">
             <Bell className="h-8 w-8 text-primary" />
-            <p className="font-semibold">Notifikasi</p>
+            <p className="font-semibold hidden md:block">Notifikasi</p>
           </div>
           <div className="flex items-center gap-4">
             <MessageSquareText className="h-8 w-8 text-primary" />
-            <p className="font-semibold">Pesanan saya</p>
+            <p className="font-semibold hidden md:block">Pesanan saya</p>
           </div>
         </aside>
-        <section className="flex w-full flex-col gap-5 bg-white">
+        <section className="flex w-full flex-col gap-5 pl-2 pr-4">
           <h2 className="text-4xl font-bold">Edit Profile</h2>
-          <div className="mt-6">
+          <div className="mt-0 md:mt-6">
             <h4 className="text-2xl font-semibold">Perbaharui Akun</h4>
             <p className="text-lg">
               Kamu bisa tambahkan atau perbaharui informasi akun kamu di sini.
             </p>
           </div>
-          <div className="mt-10 flex flex-row gap-4">
+          <div className=" mt-4 md:mt-10 flex flex-col md:flex-row gap-4 ">
             <TextField label="Nama Depan" placeholder="Ex. John" />
             <TextField label="Nama Belakang" placeholder="Ex. Doe" />
           </div>
@@ -43,7 +43,7 @@ const ProfilePage = () => {
             placeholder="Ex. johndoe@gmail.com"
             disabled={true}
           />
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 ">
             <div className="col-span-3">
               <TextField label="Tanggal Lahir" placeholder="date" type="date" />
             </div>
