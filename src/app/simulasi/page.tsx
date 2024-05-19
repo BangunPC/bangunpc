@@ -11,8 +11,11 @@ import KategoriInternalStorage from "~/components/ui/icon/kategori-internal-stor
 import KategoriMotherboard from "~/components/ui/icon/kategori-motherboard";
 import KategoriPsu from "~/components/ui/icon/kategori-psu";
 import KategoriRam from "~/components/ui/icon/kategori-ram";
-import { ComponentStorageType, useComponentStorage } from "~/lib/client_utils";
 import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
+import {
+  ComponentStorageHelper,
+  ComponentStorageType,
+} from "~/lib/storage_helper";
 
 const headers = [
   "Kategori Komponen",
@@ -62,7 +65,6 @@ export default function HomePage() {
   const [iframePath, setIframePath] = useState("");
   const [currentIframePath, setCurrentIframePath] = useState("");
   const [urlQuery, setUrlQuery] = useState("");
-  const {components: storageComponents} = useComponentStorage();
 
   const components = [
     {
@@ -109,6 +111,93 @@ export default function HomePage() {
     },
   ];
 
+  const refresh = () => {
+    setComponentCpu(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.CPU),
+    );
+    setComponentCooler(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Cooler),
+    );
+    setComponentMotherboard(
+      ComponentStorageHelper.getComponentsByCategory(
+        ComponentCategory.Motherboard,
+      ),
+    );
+    setComponentMemory(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Memory),
+    );
+    setComponentStorage(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Storage),
+    );
+    setComponentGpu(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.GPU),
+    );
+    setComponentPsu(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.PSU),
+    );
+    setComponentCasing(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Casing),
+    );
+    setComponentCaseFan(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.CaseFan),
+    );
+    setComponentMonitor(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Monitor),
+    );
+    setComponentOs(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.OS),
+    );
+    setComponentSoundCard(
+      ComponentStorageHelper.getComponentsByCategory(
+        ComponentCategory.SoundCard,
+      ),
+    );
+    setComponentWiredNetwork(
+      ComponentStorageHelper.getComponentsByCategory(
+        ComponentCategory.WiredNetwork,
+      ),
+    );
+    setComponentWirelessNetwork(
+      ComponentStorageHelper.getComponentsByCategory(
+        ComponentCategory.WirelessNetwork,
+      ),
+    );
+    setComponentCable(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Cable),
+    );
+    setComponentExternalDrive(
+      ComponentStorageHelper.getComponentsByCategory(
+        ComponentCategory.ExternalDrive,
+      ),
+    );
+    setComponentHeadphone(
+      ComponentStorageHelper.getComponentsByCategory(
+        ComponentCategory.Headphone,
+      ),
+    );
+    setComponentKeyboard(
+      ComponentStorageHelper.getComponentsByCategory(
+        ComponentCategory.Keyboard,
+      ),
+    );
+    setComponentMouse(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Mouse),
+    );
+    setComponentSpeaker(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Speaker),
+    );
+    setComponentWebcam(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Webcam),
+    );
+    setComponentPrinter(
+      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Printer),
+    );
+  };
+
+  useEffect(() => {
+    refresh();
+  }, []);
+
   // useEffect(() => {
   //   setComponentCpu(storageComponents.filter((c) => c.category === ComponentCategory.CPU));
   //   setComponentCooler(storageComponents.filter((c) => c.category === ComponentCategory.Cooler));
@@ -147,8 +236,16 @@ export default function HomePage() {
       <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-4 p-4">
         <div className="ml-auto">
           <Button
-            onClick={() => {}}
-            className="ml-auto bg-rose-500 hover:bg-rose-400 text-lg text-white"
+            onClick={() => {
+              const confirmed = window.confirm(
+                "Apakah Anda yakin ingin mengulang dari awal?\nSemua komponen akan dihapus dan tidak dapat dikembalikan.",
+              );
+              if (confirmed) {
+                ComponentStorageHelper.clear();
+                refresh();
+              }
+            }}
+            className="ml-auto bg-rose-500 text-lg text-white hover:bg-rose-400"
           >
             <Undo2 className="mr-2 inline-block" />
             Reset
@@ -185,10 +282,11 @@ export default function HomePage() {
                         {item.components.map((component) => (
                           <Link
                             key={component.id}
-                            className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 text-black hover:bg-zinc-200"
+                            className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
                             href={`/detail/${
                               categoriesFromEnum[component.category]
-                            }/${component.slug}/${component.id}`}
+                            }/${component.slug}-${component.id}`}
+                            passHref
                           >
                             <img
                               src={component.image}
@@ -266,7 +364,7 @@ export default function HomePage() {
                             className="flex flex-row items-center gap-1"
                           >
                             <Button
-                              className="flex h-[32px] items-center bg-red-600"
+                              className="h-[32px] items-center bg-red-600 text-lg text-white hover:bg-red-500"
                               onClick={() => {
                                 // if (item.components.length > 0) {
                                 //   ComponentStorage.removeComponentById(
@@ -276,7 +374,7 @@ export default function HomePage() {
                                 // }
                               }}
                             >
-                              <Trash className="inline-block" />
+                              <Trash className="mr-2 inline-block" />
                               Hapus
                             </Button>
                           </div>

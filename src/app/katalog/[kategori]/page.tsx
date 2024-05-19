@@ -29,7 +29,7 @@ import { getPsu } from "~/lib/component_api/psu";
 import { getStorage } from "~/lib/component_api/storage";
 import { getCasing } from "~/lib/component_api/casing";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
-import { ComponentStorageType, useComponentStorage } from "~/lib/client_utils";
+import { ComponentStorageHelper, ComponentStorageType } from "~/lib/storage_helper";
 
 const KategoriPage = ({ params }: { params: { kategori: string } }) => {
   const category = categoriesFromString[params.kategori]!;
@@ -372,7 +372,6 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
   const header = ["", "Product Name", ...headers, "Price (Rp)", "Action"];
 
   const router = useRouter();
-  const { components, addComponent, removeComponent } = useComponentStorage();
 
   const isIframe = useSearchParams().get("isIframe") === "true";
   return (
@@ -405,7 +404,7 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
               quantity: 1,
               slug: component.slug,
             };
-            addComponent(componentAdded);
+            ComponentStorageHelper.addComponent(componentAdded);
             alert(
               "Komponen " + component.product_name + " berhasil ditambahkan. ",
             );
