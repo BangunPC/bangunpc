@@ -47,9 +47,6 @@ import { User as SupabaseUser } from "@supabase/supabase-js";
 import Divider from "./divider";
 
 export function Navbar() {
-  
-  const isIframe = window.parent !== window;
-
   const supabase = createClient();
 
   const [user, setUser] = React.useState<SupabaseUser | null>(null);
@@ -278,10 +275,6 @@ export function Navbar() {
       </DialogContent>
     </Dialog>
   );
-
-  if (isIframe) {
-    return (<div></div>);
-  }
   return (
     <div className="fixed top-0 z-10 w-full bg-[#f5f5f573] px-4 backdrop-blur-3xl dark:bg-navbar">
       <div className="m-auto flex max-w-screen-desktop items-center">

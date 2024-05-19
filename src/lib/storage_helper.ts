@@ -3,11 +3,11 @@
 import { ComponentCategory } from "./db";
 
 class LocalStorageHelper {
-    static setItem(key: string, value: any) {
+    static setItem<T>(key: string, value: T) {
         localStorage.setItem(key, JSON.stringify(value));
     }
 
-    static getItem(key: string) {
+    static getItem<T>(key: string): T | null {
         const item = localStorage.getItem(key);
         return item ? JSON.parse(item) : null;
     }
@@ -34,7 +34,7 @@ export type ComponentStorageType = {
 export class ComponentStorageHelper {
     static addComponent(component: ComponentStorageType) {
         let components = this.getComponents();
-        const index = components.findIndex(c => c.id === component.id);
+        // const index = components.findIndex(c => c.id === component.id);
         // if (index !== -1) {
         //     components[index].quantity += component.quantity;
         // } else {

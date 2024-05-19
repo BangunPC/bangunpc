@@ -17,7 +17,7 @@ import {
 import React, { useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import { SidebarClose, SidebarOpen } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { componentImage } from "~/lib/utils";
 import Link from "next/link";
 import { getMotherboard } from "~/lib/component_api/motherboard";
@@ -29,9 +29,16 @@ import { getPsu } from "~/lib/component_api/psu";
 import { getStorage } from "~/lib/component_api/storage";
 import { getCasing } from "~/lib/component_api/casing";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
-import { ComponentStorageHelper, ComponentStorageType } from "~/lib/storage_helper";
+import {
+  ComponentStorageHelper,
+  ComponentStorageType,
+} from "~/lib/storage_helper";
 
-const KategoriPage = ({ params }: { params: { kategori: string } }) => {
+const KategoriPage = ({
+  params,
+}: {
+  params: { kategori: string; noTopH: boolean | null };
+}) => {
   const category = categoriesFromString[params.kategori]!;
   const [hideSidebar, setHideSidebar] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -176,10 +183,14 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
               hideSidebar ? "hidden" : ""
             } desktop:m-0 desktop:block`}
           >
-            <CatalogueSidebar price={price} totalComponents={total}>
+            <CatalogueSidebar
+              price={price}
+              totalComponents={total}
+              isIframe={params.noTopH ?? false}
+            >
               <SidebarSection title="Price Range">
                 <div className="flex flex-col">
-                  <span className="text-sm font-semibold dark:text-gray-400 text-gray-700">
+                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-400">
                     {" "}
                     Min Price
                   </span>
@@ -199,7 +210,7 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
                     />
                   </div>
 
-                  <span className="text-sm font-semibold dark:text-gray-400 text-gray-700">
+                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-400">
                     {" "}
                     Max Price
                   </span>
@@ -268,6 +279,7 @@ const KategoriPage = ({ params }: { params: { kategori: string } }) => {
                   data={data.filteredData}
                   headers={categoryHeaders[category]}
                   kategori={params.kategori}
+                  isIframe={params.noTopH ?? false}
                 />
               </div>
             )}
@@ -366,14 +378,13 @@ type TableType = {
   data: any[] | undefined;
   headers: string[];
   kategori: string;
+  isIframe: boolean;
 };
 
-const DesktopTable = ({ data, headers, kategori }: TableType) => {
+const DesktopTable = ({ data, headers, kategori, isIframe }: TableType) => {
   const header = ["", "Product Name", ...headers, "Price (Rp)", "Action"];
 
   const router = useRouter();
-
-  const isIframe = window.parent !== window;
 
   return (
     <table className="hidden tablet:table">

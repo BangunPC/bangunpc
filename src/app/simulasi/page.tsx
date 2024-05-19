@@ -15,6 +15,8 @@ import KategoriPsu from "~/components/ui/icon/kategori-psu";
 import KategoriRam from "~/components/ui/icon/kategori-ram";
 import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
 import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
+import KategoriPage from "../katalog/[kategori]/page";
+import { ScrollArea } from "~/components/ui/scroll-area";
 
 const headers = [
   "Kategori Komponen",
@@ -61,48 +63,53 @@ export default function HomePage() {
   const [webcam, setComponentWebcam] = useState([] as ComponentStorageType[]);
   const [printer, setComponentPrinter] = useState([] as ComponentStorageType[]);
 
-  const [iframePath, setIframePath] = useState("");
-  const [currentIframePath, setCurrentIframePath] = useState("");
-  const [urlQuery, setUrlQuery] = useState("");
+  const [kategori, setKategori] = useState<ComponentCategory | null>(null);
 
   const components = [
     {
+      kategori: ComponentCategory.Motherboard,
       icon: <KategoriMotherboard width="27" height="27" />,
       title: "Motherboard",
       components: motherboard,
       iframe: `/katalog/motherboard`,
     },
     {
+      kategori: ComponentCategory.CPU,
       icon: <KategoriCpu width="27" height="27" />,
       title: "CPU",
       components: cpu,
       iframe: `/katalog/cpu`,
     },
     {
+      kategori: ComponentCategory.GPU,
       icon: <KategoriGpu width="27" height="27" />,
       title: "GPU",
       components: gpu,
       iframe: `/katalog/gpu`,
     },
     {
+      kategori: ComponentCategory.Memory,
       icon: <KategoriRam width="27" height="27" />,
       title: "Memory",
       components: memory,
       iframe: `/katalog/memory`,
     },
     {
+      kategori: ComponentCategory.PSU,
       icon: <KategoriPsu width="27" height="27" />,
       title: "Power Supply",
       components: psu,
       iframe: `/katalog/psu`,
     },
     {
+      kategori: ComponentCategory.Storage,
       icon: <KategoriInternalStorage width="27" height="27" />,
       title: "Storage",
       components: storage,
       iframe: `/katalog/storage`,
     },
     {
+      kategori: ComponentCategory.Casing,
       icon: <KategoriCasing width="27" height="27" />,
       title: "PC Case",
       components: casing,
@@ -236,9 +243,7 @@ export default function HomePage() {
     memories: { id: number; amount: number }[] | undefined;
   };
 
-  const handleAddComponent = (item: any) => {
-    setIframePath(item.iframe);
-    setCurrentIframePath("");
+  const handleAddComponent = (item: (typeof components)[0]) => {
     let query = {} as any;
     switch (item.title) {
       case "CPU":
@@ -255,8 +260,7 @@ export default function HomePage() {
         break;
     }
 
-    setUrlQuery(convertToUrlQuery(query));
-    setIframePath(item.iframe);
+    setKategori(item.kategori);
   };
 
   return (
@@ -441,30 +445,46 @@ export default function HomePage() {
               .toLocaleString("id-ID")}
           </div>
         </div>
-        <Dialog open={iframePath !== "" && !currentIframePath.startsWith("/simulasi/") && currentIframePath !== "/"} onOpenChange={() => setIframePath("")}>
+        <Dialog open={kategori !== null} onOpenChange={() => setKategori(null)}>
           <DialogTrigger asChild>
             <div role="dialog" aria-modal="true" className="hidden"></div>
           </DialogTrigger>
-          <DialogContent className="fixed inset-0 z-10 mt-navbar-min-h overflow-y-hidden">
+          <DialogContent className="fixed inset-0 z-10 mt-navbar-min-h">
             <div className="h-full p-4 text-center">
-              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-              <div className="flex h-full transform flex-col overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all dark:bg-navbar">
-                {currentIframePath.startsWith("/detail/") && (
+              <div
+                className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                aria-hidden="true"
+              ></div>
+              <div className="flex h-full transform flex-col overflow-hidden rounded-lg bg-background text-left align-bottom shadow-xl transition-all">
+                {/* {currentIframePath.startsWith("/detail/") && (
                   <div className="flex justify-start bg-white dark:bg-navbar">
-                    <Button onClick={() => window.history.back()} className="fixed ml-4 mr-auto mt-4 aspect-square">
+                    <Button
+                      onClick={() => window.history.back()}
+                      className="fixed ml-4 mr-auto mt-4 aspect-square"
+                    >
                       <ArrowLeft />
                     </Button>
                   </div>
-                )}
-                <div className="flex justify-end">
-                  <Button onClick={() => setIframePath("")} className="fixed ml-auto p-0 mr-[9px] mt-[9px] aspect-square text-white bg-navbar">
+                )} */}
+                <div className="z-10 flex justify-end">
+                  <Button
+                    variant="outline"
+                    onClick={() => setKategori(null)}
+                    className="fixed ml-auto mr-[9px] mt-[9px] aspect-square bg-zinc-800 p-0 text-white"
+                  >
                     <X />
                   </Button>
                 </div>
-                <iframe id="iframe" className="h-full w-full" onLoad={(event: React.SyntheticEvent<HTMLIFrameElement, Event>) => {
-                  const element = event.currentTarget as HTMLIFrameElement;
-                  setCurrentIframePath(element.contentWindow?.location.pathname ?? "");
-                }} src={urlQuery ? iframePath + `?${urlQuery}&iframe=true` : iframePath + "?iframe=true"} />
+                <ScrollArea>
+                  {kategori !== null && (
+                    <KategoriPage
+                      params={{
+                        kategori: categoriesFromEnum[kategori!]!,
+                        noTopH: true,
+                      }}
+                    />
+                  )}
+                </ScrollArea>
               </div>
             </div>
           </DialogContent>

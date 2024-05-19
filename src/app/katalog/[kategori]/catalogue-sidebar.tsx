@@ -6,12 +6,13 @@ export function CatalogueSidebar({
   price,
   totalComponents,
   children,
+  isIframe,
 }: {
   price: number;
   totalComponents: number;
   children: ReactNode;
+  isIframe: boolean;
 }) {
-  const isIframe = typeof window !== "undefined" && window.parent !== window;
 
   return (
     <aside
