@@ -373,7 +373,8 @@ const DesktopTable = ({ data, headers, kategori }: TableType) => {
 
   const router = useRouter();
 
-  const isIframe = useSearchParams().get("isIframe") === "true";
+  const isIframe = window.parent !== window;
+
   return (
     <table className="hidden tablet:table">
       <thead

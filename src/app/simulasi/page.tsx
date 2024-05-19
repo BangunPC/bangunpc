@@ -1,9 +1,11 @@
 "use client";
 
+import { DialogContent } from "@radix-ui/react-dialog";
 import { ArrowLeft, Banknote, Trash, Undo2, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
+import { Dialog, DialogTrigger } from "~/components/ui/dialog";
 import KategoriCasing from "~/components/ui/icon/kategori-casing";
 import KategoriCpu from "~/components/ui/icon/kategori-cpu";
 import KategoriGpu from "~/components/ui/icon/kategori-gpu";
@@ -12,10 +14,7 @@ import KategoriMotherboard from "~/components/ui/icon/kategori-motherboard";
 import KategoriPsu from "~/components/ui/icon/kategori-psu";
 import KategoriRam from "~/components/ui/icon/kategori-ram";
 import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
-import {
-  ComponentStorageHelper,
-  ComponentStorageType,
-} from "~/lib/storage_helper";
+import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
 
 const headers = [
   "Kategori Komponen",
@@ -113,89 +112,81 @@ export default function HomePage() {
 
   const refresh = () => {
     setComponentCpu(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.CPU),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.CPU),
     );
     setComponentCooler(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Cooler),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Cooler),
     );
     setComponentMotherboard(
-      ComponentStorageHelper.getComponentsByCategory(
-        ComponentCategory.Motherboard,
-      ),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Motherboard),
     );
     setComponentMemory(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Memory),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Memory),
     );
     setComponentStorage(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Storage),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Storage),
     );
     setComponentGpu(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.GPU),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.GPU),
     );
     setComponentPsu(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.PSU),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.PSU),
     );
     setComponentCasing(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Casing),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Casing),
     );
     setComponentCaseFan(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.CaseFan),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.CaseFan),
     );
     setComponentMonitor(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Monitor),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Monitor),
     );
     setComponentOs(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.OS),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.OS),
     );
     setComponentSoundCard(
-      ComponentStorageHelper.getComponentsByCategory(
-        ComponentCategory.SoundCard,
-      ),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.SoundCard),
     );
     setComponentWiredNetwork(
-      ComponentStorageHelper.getComponentsByCategory(
-        ComponentCategory.WiredNetwork,
-      ),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.WiredNetwork),
     );
     setComponentWirelessNetwork(
-      ComponentStorageHelper.getComponentsByCategory(
+      ComponentStorage.getComponentsByCategory(
         ComponentCategory.WirelessNetwork,
       ),
     );
     setComponentCable(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Cable),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Cable),
     );
     setComponentExternalDrive(
-      ComponentStorageHelper.getComponentsByCategory(
-        ComponentCategory.ExternalDrive,
-      ),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.ExternalDrive),
     );
     setComponentHeadphone(
-      ComponentStorageHelper.getComponentsByCategory(
-        ComponentCategory.Headphone,
-      ),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Headphone),
     );
     setComponentKeyboard(
-      ComponentStorageHelper.getComponentsByCategory(
-        ComponentCategory.Keyboard,
-      ),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Keyboard),
     );
     setComponentMouse(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Mouse),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Mouse),
     );
     setComponentSpeaker(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Speaker),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Speaker),
     );
     setComponentWebcam(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Webcam),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Webcam),
     );
     setComponentPrinter(
-      ComponentStorageHelper.getComponentsByCategory(ComponentCategory.Printer),
+      ComponentStorage.getComponentsByCategory(ComponentCategory.Printer),
     );
   };
 
   useEffect(() => {
     refresh();
+    const interval = setInterval(() => {
+      refresh();
+    }, 1500);
+    return () => clearInterval(interval);
   }, []);
 
   // useEffect(() => {
@@ -223,7 +214,50 @@ export default function HomePage() {
   //   setComponentPrinter(storageComponents.filter((c) => c.category === ComponentCategory.Printer));
   // }, [storageComponents]);
 
-  const handleAddComponent = (item: any) => {};
+  function convertToUrlQuery(object: any) {
+    const isObject = (val: any) => val && typeof val === "object";
+
+    const transformObject = (obj: any) =>
+      Object.entries(obj)
+        .map(([key, value]) => {
+          const transformedKey = isObject(key) ? JSON.stringify(key) : key;
+          const transformedValue = isObject(value)
+            ? JSON.stringify(value)
+            : value;
+          return `${transformedKey}=${transformedValue as string}`;
+        })
+        .join("&");
+
+    return transformObject(object);
+  }
+
+  type cpuUrlQuery = {
+    motherboardId: number | undefined;
+    memories: { id: number; amount: number }[] | undefined;
+  };
+
+  const handleAddComponent = (item: any) => {
+    setIframePath(item.iframe);
+    setCurrentIframePath("");
+    let query = {} as any;
+    switch (item.title) {
+      case "CPU":
+        query = {} as cpuUrlQuery;
+        if (motherboard.length > 0) {
+          query.motherboardId = parseInt(motherboard[0]!.id);
+        }
+        if (memory.length > 0) {
+          query.memories = memory.map((item) => ({
+            id: parseInt(item.id),
+            amount: item.quantity,
+          }));
+        }
+        break;
+    }
+
+    setUrlQuery(convertToUrlQuery(query));
+    setIframePath(item.iframe);
+  };
 
   return (
     <div className="m-auto mt-1 w-full max-w-screen-desktop p-4">
@@ -236,13 +270,13 @@ export default function HomePage() {
       <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-4 p-4">
         <div className="ml-auto">
           <Button
+            disabled={components.every((c) => c.components.length === 0)}
             onClick={() => {
               const confirmed = window.confirm(
                 "Apakah Anda yakin ingin mengulang dari awal?\nSemua komponen akan dihapus dan tidak dapat dikembalikan.",
               );
               if (confirmed) {
-                ComponentStorageHelper.clear();
-                refresh();
+                ComponentStorage.clear();
               }
             }}
             className="ml-auto bg-rose-500 text-lg text-white hover:bg-rose-400"
@@ -366,12 +400,17 @@ export default function HomePage() {
                             <Button
                               className="h-[32px] items-center bg-red-600 text-lg text-white hover:bg-red-500"
                               onClick={() => {
-                                // if (item.components.length > 0) {
-                                //   ComponentStorage.removeComponentById(
-                                //     component.id,
-                                //   );
-                                //   refresh();
-                                // }
+                                if (item.components.length > 0) {
+                                  if (
+                                    window.confirm(
+                                      "Apakah Anda yakin ingin menghapus komponen ini?",
+                                    )
+                                  ) {
+                                    ComponentStorage.removeComponentById(
+                                      component.id,
+                                    );
+                                  }
+                                }
                               }}
                             >
                               <Trash className="mr-2 inline-block" />
@@ -402,64 +441,34 @@ export default function HomePage() {
               .toLocaleString("id-ID")}
           </div>
         </div>
-        <div
-          role="dialog"
-          aria-modal="true"
-          className={`fixed inset-0 z-10 mt-navbar-min-h overflow-y-hidden ${
-            iframePath === "" ||
-            currentIframePath.startsWith("/simulasi/") ||
-            currentIframePath === "/"
-              ? "hidden"
-              : "block"
-          }`}
-        >
-          <div className="h-full p-4 text-center">
-            <div
-              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-              aria-hidden="true"
-            ></div>
-            <div className="flex h-full transform flex-col overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all dark:bg-navbar">
-              {currentIframePath.startsWith("/detail/") && (
-                <div className="flex justify-start bg-white dark:bg-navbar">
-                  <Button
-                    onClick={() => window.history.back()}
-                    className="fixed ml-4 mr-auto mt-4 aspect-square"
-                  >
-                    <ArrowLeft />
+        <Dialog open={iframePath !== "" && !currentIframePath.startsWith("/simulasi/") && currentIframePath !== "/"} onOpenChange={() => setIframePath("")}>
+          <DialogTrigger asChild>
+            <div role="dialog" aria-modal="true" className="hidden"></div>
+          </DialogTrigger>
+          <DialogContent className="fixed inset-0 z-10 mt-navbar-min-h overflow-y-hidden">
+            <div className="h-full p-4 text-center">
+              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+              <div className="flex h-full transform flex-col overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all dark:bg-navbar">
+                {currentIframePath.startsWith("/detail/") && (
+                  <div className="flex justify-start bg-white dark:bg-navbar">
+                    <Button onClick={() => window.history.back()} className="fixed ml-4 mr-auto mt-4 aspect-square">
+                      <ArrowLeft />
+                    </Button>
+                  </div>
+                )}
+                <div className="flex justify-end">
+                  <Button onClick={() => setIframePath("")} className="fixed ml-auto p-0 mr-[9px] mt-[9px] aspect-square text-white bg-navbar">
+                    <X />
                   </Button>
                 </div>
-              )}
-
-              <div className="flex justify-end bg-white dark:bg-navbar">
-                <Button
-                  onClick={() => {
-                    setIframePath("");
-                  }}
-                  className="fixed ml-auto mr-4 mt-4 aspect-square"
-                >
-                  <X />
-                </Button>
-              </div>
-              <iframe
-                id="iframe"
-                className="h-full w-full"
-                onLoad={(
-                  event: React.SyntheticEvent<HTMLIFrameElement, Event>,
-                ) => {
+                <iframe id="iframe" className="h-full w-full" onLoad={(event: React.SyntheticEvent<HTMLIFrameElement, Event>) => {
                   const element = event.currentTarget as HTMLIFrameElement;
-                  setCurrentIframePath(
-                    element.contentWindow?.location.pathname ?? "",
-                  );
-                }}
-                src={
-                  urlQuery
-                    ? iframePath + `?${urlQuery}&iframe=true`
-                    : iframePath + "?iframe=true"
-                }
-              />
+                  setCurrentIframePath(element.contentWindow?.location.pathname ?? "");
+                }} src={urlQuery ? iframePath + `?${urlQuery}&iframe=true` : iframePath + "?iframe=true"} />
+              </div>
             </div>
-          </div>
-        </div>
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   );

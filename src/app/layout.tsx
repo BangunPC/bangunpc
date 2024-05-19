@@ -8,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 import { Navbar } from "~/components/ui/navbar";
 import Footer from "~/components/ui/footer";
 import React from "react";
+import { IframeTopHeight } from "~/components/iframe-top-height";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,7 +38,8 @@ export default function RootLayout({
         >
           <div className={`${inter.variable} bg-background text-foreground`}>
             <Navbar />
-            <div className="mt-[54px]">{children}</div>
+            <IframeTopHeight />
+            {children}
             <Footer />
           </div>
         </ThemeProvider>

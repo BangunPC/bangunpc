@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { NavbarIcon } from "./icon/navbar-icon";
 import Link from "next/link";
@@ -5,6 +7,13 @@ import Image from "next/image";
 import { Button } from "./button";
 
 const Footer = () => {
+
+  const isIframe = window.parent !== window;
+
+  if (isIframe) {
+    return <></>;
+  }
+
   const socialMedia = [
     {
       logo: "/images/instagram.svg",
