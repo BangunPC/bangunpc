@@ -9,15 +9,24 @@ const ProfilePage = () => {
     <main className="flex h-screen w-full justify-center py-10 ">
       <div className="flex h-fit max-w-7xl">
         <aside className="flex flex-col gap-5 px-4 md:w-[400px] ">
-          <Button variant="ghost" className="flex items-center justify-start gap-4">
+          <Button
+            variant="ghost"
+            className="flex items-center justify-start gap-4"
+          >
             <UserRound className="h-8 w-8 text-primary " />
             <p className="hidden font-semibold md:block">Akun </p>
           </Button>
-          <Button variant="ghost" className="flex items-center justify-start gap-4">
+          <Button
+            variant="ghost"
+            className="flex items-center justify-start gap-4"
+          >
             <Bell className="h-8 w-8 text-primary" />
             <p className="hidden font-semibold md:block">Notifikasi</p>
           </Button>
-          <Button variant="ghost" className="flex items-center justify-start gap-4">
+          <Button
+            variant="ghost"
+            className="flex items-center justify-start gap-4"
+          >
             <MessageSquareText className="h-8 w-8 text-primary" />
             <p className="hidden font-semibold md:block">Pesanan saya</p>
           </Button>

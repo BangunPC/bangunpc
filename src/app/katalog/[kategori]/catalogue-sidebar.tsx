@@ -13,16 +13,15 @@ export function CatalogueSidebar({
   children: ReactNode;
   isIframe: boolean;
 }) {
-
   return (
     <aside
       className={`sticky self-start ${isIframe ? "top-0" : "top-navbar-min-h"}`}
     >
       <div className="mx-4 flex w-56 flex-col gap-2">
         <div
-          className={`flex h-fit flex-col gap-2 rounded-lg dark:bg-navbar bg-white p-2 font-semibold shadow-br ${isIframe ? "hidden" : ""}`}
+          className={`flex h-fit flex-col gap-2 rounded-lg bg-white p-2 font-semibold shadow-br dark:bg-navbar ${isIframe ? "hidden" : ""}`}
         >
-          <div className="rounded-lg border dark:border-white/20 border-black/40 p-2 text-xl leading-5">
+          <div className="rounded-lg border border-black/40 p-2 text-xl leading-5 dark:border-white/20">
             Rincian Komponen yang Dipilih
           </div>
           <div className="flex flex-col">

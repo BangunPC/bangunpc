@@ -3,83 +3,89 @@
 import { ComponentCategory } from "./db";
 
 class LocalStorageHelper {
-    static setItem<T>(key: string, value: T) {
-        localStorage.setItem(key, JSON.stringify(value));
-    }
+  static setItem<T>(key: string, value: T) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
 
-    static getItem<T>(key: string): T | null {
-        const item = localStorage.getItem(key);
-        return item ? JSON.parse(item) as T : null;
-    }
+  static getItem<T>(key: string): T | null {
+    const item = localStorage.getItem(key);
+    return item ? (JSON.parse(item) as T) : null;
+  }
 
-    static removeItem(key: string) {
-        localStorage.removeItem(key);
-    }
+  static removeItem(key: string) {
+    localStorage.removeItem(key);
+  }
 
-    static clear() {
-        localStorage.clear();
-    }
+  static clear() {
+    localStorage.clear();
+  }
 }
 
 export type ComponentStorageType = {
-    id: string
-    name: string
-    price: number
-    quantity: number
-    image: string
-    category: ComponentCategory
-    slug: string
-}
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+  category: ComponentCategory;
+  slug: string;
+};
 
 export class ComponentStorageHelper {
-    static addComponent(component: ComponentStorageType) {
-        const components = this.getComponents();
-        // const index = components.findIndex(c => c.id === component.id);
-        // if (index !== -1) {
-        //     components[index].quantity += component.quantity;
-        // } else {
-        components.push(component);
-        // }
-        LocalStorageHelper.setItem('components', components);
-    }
+  static addComponent(component: ComponentStorageType) {
+    const components = this.getComponents();
+    // const index = components.findIndex(c => c.id === component.id);
+    // if (index !== -1) {
+    //     components[index].quantity += component.quantity;
+    // } else {
+    components.push(component);
+    // }
+    LocalStorageHelper.setItem("components", components);
+  }
 
-    static getComponents(): ComponentStorageType[] {
-        return LocalStorageHelper.getItem('components') ?? [];
-    }
+  static getComponents(): ComponentStorageType[] {
+    return LocalStorageHelper.getItem("components") ?? [];
+  }
 
-    static getComponentsByCategory(category: ComponentCategory) {
-        const components: ComponentStorageType[] = LocalStorageHelper.getItem('components') ?? [];
-        return components.filter(component => component.category === category);
-    }
+  static getComponentsByCategory(category: ComponentCategory) {
+    const components: ComponentStorageType[] =
+      LocalStorageHelper.getItem("components") ?? [];
+    return components.filter((component) => component.category === category);
+  }
 
-    static removeComponentById(id: string) {
-        let components: ComponentStorageType[] = LocalStorageHelper.getItem('components') ?? [];
-        components = components.filter(component => component.id !== id);
-        LocalStorageHelper.setItem('components', components);
-    }
+  static removeComponentById(id: string) {
+    let components: ComponentStorageType[] =
+      LocalStorageHelper.getItem("components") ?? [];
+    components = components.filter((component) => component.id !== id);
+    LocalStorageHelper.setItem("components", components);
+  }
 
-    static updateComponent(id: string, updatedComponent: ComponentStorageType) {
-        const components: ComponentStorageType[] = LocalStorageHelper.getItem('components') ?? [];
-        const index = components.findIndex(component => component.id === id);
-        if (index !== -1) {
-            components[index] = { ...components[index], ...updatedComponent };
-            LocalStorageHelper.setItem('components', components);
-        }
+  static updateComponent(id: string, updatedComponent: ComponentStorageType) {
+    const components: ComponentStorageType[] =
+      LocalStorageHelper.getItem("components") ?? [];
+    const index = components.findIndex((component) => component.id === id);
+    if (index !== -1) {
+      components[index] = { ...components[index], ...updatedComponent };
+      LocalStorageHelper.setItem("components", components);
     }
+  }
 
-    /**
-     * Calculates the total price of all components in the cart.
-     *
-     * @return {number} The total price of all components.
-     */
-    static totalPrice() {
-        const components = this.getComponents();
-        return components.reduce((total, component) => total + (component.price * component.quantity), 0);
-    }
+  /**
+   * Calculates the total price of all components in the cart.
+   *
+   * @return {number} The total price of all components.
+   */
+  static totalPrice() {
+    const components = this.getComponents();
+    return components.reduce(
+      (total, component) => total + component.price * component.quantity,
+      0,
+    );
+  }
 
-    static clear() {
-        LocalStorageHelper.removeItem('components');
-    }
+  static clear() {
+    LocalStorageHelper.removeItem("components");
+  }
 }
 
 export { LocalStorageHelper, ComponentStorageHelper as ComponentStorage };

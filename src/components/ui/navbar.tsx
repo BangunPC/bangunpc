@@ -221,7 +221,7 @@ export function Navbar() {
               size={48}
               className="rounded-full bg-primary p-2 text-white dark:bg-primary/80"
             />
-            <div className="flex flex-col gap-0 items-start justify-start">
+            <div className="flex flex-col items-start justify-start gap-0">
               <h3 className="text-lg font-bold">
                 {user?.email?.split("@")[0] ?? ""}
               </h3>
