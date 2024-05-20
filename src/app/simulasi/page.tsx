@@ -467,6 +467,11 @@ export default function HomePage() {
                       params={{
                         kategori: kategori,
                         noTopH: true,
+                        onSuccess: () => {
+                          router.push(
+                            "?" + removeQueryString(searchParams, "kategori"),
+                          );
+                        },
                       }}
                     />
                   )}

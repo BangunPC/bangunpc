@@ -37,7 +37,7 @@ import {
 const KategoriPage = ({
   params,
 }: {
-  params: { kategori: string; noTopH: boolean | null };
+  params: { kategori: string; noTopH: boolean | null; onSuccess?: () => void };
 }) => {
   const category = categoriesFromString[params.kategori]!;
   const [hideSidebar, setHideSidebar] = React.useState(false);
@@ -280,6 +280,7 @@ const KategoriPage = ({
                   headers={categoryHeaders[category]}
                   kategori={params.kategori}
                   isIframe={params.noTopH ?? false}
+                  onSuccess={params.onSuccess}
                 />
               </div>
             )}
@@ -379,9 +380,16 @@ type TableType = {
   headers: string[];
   kategori: string;
   isIframe: boolean;
+  onSuccess?: () => void;
 };
 
-const DesktopTable = ({ data, headers, kategori, isIframe }: TableType) => {
+const DesktopTable = ({
+  data,
+  headers,
+  kategori,
+  isIframe,
+  onSuccess,
+}: TableType) => {
   const header = ["", "Product Name", ...headers, "Price (Rp)", "Action"];
 
   const router = useRouter();
@@ -389,7 +397,7 @@ const DesktopTable = ({ data, headers, kategori, isIframe }: TableType) => {
   return (
     <table className="hidden tablet:table">
       <thead
-        className={`sticky z-[1] text-xs backdrop-blur 
+        className={`sticky z-[1] text-xs backdrop-blur
           ${isIframe ? "top-0" : "top-navbar-min-h"}
         `}
       >
@@ -417,13 +425,10 @@ const DesktopTable = ({ data, headers, kategori, isIframe }: TableType) => {
               slug: component.slug,
             };
             ComponentStorageHelper.addComponent(componentAdded);
+            onSuccess?.();
             alert(
               "Komponen " + component.product_name + " berhasil ditambahkan. ",
             );
-            // back
-            if (isIframe) {
-              window.history.back();
-            }
           };
 
           const handleRedirect = () =>
