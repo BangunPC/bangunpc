@@ -10,8 +10,15 @@ const config = {
     missingSuspenseWithCSRBailout: false,
   },
   images: {
-    domains: ["onawoodgnwkncueeyusr.supabase.co"],
-  },
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "onawoodgnwkncueeyusr.supabase.co",
+        pathname: "**/*",
+        port: "",
+      },
+    ],
+  }
 };
 
 export default config;

@@ -14,10 +14,16 @@ import KategoriMotherboard from "~/components/ui/icon/kategori-motherboard";
 import KategoriPsu from "~/components/ui/icon/kategori-psu";
 import KategoriRam from "~/components/ui/icon/kategori-ram";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import { ComponentCategory, categoriesFromEnum } from "~/lib/db";
+import {
+  ComponentCategory,
+  categoriesFromEnum,
+  categoriesFromString,
+} from "~/lib/db";
 import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
 import KategoriPage from "../katalog/[kategori]/page";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createQueryString, removeQueryString } from "~/lib/utils";
 
 const headers = [
   "Kategori Komponen",
@@ -27,6 +33,15 @@ const headers = [
 ];
 
 export default function HomePage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [kategori, setKategori] = useState<string | null>(null);
+
+  useEffect(() => {
+    setKategori(searchParams.get("kategori"));
+  }, [searchParams]);
+
   const [cpu, setComponentCpu] = useState([] as ComponentStorageType[]);
   // const [cooler, setComponentCooler] = useState([] as ComponentStorageType[]);
   const [motherboard, setComponentMotherboard] = useState(
@@ -63,8 +78,6 @@ export default function HomePage() {
   // const [speaker, setComponentSpeaker] = useState([] as ComponentStorageType[]);
   // const [webcam, setComponentWebcam] = useState([] as ComponentStorageType[]);
   // const [printer, setComponentPrinter] = useState([] as ComponentStorageType[]);
-
-  const [kategori, setKategori] = useState<ComponentCategory | null>(null);
 
   const components = [
     {
@@ -197,31 +210,6 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  // useEffect(() => {
-  //   setComponentCpu(storageComponents.filter((c) => c.category === ComponentCategory.CPU));
-  //   setComponentCooler(storageComponents.filter((c) => c.category === ComponentCategory.Cooler));
-  //   setComponentMotherboard(storageComponents.filter((c) => c.category === ComponentCategory.Motherboard));
-  //   setComponentMemory(storageComponents.filter((c) => c.category === ComponentCategory.Memory));
-  //   setComponentStorage(storageComponents.filter((c) => c.category === ComponentCategory.Storage));
-  //   setComponentGpu(storageComponents.filter((c) => c.category === ComponentCategory.GPU));
-  //   setComponentPsu(storageComponents.filter((c) => c.category === ComponentCategory.PSU));
-  //   setComponentCasing(storageComponents.filter((c) => c.category === ComponentCategory.Casing));
-  //   setComponentCaseFan(storageComponents.filter((c) => c.category === ComponentCategory.CaseFan));
-  //   setComponentMonitor(storageComponents.filter((c) => c.category === ComponentCategory.Monitor));
-  //   setComponentOs(storageComponents.filter((c) => c.category === ComponentCategory.OS));
-  //   setComponentSoundCard(storageComponents.filter((c) => c.category === ComponentCategory.SoundCard));
-  //   setComponentWiredNetwork(storageComponents.filter((c) => c.category === ComponentCategory.WiredNetwork));
-  //   setComponentWirelessNetwork(storageComponents.filter((c) => c.category === ComponentCategory.WirelessNetwork));
-  //   setComponentCable(storageComponents.filter((c) => c.category === ComponentCategory.Cable));
-  //   setComponentExternalDrive(storageComponents.filter((c) => c.category === ComponentCategory.ExternalDrive));
-  //   setComponentHeadphone(storageComponents.filter((c) => c.category === ComponentCategory.Headphone));
-  //   setComponentKeyboard(storageComponents.filter((c) => c.category === ComponentCategory.Keyboard));
-  //   setComponentMouse(storageComponents.filter((c) => c.category === ComponentCategory.Mouse));
-  //   setComponentSpeaker(storageComponents.filter((c) => c.category === ComponentCategory.Speaker));
-  //   setComponentWebcam(storageComponents.filter((c) => c.category === ComponentCategory.Webcam));
-  //   setComponentPrinter(storageComponents.filter((c) => c.category === ComponentCategory.Printer));
-  // }, [storageComponents]);
-
   type cpuQuery = {
     motherboardId: number | undefined;
     memories: { id: number; amount: number }[] | undefined;
@@ -244,7 +232,13 @@ export default function HomePage() {
         break;
     }
 
-    setKategori(item.kategori);
+    const params = createQueryString(
+      searchParams,
+      "kategori",
+      categoriesFromEnum[item.kategori]!,
+    );
+
+    router.push("?" + params);
   };
 
   return (
@@ -312,9 +306,9 @@ export default function HomePage() {
                           >
                             <Image
                               src={component.image}
-                              alt={component.name}
                               width={32}
                               height={32}
+                              alt={component.name}
                             />
                             <span className="ml-1">{component.name}</span>
                           </Link>
@@ -429,7 +423,11 @@ export default function HomePage() {
               .toLocaleString("id-ID")}
           </div>
         </div>
-        <Dialog open={kategori !== null} onOpenChange={() => setKategori(null)}>
+        <Dialog
+          open={
+            kategori !== null && categoriesFromString[kategori] !== undefined
+          }
+        >
           <DialogTrigger asChild>
             <div role="dialog" aria-modal="true" className="hidden"></div>
           </DialogTrigger>
@@ -453,17 +451,21 @@ export default function HomePage() {
                 <div className="z-10 flex justify-end">
                   <Button
                     variant="outline"
-                    onClick={() => setKategori(null)}
+                    onClick={() =>
+                      router.push(
+                        "?" + removeQueryString(searchParams, "kategori"),
+                      )
+                    }
                     className="fixed ml-auto mr-[9px] mt-[9px] aspect-square bg-zinc-800 p-0 text-white"
                   >
                     <X />
                   </Button>
                 </div>
                 <ScrollArea>
-                  {kategori !== null && (
+                  {kategori && categoriesFromString[kategori] && (
                     <KategoriPage
                       params={{
-                        kategori: categoriesFromEnum[kategori!]!,
+                        kategori: kategori,
                         noTopH: true,
                       }}
                     />
