@@ -2,12 +2,13 @@ export const runtime = "edge";
 
 import "~/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Navbar } from "~/components/ui/navbar";
-import Footer from "~/components/ui/footer";
+import { Inter } from "next/font/google";
 import React from "react";
+import Footer from "~/components/ui/footer";
+import { Navbar } from "~/components/ui/navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <GoogleAnalytics gaId="G-SXXB5CHSKR" />
       <body>
         <ThemeProvider
           attribute="class"
