@@ -1,8 +1,10 @@
 "use client";
 
 import { DialogContent } from "@radix-ui/react-dialog";
-import { Banknote, Trash, Undo2, X } from "lucide-react";
+import { Banknote, Save, Trash, Undo2, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogTrigger } from "~/components/ui/dialog";
@@ -20,10 +22,8 @@ import {
   categoriesFromString,
 } from "~/lib/db";
 import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
-import KategoriPage from "../katalog/[kategori]/page";
-import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
 import { createQueryString, removeQueryString } from "~/lib/utils";
+import KategoriPage from "../katalog/[kategori]/page";
 
 const headers = [
   "Kategori Komponen",
@@ -250,7 +250,7 @@ export default function HomePage() {
         </span>
       </header>
       <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-4 p-4">
-        <div className="ml-auto">
+        <div className="flex justify-end gap-2">
           <Button
             disabled={components.every((c) => c.components.length === 0)}
             onClick={() => {
@@ -261,10 +261,17 @@ export default function HomePage() {
                 ComponentStorage.clear();
               }
             }}
-            className="ml-auto bg-rose-500 text-lg text-white hover:bg-rose-400"
+            className="bg-rose-500 text-lg text-white hover:bg-rose-400"
           >
             <Undo2 className="mr-2 inline-block" />
-            Reset
+            Reset Pilihan
+          </Button>
+          <Button
+            disabled={components.every((c) => c.components.length === 0)}
+            className="bg-green-600 text-lg text-white hover:bg-green-500"
+          >
+            <Save className="mr-2 inline-block" />
+            Simpan
           </Button>
         </div>
         <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">

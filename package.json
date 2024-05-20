@@ -10,7 +10,7 @@
     "start": "next start",
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check .",
-    "gentypes": "npx supabase gen types typescript --project-id \"onawoodgnwkncueeyusr\" > src/lib/schema.ts --schema public --schema product"
+    "gentypes": "npx supabase gen types typescript --project-id \"onawoodgnwkncueeyusr\" > src/lib/schema.ts --schema public --schema product --schema pc_build"
   },
   "dependencies": {
     "@next/third-parties": "^14.2.3",

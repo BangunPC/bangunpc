@@ -7,6 +7,1203 @@ export type Json =
   | Json[];
 
 export type Database = {
+  pc_build: {
+    Tables: {
+      build_categories: {
+        Row: {
+          build_id: number;
+          category_id: number;
+          id: number;
+        };
+        Insert: {
+          build_id: number;
+          category_id: number;
+          id?: number;
+        };
+        Update: {
+          build_id?: number;
+          category_id?: number;
+          id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "buid_categories_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_categories_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "builds";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_categories_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "v_builds";
+            referencedColumns: ["build_id"];
+          },
+        ];
+      };
+      build_internal_storages: {
+        Row: {
+          build_id: number;
+          id: number;
+          internal_storage_product_detail_id: number | null;
+          internal_storage_product_id: number;
+        };
+        Insert: {
+          build_id: number;
+          id?: number;
+          internal_storage_product_detail_id?: number | null;
+          internal_storage_product_id: number;
+        };
+        Update: {
+          build_id?: number;
+          id?: number;
+          internal_storage_product_detail_id?: number | null;
+          internal_storage_product_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "build_internal_storages_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "builds";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "v_builds";
+            referencedColumns: ["build_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_detail_i_fkey2";
+            columns: ["internal_storage_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_detail_i_fkey2";
+            columns: ["internal_storage_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["product_detail_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_casings";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_cpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_gpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_internal_storages";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_memories";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_monitors";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_motherboards";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_power_supplies";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_images";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_internal_storages_internal_storage_product_id_fkey1";
+            columns: ["internal_storage_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_products";
+            referencedColumns: ["product_id"];
+          },
+        ];
+      };
+      build_memories: {
+        Row: {
+          build_id: number;
+          id: number;
+          memory_product_detail_id: number | null;
+          memory_product_id: number;
+        };
+        Insert: {
+          build_id: number;
+          id?: number;
+          memory_product_detail_id?: number | null;
+          memory_product_id: number;
+        };
+        Update: {
+          build_id?: number;
+          id?: number;
+          memory_product_detail_id?: number | null;
+          memory_product_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "build_memories_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "builds";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_memories_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "v_builds";
+            referencedColumns: ["build_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_detail_id_fkey1";
+            columns: ["memory_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_detail_id_fkey1";
+            columns: ["memory_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["product_detail_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_casings";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_cpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_gpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_internal_storages";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_memories";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_monitors";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_motherboards";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_power_supplies";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_images";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_memories_memory_product_id_fkey";
+            columns: ["memory_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_products";
+            referencedColumns: ["product_id"];
+          },
+        ];
+      };
+      build_monitors: {
+        Row: {
+          build_id: number;
+          id: number;
+          monitor_product_detail_id: number | null;
+          monitor_product_id: number;
+        };
+        Insert: {
+          build_id: number;
+          id?: number;
+          monitor_product_detail_id?: number | null;
+          monitor_product_id: number;
+        };
+        Update: {
+          build_id?: number;
+          id?: number;
+          monitor_product_detail_id?: number | null;
+          monitor_product_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "build_monitors_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "builds";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_monitors_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "v_builds";
+            referencedColumns: ["build_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_detail_id_fkey";
+            columns: ["monitor_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_detail_id_fkey";
+            columns: ["monitor_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["product_detail_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_casings";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_cpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_gpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_internal_storages";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_memories";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_monitors";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_motherboards";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_power_supplies";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_images";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "build_monitors_monitor_product_id_fkey";
+            columns: ["monitor_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_products";
+            referencedColumns: ["product_id"];
+          },
+        ];
+      };
+      builds: {
+        Row: {
+          casing_product_detail_id: number | null;
+          casing_product_id: number | null;
+          cpu_cooler_product_detail_id: number | null;
+          cpu_cooler_product_id: number | null;
+          cpu_product_detail_id: number | null;
+          cpu_product_id: number | null;
+          created_at: string | null;
+          gpu_product_detail_id: number | null;
+          gpu_product_id: number | null;
+          id: number;
+          motherboard_product_detail_id: number | null;
+          motherboard_product_id: number | null;
+          power_supply_product_detail_id: number | null;
+          power_supply_product_id: number | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          casing_product_detail_id?: number | null;
+          casing_product_id?: number | null;
+          cpu_cooler_product_detail_id?: number | null;
+          cpu_cooler_product_id?: number | null;
+          cpu_product_detail_id?: number | null;
+          cpu_product_id?: number | null;
+          created_at?: string | null;
+          gpu_product_detail_id?: number | null;
+          gpu_product_id?: number | null;
+          id?: number;
+          motherboard_product_detail_id?: number | null;
+          motherboard_product_id?: number | null;
+          power_supply_product_detail_id?: number | null;
+          power_supply_product_id?: number | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          casing_product_detail_id?: number | null;
+          casing_product_id?: number | null;
+          cpu_cooler_product_detail_id?: number | null;
+          cpu_cooler_product_id?: number | null;
+          cpu_product_detail_id?: number | null;
+          cpu_product_id?: number | null;
+          created_at?: string | null;
+          gpu_product_detail_id?: number | null;
+          gpu_product_id?: number | null;
+          id?: number;
+          motherboard_product_detail_id?: number | null;
+          motherboard_product_id?: number | null;
+          power_supply_product_detail_id?: number | null;
+          power_supply_product_id?: number | null;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "builds_casing_product_detail_id_fkey";
+            columns: ["casing_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_detail_id_fkey";
+            columns: ["casing_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["product_detail_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_casings";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_cpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_gpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_internal_storages";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_memories";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_monitors";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_motherboards";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_power_supplies";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_images";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_casing_product_id_fkey";
+            columns: ["casing_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_products";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_detail_id_fkey";
+            columns: ["cpu_cooler_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_detail_id_fkey";
+            columns: ["cpu_cooler_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["product_detail_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_casings";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_cpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_gpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_internal_storages";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_memories";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_monitors";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_motherboards";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_power_supplies";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_images";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_cooler_product_id_fkey";
+            columns: ["cpu_cooler_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_products";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_detail_id_fkey";
+            columns: ["cpu_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_detail_id_fkey";
+            columns: ["cpu_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["product_detail_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_casings";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_cpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_gpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_internal_storages";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_memories";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_monitors";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_motherboards";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_power_supplies";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_images";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_cpu_product_id_fkey";
+            columns: ["cpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_products";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_detail_id_fkey";
+            columns: ["gpu_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_detail_id_fkey";
+            columns: ["gpu_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["product_detail_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_casings";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_cpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_gpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_internal_storages";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_memories";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_monitors";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_motherboards";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_power_supplies";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_images";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_gpu_product_id_fkey";
+            columns: ["gpu_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_products";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_detail_id_fkey";
+            columns: ["motherboard_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_detail_id_fkey";
+            columns: ["motherboard_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["product_detail_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_casings";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_cpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_gpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_internal_storages";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_memories";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_monitors";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_motherboards";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_power_supplies";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_images";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_motherboard_product_id_fkey";
+            columns: ["motherboard_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_products";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_detail_id_fkey";
+            columns: ["power_supply_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_detail_id_fkey";
+            columns: ["power_supply_product_detail_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["product_detail_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_casings";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_cpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_gpus";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_internal_storages";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_memories";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_monitors";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_motherboards";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_power_supplies";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_images";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "builds_power_supply_product_id_fkey";
+            columns: ["power_supply_product_id"];
+            isOneToOne: false;
+            referencedRelation: "v_products";
+            referencedColumns: ["product_id"];
+          },
+        ];
+      };
+      categories: {
+        Row: {
+          category_name: string | null;
+          id: number;
+        };
+        Insert: {
+          category_name?: string | null;
+          id?: number;
+        };
+        Update: {
+          category_name?: string | null;
+          id?: number;
+        };
+        Relationships: [];
+      };
+      recommendation_builds: {
+        Row: {
+          build_id: number | null;
+          case_description: string | null;
+          cpu_cooler_description: string | null;
+          cpu_description: string | null;
+          description: string | null;
+          gpu_description: string | null;
+          id: number;
+          internal_storage_description: string | null;
+          memory_description: string | null;
+          monitor_description: string | null;
+          motherboard_description: string | null;
+          psu_description: string | null;
+          slug: string;
+          title: string;
+        };
+        Insert: {
+          build_id?: number | null;
+          case_description?: string | null;
+          cpu_cooler_description?: string | null;
+          cpu_description?: string | null;
+          description?: string | null;
+          gpu_description?: string | null;
+          id?: number;
+          internal_storage_description?: string | null;
+          memory_description?: string | null;
+          monitor_description?: string | null;
+          motherboard_description?: string | null;
+          psu_description?: string | null;
+          slug: string;
+          title: string;
+        };
+        Update: {
+          build_id?: number | null;
+          case_description?: string | null;
+          cpu_cooler_description?: string | null;
+          cpu_description?: string | null;
+          description?: string | null;
+          gpu_description?: string | null;
+          id?: number;
+          internal_storage_description?: string | null;
+          memory_description?: string | null;
+          monitor_description?: string | null;
+          motherboard_description?: string | null;
+          psu_description?: string | null;
+          slug?: string;
+          title?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "recommendation_builds_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "builds";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "recommendation_builds_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: false;
+            referencedRelation: "v_builds";
+            referencedColumns: ["build_id"];
+          },
+        ];
+      };
+      user_builds: {
+        Row: {
+          build_code: string;
+          build_id: number | null;
+          built_at: string | null;
+          description: string | null;
+          id: number;
+          is_published: boolean | null;
+          published_at: string | null;
+          title: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          build_code: string;
+          build_id?: number | null;
+          built_at?: string | null;
+          description?: string | null;
+          id?: number;
+          is_published?: boolean | null;
+          published_at?: string | null;
+          title?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          build_code?: string;
+          build_id?: number | null;
+          built_at?: string | null;
+          description?: string | null;
+          id?: number;
+          is_published?: boolean | null;
+          published_at?: string | null;
+          title?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "public_user_builds_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_builds_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: true;
+            referencedRelation: "builds";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_builds_build_id_fkey";
+            columns: ["build_id"];
+            isOneToOne: true;
+            referencedRelation: "v_builds";
+            referencedColumns: ["build_id"];
+          },
+        ];
+      };
+    };
+    Views: {
+      v_builds: {
+        Row: {
+          build_id: number | null;
+          casing: Json | null;
+          cpu: Json | null;
+          cpu_cooler: Json | null;
+          gpu: Json | null;
+          internal_storages: Json | null;
+          memories: Json | null;
+          monitors: Json | null;
+          motherboard: Json | null;
+          power_supply: Json | null;
+          total_price: number | null;
+        };
+        Relationships: [];
+      };
+    };
+    Functions: {
+      slugify: {
+        Args: {
+          value: string;
+        };
+        Returns: string;
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
   product: {
     Tables: {
       brands: {
@@ -635,21 +1832,15 @@ export type Database = {
       gpu_chipsets: {
         Row: {
           id: number;
-          min_psu_watt: number | null;
           name: string;
-          tdp_watt: number | null;
         };
         Insert: {
           id?: number;
-          min_psu_watt?: number | null;
           name: string;
-          tdp_watt?: number | null;
         };
         Update: {
           id?: number;
-          min_psu_watt?: number | null;
           name?: string;
-          tdp_watt?: number | null;
         };
         Relationships: [];
       };
@@ -658,18 +1849,21 @@ export type Database = {
           base_clock_mhz: number | null;
           boost_clock_mhz: number | null;
           bus_interface: Database["public"]["Enums"]["bus_interface"] | null;
+          color_variants: string[] | null;
           core_count: number | null;
           display_output: string | null;
+          fan_count: number | null;
           gpu_chipset_id: number | null;
           gpu_memory_type:
             | Database["public"]["Enums"]["gpu_memory_type"]
             | null;
           height_mm: number | null;
           id: number;
+          is_oc: boolean | null;
           length_mm: number | null;
           memory_bus_bit: number | null;
           min_psu_watt: number | null;
-          power_input: string | null;
+          power_connector: string | null;
           product_id: number;
           tdp_watt: number | null;
           vram_gb: number | null;
@@ -679,18 +1873,21 @@ export type Database = {
           base_clock_mhz?: number | null;
           boost_clock_mhz?: number | null;
           bus_interface?: Database["public"]["Enums"]["bus_interface"] | null;
+          color_variants?: string[] | null;
           core_count?: number | null;
           display_output?: string | null;
+          fan_count?: number | null;
           gpu_chipset_id?: number | null;
           gpu_memory_type?:
             | Database["public"]["Enums"]["gpu_memory_type"]
             | null;
           height_mm?: number | null;
           id?: number;
+          is_oc?: boolean | null;
           length_mm?: number | null;
           memory_bus_bit?: number | null;
           min_psu_watt?: number | null;
-          power_input?: string | null;
+          power_connector?: string | null;
           product_id: number;
           tdp_watt?: number | null;
           vram_gb?: number | null;
@@ -700,18 +1897,21 @@ export type Database = {
           base_clock_mhz?: number | null;
           boost_clock_mhz?: number | null;
           bus_interface?: Database["public"]["Enums"]["bus_interface"] | null;
+          color_variants?: string[] | null;
           core_count?: number | null;
           display_output?: string | null;
+          fan_count?: number | null;
           gpu_chipset_id?: number | null;
           gpu_memory_type?:
             | Database["public"]["Enums"]["gpu_memory_type"]
             | null;
           height_mm?: number | null;
           id?: number;
+          is_oc?: boolean | null;
           length_mm?: number | null;
           memory_bus_bit?: number | null;
           min_psu_watt?: number | null;
-          power_input?: string | null;
+          power_connector?: string | null;
           product_id?: number;
           tdp_watt?: number | null;
           vram_gb?: number | null;
@@ -812,6 +2012,7 @@ export type Database = {
           interface: string | null;
           product_id: number | null;
           read_speed_mbs: number | null;
+          tbw: number | null;
           type: Database["public"]["Enums"]["storage_type"];
           write_speed_mbs: number | null;
         };
@@ -822,6 +2023,7 @@ export type Database = {
           interface?: string | null;
           product_id?: number | null;
           read_speed_mbs?: number | null;
+          tbw?: number | null;
           type: Database["public"]["Enums"]["storage_type"];
           write_speed_mbs?: number | null;
         };
@@ -832,6 +2034,7 @@ export type Database = {
           interface?: string | null;
           product_id?: number | null;
           read_speed_mbs?: number | null;
+          tbw?: number | null;
           type?: Database["public"]["Enums"]["storage_type"];
           write_speed_mbs?: number | null;
         };
@@ -1589,39 +2792,45 @@ export type Database = {
       };
       product_details: {
         Row: {
+          created_at: string | null;
           id: number;
           is_official_store: boolean | null;
-          marketplace_id: number | null;
+          marketplace_id: number;
           price: number | null;
           product_detail_description_id: number | null;
           product_id: number;
           seller_city: string | null;
           seller_name: string | null;
           stock: number | null;
+          updated_at: string | null;
           url: string;
         };
         Insert: {
+          created_at?: string | null;
           id?: number;
           is_official_store?: boolean | null;
-          marketplace_id?: number | null;
+          marketplace_id?: number;
           price?: number | null;
           product_detail_description_id?: number | null;
           product_id: number;
           seller_city?: string | null;
           seller_name?: string | null;
           stock?: number | null;
+          updated_at?: string | null;
           url?: string;
         };
         Update: {
+          created_at?: string | null;
           id?: number;
           is_official_store?: boolean | null;
-          marketplace_id?: number | null;
+          marketplace_id?: number;
           price?: number | null;
           product_detail_description_id?: number | null;
           product_id?: number;
           seller_city?: string | null;
           seller_name?: string | null;
           stock?: number | null;
+          updated_at?: string | null;
           url?: string;
         };
         Relationships: [
@@ -1631,6 +2840,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "marketplaces";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_details_marketplace_id_fkey";
+            columns: ["marketplace_id"];
+            isOneToOne: false;
+            referencedRelation: "v_product_details";
+            referencedColumns: ["marketplace_id"];
           },
           {
             foreignKeyName: "product_details_product_detail_description_id_fkey";
@@ -2019,9 +3235,11 @@ export type Database = {
           brand_name: string | null;
           bus_interface: Database["public"]["Enums"]["bus_interface"] | null;
           chipset: string | null;
+          color_variants: string[] | null;
           core_count: number | null;
           description: string | null;
           display_output: string | null;
+          fan_count: number | null;
           gpu_chipset_id: number | null;
           gpu_id: number | null;
           gpu_memory_type:
@@ -2029,11 +3247,12 @@ export type Database = {
             | null;
           height_mm: number | null;
           image_filenames: string[] | null;
+          is_oc: boolean | null;
           length_mm: number | null;
           lowest_price: number | null;
           memory_bus_bit: number | null;
           min_psu_watt: number | null;
-          power_input: string | null;
+          power_connector: string | null;
           product_id: number | null;
           product_name: string | null;
           review_urls: string[] | null;
@@ -2227,6 +3446,8 @@ export type Database = {
       };
       v_product_details: {
         Row: {
+          is_official_store: boolean | null;
+          marketplace_id: number | null;
           marketplace_name: string | null;
           price: number | null;
           product_detail_description: string | null;
@@ -2495,15 +3716,7 @@ export type Database = {
           id?: number;
           slug?: string | null;
         };
-        Relationships: [
-          {
-            foreignKeyName: "public_recommendation_builds_build_id_fkey";
-            columns: ["build_id"];
-            isOneToOne: false;
-            referencedRelation: "builds";
-            referencedColumns: ["id"];
-          },
-        ];
+        Relationships: [];
       };
       reviews: {
         Row: {

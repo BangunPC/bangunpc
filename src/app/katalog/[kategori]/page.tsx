@@ -33,6 +33,7 @@ import {
   ComponentStorageHelper,
   ComponentStorageType,
 } from "~/lib/storage_helper";
+import Image from "next/image";
 
 const KategoriPage = ({
   params,
@@ -447,7 +448,7 @@ const DesktopTable = ({
                     href={`/detail/${kategori}/${component.slug}-${component.product_id}${isIframe ? "?iframe=true" : ""}`}
                   >
                     {component.image_filenames.length > 0 && (
-                      <img
+                      <Image
                         src={componentImage(component)}
                         alt={`Gambar ${component.product_name}`}
                         width={64}

@@ -16,7 +16,10 @@ const FormLogin = () => {
       setLoading(true);
       const { error } = await createClient().auth.signInWithOtp({
         email: email.trim(),
-        options: { shouldCreateUser: true },
+        options: {
+          shouldCreateUser: true,
+          emailRedirectTo: window.location.href,
+        },
       });
       if (error) throw error;
     } catch (error) {

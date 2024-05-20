@@ -1,8 +1,19 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
+import * as React from "react";
 
+import { User as SupabaseUser } from "@supabase/supabase-js";
+import {
+  Heart,
+  LogOut,
+  MonitorSmartphone,
+  Settings2,
+  User,
+} from "lucide-react";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import FormLogin from "~/components/login/form-login";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,16 +23,9 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
-import { NavbarIcon } from "./icon/navbar-icon";
-import FormLogin from "~/components/login/form-login";
-import { ModeToggle } from "./mode-toggle";
+import { ComponentCategory, categoriesFromEnum } from "~/lib/db";
+import { createClient } from "~/lib/supabase/client";
 import { cn, createQueryString, removeQueryString } from "~/lib/utils";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./dropdown-menu";
 import { Button } from "./button";
 import {
   Dialog,
@@ -30,21 +34,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
-import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
-import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
-import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
-import { createClient } from "~/lib/supabase/client";
-import {
-  Heart,
-  LogOut,
-  MonitorSmartphone,
-  Settings2,
-  User,
-} from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
-import { User as SupabaseUser } from "@supabase/supabase-js";
 import Divider from "./divider";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
+import { NavbarIcon } from "./icon/navbar-icon";
+import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
+import { ModeToggle } from "./mode-toggle";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 export function Navbar() {
   const supabase = createClient();
