@@ -1,7 +1,7 @@
 "use client";
 
 import { DialogContent } from "@radix-ui/react-dialog";
-import { ArrowLeft, Banknote, Trash, Undo2, X } from "lucide-react";
+import { Banknote, Trash, Undo2, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
@@ -13,10 +13,11 @@ import KategoriInternalStorage from "~/components/ui/icon/kategori-internal-stor
 import KategoriMotherboard from "~/components/ui/icon/kategori-motherboard";
 import KategoriPsu from "~/components/ui/icon/kategori-psu";
 import KategoriRam from "~/components/ui/icon/kategori-ram";
-import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
+import { ScrollArea } from "~/components/ui/scroll-area";
+import { ComponentCategory, categoriesFromEnum } from "~/lib/db";
 import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
 import KategoriPage from "../katalog/[kategori]/page";
-import { ScrollArea } from "~/components/ui/scroll-area";
+import Image from "next/image";
 
 const headers = [
   "Kategori Komponen",
@@ -27,7 +28,7 @@ const headers = [
 
 export default function HomePage() {
   const [cpu, setComponentCpu] = useState([] as ComponentStorageType[]);
-  const [cooler, setComponentCooler] = useState([] as ComponentStorageType[]);
+  // const [cooler, setComponentCooler] = useState([] as ComponentStorageType[]);
   const [motherboard, setComponentMotherboard] = useState(
     [] as ComponentStorageType[],
   );
@@ -36,32 +37,32 @@ export default function HomePage() {
   const [gpu, setComponentGpu] = useState([] as ComponentStorageType[]);
   const [psu, setComponentPsu] = useState([] as ComponentStorageType[]);
   const [casing, setComponentCasing] = useState([] as ComponentStorageType[]);
-  const [caseFan, setComponentCaseFan] = useState([] as ComponentStorageType[]);
-  const [monitor, setComponentMonitor] = useState([] as ComponentStorageType[]);
-  const [os, setComponentOs] = useState([] as ComponentStorageType[]);
-  const [soundCard, setComponentSoundCard] = useState(
-    [] as ComponentStorageType[],
-  );
-  const [wiredNetwork, setComponentWiredNetwork] = useState(
-    [] as ComponentStorageType[],
-  );
-  const [wirelessNetwork, setComponentWirelessNetwork] = useState(
-    [] as ComponentStorageType[],
-  );
-  const [cable, setComponentCable] = useState([] as ComponentStorageType[]);
-  const [externalDrive, setComponentExternalDrive] = useState(
-    [] as ComponentStorageType[],
-  );
-  const [headphone, setComponentHeadphone] = useState(
-    [] as ComponentStorageType[],
-  );
-  const [keyboard, setComponentKeyboard] = useState(
-    [] as ComponentStorageType[],
-  );
-  const [mouse, setComponentMouse] = useState([] as ComponentStorageType[]);
-  const [speaker, setComponentSpeaker] = useState([] as ComponentStorageType[]);
-  const [webcam, setComponentWebcam] = useState([] as ComponentStorageType[]);
-  const [printer, setComponentPrinter] = useState([] as ComponentStorageType[]);
+  // const [caseFan, setComponentCaseFan] = useState([] as ComponentStorageType[]);
+  // const [monitor, setComponentMonitor] = useState([] as ComponentStorageType[]);
+  // const [os, setComponentOs] = useState([] as ComponentStorageType[]);
+  // const [soundCard, setComponentSoundCard] = useState(
+  //   [] as ComponentStorageType[],
+  // );
+  // const [wiredNetwork, setComponentWiredNetwork] = useState(
+  //   [] as ComponentStorageType[],
+  // );
+  // const [wirelessNetwork, setComponentWirelessNetwork] = useState(
+  //   [] as ComponentStorageType[],
+  // );
+  // const [cable, setComponentCable] = useState([] as ComponentStorageType[]);
+  // const [externalDrive, setComponentExternalDrive] = useState(
+  //   [] as ComponentStorageType[],
+  // );
+  // const [headphone, setComponentHeadphone] = useState(
+  //   [] as ComponentStorageType[],
+  // );
+  // const [keyboard, setComponentKeyboard] = useState(
+  //   [] as ComponentStorageType[],
+  // );
+  // const [mouse, setComponentMouse] = useState([] as ComponentStorageType[]);
+  // const [speaker, setComponentSpeaker] = useState([] as ComponentStorageType[]);
+  // const [webcam, setComponentWebcam] = useState([] as ComponentStorageType[]);
+  // const [printer, setComponentPrinter] = useState([] as ComponentStorageType[]);
 
   const [kategori, setKategori] = useState<ComponentCategory | null>(null);
 
@@ -121,9 +122,9 @@ export default function HomePage() {
     setComponentCpu(
       ComponentStorage.getComponentsByCategory(ComponentCategory.CPU),
     );
-    setComponentCooler(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Cooler),
-    );
+    // setComponentCooler(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.Cooler),
+    // );
     setComponentMotherboard(
       ComponentStorage.getComponentsByCategory(ComponentCategory.Motherboard),
     );
@@ -142,50 +143,50 @@ export default function HomePage() {
     setComponentCasing(
       ComponentStorage.getComponentsByCategory(ComponentCategory.Casing),
     );
-    setComponentCaseFan(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.CaseFan),
-    );
-    setComponentMonitor(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Monitor),
-    );
-    setComponentOs(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.OS),
-    );
-    setComponentSoundCard(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.SoundCard),
-    );
-    setComponentWiredNetwork(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.WiredNetwork),
-    );
-    setComponentWirelessNetwork(
-      ComponentStorage.getComponentsByCategory(
-        ComponentCategory.WirelessNetwork,
-      ),
-    );
-    setComponentCable(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Cable),
-    );
-    setComponentExternalDrive(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.ExternalDrive),
-    );
-    setComponentHeadphone(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Headphone),
-    );
-    setComponentKeyboard(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Keyboard),
-    );
-    setComponentMouse(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Mouse),
-    );
-    setComponentSpeaker(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Speaker),
-    );
-    setComponentWebcam(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Webcam),
-    );
-    setComponentPrinter(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Printer),
-    );
+    // setComponentCaseFan(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.CaseFan),
+    // );
+    // setComponentMonitor(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.Monitor),
+    // );
+    // setComponentOs(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.OS),
+    // );
+    // setComponentSoundCard(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.SoundCard),
+    // );
+    // setComponentWiredNetwork(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.WiredNetwork),
+    // );
+    // setComponentWirelessNetwork(
+    //   ComponentStorage.getComponentsByCategory(
+    //     ComponentCategory.WirelessNetwork,
+    //   ),
+    // );
+    // setComponentCable(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.Cable),
+    // );
+    // setComponentExternalDrive(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.ExternalDrive),
+    // );
+    // setComponentHeadphone(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.Headphone),
+    // );
+    // setComponentKeyboard(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.Keyboard),
+    // );
+    // setComponentMouse(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.Mouse),
+    // );
+    // setComponentSpeaker(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.Speaker),
+    // );
+    // setComponentWebcam(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.Webcam),
+    // );
+    // setComponentPrinter(
+    //   ComponentStorage.getComponentsByCategory(ComponentCategory.Printer),
+    // );
   };
 
   useEffect(() => {
@@ -221,24 +222,7 @@ export default function HomePage() {
   //   setComponentPrinter(storageComponents.filter((c) => c.category === ComponentCategory.Printer));
   // }, [storageComponents]);
 
-  function convertToUrlQuery(object: any) {
-    const isObject = (val: any) => val && typeof val === "object";
-
-    const transformObject = (obj: any) =>
-      Object.entries(obj)
-        .map(([key, value]) => {
-          const transformedKey = isObject(key) ? JSON.stringify(key) : key;
-          const transformedValue = isObject(value)
-            ? JSON.stringify(value)
-            : value;
-          return `${transformedKey}=${transformedValue as string}`;
-        })
-        .join("&");
-
-    return transformObject(object);
-  }
-
-  type cpuUrlQuery = {
+  type cpuQuery = {
     motherboardId: number | undefined;
     memories: { id: number; amount: number }[] | undefined;
   };
@@ -247,7 +231,7 @@ export default function HomePage() {
     let query = {} as any;
     switch (item.title) {
       case "CPU":
-        query = {} as cpuUrlQuery;
+        query = {} as cpuQuery;
         if (motherboard.length > 0) {
           query.motherboardId = parseInt(motherboard[0]!.id);
         }
@@ -326,7 +310,7 @@ export default function HomePage() {
                             }/${component.slug}-${component.id}`}
                             passHref
                           >
-                            <img
+                            <Image
                               src={component.image}
                               alt={component.name}
                               width={32}

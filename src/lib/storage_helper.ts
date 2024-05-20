@@ -9,7 +9,7 @@ class LocalStorageHelper {
 
     static getItem<T>(key: string): T | null {
         const item = localStorage.getItem(key);
-        return item ? JSON.parse(item) : null;
+        return item ? JSON.parse(item) as T : null;
     }
 
     static removeItem(key: string) {
@@ -33,7 +33,7 @@ export type ComponentStorageType = {
 
 export class ComponentStorageHelper {
     static addComponent(component: ComponentStorageType) {
-        let components = this.getComponents();
+        const components = this.getComponents();
         // const index = components.findIndex(c => c.id === component.id);
         // if (index !== -1) {
         //     components[index].quantity += component.quantity;
@@ -44,22 +44,22 @@ export class ComponentStorageHelper {
     }
 
     static getComponents(): ComponentStorageType[] {
-        return LocalStorageHelper.getItem('components') || [];
+        return LocalStorageHelper.getItem('components') ?? [];
     }
 
     static getComponentsByCategory(category: ComponentCategory) {
-        let components: ComponentStorageType[] = LocalStorageHelper.getItem('components') || [];
+        const components: ComponentStorageType[] = LocalStorageHelper.getItem('components') ?? [];
         return components.filter(component => component.category === category);
     }
 
     static removeComponentById(id: string) {
-        let components: ComponentStorageType[] = LocalStorageHelper.getItem('components') || [];
+        let components: ComponentStorageType[] = LocalStorageHelper.getItem('components') ?? [];
         components = components.filter(component => component.id !== id);
         LocalStorageHelper.setItem('components', components);
     }
 
     static updateComponent(id: string, updatedComponent: ComponentStorageType) {
-        let components: ComponentStorageType[] = LocalStorageHelper.getItem('components') || [];
+        const components: ComponentStorageType[] = LocalStorageHelper.getItem('components') ?? [];
         const index = components.findIndex(component => component.id === id);
         if (index !== -1) {
             components[index] = { ...components[index], ...updatedComponent };
@@ -73,7 +73,7 @@ export class ComponentStorageHelper {
      * @return {number} The total price of all components.
      */
     static totalPrice() {
-        let components = this.getComponents();
+        const components = this.getComponents();
         return components.reduce((total, component) => total + (component.price * component.quantity), 0);
     }
 

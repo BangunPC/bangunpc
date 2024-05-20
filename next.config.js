@@ -9,6 +9,9 @@ const config = {
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
+  images: {
+    domains: ["onawoodgnwkncueeyusr.supabase.co"],
+  },
 };
 
 export default config;
