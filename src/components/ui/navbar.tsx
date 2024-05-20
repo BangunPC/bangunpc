@@ -216,13 +216,17 @@ export function Navbar() {
       </PopoverTrigger>
       <PopoverContent className="w-fit p-0">
         <div className="flex flex-col items-start justify-start p-4">
-          {/* <h3 className="mb-4 text-lg font-bold">{ }</h3> */}
-          <div className="flex items-center gap-2 mb-2">
+          <div className="mb-2 flex items-center gap-2">
             <User
               size={48}
               className="rounded-full bg-primary p-2 text-white dark:bg-primary/80"
             />
-            <p className="">{user?.email ?? ""}</p>
+            <div className="flex flex-col gap-0 items-start justify-start">
+              <h3 className="text-lg font-bold">
+                {user?.email?.split("@")[0] ?? ""}
+              </h3>
+              <p className="p-0 text-foreground/80">{user?.email ?? ""}</p>
+            </div>
           </div>
           <Divider className="my-1" />
           <Link href="/profile" passHref className="w-full justify-start">
