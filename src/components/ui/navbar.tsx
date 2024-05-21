@@ -5,41 +5,44 @@ import * as React from "react";
 
 import { User as SupabaseUser } from "@supabase/supabase-js";
 import {
-  Heart,
-  LogOut,
-  MonitorSmartphone,
-  Settings2,
-  User,
+    ChevronDown,
+    Heart,
+    LogOut,
+    MonitorSmartphone,
+    Settings2,
+    User,
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import FormLogin from "~/components/login/form-login";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+    NavigationMenu,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { ComponentCategory, categoriesFromEnum } from "~/lib/db";
 import { createClient } from "~/lib/supabase/client";
 import { cn, createQueryString, removeQueryString } from "~/lib/utils";
 import { Button } from "./button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from "./dialog";
 import Divider from "./divider";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuPortal,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger,
 } from "./dropdown-menu";
 import { NavbarIcon } from "./icon/navbar-icon";
 import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
@@ -404,43 +407,52 @@ export function Navbar() {
               </NavigationMenuContent>
             </NavigationMenuItem> */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger className={"bg-transparent"}>
-                Rakit PC
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="">
-                <ul className="w-[240px] p-4">
-                  <Link href="/simulasi" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start bg-transparent",
-                      )}
-                    >
-                      Simulasi Rakit PC
-                    </NavigationMenuLink>
-                  </Link>
-                  <Link href="/rekomendasi" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start bg-transparent",
-                      )}
-                    >
-                      Rekomendasi Rakitan
-                    </NavigationMenuLink>
-                  </Link>
-                  <Link href="/showcase" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start bg-transparent",
-                      )}
-                    >
-                      Showcase
-                    </NavigationMenuLink>
-                  </Link>
-                </ul>
-              </NavigationMenuContent>
+              <Popover>
+                <PopoverTrigger>
+                  <div
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "bg-transparent",
+                    )}
+                  >
+                    Rakit PC <ChevronDown size={18} className="inline-block" />
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-fit p-0">
+                  <ul className="w-[240px] p-4">
+                    <Link href="/simulasi" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "w-full justify-start bg-transparent",
+                        )}
+                      >
+                        Simulasi Rakit PC
+                      </NavigationMenuLink>
+                    </Link>
+                    <Link href="/rekomendasi" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "w-full justify-start bg-transparent",
+                        )}
+                      >
+                        Rekomendasi Rakitan
+                      </NavigationMenuLink>
+                    </Link>
+                    <Link href="/showcase" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "w-full justify-start bg-transparent",
+                        )}
+                      >
+                        Showcase
+                      </NavigationMenuLink>
+                    </Link>
+                  </ul>
+                </PopoverContent>
+              </Popover>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/blog" legacyBehavior passHref>
@@ -475,11 +487,47 @@ export function Navbar() {
                   Jasa
                 </DropdownMenuItem>
               </Link>
-              <Link href="/rakit" passHref>
-                <DropdownMenuItem className="cursor-pointer p-4">
-                  Rakit PC
-                </DropdownMenuItem>
-              </Link>
+
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger className="h-[52px] p-4">Rakit PC</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent className="w-fit p-0">
+                    <ul className="w-[240px] p-4">
+                      <Link href="/simulasi" legacyBehavior passHref>
+                        <DropdownMenuItem
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "cursor-pointer w-full justify-start bg-transparent",
+                          )}
+                        >
+                          Simulasi Rakit PC
+                        </DropdownMenuItem>
+                      </Link>
+                      <Link href="/rekomendasi" legacyBehavior passHref>
+                        <DropdownMenuItem
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "cursor-pointer w-full justify-start bg-transparent",
+                          )}
+                        >
+                          Rekomendasi Rakitan
+                        </DropdownMenuItem>
+                      </Link>
+                      <Link href="/showcase" legacyBehavior passHref>
+                        <DropdownMenuItem
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "cursor-pointer w-full justify-start bg-transparent",
+                          )}
+                        >
+                          Showcase
+                        </DropdownMenuItem>
+                      </Link>
+                    </ul>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+
               <Link href="/blog" passHref>
                 <DropdownMenuItem className="cursor-pointer p-4">
                   Blog

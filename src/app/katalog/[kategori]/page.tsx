@@ -1,45 +1,63 @@
 "use client";
 
 import {
-  categoriesFromString,
-  categoryTitlesFromEnum,
-  motherboardKeys,
-  cpuKeys,
-  casingKeys,
-  gpuKeys,
-  memoryKeys,
-  psuKeys,
-  storageKeys,
-  ComponentCategory,
-  categoryHeaders,
+    ComponentCategory,
+    casingKeys,
+    categoriesFromString,
+    categoryHeaders,
+    categoryTitlesFromEnum,
+    cpuKeys,
+    gpuKeys,
+    memoryKeys,
+    motherboardKeys,
+    psuKeys,
+    storageKeys,
 } from "~/lib/db";
 
+import { SidebarClose, SidebarOpen } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { Button } from "~/components/ui/button";
-import { SidebarClose, SidebarOpen } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { componentImage } from "~/lib/utils";
-import Link from "next/link";
-import { getMotherboard } from "~/lib/component_api/motherboard";
 import Spinner from "~/components/ui/spinner-loading";
+import { getCasing } from "~/lib/component_api/casing";
 import { getCpu } from "~/lib/component_api/cpu";
 import { getGpu } from "~/lib/component_api/gpu";
 import { getMemory } from "~/lib/component_api/memory";
+import { getMotherboard } from "~/lib/component_api/motherboard";
 import { getPsu } from "~/lib/component_api/psu";
 import { getStorage } from "~/lib/component_api/storage";
-import { getCasing } from "~/lib/component_api/casing";
-import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
 import {
-  ComponentStorageHelper,
-  ComponentStorageType,
+    ComponentStorageHelper,
+    ComponentStorageType,
 } from "~/lib/storage_helper";
-import Image from "next/image";
+import { componentImage } from "~/lib/utils";
+import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
 
 const KategoriPage = ({
   params,
 }: {
   params: { kategori: string; noTopH: boolean | null; onSuccess?: () => void };
 }) => {
+  const [price, setPrice] = React.useState(0);
+  const [total, setTotal] = React.useState(0);
+
+  useEffect(() => {
+    const refresh = () => {
+      const components = ComponentStorageHelper.getComponents();
+      setPrice(components.reduce((acc, component) => acc + component.price, 0));
+      setTotal(
+        components.reduce((acc, component) => acc + component.quantity, 0),
+      );
+    };
+    refresh();
+    const interval = setInterval(() => {
+      refresh();
+    }, 1500);
+    return () => clearInterval(interval);
+  }, []);
+
   const category = categoriesFromString[params.kategori]!;
   const [hideSidebar, setHideSidebar] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -171,9 +189,6 @@ const KategoriPage = ({
     </div>
   );
 
-  const price = 0;
-  const total = 0;
-
   return (
     <div>
       <div className="py-4">
@@ -181,8 +196,8 @@ const KategoriPage = ({
         <div className="flex flex-row pt-4 tablet:pt-0">
           <div
             className={`${
-              hideSidebar ? "hidden" : ""
-            } desktop:m-0 desktop:block`}
+              hideSidebar ? "hidden" : "m-auto"
+            } tablet:m-0 desktop:block`}
           >
             <CatalogueSidebar
               price={price}
@@ -269,12 +284,13 @@ const KategoriPage = ({
               </div>
             ) : (
               <div>
-                {/* <MobileTable
-                key={`${url.search}`}
-                data={data.filteredData}
-                headers={categoryHeaders[kategori]}
-                kategori={kategori}
-              /> */}
+                <MobileTable
+                  data={data.filteredData}
+                  headers={categoryHeaders[category]}
+                  kategori={params.kategori}
+                  isIframe={params.noTopH ?? false}
+                  onSuccess={params.onSuccess}
+                />
                 <DesktopTable
                   // key={`${url.search}`}
                   data={data.filteredData}
@@ -489,5 +505,81 @@ const DesktopTable = ({
         })}
       </tbody>
     </table>
+  );
+};
+
+const MobileTable = ({
+  data,
+  headers,
+  kategori,
+  onSuccess,
+}: TableType) => {
+  return (
+    <div className="flex flex-col gap-1 transition-all duration-200 tablet:hidden">
+      {data?.map((component: any) => {
+        const handleAddComponent = () => {
+          const componentAdded: ComponentStorageType = {
+            id: component.product_id,
+            name: component.product_name,
+            price: component.lowest_price,
+            image: componentImage(component),
+            category: categoriesFromString[kategori]!,
+            quantity: 1,
+            slug: component.slug,
+          };
+          ComponentStorageHelper.addComponent(componentAdded);
+          alert(
+            "Komponen " + component.product_name + " berhasil ditambahkan. ",
+          );
+          onSuccess?.();
+        };
+        return (
+          <div
+            key={component.product_id}
+            className="dark:texthover:bg-zinc-700 rounded-xl border bg-white p-2 shadow-lg transition-all hover:border-zinc-300 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:hover:border-zinc-600"
+          >
+            <Link
+              href={`/detail/${kategori}/${component.slug}/${component.product_id}`}
+              className="flex flex-row items-center gap-1"
+            >
+              <div className="flex flex-1 flex-row items-center gap-2">
+                {component.image_filenames.length > 0 && (
+                  <Image
+                    src={componentImage(component)}
+                    alt={`Gambar ${component.product_name}`}
+                    width={80}
+                    height={80}
+                  />
+                )}
+                <div className="flex flex-1 flex-col">
+                  <span className="text-lg font-bold leading-none">
+                    {component.product_name}
+                  </span>
+                  <span className="mt-2 font-bold">
+                    Rp{" "}
+                    {(component.lowest_price as number | null)?.toLocaleString(
+                      "id-ID",
+                    ) ?? "-"}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <Button className="text-white" onClick={handleAddComponent}>
+                  Tambah
+                </Button>
+              </div>
+            </Link>
+            <div className="grid grid-cols-3 gap-1 sm:grid-cols-4">
+              <ComponentFallback
+                headers={headers}
+                kategori={categoriesFromString[kategori]!}
+                component={component}
+                isMobile={true}
+              />
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 };
