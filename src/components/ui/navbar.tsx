@@ -13,7 +13,7 @@ import {
     User,
 } from "lucide-react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FormLogin from "~/components/login/form-login";
 import {
     NavigationMenu,
@@ -54,7 +54,9 @@ export function Navbar() {
 
   const [user, setUser] = React.useState<SupabaseUser | null>(null);
 
-  React.useEffect(() => {
+  const path = usePathname();
+
+  function refreshAuth() {
     supabase.auth
       .getUser()
       .then((user) => {
@@ -63,21 +65,22 @@ export function Navbar() {
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  React.useEffect(() => {
     supabase.auth.onAuthStateChange((session) => {
       if (session) {
-        supabase.auth
-          .getUser()
-          .then((user) => {
-            setUser(user.data?.user);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        refreshAuth();
       } else {
         setUser(null);
       }
     });
   }, []);
+
+  React.useEffect(() => {
+    console.log("PATHNAME: ", path);
+    refreshAuth();
+  }, [path]);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -489,7 +492,9 @@ export function Navbar() {
               </Link>
 
               <DropdownMenuSub>
-                <DropdownMenuSubTrigger className="h-[52px] p-4">Rakit PC</DropdownMenuSubTrigger>
+                <DropdownMenuSubTrigger className="h-[52px] p-4">
+                  Rakit PC
+                </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent className="w-fit p-0">
                     <ul className="w-[240px] p-4">
@@ -497,7 +502,7 @@ export function Navbar() {
                         <DropdownMenuItem
                           className={cn(
                             navigationMenuTriggerStyle(),
-                            "cursor-pointer w-full justify-start bg-transparent",
+                            "w-full cursor-pointer justify-start bg-transparent",
                           )}
                         >
                           Simulasi Rakit PC
@@ -507,7 +512,7 @@ export function Navbar() {
                         <DropdownMenuItem
                           className={cn(
                             navigationMenuTriggerStyle(),
-                            "cursor-pointer w-full justify-start bg-transparent",
+                            "w-full cursor-pointer justify-start bg-transparent",
                           )}
                         >
                           Rekomendasi Rakitan
@@ -517,7 +522,7 @@ export function Navbar() {
                         <DropdownMenuItem
                           className={cn(
                             navigationMenuTriggerStyle(),
-                            "cursor-pointer w-full justify-start bg-transparent",
+                            "w-full cursor-pointer justify-start bg-transparent",
                           )}
                         >
                           Showcase
