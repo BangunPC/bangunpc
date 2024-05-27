@@ -24,6 +24,8 @@ import {
 import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
 import { createQueryString, removeQueryString } from "~/lib/utils";
 import KategoriPage from "../katalog/[kategori]/page";
+import useSWR from "swr";
+import { ApiPaths, fetcher } from "~/lib/api";
 
 const headers = [
   "Kategori Komponen",
@@ -240,6 +242,8 @@ export default function HomePage() {
 
     router.push("?" + params);
   };
+
+  const {data, isLoading, error, mutate} = useSWR(ApiPaths.listRakitan, fetcher);
 
   return (
     <div className="m-auto mt-1 w-full max-w-screen-desktop p-4">

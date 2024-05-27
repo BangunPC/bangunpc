@@ -5,44 +5,44 @@ import * as React from "react";
 
 import { User as SupabaseUser } from "@supabase/supabase-js";
 import {
-    ChevronDown,
-    Heart,
-    LogOut,
-    MonitorSmartphone,
-    Settings2,
-    User,
+  ChevronDown,
+  Heart,
+  LogOut,
+  MonitorSmartphone,
+  Settings2,
+  User,
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FormLogin from "~/components/login/form-login";
 import {
-    NavigationMenu,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    navigationMenuTriggerStyle,
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { ComponentCategory, categoriesFromEnum } from "~/lib/db";
 import { createClient } from "~/lib/supabase/client";
 import { cn, createQueryString, removeQueryString } from "~/lib/utils";
 import { Button } from "./button";
 import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "./dialog";
 import Divider from "./divider";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuPortal,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
 } from "./dropdown-menu";
 import { NavbarIcon } from "./icon/navbar-icon";
 import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
@@ -246,12 +246,16 @@ export function Navbar() {
               <ModeToggle switch />
             </span>
           </Button> */}
-          <Button variant="ghost" className="w-full justify-start">
-            <Heart size={18} className="mr-2" /> Wishlist
-          </Button>
-          <Button variant="ghost" className="w-full justify-start">
-            <MonitorSmartphone size={18} className="mr-2" /> Rakitan-ku
-          </Button>
+          <Link href="/wishlist" passHref className="w-full justify-start">
+            <Button variant="ghost" className="w-full justify-start">
+              <Heart size={18} className="mr-2" /> Wishlist
+            </Button>
+          </Link>
+          <Link href="/rakitanku" passHref className="w-full justify-start">
+            <Button variant="ghost" className="w-full justify-start">
+              <MonitorSmartphone size={18} className="mr-2" /> Rakitan-ku
+            </Button>
+          </Link>
           <Divider className="my-1" />
           <Link href="/signout" passHref className="w-full justify-start">
             <Button variant="ghost" className="w-full justify-start">

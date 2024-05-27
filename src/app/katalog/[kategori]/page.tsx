@@ -1,17 +1,17 @@
 "use client";
 
 import {
-    ComponentCategory,
-    casingKeys,
-    categoriesFromString,
-    categoryHeaders,
-    categoryTitlesFromEnum,
-    cpuKeys,
-    gpuKeys,
-    memoryKeys,
-    motherboardKeys,
-    psuKeys,
-    storageKeys,
+  ComponentCategory,
+  casingKeys,
+  categoriesFromString,
+  categoryHeaders,
+  categoryTitlesFromEnum,
+  cpuKeys,
+  gpuKeys,
+  memoryKeys,
+  motherboardKeys,
+  psuKeys,
+  storageKeys,
 } from "~/lib/db";
 
 import { SidebarClose, SidebarOpen } from "lucide-react";
@@ -29,8 +29,8 @@ import { getMotherboard } from "~/lib/component_api/motherboard";
 import { getPsu } from "~/lib/component_api/psu";
 import { getStorage } from "~/lib/component_api/storage";
 import {
-    ComponentStorageHelper,
-    ComponentStorageType,
+  ComponentStorageHelper,
+  ComponentStorageType,
 } from "~/lib/storage_helper";
 import { componentImage } from "~/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
@@ -508,12 +508,7 @@ const DesktopTable = ({
   );
 };
 
-const MobileTable = ({
-  data,
-  headers,
-  kategori,
-  onSuccess,
-}: TableType) => {
+const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
   return (
     <div className="flex flex-col gap-1 transition-all duration-200 tablet:hidden">
       {data?.map((component: any) => {
@@ -536,7 +531,7 @@ const MobileTable = ({
         return (
           <div
             key={component.product_id}
-            className="dark:texthover:bg-zinc-700 rounded-xl border bg-white p-2 shadow-lg transition-all hover:border-zinc-300 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:hover:border-zinc-600"
+            className="dark:texthover:bg-zinc-700 rounded-xl border bg-white p-2 shadow-lg transition-all hover:border-zinc-300 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:border-zinc-600 dark:hover:bg-zinc-700"
           >
             <Link
               href={`/detail/${kategori}/${component.slug}/${component.product_id}`}

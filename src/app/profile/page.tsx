@@ -32,7 +32,7 @@ const ProfilePage = () => {
           </Button>
         </aside>
         <section className="flex w-full flex-col gap-5 pl-2 pr-4">
-          <h2 className="text-4xl font-bold">Edit Profile</h2>
+          <h2 className="text-4xl font-bold">Ubah Profil</h2>
           <div className="mt-0 md:mt-6">
             <h4 className="text-2xl font-semibold">Perbaharui Akun</h4>
             <p className="text-lg">
