@@ -1,9 +1,7 @@
-import Image from "next/image";
-
 const RekomendasiPage = () => {
   return (
     <div className="py-4">
-      <div className="flex flex-col border-navbar border-b pb-2 mx-2">
+      <div className="mx-2 flex flex-col border-b border-navbar pb-2">
         <span className="text-5xl font-semibold">
           Rekomendasi Rakitan PC dari Pengguna BangunPC
         </span>
@@ -16,20 +14,3 @@ const RekomendasiPage = () => {
 };
 
 export default RekomendasiPage;
-
-interface CardType {
-  title: string;
-  price: string;
-  image: string;
-  description: string;
-};
-
-
-const Card = ({ title, price, image, description, }: CardType) => {
-  return (
-  <div>
-    <Image src={image} alt={title} width={240} height={240} />
-
-  </div>
-  )
-}
