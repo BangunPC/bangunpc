@@ -1,13 +1,12 @@
 "use client";
 
-import { DialogContent } from "@radix-ui/react-dialog";
-import { Banknote, Save, Trash, Undo2, X } from "lucide-react";
+import { Banknote, Save, Trash, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
-import { Dialog, DialogTrigger } from "~/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import KategoriCasing from "~/components/ui/icon/kategori-casing";
 import KategoriCpu from "~/components/ui/icon/kategori-cpu";
 import KategoriGpu from "~/components/ui/icon/kategori-gpu";
@@ -436,57 +435,29 @@ export default function HomePage() {
           open={
             kategori !== null && categoriesFromString[kategori] !== undefined
           }
+          onOpenChange={() => {
+            router.push("?" + removeQueryString(searchParams, "kategori"));
+          }}
         >
           <DialogTrigger asChild>
             <div role="dialog" aria-modal="true" className="hidden"></div>
           </DialogTrigger>
-          <DialogContent className="fixed inset-0 z-10 mt-navbar-min-h">
-            <div className="h-full p-4 text-center">
-              <div
-                className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-                aria-hidden="true"
-              ></div>
-              <div className="flex h-full transform flex-col overflow-hidden rounded-lg bg-background text-left align-bottom shadow-xl transition-all">
-                {/* {currentIframePath.startsWith("/detail/") && (
-                  <div className="flex justify-start bg-white dark:bg-navbar">
-                    <Button
-                      onClick={() => window.history.back()}
-                      className="fixed ml-4 mr-auto mt-4 aspect-square"
-                    >
-                      <ArrowLeft />
-                    </Button>
-                  </div>
-                )} */}
-                <div className="z-10 flex justify-end">
-                  <Button
-                    variant="outline"
-                    onClick={() =>
+          <DialogContent className="inset-4 m-auto max-w-fit translate-x-0 translate-y-0 p-4">
+            <ScrollArea className="-z-10 w-full">
+              {kategori && categoriesFromString[kategori] && (
+                <KategoriPage
+                  params={{
+                    kategori: kategori,
+                    noTopH: true,
+                    onSuccess: () => {
                       router.push(
                         "?" + removeQueryString(searchParams, "kategori"),
-                      )
-                    }
-                    className="fixed ml-auto mr-[9px] mt-[9px] aspect-square bg-zinc-800 p-0 text-white"
-                  >
-                    <X />
-                  </Button>
-                </div>
-                <ScrollArea>
-                  {kategori && categoriesFromString[kategori] && (
-                    <KategoriPage
-                      params={{
-                        kategori: kategori,
-                        noTopH: true,
-                        onSuccess: () => {
-                          router.push(
-                            "?" + removeQueryString(searchParams, "kategori"),
-                          );
-                        },
-                      }}
-                    />
-                  )}
-                </ScrollArea>
-              </div>
-            </div>
+                      );
+                    },
+                  }}
+                />
+              )}
+            </ScrollArea>
           </DialogContent>
         </Dialog>
       </main>
