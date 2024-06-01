@@ -242,6 +242,10 @@ export default function HomePage() {
 
   // const {data, isLoading, error, mutate} = useSWR(ApiPaths.listRakitan, fetcher);
 
+  const closeIframe = () => {
+    router.push("?" + removeQueryString(searchParams, "kategori"));
+  };
+
   return (
     <div className="m-auto mt-1 w-full max-w-screen-desktop p-4">
       <header className="flex text-3xl font-semibold">
@@ -436,7 +440,7 @@ export default function HomePage() {
             kategori !== null && categoriesFromString[kategori] !== undefined
           }
           onOpenChange={() => {
-            router.push("?" + removeQueryString(searchParams, "kategori"));
+            closeIframe();
           }}
         >
           <DialogTrigger asChild>
@@ -450,9 +454,7 @@ export default function HomePage() {
                     kategori: kategori,
                     noTopH: true,
                     onSuccess: () => {
-                      router.push(
-                        "?" + removeQueryString(searchParams, "kategori"),
-                      );
+                      closeIframe();
                     },
                   }}
                 />

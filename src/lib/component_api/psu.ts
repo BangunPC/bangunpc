@@ -7,10 +7,6 @@ export const getPsu = async (
 ) => {
   const client = createClient();
 
-  if (!client) {
-    throw new Error("Supabase client is null");
-  }
-
   // filter start
 
   const client_query = client
