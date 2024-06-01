@@ -23,6 +23,11 @@ import {
 import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
 import { createQueryString, removeQueryString } from "~/lib/utils";
 import KategoriPage from "../katalog/[kategori]/page";
+import useSWR from "swr";
+import { ApiPaths, fetcher } from "~/lib/api";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import { Label } from "~/components/ui/label";
+import Divider from "~/components/ui/divider";
 
 const headers = [
   "Kategori Komponen",
@@ -271,13 +276,7 @@ export default function HomePage() {
             <Undo2 className="mr-2 inline-block" />
             Reset Pilihan
           </Button>
-          <Button
-            disabled={components.every((c) => c.components.length === 0)}
-            className="bg-green-600 text-lg text-white hover:bg-green-500"
-          >
-            <Save className="mr-2 inline-block" />
-            Simpan
-          </Button>
+          <ManageListModal disabled={components.every((c) => c.components.length === 0)} />
         </div>
         <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
           <table className="w-full ">
@@ -464,5 +463,51 @@ export default function HomePage() {
         </Dialog>
       </main>
     </div>
+  );
+}
+
+function ManageListModal({disabled}: {disabled: boolean}) {
+  const { data, isLoading, error, mutate } = useSWR(
+    ApiPaths.listRakitan,
+    fetcher,
+  );
+  return (
+    <Dialog
+      onOpenChange={() => {
+        mutate().catch((error) => {
+          console.log(error);
+        });
+      }}
+    >
+      <DialogTrigger asChild>
+        <Button
+          disabled={disabled}
+          className="bg-green-600 text-lg text-white hover:bg-green-500"
+        >
+          <Save className="mr-2 inline-block" />
+          Simpan
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <span className="text-xl font-semibold">List Simpanan Saya</span>
+        {isLoading && <div>Loading...</div>}
+        {error && <div>Error: {error.message}</div>}
+        {data && typeof data !== "string" && data.data && (
+          <RadioGroup defaultValue="option-one">
+            {data.data.map((item) => (
+              <div key={item.build_id} className="flex items-center gap-2">
+                <RadioGroupItem
+                  value={`${item.build_id}`}
+                  id={`${item.build_id}`}
+                />
+                <Label htmlFor={`${item.build_id}`}>{item.title}</Label>
+              </div>
+            ))}
+          </RadioGroup>
+        )}
+        <Divider />
+        <Button className="text-lg">Simpan</Button>
+      </DialogContent>
+    </Dialog>
   );
 }
