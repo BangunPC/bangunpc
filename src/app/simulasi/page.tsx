@@ -4,7 +4,7 @@ import { Banknote, Save, Trash, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import KategoriCasing from "~/components/ui/icon/kategori-casing";
@@ -24,10 +24,12 @@ import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
 import { createQueryString, removeQueryString } from "~/lib/utils";
 import KategoriPage from "../katalog/[kategori]/page";
 import useSWR from "swr";
-import { ApiPaths, fetcher } from "~/lib/api";
+import useSWRMutation from "swr/mutation";
+import { ApiPaths, fetcher, insertRakitan } from "~/lib/api";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
 import Divider from "~/components/ui/divider";
+import { Input } from "~/components/ui/input";
 
 const headers = [
   "Kategori Komponen",
@@ -251,6 +253,8 @@ export default function HomePage() {
     router.push("?" + removeQueryString(searchParams, "kategori"));
   };
 
+  const { trigger } = useSWRMutation(ApiPaths.insertRakitan, insertRakitan);
+
   return (
     <div className="m-auto mt-1 w-full max-w-screen-desktop p-4">
       <header className="flex text-3xl font-semibold">
@@ -276,7 +280,29 @@ export default function HomePage() {
             <Undo2 className="mr-2 inline-block" />
             Reset Pilihan
           </Button>
-          <ManageListModal disabled={components.every((c) => c.components.length === 0)} />
+          <ManageListModal
+            onSaveNew={(name) => {
+              trigger({
+                title: name,
+                cpuId: cpu[0]?.id,
+                motherboardId: motherboard[0]?.id,
+                memoryId: memory[0]?.id,
+                storageId: storage[0]?.id,
+                gpuId: gpu[0]?.id,
+                psuId: psu[0]?.id,
+                casingId: casing[0]?.id,
+                // caseFanId: caseFan[0]?.id,
+              }).catch((error) => {
+                console.log(error);
+              });
+
+              console.log(`name: ${name}`);
+            }}
+            onSaveReplace={(build_id) => {
+              console.log(`build_id: ${build_id}`);
+            }}
+            disabled={components.every((c) => c.components.length === 0)}
+          />
         </div>
         <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
           <table className="w-full ">
@@ -445,8 +471,8 @@ export default function HomePage() {
           <DialogTrigger asChild>
             <div role="dialog" aria-modal="true" className="hidden"></div>
           </DialogTrigger>
-          <DialogContent className="inset-4 m-auto max-w-fit translate-x-0 translate-y-0 p-4">
-            <ScrollArea className="-z-10 w-full">
+          <DialogContent className="inset-4 m-auto max-w-fit translate-x-0 translate-y-0 px-0 py-4">
+            <ScrollArea className="-z-10 w-full px-4">
               {kategori && categoriesFromString[kategori] && (
                 <KategoriPage
                   params={{
@@ -466,11 +492,31 @@ export default function HomePage() {
   );
 }
 
-function ManageListModal({disabled}: {disabled: boolean}) {
+type MLMProps = {
+  disabled: boolean;
+  onSaveNew: (arg: string) => void;
+  onSaveReplace: (arg: string) => void;
+};
+
+const ManageListModal: React.FC<MLMProps> = ({
+  disabled,
+  onSaveNew,
+  onSaveReplace,
+}) => {
   const { data, isLoading, error, mutate } = useSWR(
     ApiPaths.listRakitan,
     fetcher,
   );
+  const [name, setName] = useState("option-new");
+  const [newName, setNewName] = useState("");
+
+  const handleSave = () => {
+    if (name === "option-new") {
+      onSaveNew(newName);
+    } else {
+      onSaveReplace(name);
+    }
+  };
   return (
     <Dialog
       onOpenChange={() => {
@@ -490,24 +536,52 @@ function ManageListModal({disabled}: {disabled: boolean}) {
       </DialogTrigger>
       <DialogContent>
         <span className="text-xl font-semibold">List Simpanan Saya</span>
-        {isLoading && <div>Loading...</div>}
-        {error && <div>Error: {error.message}</div>}
-        {data && typeof data !== "string" && data.data && (
-          <RadioGroup defaultValue="option-one">
-            {data.data.map((item) => (
-              <div key={item.build_id} className="flex items-center gap-2">
-                <RadioGroupItem
-                  value={`${item.build_id}`}
-                  id={`${item.build_id}`}
-                />
-                <Label htmlFor={`${item.build_id}`}>{item.title}</Label>
-              </div>
-            ))}
-          </RadioGroup>
-        )}
+        <RadioGroup
+          onValueChange={(value) => {
+            setName(value);
+          }}
+          value={name}
+        >
+          {isLoading && <div>Loading...</div>}
+          {error && <div>Error: {error.message}</div>}
+          {data && typeof data !== "string" && data.data && (
+            <>
+              {data.data.map((item) => (
+                <div key={item.build_id} className="flex items-center gap-2">
+                  <RadioGroupItem
+                    value={`${item.build_id}`}
+                    id={`${item.build_id}`}
+                  />
+                  <Label htmlFor={`${item.build_id}`}>{item.title}</Label>
+                </div>
+              ))}
+            </>
+          )}
+          <div key="option-new" className="flex  gap-2">
+            <RadioGroupItem value="option-new" id="option-new" />
+            <Label htmlFor="option-new" className="flex w-full flex-col gap-3">
+              Buat Simpanan Baru
+              <Input
+                placeholder="Masukkan nama simpanan baru disini"
+                onFocus={() => {
+                  setName("option-new");
+                }}
+                onChange={(e) => {
+                  setNewName(e.target.value);
+                }}
+              />
+            </Label>
+          </div>
+        </RadioGroup>
         <Divider />
-        <Button className="text-lg">Simpan</Button>
+        <Button
+          className="text-lg"
+          onClick={handleSave}
+          disabled={name === "option-new" && !newName}
+        >
+          Simpan
+        </Button>
       </DialogContent>
     </Dialog>
   );
-}
+};
