@@ -16,7 +16,7 @@ export const fetchWithId = async (url: string, id: number) => {
         .from("v_builds")
         .select("*")
         .eq("build_id", id)
-        .single();
+        .limit(1);
       return { data, error };
     default:
       return url;
@@ -108,7 +108,6 @@ export const insertRakitan = async (
       console.log(`isError insert build: ${JSON.stringify(build_error)}`);
       if (!build_error) {
         const { error: user_build_error } = await supabase
-
           .schema("pc_build")
           .from("user_builds")
           .insert({
@@ -122,6 +121,10 @@ export const insertRakitan = async (
             built_at: new Date().toISOString(),
           });
         if (user_build_error) {
+          console.log(
+            `isError insert user_build: ${JSON.stringify(user_build_error)}`,
+          );
+
           await supabase
             .schema("pc_build")
             .from("builds")

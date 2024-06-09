@@ -281,8 +281,9 @@ export default function HomePage() {
             Reset Pilihan
           </Button>
           <ManageListModal
-            onSaveNew={(name) => {
-              trigger({
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onSaveNew={async (name) => {
+              const res = await trigger({
                 title: name,
                 cpuId: cpu[0]?.id,
                 motherboardId: motherboard[0]?.id,
@@ -292,13 +293,12 @@ export default function HomePage() {
                 psuId: psu[0]?.id,
                 casingId: casing[0]?.id,
                 // caseFanId: caseFan[0]?.id,
-              }).catch((error) => {
-                console.log(error);
               });
 
-              console.log(`name: ${name}`);
+              return res;
             }}
             onSaveReplace={(build_id) => {
+              // TODO: update
               console.log(`build_id: ${build_id}`);
             }}
             disabled={components.every((c) => c.components.length === 0)}
@@ -494,7 +494,7 @@ export default function HomePage() {
 
 type MLMProps = {
   disabled: boolean;
-  onSaveNew: (arg: string) => void;
+  onSaveNew: (arg: string) => Promise<boolean>;
   onSaveReplace: (arg: string) => void;
 };
 
@@ -509,21 +509,30 @@ const ManageListModal: React.FC<MLMProps> = ({
   );
   const [name, setName] = useState("option-new");
   const [newName, setNewName] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (name === "option-new") {
-      onSaveNew(newName);
+      const res = await onSaveNew(newName);
+      if (res) {
+        setIsOpen(false);
+        // TODO: redirect to rakitan detail page
+      } else {
+        // TODO: show error
+      }
     } else {
       onSaveReplace(name);
     }
   };
   return (
     <Dialog
-      onOpenChange={() => {
+      onOpenChange={(e) => {
+        setIsOpen(e);
         mutate().catch((error) => {
           console.log(error);
         });
       }}
+      open={isOpen}
     >
       <DialogTrigger asChild>
         <Button
