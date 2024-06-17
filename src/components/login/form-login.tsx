@@ -5,8 +5,11 @@ import { Button } from "~/components/ui/button";
 import { NavbarIcon } from "~/components/ui/icon/navbar-icon";
 import { createClient } from "~/lib/supabase/client";
 import Spinner from "../ui/spinner-loading";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const FormLogin = () => {
+  const [captchaToken, setCaptchaToken] = useState("");
+
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -19,6 +22,7 @@ const FormLogin = () => {
         options: {
           shouldCreateUser: true,
           emailRedirectTo: window.location.href,
+          captchaToken,
         },
       });
       if (error) throw error;
@@ -52,14 +56,27 @@ const FormLogin = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="flex flex-col gap-4">
-          <Button
-            type="submit"
-            className="mt-3 w-full rounded-md border border-slate-300 bg-primary px-3 py-5 text-sm font-medium text-white hover:bg-primary/80 dark:bg-navbar"
-          >
-            {loading ? <Spinner /> : "Masuk"}
-          </Button>
-        </div>
+        {captchaToken.length == 0 ? (
+          <>
+            <Turnstile
+              siteKey="0x4AAAAAAAcTY5MLJfC_A1SN"
+              onSuccess={(token) => {
+                setCaptchaToken(token);
+              }}
+              aria-label="Cloudlare Captcha"
+              className="m-auto"
+            />
+          </>
+        ) : (
+          <div className="flex flex-col gap-4">
+            <Button
+              type="submit"
+              className="mt-3 w-full rounded-md border border-slate-300 bg-primary px-3 py-5 text-sm font-medium text-white hover:bg-primary/80 dark:bg-navbar"
+            >
+              {loading ? <Spinner /> : "Masuk"}
+            </Button>
+          </div>
+        )}
       </form>
     </div>
   );

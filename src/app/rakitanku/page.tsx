@@ -13,10 +13,10 @@ export default function RakitankuPage() {
     <div className="tablet:max-w-scree-tablet mx-auto max-w-screen-desktop">
       <PageTitle title="Rakitanku" />
       <div className="mb-2 flex flex-row gap-2">
-        <Button className="bg-green-500 text-lg hover:bg-green-600">
+        <Button variant="success" className="text-lg">
           <Plus className="mr-2" /> Tambah Rakitan
         </Button>
-        <Button className="bg-blue-500 text-lg hover:bg-blue-600">
+        <Button variant="default" className="text-lg">
           <Settings2 className="mr-2" /> Kelola Rakitan
         </Button>
       </div>
@@ -26,7 +26,7 @@ export default function RakitankuPage() {
         <div className="grid grid-cols-2 gap-2 tablet:grid-cols-4">
           {data.data.map((item) => (
             <Link
-              href={`/rakitanku/${item.build_id}`}
+              href={`/simulasi/${item.build_id}`}
               key={item.build_id}
               className="flex max-w-72 flex-col gap-2 rounded-lg border bg-gray-50 p-2 shadow-bm hover:border-primary dark:hover:border-gray-300 dark:bg-gray-700"
             >

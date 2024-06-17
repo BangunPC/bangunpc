@@ -1185,7 +1185,6 @@ export type Database = {
           motherboard: Json | null
           power_supply: Json | null
           total_price: number | null
-          user_build_id: number | null
         }
         Relationships: []
       }
@@ -1497,14 +1496,17 @@ export type Database = {
         Row: {
           id: number
           name: string
+          other_name: string | null
         }
         Insert: {
           id?: number
           name: string
+          other_name?: string | null
         }
         Update: {
           id?: number
           name?: string
+          other_name?: string | null
         }
         Relationships: []
       }
@@ -2803,7 +2805,7 @@ export type Database = {
           marketplace_id: number
           price: number | null
           product_detail_description_id: number | null
-          product_id: number
+          product_id: number | null
           selected_variant_type: string | null
           seller_city: string | null
           seller_name: string | null
@@ -2819,7 +2821,7 @@ export type Database = {
           marketplace_id?: number
           price?: number | null
           product_detail_description_id?: number | null
-          product_id: number
+          product_id?: number | null
           selected_variant_type?: string | null
           seller_city?: string | null
           seller_name?: string | null
@@ -2835,7 +2837,7 @@ export type Database = {
           marketplace_id?: number
           price?: number | null
           product_detail_description_id?: number | null
-          product_id?: number
+          product_id?: number | null
           selected_variant_type?: string | null
           seller_city?: string | null
           seller_name?: string | null
@@ -2954,6 +2956,7 @@ export type Database = {
           is_published: boolean
           lowest_price: number | null
           name: string
+          product_fts: unknown | null
           review_urls: string[] | null
           slug: string
           spec_url: string | null
@@ -2966,6 +2969,7 @@ export type Database = {
           is_published?: boolean
           lowest_price?: number | null
           name: string
+          product_fts?: unknown | null
           review_urls?: string[] | null
           slug?: string
           spec_url?: string | null
@@ -2978,6 +2982,7 @@ export type Database = {
           is_published?: boolean
           lowest_price?: number | null
           name?: string
+          product_fts?: unknown | null
           review_urls?: string[] | null
           slug?: string
           spec_url?: string | null
@@ -3579,6 +3584,7 @@ export type Database = {
           image_filenames: string[] | null
           is_published: boolean | null
           lowest_price: number | null
+          product_fts: unknown | null
           product_id: number | null
           product_name: string | null
           review_urls: string[] | null
@@ -3589,50 +3595,6 @@ export type Database = {
       }
     }
     Functions: {
-      get_image_filenames_by_product_id: {
-        Args: {
-          product_id_param: number
-        }
-        Returns: {
-          product_id: number
-          image_filenames: string[]
-        }[]
-      }
-      get_power_supply: {
-        Args: {
-          slug: string
-        }
-        Returns: {
-          product_id: number
-          product_slug: string
-          product_name: string
-          product_description: string
-          image_paths: string[]
-          url: string
-          price: number
-          stock: number
-          form_factor: string
-          efficiency_rating: string
-          wattage: number
-          color: string
-          modularity: Database["public"]["Enums"]["psu_modularity"]
-          width_mm: number
-          height_mm: number
-          depth_mm: number
-        }[]
-      }
-      get_product_detail: {
-        Args: {
-          id_product: number
-        }
-        Returns: {
-          product_detail_id: number
-          product_id: number
-          url: string
-          price: number
-          stock: number
-        }[]
-      }
       slugify: {
         Args: {
           value: string
@@ -3661,41 +3623,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      admins: {
-        Row: {
-          avatar_filename: string | null
-          created_at: string
-          first_name: string | null
-          id: string
-          last_name: string | null
-          role: string
-        }
-        Insert: {
-          avatar_filename?: string | null
-          created_at?: string
-          first_name?: string | null
-          id: string
-          last_name?: string | null
-          role: string
-        }
-        Update: {
-          avatar_filename?: string | null
-          created_at?: string
-          first_name?: string | null
-          id?: string
-          last_name?: string | null
-          role?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "admins_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       partners: {
         Row: {
           city: string
@@ -3720,24 +3647,6 @@ export type Database = {
           id?: number
           name?: string
           type?: Database["public"]["Enums"]["partner_type"]
-        }
-        Relationships: []
-      }
-      recommendation_builds: {
-        Row: {
-          build_id: number | null
-          id: number
-          slug: string | null
-        }
-        Insert: {
-          build_id?: number | null
-          id?: number
-          slug?: string | null
-        }
-        Update: {
-          build_id?: number | null
-          id?: number
-          slug?: string | null
         }
         Relationships: []
       }
@@ -3859,21 +3768,6 @@ export type Database = {
         }
         Relationships: []
       }
-      test: {
-        Row: {
-          created_at: string
-          id: number
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-        }
-        Update: {
-          created_at?: string
-          id?: number
-        }
-        Relationships: []
-      }
       wishlists: {
         Row: {
           id: string
@@ -3922,19 +3816,70 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      is_authorized: {
+      gtrgm_compress: {
         Args: {
-          user_id: string
-          table_name: string
-          permission_type: string
+          "": unknown
         }
-        Returns: boolean
+        Returns: unknown
       }
-      slugify: {
+      gtrgm_decompress: {
         Args: {
-          value: string
+          "": unknown
         }
-        Returns: string
+        Returns: unknown
+      }
+      gtrgm_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      gtrgm_options: {
+        Args: {
+          "": unknown
+        }
+        Returns: undefined
+      }
+      gtrgm_out: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      search_products: {
+        Args: {
+          search_text: string
+        }
+        Returns: {
+          product_id: number
+          product_name: string
+          category_id: number
+          category_name: string
+          slug: string
+          lowest_price: number
+          description: string
+          brand_id: number
+          brand_name: string
+          spec_url: string
+          review_urls: string[]
+          image_filenames: string[]
+        }[]
+      }
+      set_limit: {
+        Args: {
+          "": number
+        }
+        Returns: number
+      }
+      show_limit: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      show_trgm: {
+        Args: {
+          "": string
+        }
+        Returns: string[]
       }
     }
     Enums: {

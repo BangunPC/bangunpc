@@ -38,7 +38,18 @@ const headers = [
   "Aksi",
 ];
 
-export default function HomePage() {
+export default function SimulasiPage(params?: {
+  params?: { id: number } | undefined;
+  cpu?: ComponentStorageType | undefined;
+  cpu_cooler?: ComponentStorageType | undefined;
+  gpu?: ComponentStorageType | undefined;
+  internal_storages?: ComponentStorageType | undefined;
+  memories?: ComponentStorageType | undefined;
+  monitors?: ComponentStorageType | undefined;
+  motherboard?: ComponentStorageType | undefined;
+  power_supply?: ComponentStorageType | undefined;
+}) {
+  const isComponent = params?.params?.id ?? null;
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -138,6 +149,19 @@ export default function HomePage() {
   ];
 
   const refresh = () => {
+    if (isComponent) {
+      setComponentCpu(params?.cpu ? [params?.cpu] : []);
+      // setComponentCpuCooler(params?.cpu_cooler ? [params?.cpu_cooler] : []);
+      setComponentGpu(params?.gpu ? [params?.gpu] : []);
+      setComponentStorage(
+        params?.internal_storages ? [params?.internal_storages] : [],
+      );
+      setComponentMemory(params?.memories ? [params?.memories] : []);
+      // setComponentMonitors(params?.monitors ? [params?.monitors] : []);
+      setComponentMotherboard(params?.motherboard ? [params?.motherboard] : []);
+      setComponentPsu(params?.power_supply ? [params?.power_supply] : []);
+      return;
+    }
     setComponentCpu(
       ComponentStorage.getComponentsByCategory(ComponentCategory.CPU),
     );
@@ -210,6 +234,7 @@ export default function HomePage() {
 
   useEffect(() => {
     refresh();
+    if (isComponent) return;
     const interval = setInterval(() => {
       refresh();
     }, 1500);
@@ -255,31 +280,50 @@ export default function HomePage() {
 
   const { trigger } = useSWRMutation(ApiPaths.insertRakitan, insertRakitan);
 
+  const handleClear = () => {
+    if (!isComponent) {
+      ComponentStorage.clear();
+    }
+  };
+
+  const handleRemoveComponent = (id: string) => {
+    if (!isComponent) {
+      ComponentStorage.removeComponentById(id);
+    }
+  };
+
   return (
     <div className="m-auto mt-1 w-full max-w-screen-desktop p-4">
       <header className="flex text-3xl font-semibold">
-        <span className="whitespace-nowrap">Simulasi Rakit PC</span>{" "}
-        <span className="ml-2 text-base italic">
-          Versi Alpha, kompatibilitas tidak dijamin 100%
+        <span className="whitespace-nowrap">
+          {isComponent ? "TODO: Nama Rakitan" : "Simulasi Rakit PC"}
         </span>
+        {!isComponent && (
+          <span className="ml-2 text-base italic">
+            Versi Alpha, kompatibilitas tidak dijamin 100%
+          </span>
+        )}
       </header>
       <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-4 p-4">
         <div className="flex justify-end gap-2">
-          <Button
-            disabled={components.every((c) => c.components.length === 0)}
-            onClick={() => {
-              const confirmed = window.confirm(
-                "Apakah Anda yakin ingin mengulang dari awal?\nSemua komponen akan dihapus dan tidak dapat dikembalikan.",
-              );
-              if (confirmed) {
-                ComponentStorage.clear();
-              }
-            }}
-            className="bg-rose-500 text-lg text-white hover:bg-rose-400"
-          >
-            <Undo2 className="mr-2 inline-block" />
-            Reset Pilihan
-          </Button>
+          {!isComponent && (
+            <Button
+              variant="destructive"
+              disabled={components.every((c) => c.components.length === 0)}
+              onClick={() => {
+                const confirmed = window.confirm(
+                  "Apakah Anda yakin ingin mengulang dari awal?\nSemua komponen akan dihapus dan tidak dapat dikembalikan.",
+                );
+                if (confirmed) {
+                  handleClear();
+                }
+              }}
+              className="text-lg"
+            >
+              <Undo2 className="mr-2 inline-block" />
+              Reset Pilihan
+            </Button>
+          )}
           <ManageListModal
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSaveNew={async (name) => {
@@ -302,6 +346,7 @@ export default function HomePage() {
               console.log(`build_id: ${build_id}`);
             }}
             disabled={components.every((c) => c.components.length === 0)}
+            defaultId={isComponent ? isComponent.toString() : undefined}
           />
         </div>
         <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
@@ -417,7 +462,8 @@ export default function HomePage() {
                             className="flex flex-row items-center gap-1"
                           >
                             <Button
-                              className="h-[32px] items-center bg-red-600 text-lg text-white hover:bg-red-500"
+                              variant="destructive"
+                              className="h-[32px] items-center text-lg text-white "
                               onClick={() => {
                                 if (item.components.length > 0) {
                                   if (
@@ -425,9 +471,7 @@ export default function HomePage() {
                                       "Apakah Anda yakin ingin menghapus komponen ini?",
                                     )
                                   ) {
-                                    ComponentStorage.removeComponentById(
-                                      component.id,
-                                    );
+                                    handleRemoveComponent(component.id);
                                   }
                                 }
                               }}
@@ -496,18 +540,20 @@ type MLMProps = {
   disabled: boolean;
   onSaveNew: (arg: string) => Promise<boolean>;
   onSaveReplace: (arg: string) => void;
+  defaultId?: string;
 };
 
 const ManageListModal: React.FC<MLMProps> = ({
   disabled,
   onSaveNew,
   onSaveReplace,
+  defaultId,
 }) => {
   const { data, isLoading, error, mutate } = useSWR(
     ApiPaths.listRakitan,
     fetcher,
   );
-  const [name, setName] = useState("option-new");
+  const [name, setName] = useState(defaultId ?? "option-new");
   const [newName, setNewName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -527,6 +573,7 @@ const ManageListModal: React.FC<MLMProps> = ({
   return (
     <Dialog
       onOpenChange={(e) => {
+        if (e) setName(defaultId ?? "option-new");
         setIsOpen(e);
         mutate().catch((error) => {
           console.log(error);
@@ -536,51 +583,71 @@ const ManageListModal: React.FC<MLMProps> = ({
     >
       <DialogTrigger asChild>
         <Button
+          variant="success"
           disabled={disabled}
-          className="bg-green-600 text-lg text-white hover:bg-green-500"
+          className="text-lg text-white"
         >
           <Save className="mr-2 inline-block" />
           Simpan
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <span className="text-xl font-semibold">List Simpanan Saya</span>
+        <span className="text-xl font-semibold">Daftar Simpanan Saya</span>
         <RadioGroup
           onValueChange={(value) => {
             setName(value);
           }}
           value={name}
+          className="gap-0"
         >
           {isLoading && <div>Loading...</div>}
           {error && <div>Error: {error.message}</div>}
           {data && typeof data !== "string" && data.data && (
             <>
               {data.data.map((item) => (
-                <div key={item.build_id} className="flex items-center gap-2">
+                <Label
+                  htmlFor={`${item.build_id}`}
+                  key={item.build_id}
+                  className={
+                    "flex w-full items-center gap-2 rounded-lg border border-transparent p-2 " +
+                    (item.build_id?.toString() === name
+                      ? "border-primary"
+                      : "hover:bg-gray-500/20")
+                  }
+                >
                   <RadioGroupItem
                     value={`${item.build_id}`}
                     id={`${item.build_id}`}
                   />
-                  <Label htmlFor={`${item.build_id}`}>{item.title}</Label>
-                </div>
+                  <span>{item.title}</span>
+                </Label>
               ))}
+              <Label
+                htmlFor="option-new"
+                key="option-new"
+                className={
+                  "flex gap-2 rounded-lg border border-transparent p-2 " +
+                  ("option-new" === name
+                    ? "border-primary"
+                    : "hover:bg-gray-500/20")
+                }
+              >
+                <RadioGroupItem value="option-new" id="option-new" />
+                <span className="flex w-full flex-col gap-3">
+                  Buat Simpanan Baru
+                  <Input
+                    placeholder="Masukkan nama simpanan baru disini"
+                    onFocus={() => {
+                      setName("option-new");
+                    }}
+                    onChange={(e) => {
+                      setNewName(e.target.value);
+                    }}
+                  />
+                </span>
+              </Label>
             </>
           )}
-          <div key="option-new" className="flex  gap-2">
-            <RadioGroupItem value="option-new" id="option-new" />
-            <Label htmlFor="option-new" className="flex w-full flex-col gap-3">
-              Buat Simpanan Baru
-              <Input
-                placeholder="Masukkan nama simpanan baru disini"
-                onFocus={() => {
-                  setName("option-new");
-                }}
-                onChange={(e) => {
-                  setNewName(e.target.value);
-                }}
-              />
-            </Label>
-          </div>
         </RadioGroup>
         <Divider />
         <Button

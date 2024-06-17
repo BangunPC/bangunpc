@@ -7,6 +7,14 @@ export class ApiPaths {
   static viewRakitan = "api/rakitanku/view";
 }
 
+export const search = async function (search_text: string) {
+  const supabase = createClient();
+  const { data, error } = await supabase.rpc("search_products", {
+    search_text,
+  });
+  return { data, error };
+};
+
 export const fetchWithId = async (url: string, id: number) => {
   switch (url) {
     case ApiPaths.viewRakitan:
