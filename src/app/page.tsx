@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 
@@ -30,7 +31,7 @@ export default function HomePage() {
   ];
   return (
     <main className="h-full w-full">
-      <div className="flex items-center justify-center bg-slate-200 py-8 dark:bg-zinc-900 tablet:py-32">
+      <div className="flex items-center justify-center bg-slate-200 py-8 dark:bg-[#1B1B1B] tablet:py-32">
         <div className="mx-4 max-w-7xl grid-cols-7 gap-8 tablet:grid">
           <div className="col-span-4 grid ">
             <div className="flex flex-col justify-center gap-6">
@@ -71,7 +72,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center bg-slate-50 py-8 dark:bg-secondary tablet:py-16">
+      <div className="flex justify-center py-8 tablet:py-16">
         <div className="mx-4 max-w-7xl grid-cols-7 gap-8 tablet:grid">
           <div className="col-span-4 grid">
             <div className="hidden tablet:block">
@@ -108,25 +109,38 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center bg-slate-50 py-8 dark:bg-secondary tablet:py-16">
+      <div className="flex justify-center py-8 tablet:py-16">
         <div className="mx-8 max-w-7xl gap-8 tablet:grid">
           <h3 className="text-center text-4xl font-bold">
             Pilihan Layanan untuk Anda
           </h3>
-          <div className="grid grid-cols-1 gap-4 tablet:grid-cols-4 mt-24">
+          <div className="mt-24 grid grid-cols-1 gap-4 tablet:grid-cols-4">
             {cardLayanan.map((item, index) => (
-              <div key={index} className="flex flex-col gap-4 p-4 bg-white h-[96] w-[96] border-2 rounded-lg border-zinc-900 mb-8 tablet:mb-0">
-                <div className="flex -mt-12 w-fit h-fit bg-primary items-center mx-auto rounded-full gap-2">
-                  <Image
-                    src={item.icon}
-                    alt={item.title}
-                    width={60}
-                    height={60}
-                    className="p-3"
-                  />
+              <div
+                key={index}
+                className="mb-8 flex h-[96] flex-col tablet:mb-0"
+              >
+                <div className="flex h-full w-[96] flex-col gap-4 rounded-lg border border-zinc-900 bg-background p-4 dark:border-zinc-300 ">
+                  <div className="mx-auto -mt-12 flex h-fit w-fit items-center gap-2 rounded-full bg-primary">
+                    <Image
+                      src={item.icon}
+                      alt={item.title}
+                      width={60}
+                      height={60}
+                      className="p-3"
+                    />
+                  </div>
+                  <h3 className="text-center text-xl font-bold">
+                    {item.title}
+                  </h3>
+                  <p className="mx-2 text-lg">{item.description}</p>
                 </div>
-                <h3 className="text-xl font-bold text-center">{item.title}</h3>
-                <p className="text-lg mx-2">{item.description}</p>
+                <Button
+                  variant="outline"
+                  className="m-auto w-[72px] -translate-y-4 rounded-full border border-zinc-900 p-0 hover:bg-zinc-500 dark:border-zinc-300 hover:text-white"
+                >
+                  <ArrowUpRight className="h-6 w-6" />
+                </Button>
               </div>
             ))}
           </div>
