@@ -13,6 +13,7 @@
     "gentypes": "npx supabase gen types typescript --project-id \"onawoodgnwkncueeyusr\" > src/lib/schema.ts --schema public --schema product --schema pc_build"
   },
   "dependencies": {
+    "@marsidev/react-turnstile": "^0.7.1",
     "@next/third-parties": "^14.2.3",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-dialog": "^1.0.5",

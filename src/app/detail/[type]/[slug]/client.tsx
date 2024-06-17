@@ -125,14 +125,16 @@ const Component = ({
             )}
             <span>
               Kategori:{" "}
-              <Link className="text-primary" href={"/katalog/" + type}>
-                {categoryTitlesFromEnum[category]}
+              <Link className="text-primary" href={"/katalog/" + type} passHref>
+                <Button variant="link" className="p-0 text-base">
+                  {categoryTitlesFromEnum[category]}
+                </Button>
               </Link>
             </span>
             <div className="flex flex-row gap-2">
               <Button
-                variant="default"
-                className="flex justify-center rounded-lg bg-green-600 px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
+                variant="success"
+                className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
                 // onClick={() => router.replace("#compare", { scroll: true })}
                 // onClick={() => router.replace("#compare", { scroll: true })}
               >
@@ -310,7 +312,10 @@ const Component = ({
                           </td>
                           <td className="flex justify-end rounded-e-lg bg-slate-200 p-2 pr-8 dark:bg-slate-800">
                             <Link href={detail.url} passHref>
-                              <Button className="bg-green-600 text-center">
+                              <Button
+                                variant="success"
+                                className="text-center text-white"
+                              >
                                 Beli
                               </Button>
                             </Link>
