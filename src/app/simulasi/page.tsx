@@ -38,7 +38,7 @@ const headers = [
   "Aksi",
 ];
 
-export default function SimulasiPage(params?: {
+export default function SimulasiPage(params: {
   params?: { id: number } | undefined;
   cpu?: ComponentStorageType | undefined;
   cpu_cooler?: ComponentStorageType | undefined;
