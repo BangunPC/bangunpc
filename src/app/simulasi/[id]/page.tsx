@@ -78,47 +78,49 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
     };
   }
 
+  const compParams = {
+    params,
+    cpu: commonDataToComponentStorageType(
+      ComponentCategory.CPU,
+      dataParsed?.cpu,
+    ),
+    cpu_cooler: commonDataToComponentStorageType(
+      ComponentCategory.Cooler,
+      dataParsed?.cpu_cooler,
+    ),
+    gpu: commonDataToComponentStorageType(
+      ComponentCategory.GPU,
+      dataParsed?.gpu,
+    ),
+    internal_storages: commonDataToComponentStorageType(
+      ComponentCategory.Storage,
+      dataParsed?.internal_storages,
+    ),
+    memories: commonDataToComponentStorageType(
+      ComponentCategory.Memory,
+      dataParsed?.memories,
+    ),
+    monitors: commonDataToComponentStorageType(
+      ComponentCategory.PSU,
+      dataParsed?.monitors,
+    ),
+    motherboard: commonDataToComponentStorageType(
+      ComponentCategory.Motherboard,
+      dataParsed?.motherboard,
+    ),
+    power_supply: commonDataToComponentStorageType(
+      ComponentCategory.PSU,
+      dataParsed?.power_supply,
+    ),
+  };
+
   return (
     <div>
       {isLoading && <div>Loading...</div>}
       {error && <div>Error: {error.message}</div>}
       {dataParsed && (
         <>
-          <SimulasiPage
-            params={params}
-            cpu={commonDataToComponentStorageType(
-              ComponentCategory.CPU,
-              dataParsed.cpu,
-            )}
-            cpu_cooler={commonDataToComponentStorageType(
-              ComponentCategory.Cooler,
-              dataParsed.cpu_cooler,
-            )}
-            gpu={commonDataToComponentStorageType(
-              ComponentCategory.GPU,
-              dataParsed.gpu,
-            )}
-            internal_storages={commonDataToComponentStorageType(
-              ComponentCategory.Storage,
-              dataParsed.internal_storages,
-            )}
-            memories={commonDataToComponentStorageType(
-              ComponentCategory.Memory,
-              dataParsed.memories,
-            )}
-            monitors={commonDataToComponentStorageType(
-              ComponentCategory.PSU,
-              dataParsed.monitors,
-            )}
-            motherboard={commonDataToComponentStorageType(
-              ComponentCategory.Motherboard,
-              dataParsed.motherboard,
-            )}
-            power_supply={commonDataToComponentStorageType(
-              ComponentCategory.PSU,
-              dataParsed.power_supply,
-            )}
-          />
+          <SimulasiPage params={compParams} />
         </>
       )}
     </div>
