@@ -38,7 +38,7 @@ const headers = [
   "Aksi",
 ];
 
-export default function SimulasiPage(params: {
+const SimulasiPage = (params: {
   params?: { id: number } | undefined;
   cpu?: ComponentStorageType | undefined;
   cpu_cooler?: ComponentStorageType | undefined;
@@ -48,7 +48,7 @@ export default function SimulasiPage(params: {
   monitors?: ComponentStorageType | undefined;
   motherboard?: ComponentStorageType | undefined;
   power_supply?: ComponentStorageType | undefined;
-}) {
+}) => {
   const isComponent = params?.params?.id ?? null;
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -661,3 +661,5 @@ const ManageListModal: React.FC<MLMProps> = ({
     </Dialog>
   );
 };
+
+export default SimulasiPage;
