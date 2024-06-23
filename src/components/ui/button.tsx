@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "text-white bg-gradient-to-t from-primary to-primary/80  hover:bg-gradient-to-t hover:from-primary/90 hover:to-primary/70",
+          "text-white bg-gradient-to-t dark:bg-gradient-to-b from-primary to-primary/80  hover:bg-gradient-to-t hover:from-primary/90 hover:to-primary/70",
         destructive:
           "text-white bg-gradient-to-t from-red-600 to-red-400  hover:bg-gradient-to-t hover:from-red-700 hover:to-red-500",
         success:
