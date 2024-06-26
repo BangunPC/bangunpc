@@ -33,51 +33,51 @@ const Footer = () => {
       name: "Beranda",
       url: "/",
     },
-    {
-      name: "Simulasi Rakit PC",
-      url: "/simulasi",
-    },
+    // {
+    //   name: "Simulasi Rakit PC",
+    //   url: "/simulasi",
+    // },
     {
       name: "Jasa Rakit PC",
       url: "/jasa",
     },
-    {
-      name: "Jasa Servis PC",
-      url: "/servis",
-    },
-    {
-      name: "Blog",
-      url: "/blog",
-    },
+    // {
+    //   name: "Jasa Servis PC",
+    //   url: "/servis",
+    // },
+    // {
+    //   name: "Blog",
+    //   url: "/blog",
+    // },
   ];
 
   const about = [
     {
-      name: "Tentang Kami",
+      name: "Tim BangunPC",
       url: "/about",
     },
-    {
-      name: "Syarat & Ketentuan",
-      url: "/terms",
-    },
-    {
-      name: "Privasi",
-      url: "/privacy",
-    },
-    {
-      name: "Dukung Kami",
-      url: "/support",
-    },
+    // {
+    //   name: "Syarat & Ketentuan",
+    //   url: "/terms",
+    // },
+    // {
+    //   name: "Privasi",
+    //   url: "/privacy",
+    // },
+    // {
+    //   name: "Dukung Kami",
+    //   url: "/support",
+    // },
   ];
 
   return (
-    <div className="w-full bg-[#020617] text-slate-100 dark:bg-navbar">
-      <div className="mx-auto mt-5 grid h-full max-w-screen-desktop gap-5 p-8 tablet:max-w-7xl tablet:grid-cols-3">
+    <div className="w-full bg-[#020617] text-slate-100 dark:bg-navbar pt-5">
+      <div className="mx-auto grid h-full max-w-screen-desktop gap-5 p-8 tablet:max-w-7xl tablet:grid-cols-3">
         <div className="flex flex-col items-center gap-5 text-center">
           <NavbarIcon alwaysDark />
-          <p className="text-sm">
-            Platform yang membantumu untuk memilih, membeli, dan merawat
-            komponen komputermu yang disesuaikan dengan kebutuhan dan budget
+          <p className="text-sm max-w-[360px]">
+            Platform yang membantumu memilih, membeli, dan merawat
+            komponen komputermu dan disesuaikan dengan kebutuhan dan budget
           </p>
           <div className="flex flex-row gap-5">
             {socialMedia.map((item) => {
