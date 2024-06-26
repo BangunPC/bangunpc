@@ -4,8 +4,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
+import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 
 export default function RencanaSection() {
   const rencanaList = [
@@ -15,7 +15,7 @@ export default function RencanaSection() {
     "Gaming Ringan",
     "Gaming Berat",
   ];
-  const [selected, setSelected] = useState(rencanaList[0]);
+  const [multiSelect, setMultiSelect] = useState<number[]>([]);
   return (
     <>
       <span className=" w-full text-center font-semibold">
@@ -24,29 +24,33 @@ export default function RencanaSection() {
 
       <div className="h-8" />
 
-      <RadioGroup
-        onValueChange={(value) => {
-          setSelected(value);
-        }}
-        value={selected}
-        className="m-auto max-w-screen-tablet grid-cols-2 tablet:grid-cols-3"
-      >
-        {rencanaList.map((item) => (
+      <div className="m-auto grid max-w-screen-tablet grid-cols-2 tablet:grid-cols-3 gap-2">
+        {rencanaList.map((item, index) => (
           <Label
-            htmlFor={`${item}`}
+            htmlFor={item}
             key={item}
             className={
               "flex w-full items-center gap-2 rounded-lg border border-transparent p-2 " +
-              (item === selected
+              (multiSelect.includes(index)
                 ? "border-primary"
                 : "bg-foreground/10 hover:bg-foreground/20")
             }
           >
-            <RadioGroupItem value={`${item}`} id={`${item}`} />
+            <Checkbox
+              id={item}
+              checked={multiSelect.includes(index)}
+              onCheckedChange={(checked) =>
+                setMultiSelect(
+                  checked
+                    ? [...multiSelect, index]
+                    : multiSelect.filter((i) => i !== index),
+                )
+              }
+            />
             <span>{item}</span>
           </Label>
         ))}
-      </RadioGroup>
+      </div>
 
       <div className="flex justify-between">
         <Link href="/rakit" className="flex justify-start" passHref>
