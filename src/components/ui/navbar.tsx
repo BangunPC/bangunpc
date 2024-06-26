@@ -553,7 +553,7 @@ export function Navbar() {
             </div>
           </>
         )}
-        <div className="ml-auto"/>
+        <div className="ml-auto" />
         <ModeToggle />
       </div>
     </div>

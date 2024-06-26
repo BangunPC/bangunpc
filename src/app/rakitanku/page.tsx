@@ -28,7 +28,7 @@ export default function RakitankuPage() {
             <Link
               href={`/simulasi/${item.build_id}`}
               key={item.build_id}
-              className="flex max-w-72 flex-col gap-2 rounded-lg border bg-gray-50 p-2 shadow-bm hover:border-primary dark:hover:border-gray-300 dark:bg-gray-700"
+              className="flex max-w-72 flex-col gap-2 rounded-lg border bg-gray-50 p-2 shadow-bm hover:border-primary dark:bg-gray-700 dark:hover:border-gray-300"
             >
               <div className="aspect-square rounded-md bg-white dark:bg-gray-800" />
               <div className="text-lg">{item.title}</div>
