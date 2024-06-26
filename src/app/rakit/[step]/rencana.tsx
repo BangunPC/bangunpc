@@ -24,7 +24,7 @@ export default function RencanaSection() {
 
       <div className="h-8" />
 
-      <div className="m-auto grid max-w-screen-tablet grid-cols-2 tablet:grid-cols-3 gap-2">
+      <div className="m-auto grid max-w-screen-tablet grid-cols-2 gap-2 tablet:grid-cols-3">
         {rencanaList.map((item, index) => (
           <Label
             htmlFor={item}
