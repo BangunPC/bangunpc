@@ -19,7 +19,7 @@ export default function RencanaSection() {
   return (
     <>
       <span className=" w-full text-center font-semibold">
-        Pilih budget yang sesuai dengan kebutuhan dan anggaran Anda.
+        Pilih rencana kegiatan yang ingin anda lakukan sebagai kebutuhan rakit PC.
       </span>
 
       <div className="h-8" />
