@@ -1,8 +1,10 @@
-import { CheckIcon, Dot } from "lucide-react";
 import { redirect } from "next/navigation";
 import BudgetSection from "./budget";
 import RencanaSection from "./rencana";
 import HasilSection from "./hasil";
+import StepBudget from "~/components/ui/icon/step-budget";
+import StepKebutuhan from "~/components/ui/icon/step-kebutuhan";
+import StepHasil from "~/components/ui/icon/step-hasil";
 
 export default function RakitPage({ params }: { params: { step: string } }) {
   switch (params.step) {
@@ -42,23 +44,25 @@ export default function RakitPage({ params }: { params: { step: string } }) {
 function RakitStep({ step }: { step: string }) {
   const stepList = [
     {
-      name: "1. Budget",
+      name: "Budget",
       key: "budget",
     },
     {
-      name: "2. Rencana",
+      name: "Kebutuhan",
       key: "rencana",
     },
     {
-      name: "3. Hasil",
+      name: "Hasil",
       key: "hasil",
     },
   ];
+
+  const stepIndex = stepList.findIndex((data) => data.key === step);
+
   return (
     <div className="mx-auto flex w-full max-w-screen-tablet flex-row items-center justify-center gap-0 pt-4">
       {stepList.map((data, index) => {
         const isSelected = data.key === step;
-        const isDone = false; //TODO
         return (
           <div
             key={data.name}
@@ -66,20 +70,36 @@ function RakitStep({ step }: { step: string }) {
           >
             <div className={`m-auto flex w-full items-center `}>
               <div
-                className={`h-[2px] w-full ${index > 0 ? "bg-foreground/20" : ""}`}
+                className={`h-[4px] w-full ${index > 0 ? (stepIndex >= index ? "bg-primary" : "bg-foreground/20") : ""}`}
               />
               <div
-                className={`rounded-full border-8 ${isSelected ? "bg-primary" : "bg-foreground/20"} "border-white/40"`}
+                className={`rounded-full border-[3px] p-3 ${stepIndex >= index ? "border-primary" : "border-foreground/20"} `}
               >
-                {isDone ? (
-                  <CheckIcon className="m-auto h-12 w-12 text-white" />
-                ) : (
-                  <Dot className="m-auto h-12 w-12 text-white" />
+                {index == 0 && (
+                  <StepBudget
+                    className={
+                      stepIndex >= index ? "text-primary" : "text-foreground/20"
+                    }
+                  />
+                )}
+                {index == 1 && (
+                  <StepKebutuhan
+                    className={
+                      stepIndex >= index ? "text-primary" : "text-foreground/20"
+                    }
+                  />
+                )}
+                {index == 2 && (
+                  <StepHasil
+                    className={
+                      stepIndex >= index ? "text-primary" : "text-foreground/20"
+                    }
+                  />
                 )}
               </div>
 
               <div
-                className={`h-[2px] w-full ${index < stepList.length - 1 ? "bg-foreground/20" : ""}`}
+                className={`h-[4px] w-full ${index < stepList.length - 1 ? (stepIndex > index ? "bg-primary" : "bg-foreground/20") : ""}`}
               />
             </div>
             <div className="text-center" key={data.name}>

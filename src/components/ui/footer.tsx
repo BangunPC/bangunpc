@@ -39,7 +39,7 @@ const Footer = () => {
     // },
     {
       name: "Jasa Rakit PC",
-      url: "/jasa",
+      url: "/rakit",
     },
     // {
     //   name: "Jasa Servis PC",

@@ -40,6 +40,7 @@
     "swr": "^2.2.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "use-mask-input": "^3.3.8",
     "zod": "^3.22.4"
   },
   "devDependencies": {

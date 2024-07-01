@@ -1179,6 +1179,7 @@ export type Database = {
           cpu: Json | null
           cpu_cooler: Json | null
           gpu: Json | null
+          image_filenames: string[] | null
           internal_storages: Json | null
           memories: Json | null
           monitors: Json | null
@@ -1622,21 +1623,18 @@ export type Database = {
         Row: {
           code_name: string | null
           id: number
-          memory_type: Database["public"]["Enums"]["memory_type"] | null
           model_line: string | null
           release_date: string | null
         }
         Insert: {
           code_name?: string | null
           id?: number
-          memory_type?: Database["public"]["Enums"]["memory_type"] | null
           model_line?: string | null
           release_date?: string | null
         }
         Update: {
           code_name?: string | null
           id?: number
-          memory_type?: Database["public"]["Enums"]["memory_type"] | null
           model_line?: string | null
           release_date?: string | null
         }
@@ -1688,6 +1686,8 @@ export type Database = {
           max_memory_channel: number | null
           max_memory_gb: number | null
           max_power_watt: number | null
+          memory_type_supports: string[] | null
+          pcie_generation: number | null
           performance_core: number | null
           product_id: number | null
           total_thread: number | null
@@ -1704,6 +1704,8 @@ export type Database = {
           max_memory_channel?: number | null
           max_memory_gb?: number | null
           max_power_watt?: number | null
+          memory_type_supports?: string[] | null
+          pcie_generation?: number | null
           performance_core?: number | null
           product_id?: number | null
           total_thread?: number | null
@@ -1720,6 +1722,8 @@ export type Database = {
           max_memory_channel?: number | null
           max_memory_gb?: number | null
           max_power_watt?: number | null
+          memory_type_supports?: string[] | null
+          pcie_generation?: number | null
           performance_core?: number | null
           product_id?: number | null
           total_thread?: number | null
@@ -2011,6 +2015,7 @@ export type Database = {
           form_factor: string | null
           id: number
           interface: string | null
+          nand_type: Database["public"]["Enums"]["nand_type"] | null
           product_id: number | null
           read_speed_mbs: number | null
           tbw: number | null
@@ -2022,6 +2027,7 @@ export type Database = {
           form_factor?: string | null
           id?: number
           interface?: string | null
+          nand_type?: Database["public"]["Enums"]["nand_type"] | null
           product_id?: number | null
           read_speed_mbs?: number | null
           tbw?: number | null
@@ -2033,6 +2039,7 @@ export type Database = {
           form_factor?: string | null
           id?: number
           interface?: string | null
+          nand_type?: Database["public"]["Enums"]["nand_type"] | null
           product_id?: number | null
           read_speed_mbs?: number | null
           tbw?: number | null
@@ -2957,6 +2964,7 @@ export type Database = {
           lowest_price: number | null
           name: string
           product_fts: unknown | null
+          product_trgms: string | null
           review_urls: string[] | null
           slug: string
           spec_url: string | null
@@ -2970,6 +2978,7 @@ export type Database = {
           lowest_price?: number | null
           name: string
           product_fts?: unknown | null
+          product_trgms?: string | null
           review_urls?: string[] | null
           slug?: string
           spec_url?: string | null
@@ -2983,6 +2992,7 @@ export type Database = {
           lowest_price?: number | null
           name?: string
           product_fts?: unknown | null
+          product_trgms?: string | null
           review_urls?: string[] | null
           slug?: string
           spec_url?: string | null
@@ -3222,7 +3232,9 @@ export type Database = {
           max_clock_ghz: number | null
           max_memory_channel: number | null
           max_power_watt: number | null
+          memory_type_supports: string[] | null
           model_line: string | null
+          pcie_generation: number | null
           performance_core: number | null
           product_id: number | null
           product_name: string | null
@@ -3587,6 +3599,7 @@ export type Database = {
           product_fts: unknown | null
           product_id: number | null
           product_name: string | null
+          product_trgms: string | null
           review_urls: string[] | null
           slug: string | null
           spec_url: string | null
@@ -3595,6 +3608,25 @@ export type Database = {
       }
     }
     Functions: {
+      search_products: {
+        Args: {
+          search_text: string
+        }
+        Returns: {
+          product_id: number
+          product_name: string
+          category_id: number
+          category_name: string
+          slug: string
+          lowest_price: number
+          description: string
+          brand_id: number
+          brand_name: string
+          spec_url: string
+          review_urls: string[]
+          image_filenames: string[]
+        }[]
+      }
       slugify: {
         Args: {
           value: string
@@ -3623,6 +3655,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      feedbacks: {
+        Row: {
+          created_at: string
+          description: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: number
+        }
+        Relationships: []
+      }
       partners: {
         Row: {
           city: string
@@ -3846,25 +3896,6 @@ export type Database = {
         }
         Returns: unknown
       }
-      search_products: {
-        Args: {
-          search_text: string
-        }
-        Returns: {
-          product_id: number
-          product_name: string
-          category_id: number
-          category_name: string
-          slug: string
-          lowest_price: number
-          description: string
-          brand_id: number
-          brand_name: string
-          spec_url: string
-          review_urls: string[]
-          image_filenames: string[]
-        }[]
-      }
       set_limit: {
         Args: {
           "": number
@@ -3891,6 +3922,7 @@ export type Database = {
         | "PCIe 3.0 x8"
       gpu_memory_type: "GDDR6" | "GDDR6X" | "GDDR5"
       memory_type: "DDR3" | "DDR4" | "DDR5"
+      nand_type: "SLC" | "MLC" | "TLC" | "QLC"
       panel_type: "OLED" | "IPS" | "VA" | "TN"
       partner_type: "jasa rakit pc" | "jasa servis pc/laptop" | "rakit keyboard"
       psu_modularity: "full" | "semi" | "no"
