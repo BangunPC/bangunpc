@@ -9,7 +9,7 @@ export class ApiPaths {
 
 export const search = async function (search_text: string) {
   const supabase = createClient();
-  const { data, error } = await supabase.rpc("search_products", {
+  const { data, error } = await supabase.schema("product").rpc("search_products", {
     search_text,
   });
   return { data, error };
