@@ -10,7 +10,7 @@ import { Label } from "~/components/ui/label";
 import { RencanaListType } from "./page";
 
 export default function RencanaSection({rencanaList}: {rencanaList: RencanaListType}) {
-  const {data, error} = rencanaList;
+  const {data} = rencanaList;
 
   const [multiSelect, setMultiSelect] = useState<number[]>([]);
   return (

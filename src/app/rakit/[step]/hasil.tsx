@@ -9,7 +9,7 @@ import { RecommendationHasilType } from "./page";
 
 export default function HasilSection({component} : {component: RecommendationHasilType}) {
 
-  const { data, error } = component;
+  const { data } = component;
 
   return (
     <>
