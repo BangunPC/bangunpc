@@ -5,8 +5,29 @@ import HasilSection from "./hasil";
 import StepBudget from "~/components/ui/icon/step-budget";
 import StepKebutuhan from "~/components/ui/icon/step-kebutuhan";
 import StepHasil from "~/components/ui/icon/step-hasil";
+import { createClient } from "~/lib/supabase/server";
 
-export default function RakitPage({ params }: { params: { step: string } }) {
+async function getRecommendation() {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .schema("pc_build")
+    .from("v_recommendation")
+    .select("recommendation_id, build_id, title, image_filenames, categories_name, total_price")
+    .limit(3);
+  return { data, error };
+}
+
+export type RecommendationHasilType = Awaited<
+  ReturnType<typeof getRecommendation>
+>;
+
+export default async function RakitPage({
+  params,
+}: {
+  params: { step: string };
+}) {
+  let component: RecommendationHasilType = {data: null, error: null};
+
   switch (params.step) {
     case "budget":
       break;
@@ -16,9 +37,7 @@ export default function RakitPage({ params }: { params: { step: string } }) {
       // }
       break;
     case "hasil":
-      // if (condition) {
-      //   redirect("/rakit/budget");
-      // }
+      component = await getRecommendation();
       break;
     default:
       redirect("/rakit/budget");
@@ -28,13 +47,13 @@ export default function RakitPage({ params }: { params: { step: string } }) {
     <>
       <RakitStep step={params.step} />
       <div className="h-8" />
-      <div className="m-auto mb-8 w-full max-w-screen-tablet p-4">
+      <div className="m-auto mb-8 w-full max-w-screen-desktop p-4">
         {params.step === "budget" ? (
           <BudgetSection />
         ) : params.step === "rencana" ? (
           <RencanaSection />
         ) : (
-          <HasilSection />
+          <HasilSection component={component} />
         )}
       </div>
     </>

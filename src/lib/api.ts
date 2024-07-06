@@ -9,9 +9,11 @@ export class ApiPaths {
 
 export const search = async function (search_text: string) {
   const supabase = createClient();
-  const { data, error } = await supabase.schema("product").rpc("search_products", {
-    search_text,
-  });
+  const { data, error } = await supabase
+    .schema("product")
+    .rpc("search_products", {
+      search_text,
+    });
   return { data, error };
 };
 
@@ -57,6 +59,26 @@ export async function getListRakitan() {
     .schema("pc_build")
     .from("user_builds")
     .select("title, build_id");
+  return { data, error };
+}
+
+export const getPagination = (page: number, size: number) => {
+  const limit = size ? +size : 3;
+  const from = page ? page * limit : 0;
+  const to = page ? from + size - 1 : size - 1;
+  return { from, to };
+};
+
+export async function getRecommendRakitan() {
+  const supabase = createClient();
+  const { from, to } = getPagination(1, 3);
+  const { data, error } = await supabase
+    .schema("pc_build")
+    .from("v_recommendation")
+    .select("build_id, title, image_filenames, categories_name, total_price", {
+      count: "exact",
+    })
+    .range(from, to);
   return { data, error };
 }
 

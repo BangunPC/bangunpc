@@ -47,6 +47,13 @@ export type Database = {
             referencedRelation: "v_builds"
             referencedColumns: ["build_id"]
           },
+          {
+            foreignKeyName: "build_categories_build_id_fkey"
+            columns: ["build_id"]
+            isOneToOne: false
+            referencedRelation: "v_recommendation"
+            referencedColumns: ["build_id"]
+          },
         ]
       }
       build_internal_storages: {
@@ -81,6 +88,13 @@ export type Database = {
             columns: ["build_id"]
             isOneToOne: false
             referencedRelation: "v_builds"
+            referencedColumns: ["build_id"]
+          },
+          {
+            foreignKeyName: "build_internal_storages_build_id_fkey"
+            columns: ["build_id"]
+            isOneToOne: false
+            referencedRelation: "v_recommendation"
             referencedColumns: ["build_id"]
           },
           {
@@ -211,6 +225,13 @@ export type Database = {
             referencedColumns: ["build_id"]
           },
           {
+            foreignKeyName: "build_memories_build_id_fkey"
+            columns: ["build_id"]
+            isOneToOne: false
+            referencedRelation: "v_recommendation"
+            referencedColumns: ["build_id"]
+          },
+          {
             foreignKeyName: "build_memories_memory_product_detail_id_fkey1"
             columns: ["memory_product_detail_id"]
             isOneToOne: false
@@ -335,6 +356,13 @@ export type Database = {
             columns: ["build_id"]
             isOneToOne: false
             referencedRelation: "v_builds"
+            referencedColumns: ["build_id"]
+          },
+          {
+            foreignKeyName: "build_monitors_build_id_fkey"
+            columns: ["build_id"]
+            isOneToOne: false
+            referencedRelation: "v_recommendation"
             referencedColumns: ["build_id"]
           },
           {
@@ -1110,6 +1138,13 @@ export type Database = {
             referencedRelation: "v_builds"
             referencedColumns: ["build_id"]
           },
+          {
+            foreignKeyName: "recommendation_builds_build_id_fkey"
+            columns: ["build_id"]
+            isOneToOne: false
+            referencedRelation: "v_recommendation"
+            referencedColumns: ["build_id"]
+          },
         ]
       }
       user_builds: {
@@ -1168,6 +1203,13 @@ export type Database = {
             referencedRelation: "v_builds"
             referencedColumns: ["build_id"]
           },
+          {
+            foreignKeyName: "user_builds_build_id_fkey"
+            columns: ["build_id"]
+            isOneToOne: true
+            referencedRelation: "v_recommendation"
+            referencedColumns: ["build_id"]
+          },
         ]
       }
     }
@@ -1185,6 +1227,28 @@ export type Database = {
           monitors: Json | null
           motherboard: Json | null
           power_supply: Json | null
+          total_price: number | null
+        }
+        Relationships: []
+      }
+      v_recommendation: {
+        Row: {
+          build_id: number | null
+          casing: Json | null
+          categories_name: string[] | null
+          cpu: Json | null
+          cpu_cooler: Json | null
+          description: string | null
+          gpu: Json | null
+          image_filenames: string[] | null
+          internal_storages: Json | null
+          memories: Json | null
+          monitors: Json | null
+          motherboard: Json | null
+          power_supply: Json | null
+          recommendation_id: number | null
+          slug: string | null
+          title: string | null
           total_price: number | null
         }
         Relationships: []

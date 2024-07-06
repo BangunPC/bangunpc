@@ -19,6 +19,7 @@ const config = {
     },
     extend: {
       boxShadow: {
+        tm: "0 -4px 4px 0 rgb(0 0 0 / 0.14)",
         bm: "0 4px 4px 0 rgb(0 0 0 / 0.14)",
         br: "3.48px 4.65px 4.65px 0 rgb(0 0 0 / 0.15)",
       },

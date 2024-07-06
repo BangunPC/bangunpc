@@ -54,6 +54,7 @@ export function batchUpdateQueryString({
 
 const supabaseUrl = "https://onawoodgnwkncueeyusr.supabase.co";
 const storageImageurl = "/storage/v1/object/public/public-images/products/";
+const storagePcImageurl = "/storage/v1/object/public/public-images/pc-builds/";
 
 export const componentImage = function (component: any) {
   return `${supabaseUrl}${storageImageurl}${component.product_id}/${component.image_filenames[0]}`;
@@ -61,4 +62,8 @@ export const componentImage = function (component: any) {
 
 export const productImage = function (product_id: number, filename: string) {
   return `${supabaseUrl}${storageImageurl}${product_id}/${filename}`;
+};
+
+export const pcImage = function (pc_id: number, filename: string) {
+  return `${supabaseUrl}${storagePcImageurl}${pc_id}/${filename}`;
 };

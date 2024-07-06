@@ -4,43 +4,12 @@ import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
+import { pcImage } from "~/lib/utils";
+import { RecommendationHasilType } from "./page";
 
-export default function HasilSection() {
-  const hasilList = [
-    {
-      img: "/images/preview-1.png",
-      name: "Paket rakitan PC Spek Gaming dan Spek Editing 3D atau Animasi",
-      cpu: "AMD Ryzen 5 3600",
-      gpu: "GeForce 1070 RTX",
-      tags: ["Gaming", "Editing", "Rendering", "Programming"],
-      ram: "8 GB",
-      price: "Rp 15.200.000",
-      heart: "120",
-      comments: "40",
-    },
-    {
-      img: "/images/preview-1.png",
-      name: "Paket rakitan PC Spek Gaming dan Spek Editing 3D atau Animasi",
-      cpu: "AMD Ryzen 5 3600",
-      gpu: "GeForce 1070 RTX",
-      tags: ["Gaming", "Programming"],
-      ram: "8 GB",
-      price: "Rp 15.200.000",
-      heart: "120",
-      comments: "40",
-    },
-    {
-      img: "/images/preview-1.png",
-      name: "Paket rakitan PC Spek Gaming dan Spek Editing 3D atau Animasi",
-      cpu: "AMD Ryzen 5 3600",
-      gpu: "GeForce 1070 RTX",
-      tags: ["Gaming", "Editing", "Rendering", "Programming"],
-      ram: "8 GB",
-      price: "Rp 15.200.000",
-      heart: "120",
-      comments: "40",
-    },
-  ];
+export default function HasilSection({component} : {component: RecommendationHasilType}) {
+
+  const { data, error } = component;
 
   return (
     <>
@@ -63,42 +32,52 @@ export default function HasilSection() {
 
       <div className="h-8" />
 
-      <div className="m-auto grid max-w-screen-tablet grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-3 tablet:grid-cols-3 desktop:grid-cols-4">
-        {hasilList.map((item) => (
-          <div
-            key={item.name}
-            className={`m-auto flex h-full max-w-[243px] cursor-pointer flex-col overflow-clip rounded-lg border-2 border-background/50 bg-white shadow-bm hover:border-primary/30
+      {data && (
+        <div className="m-auto grid w-fit grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-3 tablet:grid-cols-3 desktop:grid-cols-4">
+          {data.map((item) => (
+            <Link
+              href={`/build/${item.recommendation_id}`}
+              key={item.build_id}
+              className={`m-auto flex h-full max-w-[243px] cursor-pointer flex-col overflow-clip rounded-lg border-2 border-background/50 bg-white shadow-bm hover:border-primary/30
             dark:bg-black`}
-          >
-            <div className="aspect-square bg-[#EAE7EE] dark:bg-[#201C27]">
-              <Image src={item.img} alt="rakitan pc" width={210} height={210} />
-            </div>
-            <div className="flex flex-col justify-between gap-2 p-2">
-              <span className="text-xs text-gray-700 dark:text-gray-300">
-                {item.name}
-              </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">
+            >
+              <div className="aspect-square bg-[#EAE7EE] dark:bg-[#201C27] flex items-center justify-center">
+                <Image
+                  src={pcImage(item.build_id!, item.image_filenames![0]!)}
+                  alt="rakitan pc"
+                  width={210}
+                  height={210}
+                />
+              </div>
+              <div className="flex flex-col justify-between gap-2 p-2">
+                <span className="text-xs bold text-gray-700 dark:text-gray-300">
+                  {item.title}
+                </span>
+                {/* <span className="text-xs text-gray-500 dark:text-gray-400">
                 {item.cpu}
                 <br />
                 {item.gpu}
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {item.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="w-fit rounded-md border border-primary px-2 py-1 text-xs text-primary"
-                  >
-                    {tag}
+              </span> */}
+                <div className="flex flex-wrap gap-2">
+                  {item.categories_name?.map((category) => (
+                    <span
+                      key={category}
+                      className="w-fit rounded-md border border-primary px-2 py-1 text-xs text-primary"
+                    >
+                      {category}
+                    </span>
+                  ))}
+                </div>
+                <div className="border-t-divider mt flex flex-row border-t pt-2">
+                  <span className="text font-semibold">
+                    Rp {item.total_price?.toLocaleString("id-ID")}
                   </span>
-                ))}
+                </div>
               </div>
-              <div className="border-t-divider mt flex flex-row border-t pt-2">
-                <span className="text font-semibold">{item.price}</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
+      )}
 
       <div className="h-8" />
 
