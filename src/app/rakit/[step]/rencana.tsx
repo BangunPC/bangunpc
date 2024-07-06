@@ -7,15 +7,11 @@ import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
+import { RencanaListType } from "./page";
 
-export default function RencanaSection() {
-  const rencanaList = [
-    "Programming",
-    "3D Design",
-    "Video Editing",
-    "Gaming Ringan",
-    "Gaming Berat",
-  ];
+export default function RencanaSection({rencanaList}: {rencanaList: RencanaListType}) {
+  const {data, error} = rencanaList;
+
   const [multiSelect, setMultiSelect] = useState<number[]>([]);
   return (
     <>
@@ -39,10 +35,10 @@ export default function RencanaSection() {
       <div className="h-8" />
 
       <div className="m-auto grid max-w-screen-tablet grid-cols-2 gap-2 tablet:grid-cols-3">
-        {rencanaList.map((item, index) => (
+        {data?.map((item, index) => (
           <Label
-            htmlFor={item}
-            key={item}
+            htmlFor={item.category_name!}
+            key={item.category_name!}
             className={
               "flex w-full items-center gap-2 rounded-lg border border-transparent p-2 hover:bg-foreground/20 " +
               (multiSelect.includes(index)
@@ -51,7 +47,7 @@ export default function RencanaSection() {
             }
           >
             <Checkbox
-              id={item}
+              id={item.category_name!}
               checked={multiSelect.includes(index)}
               onCheckedChange={(checked) =>
                 setMultiSelect(
@@ -61,7 +57,7 @@ export default function RencanaSection() {
                 )
               }
             />
-            <span>{item}</span>
+            <span>{item.category_name!}</span>
           </Label>
         ))}
       </div>

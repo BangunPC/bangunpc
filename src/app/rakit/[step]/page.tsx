@@ -7,15 +7,28 @@ import StepKebutuhan from "~/components/ui/icon/step-kebutuhan";
 import StepHasil from "~/components/ui/icon/step-hasil";
 import { createClient } from "~/lib/supabase/server";
 
+async function getRencanaList() {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .schema("pc_build")
+    .from("categories")
+    .select("*");
+  return { data, error };
+}
+
 async function getRecommendation() {
   const supabase = createClient();
   const { data, error } = await supabase
     .schema("pc_build")
     .from("v_recommendation")
-    .select("recommendation_id, build_id, title, image_filenames, categories_name, total_price")
+    .select(
+      "recommendation_id, build_id, title, image_filenames, categories_name, total_price",
+    )
     .limit(3);
   return { data, error };
 }
+
+export type RencanaListType = Awaited<ReturnType<typeof getRencanaList>>;
 
 export type RecommendationHasilType = Awaited<
   ReturnType<typeof getRecommendation>
@@ -26,15 +39,14 @@ export default async function RakitPage({
 }: {
   params: { step: string };
 }) {
-  let component: RecommendationHasilType = {data: null, error: null};
+  let component: RecommendationHasilType = { data: null, error: null };
+  let rencanaList: RencanaListType = { data: null, error: null };
 
   switch (params.step) {
     case "budget":
       break;
     case "rencana":
-      // if (condition) {
-      //   redirect("/rakit/budget");
-      // }
+      rencanaList = await getRencanaList();
       break;
     case "hasil":
       component = await getRecommendation();
@@ -51,7 +63,7 @@ export default async function RakitPage({
         {params.step === "budget" ? (
           <BudgetSection />
         ) : params.step === "rencana" ? (
-          <RencanaSection />
+          <RencanaSection rencanaList={rencanaList} />
         ) : (
           <HasilSection component={component} />
         )}
