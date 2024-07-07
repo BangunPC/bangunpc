@@ -9,6 +9,7 @@ import { Inter } from "next/font/google";
 import React from "react";
 import Footer from "~/components/ui/footer";
 import { Navbar } from "~/components/ui/navbar";
+import ProgressBarProvider from "~/components/provider/progress-bar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,18 +32,20 @@ export default function RootLayout({
     <html lang="en">
       <GoogleAnalytics gaId="G-SXXB5CHSKR" />
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className={`${inter.variable} bg-background text-foreground`}>
-            <Navbar />
-            <div className="mt-navbar-min-h">{children}</div>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <ProgressBarProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className={`${inter.variable} bg-background text-foreground`}>
+              <Navbar />
+              <div className="mt-navbar-min-h">{children}</div>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </ProgressBarProvider>
       </body>
     </html>
   );
