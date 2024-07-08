@@ -120,6 +120,18 @@ const Component = ({
                   </span>
                 </span>
               )}
+              <div className="h-2" />
+              <div className="flex flex-wrap gap-2">
+                {data.categories_name &&
+                  data.categories_name?.map((category) => (
+                    <span
+                      key={category}
+                      className="w-fit rounded-md border border-primary px-2 py-1 text-xs text-primary"
+                    >
+                      {category}
+                    </span>
+                  ))}
+              </div>
               {data.description && (
                 <Accordion type="single" collapsible defaultValue="item-1">
                   <AccordionItem value="item-1" className="border-none">

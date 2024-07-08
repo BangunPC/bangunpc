@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function RakitPage() {
-  redirect("/rakit/1");
+export default async function RakitPage() {
+  redirect("/rakit/budget");
 }

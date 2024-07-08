@@ -34,7 +34,7 @@ function RakitSekarangSection() {
               harga terbaik.
             </p>
             <Link
-              href="/rakit"
+              href="/rakit/budget"
               passHref
               className="m-auto tablet:m-0 tablet:mt-6"
             >
