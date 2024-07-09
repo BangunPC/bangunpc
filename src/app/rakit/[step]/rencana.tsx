@@ -3,16 +3,34 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import { RencanaListType } from "./page";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function RencanaSection({rencanaList}: {rencanaList: RencanaListType}) {
-  const {data} = rencanaList;
+export default function RencanaSection({
+  rencanaList,
+}: {
+  rencanaList: RencanaListType;
+}) {
+  const searchParams = useSearchParams();
+  const budget = searchParams.get("b") ?? 0;
+  const multiSelect = searchParams.getAll("r");
 
-  const [multiSelect, setMultiSelect] = useState<number[]>([]);
+  const { data } = rencanaList;
+
+  const router = useRouter();
+
+  const getDest = (newMultiSelect: string[]) => {
+    let dest = `?b=${budget}`;
+    for (const item of newMultiSelect) {
+      dest += `&r=${item}`;
+    }
+
+    return dest;
+  };
+
   return (
     <>
       <div className="flex flex-col items-center justify-center">
@@ -41,21 +59,19 @@ export default function RencanaSection({rencanaList}: {rencanaList: RencanaListT
             key={item.category_name!}
             className={
               "flex w-full items-center gap-2 rounded-lg border border-transparent p-2 hover:bg-foreground/20 " +
-              (multiSelect.includes(index)
-                ? "border-primary"
-                : "")
+              (multiSelect.includes(index.toString()) ? "border-primary" : "")
             }
           >
             <Checkbox
               id={item.category_name!}
-              checked={multiSelect.includes(index)}
-              onCheckedChange={(checked) =>
-                setMultiSelect(
-                  checked
-                    ? [...multiSelect, index]
-                    : multiSelect.filter((i) => i !== index),
-                )
-              }
+              checked={multiSelect.includes(index.toString())}
+              onCheckedChange={(checked) => {
+                const newMultiSelect = checked
+                  ? [...multiSelect, index.toString()]
+                  : multiSelect.filter((i) => i !== index.toString());
+
+                router.replace(getDest(newMultiSelect));
+              }}
             />
             <span>{item.category_name!}</span>
           </Label>
@@ -63,14 +79,14 @@ export default function RencanaSection({rencanaList}: {rencanaList: RencanaListT
       </div>
 
       <div className="flex justify-between">
-        <Link href="/rakit/budget" className="" passHref>
+        <Link href={`/rakit/budget${getDest(multiSelect)}`} passHref>
           <Button className="mt-4 justify-center font-semibold">
             <ArrowLeft className="mr-2 inline-block" />
             Kembali
           </Button>
         </Link>
 
-        <Link href="/rakit/hasil" className="" passHref>
+        <Link href={`/rakit/hasil${getDest(multiSelect)}`} passHref>
           <Button className="mt-4 justify-center font-semibold">
             Selanjutnya
             <ArrowRight className="ml-2 inline-block" />

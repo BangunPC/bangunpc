@@ -6,8 +6,25 @@ import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { pcImage } from "~/lib/utils";
 import { RecommendationHasilType } from "./page";
+import { useSearchParams } from "next/navigation";
 
-export default function HasilSection({component} : {component: RecommendationHasilType}) {
+export default function HasilSection({
+  component,
+}: {
+  component: RecommendationHasilType;
+}) {
+  const searchParams = useSearchParams();
+  const budget = searchParams.get("b") ?? 0;
+  const multiSelect = searchParams.getAll("r");
+
+  const getDest = () => {
+    let dest = `?b=${budget}`;
+    for (const item of multiSelect) {
+      dest += `&r=${item}`;
+    }
+
+    return dest;
+  };
 
   const { data } = component;
 
@@ -41,7 +58,7 @@ export default function HasilSection({component} : {component: RecommendationHas
               className={`m-auto flex h-full max-w-[243px] cursor-pointer flex-col overflow-clip rounded-lg border-2 border-background/50 bg-white shadow-bm hover:border-primary/30
             dark:bg-black`}
             >
-              <div className="aspect-square bg-[#EAE7EE] dark:bg-[#201C27] flex items-center justify-center">
+              <div className="flex aspect-square items-center justify-center bg-[#EAE7EE] dark:bg-[#201C27]">
                 <Image
                   src={pcImage(item.build_id!, item.image_filenames![0]!)}
                   alt="rakitan pc"
@@ -50,7 +67,7 @@ export default function HasilSection({component} : {component: RecommendationHas
                 />
               </div>
               <div className="flex flex-col justify-between gap-2 p-2">
-                <span className="text-xs bold text-gray-700 dark:text-gray-300">
+                <span className="bold text-xs text-gray-700 dark:text-gray-300">
                   {item.title}
                 </span>
                 {/* <span className="text-xs text-gray-500 dark:text-gray-400">
@@ -117,7 +134,7 @@ export default function HasilSection({component} : {component: RecommendationHas
       <div className="h-4" />
 
       <div className="flex justify-start">
-        <Link href="/rakit/rencana" className="" passHref>
+        <Link href={`/rakit/rencana${getDest()}`} passHref>
           <Button className="justify-center font-semibold">
             <ArrowLeft className="mr-2 inline-block" />
             Kembali
