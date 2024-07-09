@@ -12,20 +12,32 @@ async function getRencanaList() {
   const { data, error } = await supabase
     .schema("pc_build")
     .from("categories")
-    .select("*");
+    .select("*")
+    .order("id");
   return { data, error };
 }
 
-async function getRecommendation() {
+async function getRecommendation(budget: number, categoryIndexes: number[]) {
   const supabase = createClient();
-  const { data, error } = await supabase
+  const categories_name = await supabase
+    .schema("pc_build")
+    .from("categories")
+    .select("category_name")
+    .order("id");
+  const categories = categories_name
+    .data!.filter((item, index) => categoryIndexes.includes(index))
+    .map((item) => item.category_name!);
+  const { data, error, count } = await supabase
     .schema("pc_build")
     .from("v_recommendation")
     .select(
       "recommendation_id, build_id, title, image_filenames, categories_name, total_price",
+      { count: "exact" },
     )
+    .lte("total_price", budget)
+    .contains("categories_name", categories)
     .limit(3);
-  return { data, error };
+  return { data, error, count };
 }
 
 export type RencanaListType = Awaited<ReturnType<typeof getRencanaList>>;
@@ -36,10 +48,16 @@ export type RecommendationHasilType = Awaited<
 
 export default async function RakitPage({
   params,
+  searchParams,
 }: {
   params: { step: string };
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
-  let component: RecommendationHasilType = { data: null, error: null };
+  let component: RecommendationHasilType = {
+    data: null,
+    error: null,
+    count: 0,
+  };
   let rencanaList: RencanaListType = { data: null, error: null };
 
   switch (params.step) {
@@ -49,7 +67,22 @@ export default async function RakitPage({
       rencanaList = await getRencanaList();
       break;
     case "hasil":
-      component = await getRecommendation();
+      const budget = searchParams.b;
+      if (!budget) {
+        redirect(`/rakit/budget`);
+      }
+      const categories = searchParams.r;
+      if (budget && !categories) {
+        redirect(`/rakit/rencana?b=${budget as string}`);
+      }
+      component = await getRecommendation(
+        parseInt(searchParams.b as string),
+        typeof searchParams.r === "string"
+          ? [parseInt(searchParams.r)]
+          : ((searchParams.r as string[] | null) ?? []).map((item) =>
+              parseInt(item),
+            ),
+      );
       break;
     default:
       redirect("/rakit/budget");

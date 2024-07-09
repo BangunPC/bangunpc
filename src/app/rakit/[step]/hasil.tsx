@@ -16,6 +16,7 @@ export default function HasilSection({
   const searchParams = useSearchParams();
   const budget = searchParams.get("b") ?? 0;
   const multiSelect = searchParams.getAll("r");
+  const currentPage = parseInt(searchParams.get("p") ?? "1");
 
   const getDest = () => {
     let dest = `?b=${budget}`;
@@ -104,26 +105,23 @@ export default function HasilSection({
             <ChevronLeft />
           </Button>
         </Link>
-        <Link href="#">
-          <Button variant="ghost">1</Button>
-        </Link>
-        <Link href="#">
-          <Button
-            variant="ghost"
-            className="bg-primary text-white hover:bg-primary hover:text-white"
-          >
-            2
-          </Button>
-        </Link>
-        <Link href="#">
-          <Button variant="ghost">3</Button>
-        </Link>
-        <Link href="#">
-          <Button variant="ghost">4</Button>
-        </Link>
-        <Link href="#">
-          <Button variant="ghost">5</Button>
-        </Link>
+        {Array.from(
+          { length: Math.max(1, Math.ceil(component.count! / 3)) },
+          (_, index) => (
+            <Link href="#" key={index}>
+              <Button
+                variant="ghost"
+                className={
+                  index + 1 === currentPage
+                    ? "bg-primary text-white hover:bg-primary hover:text-white"
+                    : ""
+                }
+              >
+                {index + 1}
+              </Button>
+            </Link>
+          ),
+        )}
         <Link href="#">
           <Button variant="ghost">
             <ChevronRight />

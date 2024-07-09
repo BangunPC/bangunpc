@@ -86,8 +86,15 @@ export default function RencanaSection({
           </Button>
         </Link>
 
-        <Link href={`/rakit/hasil${getDest(multiSelect)}`} passHref>
-          <Button className="mt-4 justify-center font-semibold">
+        <Link
+          href={`/rakit/hasil${getDest(multiSelect)}`}
+          passHref
+          legacyBehavior
+        >
+          <Button
+            className="mt-4 justify-center font-semibold"
+            disabled={!multiSelect.length}
+          >
             Selanjutnya
             <ArrowRight className="ml-2 inline-block" />
           </Button>

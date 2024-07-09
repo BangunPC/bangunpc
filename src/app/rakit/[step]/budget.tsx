@@ -94,8 +94,15 @@ export default function BudgetSection() {
       /> */}
 
       <div className="flex justify-end">
-        <Link href={`/rakit/rencana${getDest(budget.toString())}`} passHref>
-          <Button className="mt-4 justify-center font-semibold">
+        <Link
+          href={`/rakit/rencana${getDest(budget.toString())}`}
+          passHref
+          legacyBehavior
+        >
+          <Button
+            className="mt-4 justify-center font-semibold"
+            disabled={!budget}
+          >
             Selanjutnya
             <ArrowRight className="ml-2 inline-block" />
           </Button>
