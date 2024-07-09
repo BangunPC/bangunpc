@@ -2,6 +2,7 @@
 
 import { Heart, Send } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import {
   Accordion,
@@ -10,7 +11,17 @@ import {
   AccordionTrigger,
 } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
+import KategoriCpu from "~/components/ui/icon/kategori-cpu";
+import KategoriCpuCooler from "~/components/ui/icon/kategori-cpu-cooler";
+import KategoriGpu from "~/components/ui/icon/kategori-gpu";
+import KategoriInternalStorage from "~/components/ui/icon/kategori-internal-storage";
+import KategoriMonitor from "~/components/ui/icon/kategori-monitor";
+import KategoriMotherboard from "~/components/ui/icon/kategori-motherboard";
+import KategoriPsu from "~/components/ui/icon/kategori-psu";
+import KategoriRam from "~/components/ui/icon/kategori-ram";
+import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
 import { Database } from "~/lib/schema";
+import { productImage } from "~/lib/utils";
 
 // TODO: fix colors
 
@@ -24,6 +35,8 @@ interface ComponentJson {
   price: number | null;
 }
 
+const headers = ["Kategori", "Komponen", "Harga"];
+
 const Component = ({
   data,
   imageUrls,
@@ -34,6 +47,78 @@ const Component = ({
   price: string | undefined;
 }) => {
   const name = data.title;
+
+  const cpu = data.cpu ? (data.cpu as Object as ComponentJson) : null;
+  const cpu_cooler = data.cpu_cooler
+    ? (data.cpu_cooler as Object as ComponentJson)
+    : null;
+  const gpu = data.gpu ? (data.gpu as Object as ComponentJson) : null;
+  const internal_storages = data.internal_storages
+    ? (data.internal_storages as Object[] as ComponentJson[])
+    : null;
+  const memories = data.memories
+    ? (data.memories as Object[] as ComponentJson[])
+    : null;
+  const monitors = data.monitors
+    ? (data.monitors as Object as ComponentJson)
+    : null;
+  const motherboard = data.motherboard
+    ? (data.motherboard as Object as ComponentJson)
+    : null;
+  const power_supply = data.power_supply
+    ? (data.power_supply as Object as ComponentJson)
+    : null;
+
+  const components = [
+    {
+      title: "CPU",
+      icon: <KategoriCpu width="27" height="27" />,
+      components: cpu ? [cpu] : [],
+      category: ComponentCategory.CPU,
+    },
+    {
+      title: "Cooler",
+      icon: <KategoriCpuCooler width="27" height="27" />,
+      components: cpu_cooler ? [cpu_cooler] : [],
+      category: ComponentCategory.Cooler,
+    },
+    {
+      title: "GPU",
+      icon: <KategoriGpu width="27" height="27" />,
+      components: gpu ? [gpu] : [],
+      category: ComponentCategory.GPU,
+    },
+    {
+      title: "Internal Storage",
+      icon: <KategoriInternalStorage width="27" height="27" />,
+      components: internal_storages ? [...internal_storages] : [],
+      category: ComponentCategory.Storage,
+    },
+    {
+      title: "Memories",
+      icon: <KategoriRam width="27" height="27" />,
+      components: memories ? [...memories] : [],
+      category: ComponentCategory.Memory,
+    },
+    {
+      title: "Monitors",
+      icon: <KategoriMonitor width="27" height="27" />,
+      components: monitors ? [monitors] : [],
+      category: ComponentCategory.Monitor,
+    },
+    {
+      title: "Motherboard",
+      icon: <KategoriMotherboard width="27" height="27" />,
+      components: motherboard ? [motherboard] : [],
+      category: ComponentCategory.Motherboard,
+    },
+    {
+      title: "Power Supply",
+      icon: <KategoriPsu width="27" height="27" />,
+      components: power_supply ? [power_supply] : [],
+      category: ComponentCategory.PSU,
+    },
+  ];
   return (
     <>
       <div className="m-auto flex max-w-3xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
@@ -159,14 +244,87 @@ const Component = ({
             </main>
           </div>
         </div>
-        {true && (
-          <Accordion type="single" collapsible defaultValue="item-1">
-            <AccordionItem value="item-1">
-              <AccordionTrigger className="text-3xl font-semibold">
-                Komponen Paket PC
-              </AccordionTrigger>
-              <AccordionContent className="flex flex-col gap-1 ">
-                <span>
+        <Accordion type="single" collapsible defaultValue="item-1">
+          <AccordionItem value="item-1" className="border-none">
+            <AccordionTrigger className="text-3xl font-semibold">
+              Komponen Paket PC
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-1 ">
+              <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
+                <table className="w-full ">
+                  <thead className="h-8 border-b border-black text-left dark:border-primary">
+                    <tr>
+                      {headers.map((item) => (
+                        <th key={item}>{item}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {components
+                      .filter((item) => item.components.length > 0)
+                      .map((item) => (
+                        <tr
+                          key={item.title}
+                          className="h-12 border-b border-zinc-500"
+                        >
+                          <td className="flex font-bold text-primary">
+                            <div className="mb-auto mt-2 flex flex-row items-center">
+                              <span className="rounded-sm p-1 dark:bg-white">
+                                {item.icon}
+                              </span>
+                              <span className="ml-1">{item.title}</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="flex flex-col gap-1">
+                              {item.components.map((component) => (
+                                <Link
+                                  key={component.product_id}
+                                  className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
+                                  href={`/detail/${categoriesFromEnum[item.category]
+                                    }/${component.slug}-${component.product_id}`}
+                                  passHref
+                                >
+                                  <Image
+                                    src={productImage(
+                                      component.product_id!,
+                                      component.image_filename!,
+                                    )}
+                                    width={32}
+                                    height={32}
+                                    alt={component.name!}
+                                  />
+                                  <span className="ml-1">
+                                    {component.name}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="flex flex-col gap-1">
+                              {item.components.map((component) => (
+                                <div
+                                  key={component.product_id}
+                                  className="flex h-[38px]"
+                                >
+                                  <span className="my-auto whitespace-nowrap text-start">
+                                    {component.price
+                                      ? `Rp ${component.price.toLocaleString(
+                                        "id-ID",
+                                      )}`
+                                      : "-"}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+              {/* <span>
                   {data.cpu && (
                     <>
                       cpu {(data.cpu as Object as ComponentJson).name}
@@ -228,12 +386,12 @@ const Component = ({
                       casing {(data.casing as Object as ComponentJson).name}
                       <br />
                     </>
-                  )}
-                </span>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        )}
+                  )} 
+                  </span>
+                   */}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
 
       <div className="sticky bottom-0 z-10 flex h-[80px] items-center justify-between bg-white px-4 shadow-tm dark:bg-navbar">
@@ -260,8 +418,8 @@ const Component = ({
           <Button
             variant="success"
             className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-            // onClick={() => router.replace("#compare", { scroll: true })}
-            // onClick={() => router.replace("#compare", { scroll: true })}
+          // onClick={() => router.replace("#compare", { scroll: true })}
+          // onClick={() => router.replace("#compare", { scroll: true })}
           >
             Beli Sekarang
           </Button>
