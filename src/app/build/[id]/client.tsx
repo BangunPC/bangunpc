@@ -122,15 +122,14 @@ const Component = ({
               )}
               <div className="h-2" />
               <div className="flex flex-wrap gap-2">
-                {data.categories_name &&
-                  data.categories_name?.map((category) => (
-                    <span
-                      key={category}
-                      className="w-fit rounded-md border border-primary px-2 py-1 text-xs text-primary"
-                    >
-                      {category}
-                    </span>
-                  ))}
+                {data.categories_name?.map((category) => (
+                  <span
+                    key={category}
+                    className="w-fit rounded-md border border-primary px-2 py-1 text-xs text-primary"
+                  >
+                    {category}
+                  </span>
+                ))}
               </div>
               {data.description && (
                 <Accordion type="single" collapsible defaultValue="item-1">
@@ -261,8 +260,8 @@ const Component = ({
           <Button
             variant="success"
             className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-            // onClick={() => router.replace("#compare", { scroll: true })}
-            // onClick={() => router.replace("#compare", { scroll: true })}
+          // onClick={() => router.replace("#compare", { scroll: true })}
+          // onClick={() => router.replace("#compare", { scroll: true })}
           >
             Beli Sekarang
           </Button>
