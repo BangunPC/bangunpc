@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
+import KategoriCasing from "~/components/ui/icon/kategori-casing";
 import KategoriCpu from "~/components/ui/icon/kategori-cpu";
 import KategoriCpuCooler from "~/components/ui/icon/kategori-cpu-cooler";
 import KategoriGpu from "~/components/ui/icon/kategori-gpu";
@@ -68,6 +69,7 @@ const Component = ({
   const power_supply = data.power_supply
     ? (data.power_supply as Object as ComponentJson)
     : null;
+  const casing = data.casing ? (data.casing as Object as ComponentJson) : null;
 
   const components = [
     {
@@ -117,6 +119,12 @@ const Component = ({
       icon: <KategoriPsu width="27" height="27" />,
       components: power_supply ? [power_supply] : [],
       category: ComponentCategory.PSU,
+    },
+    {
+      title: "Casing",
+      icon: <KategoriCasing width="27" height="27" />,
+      components: casing ? [casing] : [],
+      category: ComponentCategory.Casing,
     },
   ];
   return (
@@ -281,8 +289,9 @@ const Component = ({
                                 <Link
                                   key={component.product_id}
                                   className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                                  href={`/detail/${categoriesFromEnum[item.category]
-                                    }/${component.slug}-${component.product_id}`}
+                                  href={`/detail/${
+                                    categoriesFromEnum[item.category]
+                                  }/${component.slug}-${component.product_id}`}
                                   passHref
                                 >
                                   <Image
@@ -294,9 +303,7 @@ const Component = ({
                                     height={32}
                                     alt={component.name!}
                                   />
-                                  <span className="ml-1">
-                                    {component.name}
-                                  </span>
+                                  <span className="ml-1">{component.name}</span>
                                 </Link>
                               ))}
                             </div>
@@ -311,8 +318,8 @@ const Component = ({
                                   <span className="my-auto whitespace-nowrap text-start">
                                     {component.price
                                       ? `Rp ${component.price.toLocaleString(
-                                        "id-ID",
-                                      )}`
+                                          "id-ID",
+                                        )}`
                                       : "-"}
                                   </span>
                                 </div>
@@ -418,8 +425,8 @@ const Component = ({
           <Button
             variant="success"
             className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-          // onClick={() => router.replace("#compare", { scroll: true })}
-          // onClick={() => router.replace("#compare", { scroll: true })}
+            // onClick={() => router.replace("#compare", { scroll: true })}
+            // onClick={() => router.replace("#compare", { scroll: true })}
           >
             Beli Sekarang
           </Button>
