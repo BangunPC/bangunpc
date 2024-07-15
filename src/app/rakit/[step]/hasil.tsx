@@ -54,6 +54,7 @@ export default function HasilSection({
         <div className="m-auto grid w-fit grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-3 tablet:grid-cols-3 desktop:grid-cols-4">
           {data.map((item) => (
             <Link
+              prefetch={false}
               href={`/build/${item.recommendation_id}`}
               key={item.build_id}
               className={`m-auto flex h-full max-w-[243px] cursor-pointer flex-col overflow-clip rounded-lg border-2 border-background/50 bg-white shadow-bm hover:border-primary/30
@@ -100,7 +101,7 @@ export default function HasilSection({
       <div className="h-8" />
 
       <div className="flex items-center justify-center gap-4">
-        <Link href="#">
+        <Link prefetch={false} href="#">
           <Button variant="ghost">
             <ChevronLeft />
           </Button>
@@ -108,7 +109,7 @@ export default function HasilSection({
         {Array.from(
           { length: Math.max(1, Math.ceil(component.count! / 3)) },
           (_, index) => (
-            <Link href="#" key={index}>
+            <Link prefetch={false} href="#" key={index}>
               <Button
                 variant="ghost"
                 className={
@@ -122,7 +123,7 @@ export default function HasilSection({
             </Link>
           ),
         )}
-        <Link href="#">
+        <Link prefetch={false} href="#">
           <Button variant="ghost">
             <ChevronRight />
           </Button>
@@ -132,7 +133,7 @@ export default function HasilSection({
       <div className="h-4" />
 
       <div className="flex justify-start">
-        <Link href={`/rakit/rencana${getDest()}`} passHref>
+        <Link prefetch={false} href={`/rakit/rencana${getDest()}`} passHref>
           <Button className="justify-center font-semibold">
             <ArrowLeft className="mr-2 inline-block" />
             Kembali

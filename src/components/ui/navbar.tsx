@@ -482,7 +482,7 @@ export function Navbar() {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-            <div className="items-center gap-4">
+            <div className="ml-auto flex items-center gap-4 tablet:ml-0 tablet:block">
               {user ? profileButton : loginButton}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild className="tablet:hidden">

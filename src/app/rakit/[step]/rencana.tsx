@@ -79,7 +79,11 @@ export default function RencanaSection({
       </div>
 
       <div className="flex justify-between">
-        <Link href={`/rakit/budget${getDest(multiSelect)}`} passHref>
+        <Link
+          prefetch={false}
+          href={`/rakit/budget${getDest(multiSelect)}`}
+          passHref
+        >
           <Button className="mt-4 justify-center font-semibold">
             <ArrowLeft className="mr-2 inline-block" />
             Kembali
@@ -87,6 +91,7 @@ export default function RencanaSection({
         </Link>
 
         <Link
+          prefetch={false}
           href={`/rakit/hasil${getDest(multiSelect)}`}
           passHref
           legacyBehavior

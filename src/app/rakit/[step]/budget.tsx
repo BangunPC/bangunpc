@@ -95,6 +95,7 @@ export default function BudgetSection() {
 
       <div className="flex justify-end">
         <Link
+          prefetch={false}
           href={`/rakit/rencana${getDest(budget.toString())}`}
           passHref
           legacyBehavior
