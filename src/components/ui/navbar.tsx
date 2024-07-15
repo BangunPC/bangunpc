@@ -273,9 +273,9 @@ export function Navbar() {
       onOpenChange={(open) => {
         router.push(
           "?" +
-            (open
-              ? createQueryString(searchParams, "login", "true")
-              : removeQueryString(searchParams, "login")),
+          (open
+            ? createQueryString(searchParams, "login", "true")
+            : removeQueryString(searchParams, "login")),
         );
       }}
     >
@@ -295,7 +295,7 @@ export function Navbar() {
         <Link href="/">
           <NavbarIcon />
         </Link>
-        {false && (
+        {true && (
           <>
             <NavigationMenu className="m-auto hidden tablet:block">
               <NavigationMenuList>
@@ -305,13 +305,14 @@ export function Navbar() {
                     onOpenChange={(open) => {
                       router.push(
                         "?" +
-                          (open
-                            ? createQueryString(
-                                searchParams,
-                                "katalog",
-                                open.toString(),
-                              )
-                            : removeQueryString(searchParams, "katalog")),
+                        (open
+                          ? createQueryString(
+                            searchParams,
+                            "katalog",
+                            open.toString(),
+                          )
+                          : removeQueryString(searchParams, "katalog")),
+                        { scroll: false },
                       );
                     }}
                   >
