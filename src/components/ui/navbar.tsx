@@ -46,7 +46,7 @@ import {
 } from "./dropdown-menu";
 import { NavbarIcon } from "./icon/navbar-icon";
 import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
-import { ModeToggle } from "./mode-toggle";
+// import { ModeToggle } from "./mode-toggle";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 export function Navbar() {
@@ -246,6 +246,9 @@ export function Navbar() {
               <ModeToggle switch />
             </span>
           </Button> */}
+          {/* <Button variant="ghost" className="w-full justify-start">
+            <SunMoon size={18} className="mr-2" /> Dark Mode
+          </Button> */}
           <Link href="/wishlist" passHref className="w-full justify-start">
             <Button variant="ghost" className="w-full justify-start">
               <Heart size={18} className="mr-2" /> Wishlist
@@ -273,9 +276,9 @@ export function Navbar() {
       onOpenChange={(open) => {
         router.push(
           "?" +
-          (open
-            ? createQueryString(searchParams, "login", "true")
-            : removeQueryString(searchParams, "login")),
+            (open
+              ? createQueryString(searchParams, "login", "true")
+              : removeQueryString(searchParams, "login")),
         );
       }}
     >
@@ -305,13 +308,13 @@ export function Navbar() {
                     onOpenChange={(open) => {
                       router.push(
                         "?" +
-                        (open
-                          ? createQueryString(
-                            searchParams,
-                            "katalog",
-                            open.toString(),
-                          )
-                          : removeQueryString(searchParams, "katalog")),
+                          (open
+                            ? createQueryString(
+                                searchParams,
+                                "katalog",
+                                open.toString(),
+                              )
+                            : removeQueryString(searchParams, "katalog")),
                         { scroll: false },
                       );
                     }}
@@ -441,7 +444,7 @@ export function Navbar() {
                             Simulasi Rakit PC
                           </NavigationMenuLink>
                         </Link>
-                        <Link href="/rekomendasi" legacyBehavior passHref>
+                        <Link href="/rakit/budget" legacyBehavior passHref>
                           <NavigationMenuLink
                             className={cn(
                               navigationMenuTriggerStyle(),
@@ -479,7 +482,7 @@ export function Navbar() {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-            <div className="ml-auto flex items-center gap-4">
+            <div className="items-center gap-4">
               {user ? profileButton : loginButton}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild className="tablet:hidden">
@@ -519,7 +522,7 @@ export function Navbar() {
                               Simulasi Rakit PC
                             </DropdownMenuItem>
                           </Link>
-                          <Link href="/rekomendasi" legacyBehavior passHref>
+                          <Link href="/rakit/budget" legacyBehavior passHref>
                             <DropdownMenuItem
                               className={cn(
                                 navigationMenuTriggerStyle(),
@@ -554,8 +557,8 @@ export function Navbar() {
             </div>
           </>
         )}
-        <div className="ml-auto" />
-        <ModeToggle />
+        {/* <div className="ml-auto" />
+        <ModeToggle /> */}
       </div>
     </div>
   );

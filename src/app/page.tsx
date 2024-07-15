@@ -92,7 +92,7 @@ function KatalogKomponenSection() {
               panduan dan dukungan yang dibutuhkan. Bersama kami, wujudkan
               impian PC Anda!
             </p>
-            <Link href="?katalog=true" passHref legacyBehavior scroll={false}>
+            <Link href="?katalog=true" passHref legacyBehavior replace scroll>
               <Button className="m-auto mt-0 w-fit gap-2 bg-black p-5 hover:bg-zinc-900 tablet:m-0 tablet:mt-6">
                 <Image
                   src="/images/icon-cart.svg"
