@@ -467,7 +467,7 @@ export default function SimulasiPage({
                           >
                             <Button
                               variant="destructive"
-                              className="h-[32px] items-center text-lg text-white "
+                              className="h-[24px] items-center text-white "
                               onClick={() => {
                                 if (item.components.length > 0) {
                                   if (
@@ -480,7 +480,7 @@ export default function SimulasiPage({
                                 }
                               }}
                             >
-                              <Trash className="mr-2 inline-block" />
+                              <Trash size={16} className="mr-2 inline-block" />
                               Hapus
                             </Button>
                           </div>

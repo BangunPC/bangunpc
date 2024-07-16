@@ -60,7 +60,7 @@ export function Navbar() {
     supabase.auth
       .getUser()
       .then((user) => {
-        setUser(user.data?.user);
+        setUser(user.data.user);
       })
       .catch((err) => {
         console.error(err);
