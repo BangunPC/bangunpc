@@ -399,6 +399,53 @@ const Component = ({
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+        <Accordion type="single" collapsible defaultValue="item-1">
+          <AccordionItem value="item-1" className="border-none">
+            <AccordionTrigger className="text-3xl font-semibold">
+              Video Review
+            </AccordionTrigger>
+            <AccordionContent className="grid grid-cols-2 gap-4 p-4">
+              <iframe
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        {/* <Accordion type="single" collapsible defaultValue="item-1">
+          <AccordionItem value="item-1" className="border-none">
+            <AccordionTrigger className="text-3xl font-semibold">
+              Komentar
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-1 ">
+              <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
+                <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-1">
+                    {data.comments.map((comment) => (
+                      <div key={comment.id} className="flex flex-col gap-1">
+                        <span className="text-primary">{comment.name}</span>
+                        <span className="text-sm">{comment.comment}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion> */}
+        <Accordion type="single" collapsible defaultValue="item-1">
+          <AccordionItem value="item-1" className="border-none">
+            <AccordionTrigger className="text-3xl font-semibold">
+              Produk Pilihan Khusus Untuk Kamu
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-1 ">
+              
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
 
       <div className="sticky bottom-0 z-10 flex h-[80px] items-center justify-between bg-white px-4 shadow-tm dark:bg-navbar">
