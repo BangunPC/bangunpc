@@ -31,12 +31,13 @@ function RakitSekarangSection() {
         duration: 0.5,
         ease: [0.4, 0.0, 0.2, 1],
       }}
-      className="flex items-center justify-center bg-slate-200 dark:bg-gray-800 h-screen">
-      <HeroHighlight className="py-8 tablet:py-32 z-0">
+      className="flex h-screen items-center justify-center bg-slate-200 dark:bg-gray-800"
+    >
+      <HeroHighlight className="z-0 py-8 tablet:py-32">
         <div className="mx-4 grid max-w-7xl gap-8 tablet:grid-cols-7">
           <div className="tablet:col-span-4  ">
             <div className="flex flex-col justify-center gap-6">
-              <Highlight className="m-auto flex w-fit rounded-3xl p-2 px-6 tablet:m-0 text-xl text-white">
+              <Highlight className="m-auto flex w-fit rounded-3xl p-2 px-6 text-xl text-white tablet:m-0">
                 Rakit PC sesuai kebutuhan budget-mu
               </Highlight>
               <h1 className="m-auto max-w-[480px] text-5xl font-bold tablet:max-w-none">
@@ -53,7 +54,7 @@ function RakitSekarangSection() {
                 passHref
                 className="m-auto tablet:m-0 tablet:mt-6"
               >
-                <Button className="text-lg w-fit gap-4 bg-black p-7 rounded-xl hover:bg-zinc-900 ">
+                <Button className="w-fit gap-4 rounded-xl bg-black p-7 text-lg hover:bg-zinc-900 ">
                   <Image
                     src="/images/icon-computer.svg"
                     alt="icon-computer"

@@ -36,7 +36,9 @@ interface ComponentJson {
   price: number | null;
 }
 
-const headers = ["Kategori", "Komponen",
+const headers = [
+  "Kategori",
+  "Komponen",
   //  "Harga"
 ];
 
@@ -213,9 +215,7 @@ const Component = ({
                   <span className="text-4xl font-bold text-primary">
                     Rp {price}
                   </span>
-                  <span className="text-xs mb-auto">
-                    *estimasi
-                  </span>
+                  <span className="mb-auto text-xs">*estimasi</span>
                 </span>
               )}
               <div className="h-2" />
@@ -294,8 +294,9 @@ const Component = ({
                                 <Link
                                   key={component.product_id}
                                   className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                                  href={`/detail/${categoriesFromEnum[item.category]
-                                    }/${component.slug}-${component.product_id}`}
+                                  href={`/detail/${
+                                    categoriesFromEnum[item.category]
+                                  }/${component.slug}-${component.product_id}`}
                                   passHref
                                 >
                                   <Image
@@ -445,9 +446,7 @@ const Component = ({
             <AccordionTrigger className="text-3xl font-semibold">
               Produk Pilihan Khusus Untuk Kamu
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-1 ">
-
-            </AccordionContent>
+            <AccordionContent className="flex flex-col gap-1 "></AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
@@ -476,8 +475,8 @@ const Component = ({
           <Button
             variant="success"
             className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-          // onClick={() => router.replace("#compare", { scroll: true })}
-          // onClick={() => router.replace("#compare", { scroll: true })}
+            // onClick={() => router.replace("#compare", { scroll: true })}
+            // onClick={() => router.replace("#compare", { scroll: true })}
           >
             Beli Sekarang
           </Button>
