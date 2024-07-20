@@ -38,11 +38,12 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
         const cpu_cooler = rakitan.cpu_cooler as CommonRakitanDataType;
         const gpu = rakitan.gpu as CommonRakitanDataType;
         const internal_storages =
-          rakitan.internal_storages as CommonRakitanDataType;
-        const memories = rakitan.memories as CommonRakitanDataType;
+          rakitan.internal_storages as CommonRakitanDataType[];
+        const memories = rakitan.memories as CommonRakitanDataType[];
         const monitors = rakitan.monitors as CommonRakitanDataType;
         const motherboard = rakitan.motherboard as CommonRakitanDataType;
         const power_supply = rakitan.power_supply as CommonRakitanDataType;
+        const casing = rakitan.casing as CommonRakitanDataType;
 
         return {
           build_id,
@@ -56,6 +57,7 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
           monitors,
           motherboard,
           power_supply,
+          casing,
         };
       }
     }
@@ -92,13 +94,11 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
       ComponentCategory.GPU,
       dataParsed?.gpu,
     ),
-    internal_storages: commonDataToComponentStorageType(
-      ComponentCategory.Storage,
-      dataParsed?.internal_storages,
+    internal_storages: dataParsed?.internal_storages.map((d) =>
+      commonDataToComponentStorageType(ComponentCategory.Storage, d)!,
     ),
-    memories: commonDataToComponentStorageType(
-      ComponentCategory.Memory,
-      dataParsed?.memories,
+    memories: dataParsed?.memories.map((d) =>
+      commonDataToComponentStorageType(ComponentCategory.Memory, d)!,
     ),
     monitors: commonDataToComponentStorageType(
       ComponentCategory.PSU,
@@ -111,6 +111,10 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
     power_supply: commonDataToComponentStorageType(
       ComponentCategory.PSU,
       dataParsed?.power_supply,
+    ),
+    casing: commonDataToComponentStorageType(
+      ComponentCategory.Casing,
+      dataParsed?.casing,
     ),
   };
 

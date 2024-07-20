@@ -48,6 +48,7 @@ import { NavbarIcon } from "./icon/navbar-icon";
 import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
 // import { ModeToggle } from "./mode-toggle";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { ModeToggle } from "./mode-toggle";
 
 export function Navbar() {
   const supabase = createClient();
@@ -298,7 +299,7 @@ export function Navbar() {
         <Link href="/">
           <NavbarIcon />
         </Link>
-        {true && (
+        {false && (
           <>
             <NavigationMenu className="m-auto hidden tablet:block">
               <NavigationMenuList>
@@ -557,8 +558,8 @@ export function Navbar() {
             </div>
           </>
         )}
-        {/* <div className="ml-auto" />
-        <ModeToggle /> */}
+        <div className="ml-auto" />
+        <ModeToggle />
       </div>
     </div>
   );

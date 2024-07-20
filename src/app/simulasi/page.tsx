@@ -46,11 +46,12 @@ export default function SimulasiPage({
     cpu?: ComponentStorageType | undefined;
     cpu_cooler?: ComponentStorageType | undefined;
     gpu?: ComponentStorageType | undefined;
-    internal_storages?: ComponentStorageType | undefined;
-    memories?: ComponentStorageType | undefined;
+    internal_storages?: ComponentStorageType[] | undefined;
+    memories?: ComponentStorageType[] | undefined;
     monitors?: ComponentStorageType | undefined;
     motherboard?: ComponentStorageType | undefined;
     power_supply?: ComponentStorageType | undefined;
+    casing?: ComponentStorageType | undefined;
   };
 }) {
   const isComponent = params?.params?.id ?? null;
@@ -158,12 +159,13 @@ export default function SimulasiPage({
       // setComponentCpuCooler(params?.cpu_cooler ? [params?.cpu_cooler] : []);
       setComponentGpu(params?.gpu ? [params?.gpu] : []);
       setComponentStorage(
-        params?.internal_storages ? [params?.internal_storages] : [],
+        params.internal_storages ? params?.internal_storages : [],
       );
-      setComponentMemory(params?.memories ? [params?.memories] : []);
+      setComponentMemory(params?.memories ? params?.memories : []);
       // setComponentMonitors(params?.monitors ? [params?.monitors] : []);
       setComponentMotherboard(params?.motherboard ? [params?.motherboard] : []);
       setComponentPsu(params?.power_supply ? [params?.power_supply] : []);
+      setComponentCasing(params?.casing ? [params?.casing] : []);
       return;
     }
     setComponentCpu(

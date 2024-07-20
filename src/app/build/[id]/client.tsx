@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -289,9 +289,8 @@ const Component = ({
                                 <Link
                                   key={component.product_id}
                                   className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                                  href={`/detail/${
-                                    categoriesFromEnum[item.category]
-                                  }/${component.slug}-${component.product_id}`}
+                                  href={`/detail/${categoriesFromEnum[item.category]
+                                    }/${component.slug}-${component.product_id}`}
                                   passHref
                                 >
                                   <Image
@@ -318,8 +317,8 @@ const Component = ({
                                   <span className="my-auto whitespace-nowrap text-start">
                                     {component.price
                                       ? `Rp ${component.price.toLocaleString(
-                                          "id-ID",
-                                        )}`
+                                        "id-ID",
+                                      )}`
                                       : "-"}
                                   </span>
                                 </div>
@@ -442,7 +441,7 @@ const Component = ({
               Produk Pilihan Khusus Untuk Kamu
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-1 ">
-              
+
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -472,26 +471,27 @@ const Component = ({
           <Button
             variant="success"
             className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-            // onClick={() => router.replace("#compare", { scroll: true })}
-            // onClick={() => router.replace("#compare", { scroll: true })}
+          // onClick={() => router.replace("#compare", { scroll: true })}
+          // onClick={() => router.replace("#compare", { scroll: true })}
           >
             Beli Sekarang
           </Button>
-          <Button
-            variant="default"
-            className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-            onClick={() => alert("Coming soon")}
-          >
-            + Customize
-          </Button>
+          {/* <Link href={`/simulasi/${data.build_id}`} passHref legacyBehavior>
+            <Button
+              variant="default"
+              className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
+            >
+              + Customize
+            </Button>
+          </Link> */}
 
-          <Button
+          {/* <Button
             variant="ghost"
             className="flex items-center px-2 font-semibold"
             onClick={() => alert("Coming Soon")}
           >
             <Heart className="fill-none " width="24" height="24" />
-          </Button>
+          </Button> */}
           <Button
             variant="ghost"
             className="flex items-center px-2 font-semibold"
