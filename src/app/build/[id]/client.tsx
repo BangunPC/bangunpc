@@ -36,7 +36,9 @@ interface ComponentJson {
   price: number | null;
 }
 
-const headers = ["Kategori", "Komponen", "Harga"];
+const headers = ["Kategori", "Komponen",
+  //  "Harga"
+];
 
 const Component = ({
   data,
@@ -207,9 +209,12 @@ const Component = ({
               </span>
             </div> */}
               {price && (
-                <span className="">
+                <span className="flex items-start">
                   <span className="text-4xl font-bold text-primary">
                     Rp {price}
+                  </span>
+                  <span className="text-xs mb-auto">
+                    *estimasi
                   </span>
                 </span>
               )}
@@ -307,7 +312,7 @@ const Component = ({
                               ))}
                             </div>
                           </td>
-                          <td>
+                          {/* <td>
                             <div className="flex flex-col gap-1">
                               {item.components.map((component) => (
                                 <div
@@ -324,7 +329,7 @@ const Component = ({
                                 </div>
                               ))}
                             </div>
-                          </td>
+                          </td> */}
                         </tr>
                       ))}
                   </tbody>
@@ -463,7 +468,7 @@ const Component = ({
         <div className="w-2" />
         <div className="flex gap-2">
           <div className="flex flex-col">
-            <span className="text-xs">Total harga:</span>
+            <span className="text-xs">Estimasi harga:</span>
             <span className="whitespace-nowrap font-bold text-primary">
               Rp {price}
             </span>
