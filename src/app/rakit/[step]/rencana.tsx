@@ -17,7 +17,9 @@ export default function RencanaSection({
 }) {
   const searchParams = useSearchParams();
   const budget = searchParams.get("b") ?? 0;
-  const [multiSelect, setMultiSelect] = React.useState(searchParams.getAll("r"));
+  const [multiSelect, setMultiSelect] = React.useState(
+    searchParams.getAll("r"),
+  );
 
   const { data } = rencanaList;
 

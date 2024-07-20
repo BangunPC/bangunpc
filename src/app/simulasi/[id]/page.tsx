@@ -94,11 +94,11 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
       ComponentCategory.GPU,
       dataParsed?.gpu,
     ),
-    internal_storages: dataParsed?.internal_storages.map((d) =>
-      commonDataToComponentStorageType(ComponentCategory.Storage, d)!,
+    internal_storages: dataParsed?.internal_storages.map(
+      (d) => commonDataToComponentStorageType(ComponentCategory.Storage, d)!,
     ),
-    memories: dataParsed?.memories.map((d) =>
-      commonDataToComponentStorageType(ComponentCategory.Memory, d)!,
+    memories: dataParsed?.memories.map(
+      (d) => commonDataToComponentStorageType(ComponentCategory.Memory, d)!,
     ),
     monitors: commonDataToComponentStorageType(
       ComponentCategory.PSU,
