@@ -8,7 +8,8 @@ import { Button } from "~/components/ui/button";
 import Image from "next/image";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function BudgetSection() {
   const budgets = [
@@ -17,10 +18,8 @@ export default function BudgetSection() {
   ];
 
   const searchParams = useSearchParams();
-  const budget = searchParams.get("b") ?? 0;
+  const [budget, setBudget] = useState(searchParams.get("b") ?? 0);
   const multiSelect = searchParams.getAll("r");
-
-  const router = useRouter();
 
   const getDest = (newBudget: string) => {
     let dest = `?b=${newBudget}`;
@@ -54,7 +53,7 @@ export default function BudgetSection() {
 
       <RadioGroup
         onValueChange={(value) => {
-          router.replace(getDest(value));
+          setBudget(value);
         }}
         value={budget.toString()}
         className="m-auto max-w-screen-tablet grid-cols-3 tablet:grid-cols-4"
@@ -98,7 +97,6 @@ export default function BudgetSection() {
           prefetch={false}
           href={`/rakit/rencana${getDest(budget.toString())}`}
           passHref
-          legacyBehavior
         >
           <Button
             className="mt-4 justify-center font-semibold"

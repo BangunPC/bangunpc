@@ -7,7 +7,8 @@ import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import { RencanaListType } from "./page";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function RencanaSection({
   rencanaList,
@@ -16,11 +17,9 @@ export default function RencanaSection({
 }) {
   const searchParams = useSearchParams();
   const budget = searchParams.get("b") ?? 0;
-  const multiSelect = searchParams.getAll("r");
+  const [multiSelect, setMultiSelect] = useState(searchParams.getAll("r"));
 
   const { data } = rencanaList;
-
-  const router = useRouter();
 
   const getDest = (newMultiSelect: string[]) => {
     let dest = `?b=${budget}`;
@@ -70,7 +69,7 @@ export default function RencanaSection({
                   ? [...multiSelect, index.toString()]
                   : multiSelect.filter((i) => i !== index.toString());
 
-                router.replace(getDest(newMultiSelect));
+                setMultiSelect(newMultiSelect);
               }}
             />
             <span>{item.category_name!}</span>
@@ -94,7 +93,6 @@ export default function RencanaSection({
           prefetch={false}
           href={`/rakit/hasil${getDest(multiSelect)}`}
           passHref
-          legacyBehavior
         >
           <Button
             className="mt-4 justify-center font-semibold"
