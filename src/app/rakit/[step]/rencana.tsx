@@ -8,7 +8,7 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import { RencanaListType } from "./page";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import React from "react";
 
 export default function RencanaSection({
   rencanaList,
@@ -17,7 +17,7 @@ export default function RencanaSection({
 }) {
   const searchParams = useSearchParams();
   const budget = searchParams.get("b") ?? 0;
-  const [multiSelect, setMultiSelect] = useState(searchParams.getAll("r"));
+  const [multiSelect, setMultiSelect] = React.useState(searchParams.getAll("r"));
 
   const { data } = rencanaList;
 

@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
+import { HeroHighlight, Highlight } from "~/components/ui/hero-highlight";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   return (
@@ -14,53 +18,74 @@ export default function HomePage() {
 
 function RakitSekarangSection() {
   return (
-    <div className="flex items-center justify-center bg-slate-200 py-8 dark:bg-gray-800 tablet:py-32 h-screen">
-      <div className="mx-4 grid max-w-7xl gap-8 tablet:grid-cols-7">
-        <div className="tablet:col-span-4  ">
-          <div className="flex flex-col justify-center gap-6">
-            <div className="m-auto flex w-fit rounded-3xl bg-blue-700 p-2 px-6 tablet:m-0">
-              <p className="text-xl text-white">
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 20,
+      }}
+      animate={{
+        opacity: 1,
+        y: [20, -5, 0],
+      }}
+      transition={{
+        duration: 0.5,
+        ease: [0.4, 0.0, 0.2, 1],
+      }}
+      className="flex items-center justify-center bg-slate-200 dark:bg-gray-800 h-screen">
+      <HeroHighlight className="py-8 tablet:py-32 z-0">
+        <div className="mx-4 grid max-w-7xl gap-8 tablet:grid-cols-7">
+          <div className="tablet:col-span-4  ">
+            <div className="flex flex-col justify-center gap-6">
+              <Highlight className="m-auto flex w-fit rounded-3xl p-2 px-6 tablet:m-0 text-xl text-white">
                 Rakit PC sesuai kebutuhan budget-mu
+              </Highlight>
+              <h1 className="m-auto max-w-[480px] text-5xl font-bold tablet:max-w-none">
+                Bangun PC impianmu dengan <br />{" "}
+                <span className="font-bold text-primary">MUDAH</span> {"dan "}
+                <span className="font-bold text-primary">MURAH</span>
+              </h1>
+              <p className="text-xl text-gray-600 dark:text-gray-300">
+                Rekomendasi komponen PC yang berkualitas tinggi <br /> dengan
+                harga terbaik.
               </p>
+              <Link
+                href="/rakit/budget"
+                passHref
+                className="m-auto tablet:m-0 tablet:mt-6"
+              >
+                <Button className="text-lg w-fit gap-4 bg-black p-7 rounded-xl hover:bg-zinc-900 ">
+                  <Image
+                    src="/images/icon-computer.svg"
+                    alt="icon-computer"
+                    width={24}
+                    height={24}
+                  />
+                  Rakit Sekarang
+                </Button>
+              </Link>
             </div>
-            <h1 className="m-auto max-w-[480px] text-5xl font-bold tablet:max-w-none">
-              Bangun PC impianmu dengan <br />{" "}
-              <span className="font-bold text-primary">MUDAH</span> {"dan "}
-              <span className="font-bold text-primary">MURAH</span>
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              Rekomendasi komponen PC yang berkualitas tinggi <br /> dengan
-              harga terbaik.
-            </p>
-            <Link
-              href="/rakit/budget"
-              passHref
-              className="m-auto tablet:m-0 tablet:mt-6"
+          </div>
+          <div className="-order-1 m-auto tablet:order-none tablet:col-span-3 tablet:m-0 tablet:w-full">
+            <motion.div
+              className="flex tablet:mt-0"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: [-20, 5, 0] }}
+              transition={{
+                duration: 0.7,
+                ease: [0.4, 0.0, 0.2, 1],
+              }}
             >
-              <Button className="w-fit gap-2 bg-black p-5 hover:bg-zinc-900 ">
-                <Image
-                  src="/images/icon-computer.svg"
-                  alt="icon-computer"
-                  width={20}
-                  height={20}
-                />
-                Rakit Sekarang
-              </Button>
-            </Link>
+              <Image
+                src="/images/components.svg"
+                alt="components"
+                width={400}
+                height={400}
+              />
+            </motion.div>
           </div>
         </div>
-        <div className="-order-1 m-auto tablet:order-none tablet:col-span-3 tablet:m-0 tablet:w-full">
-          <div className="flex tablet:mt-0">
-            <Image
-              src="/images/components.svg"
-              alt="components"
-              width={400}
-              height={400}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+      </HeroHighlight>
+    </motion.div>
   );
 }
 

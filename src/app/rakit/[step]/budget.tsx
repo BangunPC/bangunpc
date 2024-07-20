@@ -9,7 +9,7 @@ import Image from "next/image";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import React from "react";
 
 export default function BudgetSection() {
   const budgets = [
@@ -18,7 +18,7 @@ export default function BudgetSection() {
   ];
 
   const searchParams = useSearchParams();
-  const [budget, setBudget] = useState(searchParams.get("b") ?? 0);
+  const [budget, setBudget] = React.useState(searchParams.get("b") ?? 0);
   const multiSelect = searchParams.getAll("r");
 
   const getDest = (newBudget: string) => {
