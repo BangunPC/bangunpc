@@ -262,9 +262,9 @@ const Component = ({
             <AccordionTrigger className="text-3xl font-semibold">
               Komponen Paket PC
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-1 ">
-              <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
-                <table className="w-full ">
+            <AccordionContent className="flex flex-col gap-1">
+              <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar overflow-x-scroll">
+                <table> 
                   <thead className="h-8 border-b border-black text-left dark:border-primary">
                     <tr>
                       {headers.map((item) => (
@@ -280,7 +280,7 @@ const Component = ({
                           key={item.title}
                           className="h-12 border-b border-zinc-500"
                         >
-                          <td className="flex font-bold text-primary">
+                          <td className="font-bold text-primary">
                             <div className="mb-auto mt-2 flex flex-row items-center">
                               <span className="rounded-sm p-1 dark:bg-white">
                                 {item.icon}
@@ -308,7 +308,7 @@ const Component = ({
                                     height={32}
                                     alt={component.name!}
                                   />
-                                  <span className="ml-1">{component.name}</span>
+                                  <span className="ml-1 text-nowrap">{component.name}</span>
                                 </Link>
                               ))}
                             </div>
@@ -451,7 +451,7 @@ const Component = ({
         </Accordion>
       </div>
 
-      <div className="sticky bottom-0 z-10 flex h-[80px] items-center justify-between bg-white px-4 shadow-tm dark:bg-navbar">
+      <div className="sticky bottom-0 z-10 overflow-x-auto overflow-y-hidden flex h-[80px] items-center justify-between bg-white px-4 shadow-tm dark:bg-navbar">
         <div className="flex items-center gap-2">
           {imageUrls[0] && (
             <Image
@@ -462,9 +462,8 @@ const Component = ({
               height={72}
             />
           )}
-          <span className="font-semibold">{name}</span>
+          <span className="font-semibold w-[280px]">{name}</span>
         </div>
-        <div className="w-2" />
         <div className="flex gap-2">
           <div className="flex flex-col">
             <span className="text-xs">Estimasi harga:</span>
