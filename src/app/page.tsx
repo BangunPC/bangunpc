@@ -31,7 +31,7 @@ function RakitSekarangSection() {
         duration: 0.5,
         ease: [0.4, 0.0, 0.2, 1],
       }}
-      className="flex h-screen items-center justify-center bg-slate-200 dark:bg-gray-800"
+      className="flex h-full min-h-screen items-center justify-center bg-slate-200 dark:bg-gray-800"
     >
       <HeroHighlight className="z-0 py-8 tablet:py-32">
         <div className="mx-4 grid max-w-7xl gap-8 tablet:grid-cols-7">
@@ -49,21 +49,30 @@ function RakitSekarangSection() {
                 Rekomendasi komponen PC yang berkualitas tinggi <br /> dengan
                 harga terbaik.
               </p>
-              <Link
-                href="/rakit/budget"
-                passHref
-                className="m-auto tablet:m-0 tablet:mt-6"
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: [20, -5, 0] }}
+                transition={{
+                  duration: 0.7,
+                  ease: [0.4, 0.0, 0.2, 1],
+                }}
               >
-                <Button className="w-fit gap-4 rounded-xl bg-black p-7 text-lg hover:bg-zinc-900 ">
-                  <Image
-                    src="/images/icon-computer.svg"
-                    alt="icon-computer"
-                    width={24}
-                    height={24}
-                  />
-                  Rakit Sekarang
-                </Button>
-              </Link>
+                <Link
+                  href="/rakit/budget"
+                  passHref
+                  className="m-auto tablet:m-0 tablet:mt-6"
+                >
+                  <Button className="w-fit gap-4 rounded-xl bg-black p-7 text-lg hover:bg-zinc-900 ">
+                    <Image
+                      src="/images/icon-computer.svg"
+                      alt="icon-computer"
+                      width={24}
+                      height={24}
+                    />
+                    Rakit Sekarang
+                  </Button>
+                </Link>
+              </motion.div>
             </div>
           </div>
           <div className="-order-1 m-auto tablet:order-none tablet:col-span-3 tablet:m-0 tablet:w-full">
