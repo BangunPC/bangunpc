@@ -342,8 +342,7 @@ const Component = ({
             {spec_url ? (
               <a
                 href={spec_url}
-                target="_blank"
-                rel="noreferrer"
+                target="_blank" rel="noopener noreferrer"
                 className="ml-2 mr-auto"
                 onClick={(e) => e.stopPropagation()}
               >

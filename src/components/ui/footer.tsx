@@ -21,11 +21,11 @@ const Footer = () => {
       alt: "twitter",
       url: "https://twitter.com/bangunpc/",
     },
-    {
-      logo: "/images/linkedin.svg",
-      alt: "linkedin",
-      url: "https://www.linkedin.com/company/bangun-pc/",
-    },
+    // {
+    //   logo: "/images/linkedin.svg",
+    //   alt: "linkedin",
+    //   url: "https://www.linkedin.com/company/bangun-pc/",
+    // },
   ];
 
   const services = [
@@ -86,7 +86,7 @@ const Footer = () => {
                   key={item.alt}
                   href={item.url}
                   className="flex items-center justify-center"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   passHref
                 >
                   <Button

@@ -3,6 +3,7 @@
 import { Send } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import {
   Accordion,
@@ -39,7 +40,7 @@ interface ComponentJson {
 const headers = [
   "Kategori",
   "Komponen",
-  //  "Harga"
+  "Harga"
 ];
 
 const Component = ({
@@ -51,6 +52,8 @@ const Component = ({
   imageUrls: string[];
   price: string | undefined;
 }) => {
+  const buyLink = `http://wa.me/6282295561944?text=Hai, saya ingin bertanya tentang jasa rakit pc di link berikut ${window.location.href}`;
+
   const name = data.title;
 
   const cpu = data.cpu ? (data.cpu as Object as ComponentJson) : null;
@@ -264,7 +267,7 @@ const Component = ({
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-1">
               <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar overflow-x-scroll">
-                <table> 
+                <table className="min-w-max w-full">
                   <thead className="h-8 border-b border-black text-left dark:border-primary">
                     <tr>
                       {headers.map((item) => (
@@ -289,14 +292,13 @@ const Component = ({
                             </div>
                           </td>
                           <td>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1 w-full">
                               {item.components.map((component) => (
                                 <Link
                                   key={component.product_id}
                                   className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                                  href={`/detail/${
-                                    categoriesFromEnum[item.category]
-                                  }/${component.slug}-${component.product_id}`}
+                                  href={`/detail/${categoriesFromEnum[item.category]
+                                    }/${component.slug}-${component.product_id}`}
                                   passHref
                                 >
                                   <Image
@@ -313,7 +315,7 @@ const Component = ({
                               ))}
                             </div>
                           </td>
-                          {/* <td>
+                          <td>
                             <div className="flex flex-col gap-1">
                               {item.components.map((component) => (
                                 <div
@@ -330,7 +332,7 @@ const Component = ({
                                 </div>
                               ))}
                             </div>
-                          </td> */}
+                          </td>
                         </tr>
                       ))}
                   </tbody>
@@ -451,7 +453,7 @@ const Component = ({
         </Accordion>
       </div>
 
-      <div className="sticky bottom-0 z-10 overflow-x-auto overflow-y-hidden flex h-[80px] items-center justify-between bg-white px-4 shadow-tm dark:bg-navbar">
+      <div className="sticky bottom-0 z-10 overflow-x-auto overflow-y-hidden flex min-h-[80px] py-2 items-center justify-between bg-white px-4 shadow-tm dark:bg-navbar">
         <div className="flex items-center gap-2">
           {imageUrls[0] && (
             <Image
@@ -471,14 +473,14 @@ const Component = ({
               Rp {price}
             </span>
           </div>
-          <Button
-            variant="success"
-            className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-            // onClick={() => router.replace("#compare", { scroll: true })}
-            // onClick={() => router.replace("#compare", { scroll: true })}
-          >
-            Beli Sekarang
-          </Button>
+          <a href={buyLink} target="_blank" rel="noopener noreferrer">
+            <Button
+              variant="success"
+              className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
+            >
+              Beli Sekarang
+            </Button>
+          </a>
           {/* <Link href={`/simulasi/${data.build_id}`} passHref legacyBehavior>
             <Button
               variant="default"
