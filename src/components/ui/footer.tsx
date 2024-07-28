@@ -86,7 +86,8 @@ const Footer = () => {
                   key={item.alt}
                   href={item.url}
                   className="flex items-center justify-center"
-                  target="_blank" rel="noopener noreferrer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   passHref
                 >
                   <Button

@@ -35,7 +35,7 @@ async function getRecommendation(budget: number, categoryIndexes: number[]) {
       { count: "exact" },
     )
     .lte("total_price", budget)
-    .contains("categories_name", categories)
+    .containedBy("categories_name", categories)
     .limit(3);
   return { data, error, count };
 }

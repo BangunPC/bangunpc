@@ -14,7 +14,7 @@ import React from "react";
 export default function BudgetSection() {
   const budgets = [
     5000000, 7000000, 10000000, 15000000, 18000000, 20000000, 25000000,
-    30000000, 40000000, 50000000,
+    30000000, 40000000, 50000000, 80000000,
   ];
 
   const searchParams = useSearchParams();

@@ -1077,49 +1077,25 @@ export type Database = {
       recommendation_builds: {
         Row: {
           build_id: number | null;
-          case_description: string | null;
-          cpu_cooler_description: string | null;
-          cpu_description: string | null;
           description: string | null;
-          gpu_description: string | null;
           id: number;
-          internal_storage_description: string | null;
-          memory_description: string | null;
-          monitor_description: string | null;
-          motherboard_description: string | null;
-          psu_description: string | null;
+          review_urls: string | null;
           slug: string;
           title: string;
         };
         Insert: {
           build_id?: number | null;
-          case_description?: string | null;
-          cpu_cooler_description?: string | null;
-          cpu_description?: string | null;
           description?: string | null;
-          gpu_description?: string | null;
           id?: number;
-          internal_storage_description?: string | null;
-          memory_description?: string | null;
-          monitor_description?: string | null;
-          motherboard_description?: string | null;
-          psu_description?: string | null;
+          review_urls?: string | null;
           slug: string;
           title: string;
         };
         Update: {
           build_id?: number | null;
-          case_description?: string | null;
-          cpu_cooler_description?: string | null;
-          cpu_description?: string | null;
           description?: string | null;
-          gpu_description?: string | null;
           id?: number;
-          internal_storage_description?: string | null;
-          memory_description?: string | null;
-          monitor_description?: string | null;
-          motherboard_description?: string | null;
-          psu_description?: string | null;
+          review_urls?: string | null;
           slug?: string;
           title?: string;
         };
@@ -1247,6 +1223,7 @@ export type Database = {
           motherboard: Json | null;
           power_supply: Json | null;
           recommendation_id: number | null;
+          review_urls: string | null;
           slug: string | null;
           title: string | null;
           total_price: number | null;

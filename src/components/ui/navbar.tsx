@@ -294,7 +294,7 @@ export function Navbar() {
     </Dialog>
   );
   return (
-    <div className="fixed top-0 z-20 w-full bg-[#f5f5f573] px-4 backdrop-blur-3xl dark:bg-navbar">
+    <div className="fixed top-0 z-20 w-full bg-[#f5f5f5] px-4 dark:bg-navbar">
       <div className="m-auto flex max-w-screen-desktop items-center">
         <Link href="/">
           <NavbarIcon />

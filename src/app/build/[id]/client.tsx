@@ -3,7 +3,6 @@
 import { Send } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 import {
   Accordion,
@@ -37,11 +36,7 @@ interface ComponentJson {
   price: number | null;
 }
 
-const headers = [
-  "Kategori",
-  "Komponen",
-  "Harga"
-];
+const headers = ["Kategori", "Komponen", "Harga"];
 
 const Component = ({
   data,
@@ -55,6 +50,9 @@ const Component = ({
   const buyLink = `http://wa.me/6282295561944?text=Hai, saya ingin bertanya tentang jasa rakit pc di link berikut ${window.location.href}`;
 
   const name = data.title;
+  const review_urls = JSON.parse(
+    data.review_urls!.replaceAll("watch?v=", "embed/"),
+  ) as string[];
 
   const cpu = data.cpu ? (data.cpu as Object as ComponentJson) : null;
   const cpu_cooler = data.cpu_cooler
@@ -266,8 +264,8 @@ const Component = ({
               Komponen Paket PC
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-1">
-              <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar overflow-x-scroll">
-                <table className="min-w-max w-full">
+              <div className="overflow-x-scroll rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
+                <table className="w-full min-w-max">
                   <thead className="h-8 border-b border-black text-left dark:border-primary">
                     <tr>
                       {headers.map((item) => (
@@ -292,13 +290,14 @@ const Component = ({
                             </div>
                           </td>
                           <td>
-                            <div className="flex flex-col gap-1 w-full">
+                            <div className="flex w-full flex-col gap-1">
                               {item.components.map((component) => (
                                 <Link
                                   key={component.product_id}
                                   className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                                  href={`/detail/${categoriesFromEnum[item.category]
-                                    }/${component.slug}-${component.product_id}`}
+                                  href={`/detail/${
+                                    categoriesFromEnum[item.category]
+                                  }/${component.slug}-${component.product_id}`}
                                   passHref
                                 >
                                   <Image
@@ -310,7 +309,9 @@ const Component = ({
                                     height={32}
                                     alt={component.name!}
                                   />
-                                  <span className="ml-1 text-nowrap">{component.name}</span>
+                                  <span className="ml-1 text-nowrap">
+                                    {component.name}
+                                  </span>
                                 </Link>
                               ))}
                             </div>
@@ -325,8 +326,8 @@ const Component = ({
                                   <span className="my-auto whitespace-nowrap text-start">
                                     {component.price
                                       ? `Rp ${component.price.toLocaleString(
-                                        "id-ID",
-                                      )}`
+                                          "id-ID",
+                                        )}`
                                       : "-"}
                                   </span>
                                 </div>
@@ -412,13 +413,15 @@ const Component = ({
               Video Review
             </AccordionTrigger>
             <AccordionContent className="grid grid-cols-2 gap-4 p-4">
-              <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              {review_urls.map((url: string) => (
+                <iframe
+                  key={url}
+                  src={url}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ))}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -453,7 +456,7 @@ const Component = ({
         </Accordion>
       </div>
 
-      <div className="sticky bottom-0 z-10 overflow-x-auto overflow-y-hidden flex min-h-[80px] py-2 items-center justify-between bg-white px-4 shadow-tm dark:bg-navbar">
+      <div className="sticky bottom-0 z-10 flex min-h-[80px] items-center justify-between overflow-x-auto overflow-y-hidden bg-white px-4 py-2 shadow-tm dark:bg-navbar">
         <div className="flex items-center gap-2">
           {imageUrls[0] && (
             <Image
@@ -464,7 +467,7 @@ const Component = ({
               height={72}
             />
           )}
-          <span className="font-semibold w-[280px]">{name}</span>
+          <span className="w-[280px] font-semibold">{name}</span>
         </div>
         <div className="flex gap-2">
           <div className="flex flex-col">
