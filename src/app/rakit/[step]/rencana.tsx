@@ -74,7 +74,8 @@ export default function RencanaSection({
               onCheckedChange={(checked) => {
                 if (checked && item.id === -1) {
                   setMultiSelect([
-                    ...(rencanaData?.map((item, index) => index.toString()) ?? []),
+                    ...(rencanaData?.map((item, index) => index.toString()) ??
+                      []),
                   ]);
                 } else if (!checked && item.id === -1) {
                   setMultiSelect([]);

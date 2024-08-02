@@ -17,9 +17,6 @@ export default function BudgetSection() {
     30000000, 40000000, 50000000, 80000000,
   ];
 
-  const minBudget = budgets[0];
-  const maxBudget = budgets[budgets.length - 1];
-
   const searchParams = useSearchParams();
   const [budget, setBudget] = React.useState(searchParams.get("b") ?? 0);
   const multiSelect = searchParams.getAll("r");
@@ -90,8 +87,8 @@ export default function BudgetSection() {
           digits: 0,
           unmaskAsNumber: true,
           onUnMask(maskedValue, unmaskedValue) {
-              setBudget(unmaskedValue);
-              return unmaskedValue;
+            setBudget(unmaskedValue);
+            return unmaskedValue;
           },
         })}
         onChange={(e) => setBudget(e.target.value)}
