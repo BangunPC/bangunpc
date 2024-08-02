@@ -23,6 +23,11 @@ export default function RencanaSection({
 
   const { data } = rencanaList;
 
+  const rencanaData = [
+    ...(data ?? []),
+    { id: -1, category_name: "Semua/Lainnya" },
+  ];
+
   const getDest = (newMultiSelect: string[]) => {
     let dest = `?b=${budget}`;
     for (const item of newMultiSelect) {
@@ -54,7 +59,7 @@ export default function RencanaSection({
       <div className="h-8" />
 
       <div className="m-auto grid max-w-screen-tablet grid-cols-2 gap-2 tablet:grid-cols-3">
-        {data?.map((item, index) => (
+        {rencanaData?.map((item, index) => (
           <Label
             htmlFor={item.category_name!}
             key={item.category_name!}
@@ -67,11 +72,18 @@ export default function RencanaSection({
               id={item.category_name!}
               checked={multiSelect.includes(index.toString())}
               onCheckedChange={(checked) => {
-                const newMultiSelect = checked
-                  ? [...multiSelect, index.toString()]
-                  : multiSelect.filter((i) => i !== index.toString());
-
-                setMultiSelect(newMultiSelect);
+                if (checked && item.id === -1) {
+                  setMultiSelect([
+                    ...(rencanaData?.map((item, index) => index.toString()) ?? []),
+                  ]);
+                } else if (!checked && item.id === -1) {
+                  setMultiSelect([]);
+                } else {
+                  const newMultiSelect = checked
+                    ? [...multiSelect, index.toString()]
+                    : multiSelect.filter((i) => i !== index.toString());
+                  setMultiSelect(newMultiSelect);
+                }
               }}
             />
             <span>{item.category_name!}</span>

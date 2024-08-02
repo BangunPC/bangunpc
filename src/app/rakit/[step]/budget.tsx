@@ -3,8 +3,8 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-// import { Input } from "~/components/ui/input";
-// import { withMask } from "use-mask-input";
+import { Input } from "~/components/ui/input";
+import { withMask } from "use-mask-input";
 import Image from "next/image";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
@@ -16,6 +16,9 @@ export default function BudgetSection() {
     5000000, 7000000, 10000000, 15000000, 18000000, 20000000, 25000000,
     30000000, 40000000, 50000000, 80000000,
   ];
+
+  const minBudget = budgets[0];
+  const maxBudget = budgets[budgets.length - 1];
 
   const searchParams = useSearchParams();
   const [budget, setBudget] = React.useState(searchParams.get("b") ?? 0);
@@ -74,7 +77,7 @@ export default function BudgetSection() {
           </Label>
         ))}
       </RadioGroup>
-      {/* <div className="my-8 flex justify-center">
+      <div className="my-8 flex justify-center">
         <span className="text-center text-sm text-gray-500">
           Atau bisa atur sesuai budget kamu
         </span>
@@ -82,15 +85,20 @@ export default function BudgetSection() {
       <Input
         ref={withMask("currency", {
           allowMinus: false,
-          min: minBudget,
-          max: maxBudget,
           groupSeparator: ".",
           prefix: "Rp. ",
           digits: 0,
+          unmaskAsNumber: true,
+          onUnMask(maskedValue, unmaskedValue) {
+              setBudget(unmaskedValue);
+              return unmaskedValue;
+          },
         })}
+        onChange={(e) => setBudget(e.target.value)}
+        value={budget}
         autoFocus
         className="m-auto w-32 pr-3"
-      /> */}
+      />
 
       <div className="flex justify-end">
         <Link
