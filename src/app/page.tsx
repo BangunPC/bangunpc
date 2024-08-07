@@ -5,11 +5,13 @@ import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { HeroHighlight, Highlight } from "~/components/ui/hero-highlight";
 import { motion } from "framer-motion";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 export default function HomePage() {
   return (
     <main className="h-full w-full">
       <RakitSekarangSection />
+      <HeroSection />
       {/* <KatalogKomponenSection /> */}
       {/* <PilihLayananSection /> */}
     </main>
@@ -96,6 +98,90 @@ function RakitSekarangSection() {
         </div>
       </HeroHighlight>
     </motion.div>
+  );
+}
+
+function HeroSection() {
+  return (
+    <>
+      <div className="flex h-screen w-full flex-col items-center justify-center bg-[#f4f4f4] dark:bg-gray-800 text-center">
+        <div className="flex flex-row">
+          <Image
+            src="/images/vector-bintang.svg"
+            alt="vector-bintang"
+            width={36}
+            height={30}
+            className="relative -left-6 top-2 drop-shadow-md"
+          />
+          <Image
+            src="/images/vector-bintang.svg"
+            alt="vector-bintang"
+            width={24}
+            height={18}
+            className="relative -left-20 top-8 drop-shadow-md"
+          />
+          <h1 className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-center text-6xl font-bold leading-tight text-transparent drop-shadow-md">
+            One Stop Solution for <br /> Your PC Build Needs
+          </h1>
+          <Image
+            src="/images/vector-bintang.svg"
+            alt="vector-bintang"
+            width={36}
+            height={30}
+            className="relative -right-6 top-8 drop-shadow-md"
+          />
+        </div>
+        <p className="pt-8 text-lg text-gray-500 dark:text-gray-300">
+          Merakit PC menjadi mudah, tanpa ribet, dan profesional. <br /> Rakit
+          PC sesuai kebutuhan dan budget Anda.
+        </p>
+        <div className="flex flex-row gap-4 pt-8 ">
+          <Button className="via-52% bg-gradient-to-rfrom-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg">
+            <Image
+              src="/images/icon-computer.svg"
+              alt="icon-computer"
+              width={20}
+              height={20}
+              className="mr-2"
+            />
+            Ayo Rakit Sekarang
+          </Button>
+          <Button className="via-52% bg-gradient-to-rfrom-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-lg text-transparent">
+            Temukan PC Impianmu
+            <Image
+              src="/images/arrow-down.svg"
+              alt="arrow-down"
+              width={20}
+              height={20}
+              className="ml-2"
+            />
+          </Button>
+        </div>
+        <p className="pt-16 text-lg text-gray-500 dark:text-gray-300">
+          Terintegrasi dengan marketplace favorit kamu.
+        </p>
+        <div className="flex flex-row gap-16 pt-8">
+          <Image
+            src="/images/logo-blibli.svg"
+            alt="logo blibli"
+            width={120}
+            height={120}
+          />
+          <Image
+            src="/images/logo-shopee.svg"
+            alt="logo shopee"
+            width={120}
+            height={120}
+          />
+          <Image
+            src="/images/logo-tokopedia.svg"
+            alt="logo tokopedia"
+            width={120}
+            height={120}
+          />
+        </div>
+      </div>
+    </>
   );
 }
 
