@@ -136,7 +136,7 @@ function HeroSection() {
           PC sesuai kebutuhan dan budget Anda.
         </p>
         <div className="flex flex-row gap-4 pt-8 ">
-          <Button className="via-52% bg-gradient-to-rfrom-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg">
+          <Button className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg">
             <Image
               src="/images/icon-computer.svg"
               alt="icon-computer"
