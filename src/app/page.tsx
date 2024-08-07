@@ -146,7 +146,7 @@ function HeroSection() {
             />
             Ayo Rakit Sekarang
           </Button>
-          <Button className="via-52% bg-gradient-to-rfrom-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-lg text-transparent">
+          <Button variant="raw" className="bg-gradient-to-r from-[#1536FC] from-0% to-[#35AEF2] to-100% bg-clip-text text-lg text-transparent">
             Temukan PC Impianmu
             <Image
               src="/images/arrow-down.svg"
