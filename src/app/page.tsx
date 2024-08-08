@@ -1,9 +1,13 @@
 "use client";
 
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect, use } from "react";
+import { title } from "process";
 // import Link from "next/link";
 import { Button } from "~/components/ui/button";
+import Caraousel from "~/components/ui/caraousel";
 // import { HeroHighlight, Highlight } from "~/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
@@ -11,6 +15,7 @@ export default function HomePage() {
   return (
     <main className="h-full w-full">
       <HeroSection />
+      <CaraouselSection />
       {/* <RakitSekarangSection /> */}
       {/* <KatalogKomponenSection /> */}
       {/* <PilihLayananSection /> */}
@@ -190,6 +195,152 @@ function HeroSection() {
         </div>
       </div>
     </>
+  );
+}
+
+function CaraouselSection() {
+  const caraousel = [
+    {
+      src: "/images/image 173.png",
+      alt: "image 173",
+      title: "One-Stop Solution for Your PC Build Needs",
+      description:
+        "Merakit PC menjadi mudah, tanpa ribet, dan praktis. Sesuaikan dengan kebutuhan dan budget Anda.",
+    },
+    {
+      src: "/images/image 173.png",
+      alt: "image 173",
+      title: "PC Essentials For Back To School",
+      description:
+        "PC yang sudah terafiliasi dengan marketplace favoritmu. Temukan komponen PC yang sesuai dengan kebutuhanmu.",
+    },
+    {
+      src: "/images/image 173.png",
+      alt: "image 173",
+      title: "PC Essentials For Your Gaming Setup",
+      description:
+        "PC yang keren dan mempunyai fitur terbaik. Temukan komponen PC yang sesuai dengan kebutuhanmu.",
+    },
+  ];
+
+  // const [currentIndex, setCurrentIndex] = useState(0);
+
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setCurrentIndex((prevIndex) => (prevIndex + 1) % caraousel.length);
+  //   }, 3000);
+
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // });
+
+  // const goToNext = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex + 1) % caraousel.length);
+  // };
+  // const goToPrev = () => {
+  //   setCurrentIndex(
+  //     (prevIndex) => (prevIndex + caraousel.length - 1) % caraousel.length,
+  //   );
+  // };
+  // const goToIndex = (index: number) => {
+  //   setCurrentIndex(index);
+  // };
+  // return (
+  //   <>
+  //     <div className="flex h-fit w-full items-center justify-center bg-[#f4f4f4] pb-10 text-center dark:bg-gray-800">
+  //       <ChevronLeft className="relative right-8 h-12 w-12 cursor-pointer rounded-full bg-white p-2" onClick={goToPrev}/>
+  //       {caraousel.map((item, index) => (
+  //         <Caraousel
+  //           images={item.src}
+  //           alt={item.alt}
+  //           title={item.title}
+  //           description={item.description}
+  //           key={index}
+  //           className={ ` ${currentIndex === index ? "block" : "hidden "}` }
+  //         />
+  //       ))}
+  //       <ChevronRight className="relative left-8 h-12 w-12 cursor-pointer rounded-full bg-white p-2" onClick={goToNext}/>
+  //       <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 transform space-x-2"></div>
+  //     </div>
+  //   </>
+  // );
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState<"right" | "left">("right");
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDirection("right");
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % caraousel.length);
+    }, 3000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [caraousel.length]);
+
+  const goToNext = () => {
+    setDirection("right");
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % caraousel.length);
+  };
+
+  const goToPrev = () => {
+    setDirection("left");
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + caraousel.length) % caraousel.length,
+    );
+  };
+
+  const goToIndex = (index: number) => {
+    setDirection(index > currentIndex ? "right" : "left");
+    setCurrentIndex(index);
+  };
+
+  return (
+    <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#f4f4f4] pb-10 text-center dark:bg-gray-800">
+      <div className="relative w-full">
+        <ChevronLeft
+          className="absolute left-48 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2"
+          onClick={goToPrev}
+        />
+        <ChevronRight
+          className="absolute right-48 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2"
+          onClick={goToNext}
+        />
+        <div className=" flex justify-center items-center w-full overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {caraousel.map((item, index) => (
+              <div
+                key={index}
+                className="flex w-full flex-shrink-0 items-center justify-center"
+              >
+                <Caraousel
+                  images={item.src}
+                  alt={item.alt}
+                  title={item.title}
+                  description={item.description}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="mt-4 flex space-x-2">
+        {caraousel.map((_, index) => (
+          <button
+            key={index}
+            className={`h-2 w-2 rounded-full transition-colors duration-300 ${
+              index === currentIndex ? "bg-primary w-7" : "bg-gray-300"
+            }`}
+            onClick={() => goToIndex(index)}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
