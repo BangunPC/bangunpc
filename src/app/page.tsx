@@ -109,23 +109,23 @@ export default function HomePage() {
 function HeroSection() {
   return (
     <>
-      <div className="flex h-screen w-full flex-col items-center justify-center bg-[#f4f4f4] text-center dark:bg-gray-800">
+      <div className="mx-4 tablet:mx-0 flex h-screen w-full flex-col items-center justify-center bg-[#f4f4f4] text-center dark:bg-gray-800">
         <div className="flex flex-row drop-shadow-xl">
           <Image
             src="/images/vector-bintang.svg"
             alt="vector-bintang"
             width={36}
             height={30}
-            className="relative -left-6 top-2"
+            className="relative -left-6 top-2 hidden tablet:block"
           />
           <Image
             src="/images/vector-bintang.svg"
             alt="vector-bintang"
             width={24}
             height={18}
-            className="relative -left-20 top-8"
+            className="relative -left-20 top-8 hidden tablet:block"
           />
-          <h1 className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-center text-6xl font-bold leading-tight text-transparent">
+          <h1 className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-center text-5xl tablet:text-6xl font-bold leading-tight text-transparent">
             One-Stop Solution for <br /> Your PC Build Needs
           </h1>
           <Image
@@ -133,7 +133,7 @@ function HeroSection() {
             alt="vector-bintang"
             width={36}
             height={30}
-            className="relative -right-6 top-8"
+            className="relative -right-6 top-8 hidden tablet:block"
           />
         </div>
         <p className="pt-8 text-lg text-gray-500 dark:text-gray-300">
@@ -273,7 +273,7 @@ function CaraouselSection() {
     const timer = setInterval(() => {
       setDirection("right");
       setCurrentIndex((prevIndex) => (prevIndex + 1) % caraousel.length);
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearInterval(timer);
@@ -301,14 +301,14 @@ function CaraouselSection() {
     <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#f4f4f4] pb-10 text-center dark:bg-gray-800">
       <div className="relative w-full">
         <ChevronLeft
-          className="absolute left-48 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2"
+          className="absolute left-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2"
           onClick={goToPrev}
         />
         <ChevronRight
-          className="absolute right-48 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2"
+          className="absolute right-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2"
           onClick={goToNext}
         />
-        <div className=" flex justify-center items-center w-full overflow-hidden">
+        <div className=" w-full overflow-hidden">
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}

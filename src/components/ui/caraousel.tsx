@@ -12,7 +12,7 @@ interface CaraouselProps {
 const caraousel = ({images, alt, title, description, className} : CaraouselProps) => {
   return (
     <>
-        <div className={`max-w-7xl bg-white grid grid-cols-1 tablet:grid-cols-2 rounded-xl gap-12 px-12 py-8 justify-center items-center shadow-xl ${className}`} >
+        <div className={`mx-4 tablet:mx-0 max-w-7xl h-fit bg-white grid grid-cols-1 tablet:grid-cols-2 rounded-xl gap-12 px-12 py-8 justify-center items-center shadow-xl mb-6 ${className}`} >
             <div className="transition-opacity duration-500 w-full col-span-1">
                 <Image src= {images} alt={alt} width={700} height={500} className="object-cover rounded-xl" />
             </div>
