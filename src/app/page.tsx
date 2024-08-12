@@ -3,11 +3,10 @@
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, use } from "react";
-import { title } from "process";
+import { useState, useEffect } from "react";
 // import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import Caraousel from "~/components/ui/caraousel";
+import Carousel from "~/components/ui/carousel";
 // import { HeroHighlight, Highlight } from "~/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
@@ -15,7 +14,7 @@ export default function HomePage() {
   return (
     <main className="h-full w-full">
       <HeroSection />
-      <CaraouselSection />
+      <CarouselSection />
       {/* <RakitSekarangSection /> */}
       {/* <KatalogKomponenSection /> */}
       {/* <PilihLayananSection /> */}
@@ -109,7 +108,7 @@ export default function HomePage() {
 function HeroSection() {
   return (
     <>
-      <div className="mx-4 tablet:mx-0 flex h-screen w-full flex-col items-center justify-center bg-[#f4f4f4] text-center dark:bg-gray-800">
+      <div className="mx-4 flex h-screen w-full flex-col items-center justify-center bg-[#f4f4f4] text-center dark:bg-gray-800 tablet:mx-0">
         <div className="flex flex-row drop-shadow-xl">
           <Image
             src="/images/vector-bintang.svg"
@@ -125,7 +124,7 @@ function HeroSection() {
             height={18}
             className="relative -left-20 top-8 hidden tablet:block"
           />
-          <h1 className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-center text-5xl tablet:text-6xl font-bold leading-tight text-transparent">
+          <h1 className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-center text-5xl font-bold leading-tight text-transparent tablet:text-6xl">
             One-Stop Solution for <br /> Your PC Build Needs
           </h1>
           <Image
@@ -198,8 +197,8 @@ function HeroSection() {
   );
 }
 
-function CaraouselSection() {
-  const caraousel = [
+function CarouselSection() {
+  const carousel = [
     {
       src: "/images/image 173.png",
       alt: "image 173",
@@ -267,33 +266,33 @@ function CaraouselSection() {
   // );
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState<"right" | "left">("right");
+  // const [direction, setDirection] = useState<"right" | "left">("right");
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setDirection("right");
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % caraousel.length);
+      // setDirection("right");
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % carousel.length);
     }, 5000);
 
     return () => {
       clearInterval(timer);
     };
-  }, [caraousel.length]);
+  }, [carousel.length]);
 
   const goToNext = () => {
-    setDirection("right");
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % caraousel.length);
+    // setDirection("right");
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % carousel.length);
   };
 
   const goToPrev = () => {
-    setDirection("left");
+    // setDirection("left");
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + caraousel.length) % caraousel.length,
+      (prevIndex) => (prevIndex - 1 + carousel.length) % carousel.length,
     );
   };
 
   const goToIndex = (index: number) => {
-    setDirection(index > currentIndex ? "right" : "left");
+    // setDirection(index > currentIndex ? "right" : "left");
     setCurrentIndex(index);
   };
 
@@ -313,12 +312,12 @@ function CaraouselSection() {
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
-            {caraousel.map((item, index) => (
+            {carousel.map((item, index) => (
               <div
                 key={index}
                 className="flex w-full flex-shrink-0 items-center justify-center"
               >
-                <Caraousel
+                <Carousel
                   images={item.src}
                   alt={item.alt}
                   title={item.title}
@@ -330,11 +329,11 @@ function CaraouselSection() {
         </div>
       </div>
       <div className="mt-4 flex space-x-2">
-        {caraousel.map((_, index) => (
+        {carousel.map((_, index) => (
           <button
             key={index}
             className={`h-2 w-2 rounded-full transition-colors duration-300 ${
-              index === currentIndex ? "bg-primary w-7" : "bg-gray-300"
+              index === currentIndex ? "w-7 bg-primary" : "bg-gray-300"
             }`}
             onClick={() => goToIndex(index)}
           />
