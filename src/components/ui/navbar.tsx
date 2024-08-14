@@ -297,7 +297,7 @@ export function Navbar() {
     </Dialog>
   );
   return (
-    <div className="fixed top-10 z-20 w-full ">
+    <div className="fixed top-2 z-20 w-full ">
       <div className="m-auto flex h-16 max-w-screen-desktop items-center rounded-[20px] border dark:border-[#B2B2B2]/30 border-[#B2B2B2] bg-[#f5f5f5] px-4 dark:bg-navbar">
         <Link href="/" className="scale-[70%]">
           <NavbarIcon />
@@ -487,7 +487,7 @@ export function Navbar() {
               </NavigationMenuList>
             </NavigationMenu>
             <div className="ml-auto flex items-center gap-4 tablet:ml-0">
-              <Button variant="outline" className="">
+              <Button variant="outline" className="rounded-xl">
                 <Search />
               </Button>
               {user ? profileButton : loginButton}
