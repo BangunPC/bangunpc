@@ -9,6 +9,7 @@ import {
   Heart,
   LogOut,
   MonitorSmartphone,
+  Search,
   Settings2,
   User,
 } from "lucide-react";
@@ -17,9 +18,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FormLogin from "~/components/login/form-login";
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { ComponentCategory, categoriesFromEnum } from "~/lib/db";
@@ -284,7 +287,7 @@ export function Navbar() {
       }}
     >
       <DialogTrigger>
-        <Button className="bg-primary px-4 text-white hover:bg-primary/80">
+        <Button className="w-24 rounded-xl bg-primary px-4 text-white hover:bg-primary/80">
           Masuk
         </Button>
       </DialogTrigger>
@@ -294,12 +297,12 @@ export function Navbar() {
     </Dialog>
   );
   return (
-    <div className="fixed top-0 z-20 w-full bg-[#f5f5f5] px-4 dark:bg-navbar">
-      <div className="m-auto flex max-w-screen-desktop items-center">
-        <Link href="/">
+    <div className="fixed top-10 z-20 w-full ">
+      <div className="m-auto flex h-16 max-w-screen-desktop items-center rounded-[20px] border dark:border-[#B2B2B2]/30 border-[#B2B2B2] bg-[#f5f5f5] px-4 dark:bg-navbar">
+        <Link href="/" className="scale-[70%]">
           <NavbarIcon />
         </Link>
-        {false && (
+        {true && (
           <>
             <NavigationMenu className="m-auto hidden tablet:block">
               <NavigationMenuList>
@@ -391,35 +394,35 @@ export function Navbar() {
                     </DialogContent>
                   </Dialog>
                 </NavigationMenuItem>
-                {/* <NavigationMenuItem>
-      <NavigationMenuTrigger className={"bg-transparent"}>
-        Jasa
-      </NavigationMenuTrigger>
-      <NavigationMenuContent className="">
-        <ul className="w-[160px] p-4">
-          <Link href="/jasa" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "w-full bg-transparent",
-              )}
-            >
-              Jasa Rakit PC
-            </NavigationMenuLink>
-          </Link>
-          <Link href="/servis" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "w-full bg-transparent",
-              )}
-            >
-              Jasa Servis PC
-            </NavigationMenuLink>
-          </Link>
-        </ul>
-      </NavigationMenuContent>
-    </NavigationMenuItem> */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className={"bg-transparent"}>
+                    Jasa
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="">
+                    <ul className="w-[160px] p-4">
+                      <Link href="/jasa" legacyBehavior passHref>
+                        <NavigationMenuLink
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "w-full bg-transparent",
+                          )}
+                        >
+                          Jasa Rakit PC
+                        </NavigationMenuLink>
+                      </Link>
+                      <Link href="/servis" legacyBehavior passHref>
+                        <NavigationMenuLink
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "w-full bg-transparent",
+                          )}
+                        >
+                          Jasa Servis PC
+                        </NavigationMenuLink>
+                      </Link>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Popover>
                     <PopoverTrigger>
@@ -483,8 +486,12 @@ export function Navbar() {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-            <div className="ml-auto flex items-center gap-4 tablet:ml-0 tablet:block">
+            <div className="ml-auto flex items-center gap-4 tablet:ml-0">
+              <Button variant="outline" className="">
+                <Search />
+              </Button>
               {user ? profileButton : loginButton}
+              <ModeToggle />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild className="tablet:hidden">
                   <Button size="icon">
@@ -558,8 +565,6 @@ export function Navbar() {
             </div>
           </>
         )}
-        <div className="ml-auto" />
-        <ModeToggle />
       </div>
     </div>
   );
