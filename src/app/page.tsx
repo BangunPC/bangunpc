@@ -144,7 +144,7 @@ function HeroSection() {
         </p>
         <div className="flex flex-row gap-4 pt-8">
           <Link href="/rakit/budget" passHref>
-            <Button className=" via-52% h-14 w-60 gap-[5px] bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
+            <Button className="via-52% h-14 w-60 gap-[5px] rounded-2xl bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
               <Image
                 src="/images/icon-computer.svg"
                 alt="icon-computer"
@@ -585,7 +585,7 @@ function MudahMurahSection() {
         </div>
         <div className="flex flex-row gap-4 pt-8">
           <Link href="/rakit/budget" passHref>
-            <Button className=" via-52% h-14 w-60 gap-[5px] bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
+            <Button className="via-52% h-14 w-60 gap-[5px] rounded-2xl bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
               <Image
                 src="/images/icon-computer.svg"
                 alt="icon-computer"

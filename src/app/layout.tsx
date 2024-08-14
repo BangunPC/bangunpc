@@ -40,7 +40,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <div className={`${inter.variable} bg-background text-foreground`}>
-              <Navbar />
+              <Navbar  />
               <div className="mt-navbar-min-h">{children}</div>
               <Footer />
             </div>
