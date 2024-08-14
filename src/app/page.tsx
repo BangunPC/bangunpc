@@ -20,6 +20,7 @@ export default function HomePage() {
       {/* <RakitSekarangSection /> */}
       {/* <KatalogKomponenSection /> */}
       {/* <PilihLayananSection /> */}
+      <MudahMurahSection />
     </main>
   );
 }
@@ -138,8 +139,8 @@ function HeroSection() {
           />
         </div>
         <p className="pt-8 text-lg text-gray-500 dark:text-gray-300">
-          Merakit PC menjadi mudah, tanpa ribet, dan profesional. <br />
-          Sesuaikan dengan kebutuhan dan budget Anda.
+          Merakit PC menjadi mudah, tanpa ribet, dan profesional <br />
+          Sesuaikan dengan kebutuhan dan budget Anda
         </p>
         <div className="flex flex-row gap-4 pt-8">
           <Link href="/rakit/budget" passHref>
@@ -177,21 +178,21 @@ function HeroSection() {
             alt="logo blibli"
             width={120}
             height={120}
-            className="grayscale"
+            className="object-contain grayscale"
           />
           <Image
             src="/images/logo-shopee.svg"
             alt="logo shopee"
             width={120}
             height={120}
-            className="grayscale"
+            className="translate-y-[2px] scale-105 object-contain grayscale"
           />
           <Image
             src="/images/logo-tokopedia.svg"
             alt="logo tokopedia"
             width={120}
             height={120}
-            className="grayscale"
+            className="scale-110 object-contain grayscale"
           />
         </div>
       </div>
@@ -439,12 +440,12 @@ function PacketPersonalComputerSection() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 flex space-x-2 mb-10">
+            <div className="mb-10 mt-4 flex space-x-2">
               {cardPc.map((_, index) => (
                 <button
                   key={index}
                   className={`h-2 w-2 rounded-full ${
-                    index === currentIndex ? "bg-blue-500 w-7" : "bg-gray-300"
+                    index === currentIndex ? "w-7 bg-blue-500" : "bg-gray-300"
                   }`}
                   onClick={() => setCurrentIndex(index)}
                 />
@@ -563,3 +564,53 @@ function PacketPersonalComputerSection() {
 //     </div>
 //   );
 // }
+
+function MudahMurahSection() {
+  return (
+    <>
+      <div className="mx-4 flex h-screen w-full flex-col items-center justify-center bg-[#f4f4f4] text-center dark:bg-gray-800 tablet:mx-0">
+        <div className="flex h-40 flex-row drop-shadow-xl">
+          <h1 className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-center text-5xl font-bold text-transparent tablet:text-6xl">
+            Ayo Bangun PC Impianmu
+            <div className="h-6" />
+            {"dengan "}
+            <span className="drop-shadow-shine-blue-light dark:drop-shadow-shine-blue-dark font-bold text-primary">
+              MUDAH
+            </span>{" "}
+            {"dan "}
+            <span className="drop-shadow-shine-blue-light dark:drop-shadow-shine-blue-dark font-bold text-primary">
+              MURAH
+            </span>
+          </h1>
+        </div>
+        <div className="flex flex-row gap-4 pt-8">
+          <Link href="/rakit/budget" passHref>
+            <Button className=" via-52% h-14 w-60 gap-[5px] bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
+              <Image
+                src="/images/icon-computer.svg"
+                alt="icon-computer"
+                width={24}
+                height={24}
+                className="mr-2 text-lg"
+              />
+              Ayo Rakit Sekarang
+            </Button>
+          </Link>
+          <Button
+            variant="raw"
+            className="h-14 bg-gradient-to-r from-[#1536FC] from-0% to-[#35AEF2] to-100% bg-clip-text text-lg text-transparent"
+          >
+            Tentang Kami
+            <Image
+              src="/images/arrow-down.svg"
+              alt="arrow-down"
+              width={20}
+              height={20}
+              className="ml-2"
+            />
+          </Button>
+        </div>
+      </div>
+    </>
+  );
+}
