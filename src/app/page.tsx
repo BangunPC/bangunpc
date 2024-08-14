@@ -1,12 +1,13 @@
 "use client";
 
-import { ChevronRight, ChevronLeft } from "lucide-react";
+import { ChevronRight, ChevronLeft, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 // import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import Carousel from "~/components/ui/carousel";
+import CardPc from "~/components/ui/card-pc";
 // import { HeroHighlight, Highlight } from "~/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
@@ -15,6 +16,7 @@ export default function HomePage() {
     <main className="h-full w-full">
       <HeroSection />
       <CarouselSection />
+      <PacketPersonalComputerSection />
       {/* <RakitSekarangSection /> */}
       {/* <KatalogKomponenSection /> */}
       {/* <PilihLayananSection /> */}
@@ -300,11 +302,11 @@ function CarouselSection() {
     <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#f4f4f4] pb-10 text-center dark:bg-gray-800">
       <div className="relative w-full">
         <ChevronLeft
-          className="absolute left-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2"
+          className="absolute left-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 drop-shadow-lg "
           onClick={goToPrev}
         />
         <ChevronRight
-          className="absolute right-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2"
+          className="absolute right-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 drop-shadow-lg"
           onClick={goToNext}
         />
         <div className=" w-full overflow-hidden">
@@ -340,6 +342,118 @@ function CarouselSection() {
         ))}
       </div>
     </div>
+  );
+}
+
+function PacketPersonalComputerSection() {
+  const cardPc = [
+    {
+      src: "/images/image.png",
+      alt: "pc 1",
+      title: "Paket rakitan PC Spek Gaming dan Spek Editing 3D atau Animasi",
+      cpu: "Intel Core i5-1135G7",
+      gpu: "NVIDIA GTX 1650",
+      categories: "Editing",
+      price: 5000000,
+    },
+    {
+      src: "/images/image.png",
+      alt: "pc 2",
+      title: "Paket rakitan PC Spek Gaming dan Spek Editing 3D atau Animasi",
+      cpu: "Intel Core i9-9900F",
+      gpu: "NVIDIA RTX 4090",
+      categories: ["Gaming", "Editing 3D", "Animasi"],
+      price: 60000000,
+    },
+    {
+      src: "/images/image.png",
+      alt: "pc 3",
+      title: "Paket rakitan PC Spek Gaming dan Spek Editing 3D atau Animasi",
+      cpu: "Intel Core i7-9700K",
+      gpu: "NVIDIA RTX 4080",
+      categories: ["Gaming", "Editing 3D", "Animasi"],
+      price: 48990000,
+    },
+  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === cardPc.length - 1 ? 0 : prevIndex + 1,
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? cardPc.length - 1 : prevIndex - 1,
+    );
+  };
+
+  return (
+    <>
+      <div className="mx-auto flex max-w-7xl flex-row items-center justify-center gap-10">
+        <div className="flex w-2/6 flex-col justify-center gap-8">
+          <h3 className="text-5xl font-bold">
+            Pilih paketan rakit PC yang cocok buat kamu
+          </h3>
+          <p className="text-md text-gray-500">
+            Kami menyediakan berbagai rekomendasi rakitan PC yang dikategorisasi
+            berdasarkan kebutuhan dan rentang budget untuk memudahkan Anda dalam
+            merakit PC impian
+          </p>
+          <Button className="via-52% text-md w-fit gap-2 bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3] ">
+            <ShoppingCart className="h-6 w-6 " />
+            Lihat paket PC lainnya
+          </Button>
+        </div>
+        <div className="relative flex w-4/6 items-center">
+          <button
+            onClick={prevSlide}
+            className="absolute -left-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute -right-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+
+          <div className="flex flex-col items-center">
+            <div className="flex flex-row gap-4">
+              {cardPc.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex w-fit flex-col rounded-lg bg-white  p-4 drop-shadow-md dark:border-white/20"
+                >
+                  <CardPc
+                    src={item.src}
+                    alt={item.alt}
+                    title={item.title}
+                    cpu={item.cpu}
+                    gpu={item.gpu}
+                    categories={item.categories}
+                    price={item.price}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex space-x-2 mb-10">
+              {cardPc.map((_, index) => (
+                <button
+                  key={index}
+                  className={`h-2 w-2 rounded-full ${
+                    index === currentIndex ? "bg-blue-500 w-7" : "bg-gray-300"
+                  }`}
+                  onClick={() => setCurrentIndex(index)}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
