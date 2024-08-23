@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import Carousel from "~/components/ui/carousel";
 import CardPc from "~/components/ui/card-pc";
+import { color } from "framer-motion";
 // import { HeroHighlight, Highlight } from "~/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
@@ -20,7 +21,8 @@ export default function HomePage() {
       {/* <RakitSekarangSection /> */}
       {/* <KatalogKomponenSection /> */}
       {/* <PilihLayananSection /> */}
-      <MudahMurahSection />
+      <CariKomponenSection />
+      {/* <MudahMurahSection /> */}
     </main>
   );
 }
@@ -303,11 +305,11 @@ function CarouselSection() {
     <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#f4f4f4] pb-10 text-center dark:bg-gray-800">
       <div className="relative w-full">
         <ChevronLeft
-          className="absolute left-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 drop-shadow-lg "
+          className="absolute left-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
           onClick={goToPrev}
         />
         <ChevronRight
-          className="absolute right-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 drop-shadow-lg"
+          className="absolute right-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
           onClick={goToNext}
         />
         <div className=" w-full overflow-hidden">
@@ -318,7 +320,7 @@ function CarouselSection() {
             {carousel.map((item, index) => (
               <div
                 key={index}
-                className="flex w-full flex-shrink-0 items-center justify-center"
+                className="dark flex w-full flex-shrink-0 items-center justify-center"
               >
                 <Carousel
                   images={item.src}
@@ -336,7 +338,7 @@ function CarouselSection() {
           <button
             key={index}
             className={`h-2 w-2 rounded-full transition-colors duration-300 ${
-              index === currentIndex ? "w-7 bg-primary" : "bg-gray-300"
+              index === currentIndex ? "w-7 bg-primary dark:bg-slate-700" : "bg-gray-300"
             }`}
             onClick={() => goToIndex(index)}
           />
@@ -392,64 +394,66 @@ function PacketPersonalComputerSection() {
 
   return (
     <>
-      <div className="mx-auto flex max-w-7xl flex-row items-center justify-center gap-10">
-        <div className="flex w-2/6 flex-col justify-center gap-8">
-          <h3 className="text-5xl font-bold">
-            Pilih paketan rakit PC yang cocok buat kamu
-          </h3>
-          <p className="text-md text-gray-500">
-            Kami menyediakan berbagai rekomendasi rakitan PC yang dikategorisasi
-            berdasarkan kebutuhan dan rentang budget untuk memudahkan Anda dalam
-            merakit PC impian
-          </p>
-          <Button className="via-52% text-md w-fit gap-2 bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3] ">
-            <ShoppingCart className="h-6 w-6 " />
-            Lihat paket PC lainnya
-          </Button>
-        </div>
-        <div className="relative flex w-4/6 items-center">
-          <button
-            onClick={prevSlide}
-            className="absolute -left-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute -right-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </button>
+      <div className="flex w-full dark:bg-gray-800">
+        <div className="mx-auto flex max-w-7xl flex-row items-center justify-center gap-10">
+          <div className="flex w-2/6 flex-col justify-center gap-8">
+            <h3 className="text-5xl font-bold">
+              Pilih paketan rakit PC yang cocok buat kamu
+            </h3>
+            <p className="text-md text-gray-500">
+              Kami menyediakan berbagai rekomendasi rakitan PC yang
+              dikategorisasi berdasarkan kebutuhan dan rentang budget untuk
+              memudahkan Anda dalam merakit PC impian
+            </p>
+            <Button className="via-52% text-md w-fit gap-2 bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3] ">
+              <ShoppingCart className="h-6 w-6 " />
+              Lihat paket PC lainnya
+            </Button>
+          </div>
+          <div className="relative flex w-4/6 items-center">
+            <button
+              onClick={prevSlide}
+              className="absolute -left-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute -right-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
 
-          <div className="flex flex-col items-center">
-            <div className="flex flex-row gap-4">
-              {cardPc.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex w-fit flex-col rounded-lg bg-white  p-4 drop-shadow-md dark:border-white/20"
-                >
-                  <CardPc
-                    src={item.src}
-                    alt={item.alt}
-                    title={item.title}
-                    cpu={item.cpu}
-                    gpu={item.gpu}
-                    categories={item.categories}
-                    price={item.price}
+            <div className="flex flex-col items-center">
+              <div className="flex flex-row gap-4">
+                {cardPc.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex w-fit flex-col rounded-lg bg-white  p-4 drop-shadow-md dark:border-white/20 dark:bg-slate-700"
+                  >
+                    <CardPc
+                      src={item.src}
+                      alt={item.alt}
+                      title={item.title}
+                      cpu={item.cpu}
+                      gpu={item.gpu}
+                      categories={item.categories}
+                      price={item.price}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="mb-10 mt-4 flex space-x-2">
+                {cardPc.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`h-2 w-2 rounded-full ${
+                      index === currentIndex ? "w-7 bg-blue-500" : "bg-gray-300"
+                    }`}
+                    onClick={() => setCurrentIndex(index)}
                   />
-                </div>
-              ))}
-            </div>
-            <div className="mb-10 mt-4 flex space-x-2">
-              {cardPc.map((_, index) => (
-                <button
-                  key={index}
-                  className={`h-2 w-2 rounded-full ${
-                    index === currentIndex ? "w-7 bg-blue-500" : "bg-gray-300"
-                  }`}
-                  onClick={() => setCurrentIndex(index)}
-                />
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -565,52 +569,97 @@ function PacketPersonalComputerSection() {
 //   );
 // }
 
-function MudahMurahSection() {
+function CariKomponenSection() {
+  const dataKomponen = [
+    { title: "Motherboard", img: "/images/image.png", color: "bg-[#549498]" },
+    { title: "CPU", img: "/images/image.png", color: "bg-[#39778E]" },
+    { title: "Memory", img: "/images/image.png", color: "bg-[#1F6CBE]" },
+    { title: "Storage", img: "/images/image.png", color: "bg-[#6683C2]" },
+    // { title: "GPU", img: "/images/image.png" },
+  ];
   return (
     <>
-      <div className="mx-4 flex h-screen w-full flex-col items-center justify-center bg-[#f4f4f4] text-center dark:bg-gray-800 tablet:mx-0">
-        <div className="flex h-40 flex-row drop-shadow-xl">
-          <h1 className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-center text-5xl font-bold text-transparent tablet:text-6xl">
-            Ayo Bangun PC Impianmu
-            <div className="h-6" />
-            {"dengan "}
-            <span className="drop-shadow-shine-blue-light dark:drop-shadow-shine-blue-dark font-bold text-primary">
-              MUDAH
-            </span>{" "}
-            {"dan "}
-            <span className="drop-shadow-shine-blue-light dark:drop-shadow-shine-blue-dark font-bold text-primary">
-              MURAH
-            </span>
-          </h1>
+      <div className="mx-auto my-10 grid max-w-7xl grid-cols-5 gap-4 ">
+        <div className="relative flex h-72 flex-col justify-between overflow-hidden rounded-lg bg-[#0356F7] p-6 text-white">
+          {/* Persegi panjang diagonal */}
+          <div className="absolute bottom-[0%] left-[0%] h-[40%] w-[200%] origin-bottom-left -rotate-45 transform bg-[#1536FC]"></div>
+
+          {/* Konten */}
+          <div className="relative z-10">
+            <h2 className="mb-2 text-3xl font-bold">Cari</h2>
+            <h2 className="text-3xl font-bold">Komponen</h2>
+          </div>
+
+          <p className="relative z-10 mt-4 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
         </div>
-        <div className="flex flex-row gap-4 pt-8">
-          <Link href="/rakit/budget" passHref>
-            <Button className="via-52% h-14 w-60 gap-[5px] rounded-2xl bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
-              <Image
-                src="/images/icon-computer.svg"
-                alt="icon-computer"
-                width={24}
-                height={24}
-                className="mr-2 text-lg"
-              />
-              Ayo Rakit Sekarang
-            </Button>
-          </Link>
-          <Button
-            variant="raw"
-            className="h-14 bg-gradient-to-r from-[#1536FC] from-0% to-[#35AEF2] to-100% bg-clip-text text-lg text-transparent"
-          >
-            Tentang Kami
-            <Image
-              src="/images/arrow-down.svg"
-              alt="arrow-down"
-              width={20}
-              height={20}
-              className="ml-2"
-            />
-          </Button>
+        <div className="col-span-4 flex justify-center gap-4">
+          {dataKomponen.map((item, index) => (
+            <div key={index} className={`h-72 rounded-md p-2 ${item.color}`}>
+              <h5 className="pt-2 text-center text-2xl font-semibold text-white">
+                {item.title}
+              </h5>
+              <p className=" text-center text-sm text-white underline">
+                Lihat Selengkapnya
+                <ChevronRight className="ml-2 inline-block h-3 w-3" />
+              </p>
+              <Image src={item.img} alt={item.title} width={200} height={200} />
+            </div>
+          ))}
         </div>
       </div>
     </>
   );
 }
+
+// function MudahMurahSection() {
+//   return (
+//     <>
+//       <div className="mx-4 flex h-screen w-full flex-col items-center justify-center bg-[#f4f4f4] text-center dark:bg-gray-800 tablet:mx-0">
+//         <div className="flex h-40 flex-row drop-shadow-xl">
+//           <h1 className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-center text-5xl font-bold text-transparent tablet:text-6xl">
+//             Ayo Bangun PC Impianmu
+//             <div className="h-6" />
+//             {"dengan "}
+//             <span className="drop-shadow-shine-blue-light dark:drop-shadow-shine-blue-dark font-bold text-primary">
+//               MUDAH
+//             </span>{" "}
+//             {"dan "}
+//             <span className="drop-shadow-shine-blue-light dark:drop-shadow-shine-blue-dark font-bold text-primary">
+//               MURAH
+//             </span>
+//           </h1>
+//         </div>
+//         <div className="flex flex-row gap-4 pt-8">
+//           <Link href="/rakit/budget" passHref>
+//             <Button className="via-52% h-14 w-60 gap-[5px] rounded-2xl bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
+//               <Image
+//                 src="/images/icon-computer.svg"
+//                 alt="icon-computer"
+//                 width={24}
+//                 height={24}
+//                 className="mr-2 text-lg"
+//               />
+//               Ayo Rakit Sekarang
+//             </Button>
+//           </Link>
+//           <Button
+//             variant="raw"
+//             className="h-14 bg-gradient-to-r from-[#1536FC] from-0% to-[#35AEF2] to-100% bg-clip-text text-lg text-transparent"
+//           >
+//             Tentang Kami
+//             <Image
+//               src="/images/arrow-down.svg"
+//               alt="arrow-down"
+//               width={20}
+//               height={20}
+//               className="ml-2"
+//             />
+//           </Button>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }

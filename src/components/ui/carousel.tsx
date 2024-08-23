@@ -19,7 +19,7 @@ const carousel = ({
   return (
     <>
       <div
-        className={`mx-4 mb-6 grid h-fit max-w-7xl grid-cols-1 items-center justify-center gap-12 rounded-xl bg-white px-12 py-8 shadow-xl tablet:mx-0 tablet:grid-cols-2 ${className}`}
+        className={`mx-4 mb-6 grid h-fit max-w-7xl grid-cols-1 items-center justify-center gap-12 rounded-xl bg-white px-12 py-8 shadow-xl tablet:mx-0 tablet:grid-cols-2 dark:bg-slate-700 ${className}`}
       >
         <div className="col-span-1 w-full transition-opacity duration-500">
           <Image
