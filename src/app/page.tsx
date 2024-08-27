@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import Carousel from "~/components/ui/carousel";
 import CardPc from "~/components/ui/card-pc";
-import { color } from "framer-motion";
 // import { HeroHighlight, Highlight } from "~/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
