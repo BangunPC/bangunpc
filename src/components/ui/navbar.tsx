@@ -9,6 +9,7 @@ import {
   Heart,
   LogOut,
   MonitorSmartphone,
+  Search,
   Settings2,
   User,
 } from "lucide-react";
@@ -17,9 +18,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FormLogin from "~/components/login/form-login";
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { ComponentCategory, categoriesFromEnum } from "~/lib/db";
@@ -49,6 +52,7 @@ import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
 // import { ModeToggle } from "./mode-toggle";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { ModeToggle } from "./mode-toggle";
+import { FloatingNav } from "./floating-navbar";
 
 export function Navbar() {
   const supabase = createClient();
@@ -284,7 +288,7 @@ export function Navbar() {
       }}
     >
       <DialogTrigger>
-        <Button className="bg-primary px-4 text-white hover:bg-primary/80">
+        <Button className="w-24 rounded-xl bg-primary px-4 text-white hover:bg-primary/80">
           Masuk
         </Button>
       </DialogTrigger>
@@ -294,273 +298,273 @@ export function Navbar() {
     </Dialog>
   );
   return (
-    <div className="fixed top-0 z-20 w-full bg-[#f5f5f5] px-4 dark:bg-navbar">
-      <div className="m-auto flex max-w-screen-desktop items-center">
-        <Link href="/">
-          <NavbarIcon />
-        </Link>
-        {false && (
-          <>
-            <NavigationMenu className="m-auto hidden tablet:block">
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <Dialog
-                    open={katalog}
-                    onOpenChange={(open) => {
-                      router.push(
-                        "?" +
-                          (open
-                            ? createQueryString(
-                                searchParams,
-                                "katalog",
-                                open.toString(),
-                              )
-                            : removeQueryString(searchParams, "katalog")),
-                        { scroll: false },
-                      );
-                    }}
-                  >
-                    <DialogTrigger>
-                      <NavigationMenuLink
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "bg-transparent",
-                        )}
-                      >
-                        Katalog
-                      </NavigationMenuLink>{" "}
-                    </DialogTrigger>
-                    <DialogContent className="h-full overflow-auto p-2 tablet:max-h-[642px] tablet:max-w-fit tablet:p-4">
-                      <DialogHeader className="border-b border-b-slate-200 pb-4">
-                        <DialogTitle>Pilih Kategori Komponen PC</DialogTitle>
-                      </DialogHeader>
-                      <Button
-                        variant="outline"
-                        className="border-primary text-primary tablet:hidden"
-                      >
-                        Kategori Lain
-                      </Button>
-                      <div className="flex w-full flex-row gap-2">
-                        <div className="hidden flex-col rounded-lg bg-white p-2 shadow-bm dark:bg-black tablet:flex">
-                          <span className="bold mb-2 border-b border-b-white">
-                            Peripherals
-                          </span>
-                          {peripherals.map((item) => (
-                            <Link key={item.name} href={item.href}>
-                              <Button
-                                variant="ghost"
-                                className="w-full justify-start"
-                              >
-                                {item.name}
-                              </Button>
-                            </Link>
-                          ))}
-                          <span className="bold mb-2 border-b border-b-white">
-                            Accessories / Lainnya
-                          </span>
-                          {accessories.map((item) => (
-                            <Link key={item.name} href={item.href}>
-                              <Button
-                                variant="ghost"
-                                className="w-full justify-start"
-                              >
-                                {item.name}
-                              </Button>
-                            </Link>
-                          ))}
-                        </div>
-                        <div className="w-full rounded-lg bg-white p-4 shadow-bm dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
-                          <div className="m-auto grid w-fit grid-cols-2 gap-3 tablet:grid-cols-3 tablet:tablet:grid-rows-3">
-                            {components.map((item) => (
-                              <Link
-                                key={item.name}
-                                href={`/katalog/${categoriesFromEnum[item.enum]}`}
-                              >
-                                <Button
-                                  variant="outline"
-                                  className="flex h-[156px] w-[147px] flex-col"
-                                >
-                                  <div className="m-auto">{item.icon}</div>
-                                  {item.name}
-                                </Button>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </NavigationMenuItem>
-                {/* <NavigationMenuItem>
-      <NavigationMenuTrigger className={"bg-transparent"}>
-        Jasa
-      </NavigationMenuTrigger>
-      <NavigationMenuContent className="">
-        <ul className="w-[160px] p-4">
-          <Link href="/jasa" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "w-full bg-transparent",
-              )}
-            >
-              Jasa Rakit PC
-            </NavigationMenuLink>
-          </Link>
-          <Link href="/servis" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "w-full bg-transparent",
-              )}
-            >
-              Jasa Servis PC
-            </NavigationMenuLink>
-          </Link>
-        </ul>
-      </NavigationMenuContent>
-    </NavigationMenuItem> */}
-                <NavigationMenuItem>
-                  <Popover>
-                    <PopoverTrigger>
-                      <div
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "bg-transparent",
-                        )}
-                      >
-                        Rakit PC{" "}
-                        <ChevronDown size={18} className="inline-block" />
-                      </div>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-fit p-0">
-                      <ul className="w-[240px] p-4">
-                        <Link href="/simulasi" legacyBehavior passHref>
-                          <NavigationMenuLink
-                            className={cn(
-                              navigationMenuTriggerStyle(),
-                              "w-full justify-start bg-transparent",
-                            )}
-                          >
-                            Simulasi Rakit PC
-                          </NavigationMenuLink>
-                        </Link>
-                        <Link href="/rakit/budget" legacyBehavior passHref>
-                          <NavigationMenuLink
-                            className={cn(
-                              navigationMenuTriggerStyle(),
-                              "w-full justify-start bg-transparent",
-                            )}
-                          >
-                            Rekomendasi Rakitan
-                          </NavigationMenuLink>
-                        </Link>
-                        <Link href="/showcase" legacyBehavior passHref>
-                          <NavigationMenuLink
-                            className={cn(
-                              navigationMenuTriggerStyle(),
-                              "w-full justify-start bg-transparent",
-                            )}
-                          >
-                            Showcase
-                          </NavigationMenuLink>
-                        </Link>
-                      </ul>
-                    </PopoverContent>
-                  </Popover>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link href="/blog" legacyBehavior passHref>
+    <FloatingNav>
+      <Link href="/" className="scale-[70%]">
+        <NavbarIcon />
+      </Link>
+      {true && (
+        <>
+          <NavigationMenu className="m-auto hidden tablet:block">
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Dialog
+                  open={katalog}
+                  onOpenChange={(open) => {
+                    router.push(
+                      "?" +
+                        (open
+                          ? createQueryString(
+                              searchParams,
+                              "katalog",
+                              open.toString(),
+                            )
+                          : removeQueryString(searchParams, "katalog")),
+                      { scroll: false },
+                    );
+                  }}
+                >
+                  <DialogTrigger>
                     <NavigationMenuLink
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "bg-transparent",
                       )}
                     >
-                      Blog
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-            <div className="ml-auto flex items-center gap-4 tablet:ml-0 tablet:block">
-              {user ? profileButton : loginButton}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild className="tablet:hidden">
-                  <Button size="icon">
-                    <NavbarMobileToggle />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="tablet:hidden">
-                  <Link
-                    href={`?${createQueryString(searchParams, "katalog", "true")}`}
-                    passHref
-                  >
-                    <DropdownMenuItem className="cursor-pointer p-4">
                       Katalog
-                    </DropdownMenuItem>
-                  </Link>
-                  {/* <Link href="/jasa" passHref>
+                    </NavigationMenuLink>{" "}
+                  </DialogTrigger>
+                  <DialogContent className="h-full overflow-auto p-2 tablet:max-h-[642px] tablet:max-w-fit tablet:p-4">
+                    <DialogHeader className="border-b border-b-slate-200 pb-4">
+                      <DialogTitle>Pilih Kategori Komponen PC</DialogTitle>
+                    </DialogHeader>
+                    <Button
+                      variant="outline"
+                      className="border-primary text-primary tablet:hidden"
+                    >
+                      Kategori Lain
+                    </Button>
+                    <div className="flex w-full flex-row gap-2">
+                      <div className="hidden flex-col rounded-lg bg-white p-2 shadow-bm dark:bg-black tablet:flex">
+                        <span className="bold mb-2 border-b border-b-white">
+                          Peripherals
+                        </span>
+                        {peripherals.map((item) => (
+                          <Link key={item.name} href={item.href}>
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start"
+                            >
+                              {item.name}
+                            </Button>
+                          </Link>
+                        ))}
+                        <span className="bold mb-2 border-b border-b-white">
+                          Accessories / Lainnya
+                        </span>
+                        {accessories.map((item) => (
+                          <Link key={item.name} href={item.href}>
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start"
+                            >
+                              {item.name}
+                            </Button>
+                          </Link>
+                        ))}
+                      </div>
+                      <div className="w-full rounded-lg bg-white p-4 shadow-bm dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
+                        <div className="m-auto grid w-fit grid-cols-2 gap-3 tablet:grid-cols-3 tablet:tablet:grid-rows-3">
+                          {components.map((item) => (
+                            <Link
+                              key={item.name}
+                              href={`/katalog/${categoriesFromEnum[item.enum]}`}
+                            >
+                              <Button
+                                variant="outline"
+                                className="flex h-[156px] w-[147px] flex-col"
+                              >
+                                <div className="m-auto">{item.icon}</div>
+                                {item.name}
+                              </Button>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={"bg-transparent"}>
+                  Jasa
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="">
+                  <ul className="w-[160px] p-4">
+                    <Link href="/jasa" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "w-full bg-transparent",
+                        )}
+                      >
+                        Jasa Rakit PC
+                      </NavigationMenuLink>
+                    </Link>
+                    <Link href="/servis" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "w-full bg-transparent",
+                        )}
+                      >
+                        Jasa Servis PC
+                      </NavigationMenuLink>
+                    </Link>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Popover>
+                  <PopoverTrigger>
+                    <div
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "bg-transparent",
+                      )}
+                    >
+                      Rakit PC{" "}
+                      <ChevronDown size={18} className="inline-block" />
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-fit p-0">
+                    <ul className="w-[240px] p-4">
+                      <Link href="/simulasi" legacyBehavior passHref>
+                        <NavigationMenuLink
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "w-full justify-start bg-transparent",
+                          )}
+                        >
+                          Simulasi Rakit PC
+                        </NavigationMenuLink>
+                      </Link>
+                      <Link href="/rakit/budget" legacyBehavior passHref>
+                        <NavigationMenuLink
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "w-full justify-start bg-transparent",
+                          )}
+                        >
+                          Rekomendasi Rakitan
+                        </NavigationMenuLink>
+                      </Link>
+                      <Link href="/showcase" legacyBehavior passHref>
+                        <NavigationMenuLink
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "w-full justify-start bg-transparent",
+                          )}
+                        >
+                          Showcase
+                        </NavigationMenuLink>
+                      </Link>
+                    </ul>
+                  </PopoverContent>
+                </Popover>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/blog" legacyBehavior passHref>
+                  <NavigationMenuLink
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "bg-transparent",
+                    )}
+                  >
+                    Blog
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          <div className="ml-auto flex items-center gap-4 tablet:ml-0">
+            <Button variant="outline" size="icon" className="rounded-xl ">
+              <Search />
+            </Button>
+            {user ? profileButton : loginButton}
+            <ModeToggle />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild className="tablet:hidden">
+                <Button size="icon">
+                  <NavbarMobileToggle />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="tablet:hidden">
+                <Link
+                  href={`?${createQueryString(searchParams, "katalog", "true")}`}
+                  passHref
+                >
+                  <DropdownMenuItem className="cursor-pointer p-4">
+                    Katalog
+                  </DropdownMenuItem>
+                </Link>
+                {/* <Link href="/jasa" passHref>
       <DropdownMenuItem className="cursor-pointer p-4">
         Jasa
       </DropdownMenuItem>
     </Link> */}
 
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger className="h-[52px] p-4">
-                      Rakit PC
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-fit p-0">
-                        <ul className="w-[240px] p-4">
-                          <Link href="/simulasi" legacyBehavior passHref>
-                            <DropdownMenuItem
-                              className={cn(
-                                navigationMenuTriggerStyle(),
-                                "w-full cursor-pointer justify-start bg-transparent",
-                              )}
-                            >
-                              Simulasi Rakit PC
-                            </DropdownMenuItem>
-                          </Link>
-                          <Link href="/rakit/budget" legacyBehavior passHref>
-                            <DropdownMenuItem
-                              className={cn(
-                                navigationMenuTriggerStyle(),
-                                "w-full cursor-pointer justify-start bg-transparent",
-                              )}
-                            >
-                              Rekomendasi Rakitan
-                            </DropdownMenuItem>
-                          </Link>
-                          <Link href="/showcase" legacyBehavior passHref>
-                            <DropdownMenuItem
-                              className={cn(
-                                navigationMenuTriggerStyle(),
-                                "w-full cursor-pointer justify-start bg-transparent",
-                              )}
-                            >
-                              Showcase
-                            </DropdownMenuItem>
-                          </Link>
-                        </ul>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="h-[52px] p-4">
+                    Rakit PC
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent className="w-fit p-0">
+                      <ul className="w-[240px] p-4">
+                        <Link href="/simulasi" legacyBehavior passHref>
+                          <DropdownMenuItem
+                            className={cn(
+                              navigationMenuTriggerStyle(),
+                              "w-full cursor-pointer justify-start bg-transparent",
+                            )}
+                          >
+                            Simulasi Rakit PC
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href="/rakit/budget" legacyBehavior passHref>
+                          <DropdownMenuItem
+                            className={cn(
+                              navigationMenuTriggerStyle(),
+                              "w-full cursor-pointer justify-start bg-transparent",
+                            )}
+                          >
+                            Rekomendasi Rakitan
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href="/showcase" legacyBehavior passHref>
+                          <DropdownMenuItem
+                            className={cn(
+                              navigationMenuTriggerStyle(),
+                              "w-full cursor-pointer justify-start bg-transparent",
+                            )}
+                          >
+                            Showcase
+                          </DropdownMenuItem>
+                        </Link>
+                      </ul>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
 
-                  <Link href="/blog" passHref>
-                    <DropdownMenuItem className="cursor-pointer p-4">
-                      Blog
-                    </DropdownMenuItem>
-                  </Link>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </>
-        )}
-        <div className="ml-auto" />
-        <ModeToggle />
-      </div>
-    </div>
+                <Link href="/blog" passHref>
+                  <DropdownMenuItem className="cursor-pointer p-4">
+                    Blog
+                  </DropdownMenuItem>
+                </Link>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </>
+      )}
+    </FloatingNav>
   );
 }

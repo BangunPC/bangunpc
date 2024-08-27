@@ -38,6 +38,10 @@ const config = {
         bm: "0 4px 4px 0 rgb(0 0 0 / 0.14)",
         br: "3.48px 4.65px 4.65px 0 rgb(0 0 0 / 0.15)",
       },
+      dropShadow: {
+        "shine-blue-light": "0 4px 18px rgba(14, 60, 220, 0.6)",
+        "shine-blue-dark": "0 4px 10px rgba(14, 112, 255, 0.5)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -110,7 +114,7 @@ const config = {
         // => @media (min-width: 1280px) { ... }
       },
       spacing: {
-        "navbar-min-h": "54px",
+        "navbar-min-h": "72px",
       },
     },
   },

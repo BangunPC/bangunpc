@@ -89,10 +89,10 @@ export default async function RakitPage({
   }
 
   return (
-    <>
+    <div className="min-h-screen h-min">
       <RakitStep step={params.step} />
-      <div className="h-8" />
-      <div className="m-auto mb-8 w-full max-w-screen-desktop p-4">
+      <div className="h-4" />
+      <div className="m-auto mb-8 w-full max-w-screen-desktop p-4 h-max">
         {params.step === "budget" ? (
           <BudgetSection />
         ) : params.step === "rencana" ? (
@@ -101,7 +101,7 @@ export default async function RakitPage({
           <HasilSection component={component} />
         )}
       </div>
-    </>
+    </div>
   );
 }
 

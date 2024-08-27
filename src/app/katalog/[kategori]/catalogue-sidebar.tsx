@@ -15,7 +15,7 @@ export function CatalogueSidebar({
 }) {
   return (
     <aside
-      className={`sticky self-start ${isIframe ? "top-0" : "top-navbar-min-h"}`}
+      className={`sticky self-start top-0`}
     >
       <div className="mx-4 flex w-56 flex-col gap-2">
         <div

@@ -410,13 +410,11 @@ const DesktopTable = ({
   const header = ["", "Product Name", ...headers, "Price (Rp)", "Action"];
 
   const router = useRouter();
-
+  
   return (
     <table className="hidden tablet:table">
       <thead
-        className={`sticky z-[1] text-xs backdrop-blur
-          ${isIframe ? "top-0" : "top-navbar-min-h"}
-        `}
+        className={`sticky z-[1] text-xs backdrop-blur top-0`}
       >
         <tr>
           {header.map((item) => (
