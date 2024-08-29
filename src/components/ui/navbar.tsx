@@ -53,6 +53,7 @@ import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { ModeToggle } from "./mode-toggle";
 import { FloatingNav } from "./floating-navbar";
+import FormRegister from "../register/from-register";
 
 export function Navbar() {
   const supabase = createClient();
@@ -91,6 +92,7 @@ export function Navbar() {
   const searchParams = useSearchParams();
   const katalog = searchParams.get("katalog") === "true";
   const login = searchParams.get("login") === "true";
+  const register = searchParams.get("register") === "true";
 
   const peripherals = [
     { name: "Headphones", href: "?katalog=false" },
@@ -284,6 +286,7 @@ export function Navbar() {
             (open
               ? createQueryString(searchParams, "login", "true")
               : removeQueryString(searchParams, "login")),
+          { scroll: false }
         );
       }}
     >
@@ -293,7 +296,33 @@ export function Navbar() {
         </Button>
       </DialogTrigger>
       <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
-        <FormLogin />
+        <FormLogin onRegisterClick={() => {
+          router.push(
+            "?" + createQueryString(searchParams, "register", "true")
+          );
+        }} />
+      </DialogContent>
+    </Dialog>
+  );
+  const registerModal = (
+    <Dialog
+      open={register}
+      onOpenChange={(open) => {
+        router.push(
+          "?" +
+            (open
+              ? createQueryString(searchParams, "register", "true")
+              : removeQueryString(searchParams, "register")),
+          { scroll: false }
+        );
+      }}
+    >
+      <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
+        <FormRegister onLoginClick={() => {
+          router.push(
+            "?" + createQueryString(searchParams, "login", "true")
+          );
+        }} />
       </DialogContent>
     </Dialog>
   );
@@ -312,13 +341,13 @@ export function Navbar() {
                   onOpenChange={(open) => {
                     router.push(
                       "?" +
-                        (open
-                          ? createQueryString(
-                              searchParams,
-                              "katalog",
-                              open.toString(),
-                            )
-                          : removeQueryString(searchParams, "katalog")),
+                      (open
+                        ? createQueryString(
+                          searchParams,
+                          "katalog",
+                          open.toString(),
+                        )
+                        : removeQueryString(searchParams, "katalog")),
                       { scroll: false },
                     );
                   }}
@@ -490,7 +519,12 @@ export function Navbar() {
             <Button variant="outline" size="icon" className="rounded-xl ">
               <Search />
             </Button>
-            {user ? profileButton : loginButton}
+            {user ? profileButton : (
+              <>
+                {loginButton}
+                {registerModal}
+              </>
+            )}
             <ModeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="tablet:hidden">

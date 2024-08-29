@@ -7,7 +7,7 @@ import { createClient } from "~/lib/supabase/client";
 import Spinner from "../ui/spinner-loading";
 import { Turnstile } from "@marsidev/react-turnstile";
 
-export default function FormLogin() {
+export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => void }) {
   const [captchaToken, setCaptchaToken] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,14 +32,26 @@ export default function FormLogin() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const { error } = await createClient().auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+        },
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center gap-4">
       <div className="flex flex-col items-center mx-auto mb-8 tablet:mb-5 tablet:pt-6 ">
         <NavbarIcon />
         <h1 className="font-medium text-slate-700 ">Masukan Akun Bangun PC Anda</h1>
       </div>
-      
-          
       <form className="my-2" onSubmit={handleLogin}>
         <div className="flex flex-col space-y-5">
           {/* Email */}
@@ -123,14 +135,20 @@ export default function FormLogin() {
           )}
           {/* google account */}
           <div>
-            <button className="flex w-full items-center justify-center space-x-2 rounded-lg border border-slate-200 py-3 text-center text-slate-700 transition duration-150 hover:border-slate-400 hover:text-slate-900 hover:shadow">
+            <Button
+            onClick={(e) => {
+              e.preventDefault(); // Prevent form submission
+              void handleGoogleLogin();
+            }}
+            className="flex w-full items-center justify-center space-x-2 rounded-lg border border-slate-200 py-3 text-center text-slate-700 transition duration-150 hover:border-slate-400 hover:text-slate-900 hover:shadow"
+            >
               <img
                 src="https://www.svgrepo.com/show/355037/google.svg"
                 className="h-6 w-6"
                 alt="Google Icon"
               />
-              <span>Masuk dengan Google</span>
-            </button>
+              <span className="text-white">Masuk dengan Google</span>
+            </Button>
           </div>
         </div>
       </form>
@@ -139,6 +157,7 @@ export default function FormLogin() {
         Belum punya akun?{" "}
         <a
           href="#"
+          onClick={onRegisterClick}
           className="inline-flex items-center space-x-1 font-medium text-indigo-600"
         >
           <span>Daftar sekarang</span>
