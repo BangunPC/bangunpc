@@ -25,7 +25,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
-import { ComponentCategory, categoriesFromEnum, categoriesFromString } from "~/lib/db";
+import { ComponentCategory, categoriesFromEnum,  } from "~/lib/db";
 import { createClient } from "~/lib/supabase/client";
 import { Database } from "~/lib/schema";
 import { search } from "~/lib/api";
@@ -64,7 +64,7 @@ export function Navbar() {
 
   const [user, setUser] = React.useState<SupabaseUser | null>(null);
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [searchResults, setSearchResults] = React.useState<Database['public']['Functions']['search_products']['Returns']>([]);
+  const [searchResults, setSearchResults] = React.useState<Database['public']['Functions']['']['Returns']>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const path = usePathname();
 
