@@ -54,6 +54,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { ModeToggle } from "./mode-toggle";
 import { FloatingNav } from "./floating-navbar";
 import FormRegister from "../register/from-register";
+import FeedbackModal from "./FeedbackModal";
 
 export function Navbar() {
   const supabase = createClient();
@@ -526,6 +527,7 @@ export function Navbar() {
               </>
             )}
             <ModeToggle />
+            
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="tablet:hidden">
                 <Button size="icon">
@@ -597,8 +599,11 @@ export function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+          
         </>
+        
       )}
+      <FeedbackModal />
     </FloatingNav>
   );
 }
