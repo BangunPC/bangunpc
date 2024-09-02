@@ -40,8 +40,10 @@ const KategoriPage = ({
 }: {
   params: { kategori: string; noTopH: boolean | null; onSuccess?: () => void };
 }) => {
+  
   const [price, setPrice] = React.useState(0);
   const [total, setTotal] = React.useState(0);
+  
 
   useEffect(() => {
     const refresh = () => {

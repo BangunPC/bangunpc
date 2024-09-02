@@ -14,7 +14,13 @@ export const search = async function (search_text: string) {
     .rpc("search_products", {
       search_text,
     });
-  return { data, error };
+
+  if (error) {
+    console.error("Error searching products:", error);
+    return { data: [], error };
+  }
+
+  return { data, error: null };
 };
 
 export const fetchWithId = async (url: string, id: number) => {

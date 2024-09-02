@@ -334,7 +334,7 @@ function CarouselSection() {
       </div>
       <div className="mt-4 flex space-x-2">
         {carousel.map((_, index) => (
-          <button
+          <Button
             key={index}
             className={`h-2 w-2 rounded-full transition-colors duration-300 ${
               index === currentIndex ? "w-7 bg-primary dark:bg-slate-700" : "bg-gray-300"
@@ -410,18 +410,18 @@ function PacketPersonalComputerSection() {
             </Button>
           </div>
           <div className="relative flex w-4/6 items-center">
-            <button
+            <Button
               onClick={prevSlide}
               className="absolute -left-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
             >
               <ChevronLeft className="h-6 w-6" />
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={nextSlide}
               className="absolute -right-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
             >
               <ChevronRight className="h-6 w-6" />
-            </button>
+            </Button>
 
             <div className="flex flex-col items-center">
               <div className="flex flex-row gap-4">
@@ -444,7 +444,7 @@ function PacketPersonalComputerSection() {
               </div>
               <div className="mb-10 mt-4 flex space-x-2">
                 {cardPc.map((_, index) => (
-                  <button
+                  <Button
                     key={index}
                     className={`h-2 w-2 rounded-full ${
                       index === currentIndex ? "w-7 bg-blue-500" : "bg-gray-300"
