@@ -64,7 +64,7 @@ export function Navbar() {
 
   const [user, setUser] = React.useState<SupabaseUser | null>(null);
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [searchResults, setSearchResults] = React.useState<Database['public']['Functions']['']['Returns']>([]);
+  const [searchResults, setSearchResults] = React.useState<Database['product']['Tables']['products']['Row'][] | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const path = usePathname();
 
@@ -101,7 +101,14 @@ export function Navbar() {
         try {
           const { data, error } = await search(searchQuery);
           if (!error) {
-            setSearchResults(data);
+            setSearchResults(data.map((product) => ({
+              ...product,
+              id: product.product_id,
+              name: product.product_name,
+              is_published: true,
+              product_fts: null,
+              product_trgms: null,
+            })));
           } else {
             console.error('Error fetching search results:', error);
             setSearchResults([]);
@@ -579,7 +586,7 @@ export function Navbar() {
                             </tr>
                           </thead>
                           <tbody className="bg-white divide-y divide-gray-200">
-                            {searchResults.map((result: any) => (
+                            {searchResults?.map((result: any) => (
                               <tr key={result.product_id} className="tablet:table-row">
                                 <td className="px-6 py-4 whitespace-nowrap flex items-center">
                                   <Image src={componentImage(result)} alt={result.product_name} width={64} height={64} className="h-16 w-16 object-contain mr-4" />
