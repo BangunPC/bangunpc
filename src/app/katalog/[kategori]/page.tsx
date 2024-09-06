@@ -29,11 +29,13 @@ import { getMotherboard } from "~/lib/component_api/motherboard";
 import { getPsu } from "~/lib/component_api/psu";
 import { getStorage } from "~/lib/component_api/storage";
 import {
+  ComponentStorage,
   ComponentStorageHelper,
   ComponentStorageType,
 } from "~/lib/storage_helper";
 import { componentImage } from "~/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
+import { v4 as uuidv4 } from 'uuid';
 
 const KategoriPage = ({
   params,
@@ -75,9 +77,25 @@ const KategoriPage = ({
       min_price: 0,
       max_price: 0,
     };
+
+    const getComponentId = (category: ComponentCategory) => {
+      const id = ComponentStorage.getComponentsByCategory(category)?.[0]?.id ?? '';
+      const parsedId = parseInt(id);
+      return isNaN(parsedId) ? undefined : parsedId;
+    };
+    
+    const motherboardId = getComponentId(ComponentCategory.Motherboard);
+    const casingId = getComponentId(ComponentCategory.Casing);
+    const cpuId = getComponentId(ComponentCategory.CPU);
+    const gpuId = getComponentId(ComponentCategory.GPU);
+    const psuId = getComponentId(ComponentCategory.PSU);
+    
+    const memoryIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Memory)?.map(component => parseInt(component.id));
+    const storageIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Storage).map(component => component.id);
+
     switch (category) {
       case ComponentCategory.Motherboard:
-        getMotherboard({}, defaultQuery)
+        getMotherboard({ casingId, cpuId }, defaultQuery)
           .then((res) => {
             setData(res);
             setLoading(false);
@@ -89,7 +107,9 @@ const KategoriPage = ({
           });
         break;
       case ComponentCategory.CPU:
-        getCpu({}, defaultQuery)
+        //TODO: Add memories check
+        
+        getCpu({motherboardId, memoryIds}, defaultQuery)
           .then((res) => {
             setData(res);
             setLoading(false);
@@ -433,6 +453,7 @@ const DesktopTable = ({
         {data?.map((component: any) => {
           const handleAddComponent = () => {
             const componentAdded: ComponentStorageType = {
+              storageId: uuidv4(),
               id: component.product_id,
               name: component.product_name,
               price: component.lowest_price,
@@ -514,6 +535,7 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
       {data?.map((component: any) => {
         const handleAddComponent = () => {
           const componentAdded: ComponentStorageType = {
+            storageId: uuidv4(),
             id: component.product_id,
             name: component.product_name,
             price: component.lowest_price,

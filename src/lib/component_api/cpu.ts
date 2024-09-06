@@ -2,7 +2,7 @@ import { createClient } from "../supabase/client";
 import { CpuCompatibility, CpuFilter } from "./filter";
 
 export const getCpu = async (
-  { motherboardId, memories }: CpuCompatibility,
+  { motherboardId, memoryIds }: CpuCompatibility,
   {
     query,
     base_clock_ghz,
@@ -121,13 +121,13 @@ export const getCpu = async (
   let filteredData = cpuData;
 
   // compatibility start
-
   if (motherboardId) {
     const { data: motherboardData } = await client
       .schema("product")
       .from("v_motherboards")
-      .select()
+      .select('cpu_socket_id')
       .eq("product_id", motherboardId);
+
     if (!motherboardData) {
       throw new Error("Motherboard data is null");
     }
@@ -140,38 +140,51 @@ export const getCpu = async (
       (cpu) => cpu.cpu_socket_id == cpuSocketId,
     );
   }
-  if (memories) {
-    const { data: memoryData, error } = await client
-      .schema("product")
-      .from("v_memories")
-      .select("product_id, memory_type, capacity_gb, amount")
-      .in(
-        "product_id",
-        memories.map((memory) => memory.id),
-      );
 
+  if (memoryIds) {
+    const memoryData: any[] = []    
+
+    for (const memoryId of memoryIds) {
+      const { data, error } = await client
+        .schema("product")
+        .from("v_memories")
+        .select("product_id, memory_type, capacity_gb, amount")
+        .eq("product_id", memoryId)
+        .single()
+
+      if (error) 
+        console.error(`Error fetching data for memoryId ${memoryId}:`, error);
+      
+      memoryData.push(data);
+    }    
+    
     if (!memoryData || error !== null || memoryData.length === 0) {
       return { filteredData, count: filteredData.length };
     }
 
-    const memoryType = memoryData[0]?.memory_type;
-    if (memoryData.some((memory) => memory.memory_type !== memoryType)) {
-      console.log("Memory type mismatch");
+    // All selected memory's type should be same 
+    const firstMemoryType = memoryData[0]?.memory_type;
+    if (memoryData.some((memory) => memory.memory_type !== firstMemoryType)) {
+      alert("Memory type mismatch");
       filteredData = [];
     } else {
-      filteredData = filteredData.filter(() => {
-        const totalMemory = memoryData.reduce((total, memory) => {
-          const inputMemory = memories.find(
-            (inputMemory) => inputMemory.id === memory.product_id,
-          ) ?? { amount: 0 };
-          return total + (memory.amount ?? 0) * inputMemory.amount;
-        }, 0);
-        // return (cpu.max_memory_gb ?? 0) >= totalMemory;
-        // TODO: Fix this
-        return 0 >= totalMemory;
-      });
+      const totalMemorySizeGB = memoryData.reduce((total, memory) => {
+          return total + (memory.capacity_gb ?? 0) * (memory.amount ?? 0)
+      }, 0);
+
+      filteredData = filteredData.filter((cpu) => (cpu.max_memory_gb ?? 0) >= totalMemorySizeGB);
+
+      // const totalMemory = memoryData.reduce((total, memory) => {
+      //   return total + (memory.amount ?? 0); //* inputMemory.amount
+      //   //? For temporary, not use amount when selecting component, id only
+      //   // const inputMemory = memories.find(
+      //   //   (inputMemory) => inputMemory.id === memory.product_id,
+      //   // ) ?? { amount: 0 };
+      // }, 0);
+      
     }
   }
+  
   if (error) {
     throw error;
   }

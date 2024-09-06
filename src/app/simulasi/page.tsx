@@ -253,21 +253,20 @@ export default function SimulasiPage({
   };
 
   const handleAddComponent = (item: (typeof components)[0]) => {
-    let query = {} as any;
-    switch (item.title) {
-      case "CPU":
-        query = {} as cpuQuery;
-        if (motherboard.length > 0) {
-          query.motherboardId = parseInt(motherboard[0]!.id);
-        }
-        if (memory.length > 0) {
-          query.memories = memory.map((item) => ({
-            id: parseInt(item.id),
-            amount: item.quantity,
-          }));
-        }
-        break;
-    }
+    // switch (item.title) {
+    //   case "CPU":
+    //     let query = {} as cpuQuery;
+    //     if (motherboard.length > 0) {
+    //       query.motherboardId = parseInt(motherboard[0]!.id);
+    //     }
+    //     if (memory.length > 0) {
+    //       query.memories = memory.map((item) => ({
+    //         id: parseInt(item.id),
+    //         amount: item.quantity,
+    //       }));
+    //     }
+    //     break;
+    // }
 
     const params = createQueryString(
       searchParams,
@@ -292,9 +291,9 @@ export default function SimulasiPage({
     }
   };
 
-  const handleRemoveComponent = (id: string) => {
+  const handleRemoveComponent = (storageId: string) => {
     if (!isComponent) {
-      ComponentStorage.removeComponentById(id);
+      ComponentStorage.removeComponentById(storageId);
     }
   };
 
@@ -477,7 +476,7 @@ export default function SimulasiPage({
                                       "Apakah Anda yakin ingin menghapus komponen ini?",
                                     )
                                   ) {
-                                    handleRemoveComponent(component.id);
+                                    handleRemoveComponent(component.storageId);
                                   }
                                 }
                               }}

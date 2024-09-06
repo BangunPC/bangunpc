@@ -89,7 +89,7 @@ export const getMotherboard = async (
     if (!memoryData) {
       throw new Error("Memory data is null");
     }
-
+    
     if (memoryData && memoryData.length > 0) {
       filteredData = filteredData.filter((motherboard) => {
         const memoryCount = memories.reduce(

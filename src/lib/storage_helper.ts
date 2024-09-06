@@ -22,6 +22,7 @@ class LocalStorageHelper {
 }
 
 export type ComponentStorageType = {
+  storageId: string;
   id: string;
   name: string;
   price: number;
@@ -53,17 +54,17 @@ export class ComponentStorageHelper {
     return components.filter((component) => component.category === category);
   }
 
-  static removeComponentById(id: string) {
+  static removeComponentById(storageId: string) {
     let components: ComponentStorageType[] =
       LocalStorageHelper.getItem("components") ?? [];
-    components = components.filter((component) => component.id !== id);
+    components = components.filter((component) => component.storageId !== storageId);
     LocalStorageHelper.setItem("components", components);
   }
 
-  static updateComponent(id: string, updatedComponent: ComponentStorageType) {
+  static updateComponent(storageId: string, updatedComponent: ComponentStorageType) {
     const components: ComponentStorageType[] =
       LocalStorageHelper.getItem("components") ?? [];
-    const index = components.findIndex((component) => component.id === id);
+    const index = components.findIndex((component) => component.storageId === storageId);
     if (index !== -1) {
       components[index] = { ...components[index], ...updatedComponent };
       LocalStorageHelper.setItem("components", components);

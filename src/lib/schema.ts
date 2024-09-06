@@ -3275,6 +3275,7 @@ export type Database = {
           max_clock_ghz: number | null;
           max_memory_channel: number | null;
           max_power_watt: number | null;
+          max_memory_gb: number | null;
           memory_type_supports: string[] | null;
           model_line: string | null;
           pcie_generation: number | null;
