@@ -78,9 +78,10 @@ const KategoriPage = ({
       max_price: 0,
     };
 
-    const getComponentId = (category: ComponentCategory) => {
-      const id = ComponentStorage.getComponentsByCategory(category)?.[0]?.id ?? '';
-      const parsedId = parseInt(id);
+    const getComponentId = (category: ComponentCategory): number | undefined => {
+      const components = ComponentStorage.getComponentsByCategory(category);
+      const id = components?.[0]?.id ?? '';
+      const parsedId = parseInt(id, 10);
       return isNaN(parsedId) ? undefined : parsedId;
     };
     
@@ -89,10 +90,13 @@ const KategoriPage = ({
     const cpuId = getComponentId(ComponentCategory.CPU);
     const gpuId = getComponentId(ComponentCategory.GPU);
     const psuId = getComponentId(ComponentCategory.PSU);
+    const memoryIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Memory)
+      ?.map(component => parseInt(component.id, 10))
+      .filter(id => !isNaN(id));
+    const storageIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Storage)
+      ?.map(component => parseInt(component.id, 10))
+      .filter(id => !isNaN(id));
     
-    const memoryIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Memory)?.map(component => parseInt(component.id));
-    const storageIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Storage).map(component => component.id);
-
     switch (category) {
       case ComponentCategory.Motherboard:
         getMotherboard({ casingId, cpuId }, defaultQuery)
@@ -109,7 +113,7 @@ const KategoriPage = ({
       case ComponentCategory.CPU:
         //TODO: Add memories check
         
-        getCpu({motherboardId, memoryIds}, defaultQuery)
+        getCpu({motherboardId, psuId, gpuId, memoryIds}, defaultQuery)
           .then((res) => {
             setData(res);
             setLoading(false);

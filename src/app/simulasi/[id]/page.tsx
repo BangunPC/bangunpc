@@ -7,6 +7,7 @@ import SimulasiPage from "../page";
 import { ComponentStorageType } from "~/lib/storage_helper";
 import { ComponentCategory } from "~/lib/db";
 import { productImage } from "~/lib/utils";
+import { v4 as uuidv4 } from 'uuid';
 
 export type CommonRakitanDataType = {
   product_id: number;
@@ -70,6 +71,7 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
   ): ComponentStorageType | undefined {
     if (!data) return undefined;
     return {
+      storageId: uuidv4(),
       id: data.product_id.toString(),
       name: data.name,
       price: data.price,

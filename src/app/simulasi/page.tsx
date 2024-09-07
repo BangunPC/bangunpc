@@ -384,7 +384,7 @@ export default function SimulasiPage({
                       <div className="flex flex-col gap-1">
                         {item.components.map((component) => (
                           <Link
-                            key={component.id}
+                            key={component.storageId}
                             className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
                             href={`/detail/${
                               categoriesFromEnum[component.category]
@@ -424,7 +424,7 @@ export default function SimulasiPage({
                     <td>
                       <div className="flex flex-col gap-1">
                         {item.components.map((component) => (
-                          <div key={component.id} className="flex h-[38px]">
+                          <div key={component.storageId} className="flex h-[38px]">
                             <span className="my-auto whitespace-nowrap text-start">
                               {component.price
                                 ? `Rp ${component.price.toLocaleString(
@@ -463,7 +463,7 @@ export default function SimulasiPage({
                       <div className="flex h-full flex-col gap-1">
                         {item.components.map((component) => (
                           <div
-                            key={component.id}
+                            key={component.storageId}
                             className="flex flex-row items-center gap-1"
                           >
                             <Button

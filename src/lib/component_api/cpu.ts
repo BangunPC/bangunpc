@@ -2,7 +2,7 @@ import { createClient } from "../supabase/client";
 import { CpuCompatibility, CpuFilter } from "./filter";
 
 export const getCpu = async (
-  { motherboardId, memoryIds }: CpuCompatibility,
+  { motherboardId, psuId, gpuId, memoryIds }: CpuCompatibility,
   {
     query,
     base_clock_ghz,
@@ -138,6 +138,48 @@ export const getCpu = async (
     }
     filteredData = filteredData.filter(
       (cpu) => cpu.cpu_socket_id == cpuSocketId,
+    );
+  }
+
+  if (psuId) {
+    const { data: psuData } = await client
+      .schema("product")
+      .from("v_power_supplies")
+      .select('wattage')
+      .eq("product_id", psuId)
+      .single();
+
+    if (!psuData) {
+      throw new Error("PSU data is null");
+    }
+
+    let psuWatt = psuData?.wattage;
+    if (psuWatt == null) {
+      throw new Error("PSU wattage is null");
+    }
+
+    let gpuPowerWatt = 0;
+    if(gpuId) {
+      const { data: gpuData } = await client
+      .schema("product")
+      .from("v_gpus")
+      .select('tdp_watt, min_psu_watt')
+      .eq("product_id", psuId)
+      .single();
+
+      if (!gpuData) {
+        throw new Error("PSU data is null");
+      }
+
+      gpuPowerWatt = gpuData.tdp_watt!;
+      psuWatt = gpuData.min_psu_watt!;
+    }
+
+    const availablePowerWatt = psuWatt * 0.8 - gpuPowerWatt * 1.2
+
+    filteredData = filteredData.filter((cpu) => 
+      (cpu.max_power_watt! < psuWatt) &&
+      (cpu.max_power_watt! * 1.2 < availablePowerWatt)
     );
   }
 
