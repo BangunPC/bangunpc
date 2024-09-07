@@ -377,11 +377,11 @@ export default function SimulasiPage({
                         <span className="rounded-sm p-1 dark:bg-white">
                           {item.icon}
                         </span>
-                        <span className="ml-1">{item.title}</span>
+                        <span className="ml-2">{item.title}</span>
                       </div>
                     </td>
                     <td>
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-2">
                         {item.components.map((component) => (
                           <Link
                             key={component.storageId}
@@ -397,12 +397,12 @@ export default function SimulasiPage({
                               height={32}
                               alt={component.name}
                             />
-                            <span className="ml-1">{component.name}</span>
+                            <span className="ml-2">{component.name}</span>
                           </Link>
                         ))}
                         {item.components.length == 0 ? (
                           <Button
-                            className="w-fit text-lg text-white"
+                            className="w-fit text-base h-9 text-white my-2"
                             onClick={() => handleAddComponent(item)}
                           >
                             + Pilih {item.title}
@@ -412,7 +412,7 @@ export default function SimulasiPage({
                             item.title == "Storage") && (
                             <Button
                               variant="outline"
-                              className="w-fit text-lg"
+                              className="w-fit text-base my-2"
                               onClick={() => handleAddComponent(item)}
                             >
                               + {item.title}
@@ -424,8 +424,8 @@ export default function SimulasiPage({
                     <td>
                       <div className="flex flex-col gap-1">
                         {item.components.map((component) => (
-                          <div key={component.storageId} className="flex h-[38px]">
-                            <span className="my-auto whitespace-nowrap text-start">
+                          <div key={component.storageId} className="flex h-[48px] flex-row items-center">
+                            <span className="whitespace-nowrap">
                               {component.price
                                 ? `Rp ${component.price.toLocaleString(
                                     "id-ID",
@@ -464,11 +464,11 @@ export default function SimulasiPage({
                         {item.components.map((component) => (
                           <div
                             key={component.storageId}
-                            className="flex flex-row items-center gap-1"
+                            className="flex flex-row items-center gap-1 my-2"
                           >
                             <Button
                               variant="destructive"
-                              className="h-[24px] items-center text-white "
+                              className="h-8 items-center text-white "
                               onClick={() => {
                                 if (item.components.length > 0) {
                                   if (
