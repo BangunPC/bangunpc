@@ -40,7 +40,7 @@ import { v4 as uuidv4 } from 'uuid';
 const KategoriPage = ({
   params,
 }: {
-  params: { kategori: string; noTopH: boolean | null; onSuccess?: () => void };
+  params: { isCompatibiliyChecked: boolean | null; kategori: string; noTopH: boolean | null; onSuccess?: () => void };
 }) => {
   
   const [price, setPrice] = React.useState(0);
@@ -99,7 +99,8 @@ const KategoriPage = ({
     
     switch (category) {
       case ComponentCategory.Motherboard:
-        getMotherboard({ casingId, cpuId }, defaultQuery)
+        const motherboardCompatibility = params.isCompatibiliyChecked ? { casingId, cpuId } : {}
+        getMotherboard(motherboardCompatibility, defaultQuery)
           .then((res) => {
             setData(res);
             setLoading(false);
@@ -112,8 +113,8 @@ const KategoriPage = ({
         break;
       case ComponentCategory.CPU:
         //TODO: Add memories check
-        
-        getCpu({motherboardId, psuId, gpuId, memoryIds}, defaultQuery)
+        const cpuCompatibility = params.isCompatibiliyChecked ? { motherboardId, psuId, gpuId, memoryIds } : {}
+        getCpu(cpuCompatibility, defaultQuery)
           .then((res) => {
             setData(res);
             setLoading(false);

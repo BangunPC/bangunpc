@@ -525,6 +525,7 @@ export default function SimulasiPage({
               {kategori && categoriesFromString[kategori] && (
                 <KategoriPage
                   params={{
+                    isCompatibiliyChecked: true,
                     kategori: kategori,
                     noTopH: true,
                     onSuccess: () => {
