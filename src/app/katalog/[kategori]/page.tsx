@@ -14,7 +14,7 @@ import {
   storageKeys,
 } from "~/lib/db";
 
-import { SidebarClose, SidebarOpen } from "lucide-react";
+import { SidebarClose, SidebarOpen, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -193,7 +193,7 @@ const KategoriPage = ({
 
   return (
     <div>
-      <div className="py-4">
+      <div className="flex flex-row py-4 items-center justify-center">
         {mobileSidebarButton}
         <div className="flex flex-row pt-4 tablet:pt-0">
           <div
@@ -269,7 +269,7 @@ const KategoriPage = ({
               hideSidebar ? "" : "hidden"
             } tablet:block`}
           >
-            <div className="flex flex-col tablet:flex-row">
+            <div className="flex flex-col tablet:flex-row w-auto h-auto">
               {desktopSidebarButton}
               <Header
                 category={category}
@@ -281,7 +281,7 @@ const KategoriPage = ({
                 <Spinner />
               </div>
             ) : error ? (
-              <div className="flex h-96 items-center justify-center">
+              <div className="flex h-96 items-center justify-center ">
                 <span>{JSON.stringify(error)}</span>
               </div>
             ) : (
@@ -358,14 +358,14 @@ const ComponentFallback = ({
     return (
       <>
         {keys.map((key, index) => (
-          <div key={key} className="flex flex-col">
+          <div key={key} className="flex flex-col ">
             <div className="mb-2 mt-1 text-sm">{headers[index]}</div>
             <div className="font-semibold">{component[key] ?? "-"}</div>
           </div>
         ))}
       </>
     );
-
+    
   return (
     <>
       {keys.map((key) => (
@@ -384,13 +384,26 @@ const Header = ({
   category: ComponentCategory;
   itemCount: string;
 }) => (
-  <div className="flex flex-col">
-    <span className="text-5xl font-semibold">
-      Pilih {categoryTitlesFromEnum[category]}
-    </span>
-    <span className="flex items-center gap-2 text-lg font-semibold">
-      Tersedia {itemCount} produk siap kamu pilih
-    </span>
+  <div className="flex flex-col tablet:flex-row justify-between items-center w-full pb-2">
+    <div>
+      <span className="text-5xl font-semibold">
+        Pilih {categoryTitlesFromEnum[category]}
+      </span>
+      <span className="flex items-center mt-2 text-lg font-semibold ">
+        Tersedia {itemCount} produk siap kamu pilih
+      </span>
+    </div>
+    {/* form search */}
+    <form className="relative mt-2 tablet:mt-0 self-end">
+      <input
+        type="text"
+        placeholder="Cari produk..."
+        className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button type="submit" className="absolute right-2 top-1/2 transform -translate-y-1/2">
+        <Search className="w-5 h-5" />
+      </button>
+    </form>
   </div>
 );
 
@@ -414,22 +427,22 @@ const DesktopTable = ({
   const router = useRouter();
   
   return (
-    <table className="hidden tablet:table">
+    <table className="hidden tablet:table  ">
       <thead
-        className={`sticky z-[1] text-xs backdrop-blur top-0`}
+        className={`sticky z-[1] text-xs top-0 bg-[#F4F4F4] dark:bg-[#171717]   `}
       >
         <tr>
           {header.map((item) => (
             <th key={item}>
-              <div className="flex h-full items-end">
-                <span className="text-start">{item}</span>
+              <div className="flex h-full items-end justify-start py-4  ">
+                <span className="text-start px-4 ">{item}</span>
               </div>
             </th>
           ))}
         </tr>
       </thead>
-      <tbody className="h-min flex-col flex-nowrap content-start items-start justify-start gap-[3px] overflow-visible p-5">
-        <tr className="h-4"></tr>
+      <tbody className="h-min flex-col flex-nowrap content-start items-start justify-start gap-[4px] overflow-visible p-5 ">
+        <tr className="h-4 "></tr>
         {data?.map((component: any) => {
           const handleAddComponent = () => {
             const componentAdded: ComponentStorageType = {
@@ -457,9 +470,9 @@ const DesktopTable = ({
               <tr
                 data-href={`/detail/${kategori}/${component.slug}-${component.product_id}${isIframe ? "?iframe=true" : ""}`}
                 key={component.product_id}
-                className="h-[56px] cursor-pointer transition-transform hover:z-10 hover:scale-[1.01]"
+                className="h-[56px] cursor-pointer transition-transform hover:z-10 hover:scale-[1.01] "
               >
-                <td className="w-16">
+                <td className="w-16 ">
                   <Link
                     href={`/detail/${kategori}/${component.slug}-${component.product_id}${isIframe ? "?iframe=true" : ""}`}
                   >
