@@ -299,17 +299,17 @@ export default function SimulasiPage({
 
   return (
     <div className="m-auto mt-1 w-full max-w-screen-desktop p-4">
-      <header className="flex text-3xl font-semibold">
+      <header className="flex text-3xl font-semibold mt-4">
         <span className="whitespace-nowrap">
           {isComponent ? "TODO: Nama Rakitan" : "Simulasi Rakit PC"}
         </span>
-        {!isComponent && (
+        {/* {!isComponent && (
           <span className="ml-2 text-base italic">
             Versi Alpha, kompatibilitas tidak dijamin 100%
           </span>
-        )}
+        )} */}
       </header>
-      <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-4 p-4">
+      <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-4">
         <div className="flex justify-end gap-2">
           {!isComponent && (
             <Button
@@ -323,7 +323,7 @@ export default function SimulasiPage({
                   handleClear();
                 }
               }}
-              className="text-lg"
+              className="text-base"
             >
               <Undo2 className="mr-2 inline-block" />
               Reset Pilihan
@@ -400,7 +400,7 @@ export default function SimulasiPage({
                             <span className="ml-2">{component.name}</span>
                           </Link>
                         ))}
-                        {item.components.length == 0 ? (
+                        {item.components.length === 0 ? (
                           <Button
                             className="w-fit text-base h-9 text-white my-2"
                             onClick={() => handleAddComponent(item)}
@@ -408,17 +408,30 @@ export default function SimulasiPage({
                             + Pilih {item.title}
                           </Button>
                         ) : (
-                          (item.title == "Memory" ||
-                            item.title == "Storage") && (
-                            <Button
-                              variant="outline"
-                              className="w-fit text-base my-2"
-                              onClick={() => handleAddComponent(item)}
-                            >
-                              + {item.title}
-                            </Button>
-                          )
+                          <>
+                            {item.title === "Memory" && (
+                              <Button
+                                variant="outline"
+                                className="w-fit text-base my-2"
+                                disabled={item.components.reduce((total, item) => total + item.quantity, 0) >= 4}
+                                onClick={() => handleAddComponent(item)}
+                              >
+                                + {item.title}
+                              </Button>
+                            )}
+                            {item.title === "Storage" && (
+                              <Button
+                                variant="outline"
+                                className="w-fit text-base my-2"
+                                disabled={item.kategori === ComponentCategory.Storage}
+                                onClick={() => handleAddComponent(item)}
+                              >
+                                + {item.title}
+                              </Button>
+                            )}
+                          </>
                         )}
+
                       </div>
                     </td>
                     <td>
@@ -591,7 +604,7 @@ const ManageListModal: React.FC<MLMProps> = ({
         <Button
           variant="success"
           disabled={disabled}
-          className="text-lg text-white"
+          className="text-base text-white"
         >
           <Save className="mr-2 inline-block" />
           Simpan

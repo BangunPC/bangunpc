@@ -464,7 +464,7 @@ const DesktopTable = ({
               price: component.lowest_price,
               image: componentImage(component),
               category: categoriesFromString[kategori]!,
-              quantity: 1,
+              quantity: kategori === "memory" ? component.amount : 1,
               slug: component.slug,
             };
             ComponentStorageHelper.addComponent(componentAdded);
