@@ -93,9 +93,9 @@ const KategoriPage = ({
     const memoryIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Memory)
       ?.map(component => parseInt(component.id, 10))
       .filter(id => !isNaN(id));
-    const storageIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Storage)
-      ?.map(component => parseInt(component.id, 10))
-      .filter(id => !isNaN(id));
+    // const storageIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Storage)
+    //   ?.map(component => parseInt(component.id, 10))
+    //   .filter(id => !isNaN(id));
     
     switch (category) {
       case ComponentCategory.Motherboard:

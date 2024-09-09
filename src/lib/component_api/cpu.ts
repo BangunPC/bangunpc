@@ -184,7 +184,13 @@ export const getCpu = async (
   }
 
   if (memoryIds) {
-    const memoryData: any[] = []    
+    interface MemoryData {
+      product_id: number | null;
+      memory_type: "DDR3" | "DDR4" | "DDR5" | null;
+      capacity_gb: number | null;
+      amount: number | null;
+    }
+    const memoryData: MemoryData[] = []    
 
     for (const memoryId of memoryIds) {
       const { data, error } = await client
@@ -196,8 +202,8 @@ export const getCpu = async (
 
       if (error) 
         console.error(`Error fetching data for memoryId ${memoryId}:`, error);
-      
-      memoryData.push(data);
+      else
+        memoryData.push(data);
     }    
     
     if (!memoryData || error !== null || memoryData.length === 0) {

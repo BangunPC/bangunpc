@@ -247,10 +247,10 @@ export default function SimulasiPage({
     return () => clearInterval(interval);
   }, []);
 
-  type cpuQuery = {
-    motherboardId: number | undefined;
-    memories: { id: number; amount: number }[] | undefined;
-  };
+  // type cpuQuery = {
+  //   motherboardId: number | undefined;
+  //   memories: { id: number; amount: number }[] | undefined;
+  // };
 
   const handleAddComponent = (item: (typeof components)[0]) => {
     // switch (item.title) {
