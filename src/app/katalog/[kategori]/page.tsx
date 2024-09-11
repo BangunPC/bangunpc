@@ -476,18 +476,18 @@ const DesktopTable = ({
 
           const handleRedirect = () =>
             router.push(
-              `/detail/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`,
+              `/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`,
             );
           return (
             <>
               <tr
-                data-href={`/detail/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
+                data-href={`/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
                 key={component.product_id}
                 className="h-[56px] cursor-pointer transition-transform hover:z-10 hover:scale-[1.01]"
               >
                 <td className="w-16">
                   <Link
-                    href={`/detail/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
+                    href={`/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
                   >
                     {component.image_filenames.length > 0 && (
                       <Image
@@ -561,7 +561,7 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
             className="dark:texthover:bg-zinc-700 rounded-xl border bg-white p-2 shadow-lg transition-all hover:border-zinc-300 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:border-zinc-600 dark:hover:bg-zinc-700"
           >
             <Link
-              href={`/detail/${kategori}/${component.slug}`}
+              href={`/katalog/${kategori}/${component.slug}`}
               className="flex flex-row items-center gap-1"
             >
               <div className="flex flex-1 flex-row items-center gap-2">

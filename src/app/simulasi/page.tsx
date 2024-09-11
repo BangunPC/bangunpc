@@ -386,7 +386,7 @@ export default function SimulasiPage({
                           <Link
                             key={component.storageId}
                             className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                            href={`/detail/${
+                            href={`/katalog/${
                               categoriesFromEnum[component.category]
                             }/${component.slug}`}
                             passHref

@@ -6,13 +6,13 @@ import Component from "./client";
 import { redirect } from "next/navigation";
 
 async function getDetails(params: any) {
-  const type = params.type;
+  const kategori = params.kategori;
   const slug = params.slug;
   // const slug_split = slug_param.split("-");
   // const id = slug_split[slug_split.length - 1]!;
   // const slug = slug_param.replace(`-${id}`, "");
 
-  const category = categoriesFromString[type]!;
+  const category = categoriesFromString[kategori]!;
   console.log(slug);
   
   const client = createClient();
@@ -56,7 +56,7 @@ async function getDetails(params: any) {
 export default async function Page({
   params,
 }: {
-  params: { slug: string; type: string };
+  params: { slug: string; kategori: string };
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   //   const router = useRouter();
@@ -69,10 +69,10 @@ export default async function Page({
     productImage(data!.product_id!, image),
   );
 
-  const type = params.type;
-  const category = categoriesFromString[type]!;
+  const kategori = params.kategori;
+  const category = categoriesFromString[kategori]!;
 
-  const componentInfo = v_spec[type!]?.flatMap((v) => ({
+  const componentInfo = v_spec[kategori!]?.flatMap((v) => ({
     title: v[1],
     // @ts-expect-error
     value: data[v[0]],
@@ -94,7 +94,7 @@ export default async function Page({
         imageUrls={imageUrls}
         componentInfo={componentInfo ?? []}
         lowest_price={lowest_price}
-        type={type}
+        type={kategori}
         category={category}
         spec_url={spec_url}
         review_urls={review_urls}

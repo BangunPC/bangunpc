@@ -59,6 +59,118 @@ import FormRegister from "../register/from-register";
 import FeedbackModal from "./FeedbackModal";
 import { componentImage } from "~/lib/utils";
 
+export const components = [
+  {
+    name: "Memory / RAM",
+    enum: ComponentCategory.Memory,
+    icon: (
+      <Image
+        width={120}
+        height={120}
+        src="/images/katalog_memory.svg"
+        alt="katalog_ram"
+      />
+    ),
+  },
+  {
+    name: "Motherboard",
+    enum: ComponentCategory.Motherboard,
+    icon: (
+      <Image
+        width={120}
+        height={120}
+        src="/images/katalog_motherboard.svg"
+        alt="katalog_motherboard"
+      />
+    ),
+  },
+  {
+    name: "CPU",
+    enum: ComponentCategory.CPU,
+    icon: (
+      <Image
+        width={120}
+        height={120}
+        src="/images/katalog_cpu.svg"
+        alt="katalog_cpu"
+      />
+    ),
+  },
+  {
+    name: "CPU Cooler",
+    enum: ComponentCategory.Cooler,
+    icon: (
+      <Image
+        width={120}
+        height={120}
+        src="/images/katalog_cpu_coolers.svg"
+        alt="katalog_cpu_cooler"
+      />
+    ),
+  },
+  {
+    name: "Video Card / GPU",
+    enum: ComponentCategory.GPU,
+    icon: (
+      <Image
+        width={120}
+        height={120}
+        src="/images/katalog_gpu.svg"
+        alt="katalog_gpu"
+      />
+    ),
+  },
+  {
+    name: "Power Supply",
+    enum: ComponentCategory.PSU,
+    icon: (
+      <Image
+        width={120}
+        height={120}
+        src="/images/katalog_psu.svg"
+        alt="katalog_psu"
+      />
+    ),
+  },
+  {
+    name: "Internal Storage",
+    enum: ComponentCategory.Storage,
+    icon: (
+      <Image
+        width={120}
+        height={120}
+        src="/images/katalog_storage.svg"
+        alt="katalog_internal_storage"
+      />
+    ),
+  },
+  {
+    name: "PC Case",
+    enum: ComponentCategory.Casing,
+    icon: (
+      <Image
+        width={120}
+        height={120}
+        src="/images/katalog_casing.svg"
+        alt="katalog_casing"
+      />
+    ),
+  },
+  {
+    name: "Monitor",
+    enum: ComponentCategory.Monitor,
+    icon: (
+      <Image
+        width={120}
+        height={120}
+        src="/images/katalog_monitor.svg"
+        alt="katalog_monitor"
+      />
+    ),
+  },
+];
+
+
 export function Navbar() {
   const supabase = createClient();
 
@@ -145,117 +257,6 @@ export function Navbar() {
     { name: "Case Fan", href: "?katalog=false" },
     { name: "External Hard Drive", href: "?katalog=false" },
     { name: "Thermal Paste", href: "?katalog=false" },
-  ];
-
-  const components = [
-    {
-      name: "Memory / RAM",
-      enum: ComponentCategory.Memory,
-      icon: (
-        <Image
-          width={120}
-          height={120}
-          src="/images/katalog_memory.svg"
-          alt="katalog_ram"
-        />
-      ),
-    },
-    {
-      name: "Motherboard",
-      enum: ComponentCategory.Motherboard,
-      icon: (
-        <Image
-          width={120}
-          height={120}
-          src="/images/katalog_motherboard.svg"
-          alt="katalog_motherboard"
-        />
-      ),
-    },
-    {
-      name: "CPU",
-      enum: ComponentCategory.CPU,
-      icon: (
-        <Image
-          width={120}
-          height={120}
-          src="/images/katalog_cpu.svg"
-          alt="katalog_cpu"
-        />
-      ),
-    },
-    {
-      name: "CPU Cooler",
-      enum: ComponentCategory.Cooler,
-      icon: (
-        <Image
-          width={120}
-          height={120}
-          src="/images/katalog_cpu_coolers.svg"
-          alt="katalog_cpu_cooler"
-        />
-      ),
-    },
-    {
-      name: "Video Card / GPU",
-      enum: ComponentCategory.GPU,
-      icon: (
-        <Image
-          width={120}
-          height={120}
-          src="/images/katalog_gpu.svg"
-          alt="katalog_gpu"
-        />
-      ),
-    },
-    {
-      name: "Power Supply",
-      enum: ComponentCategory.PSU,
-      icon: (
-        <Image
-          width={120}
-          height={120}
-          src="/images/katalog_psu.svg"
-          alt="katalog_psu"
-        />
-      ),
-    },
-    {
-      name: "Internal Storage",
-      enum: ComponentCategory.Storage,
-      icon: (
-        <Image
-          width={120}
-          height={120}
-          src="/images/katalog_storage.svg"
-          alt="katalog_internal_storage"
-        />
-      ),
-    },
-    {
-      name: "PC Case",
-      enum: ComponentCategory.Casing,
-      icon: (
-        <Image
-          width={120}
-          height={120}
-          src="/images/katalog_casing.svg"
-          alt="katalog_casing"
-        />
-      ),
-    },
-    {
-      name: "Monitor",
-      enum: ComponentCategory.Monitor,
-      icon: (
-        <Image
-          width={120}
-          height={120}
-          src="/images/katalog_monitor.svg"
-          alt="katalog_monitor"
-        />
-      ),
-    },
   ];
 
   const profileButton = (
@@ -596,7 +597,7 @@ export function Navbar() {
                                 <td className="px-6 py-4 whitespace-nowrap">Rp {result.lowest_price.toLocaleString()}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                   {/* still error on category params */}
-                                <Link href={`/detail/${getCategorySlug(result.category_name)}/${encodeURIComponent(result.product_name.replace(/\s+/g, '-').toLowerCase())}`} passHref>
+                                <Link href={`/katalog/${getCategorySlug(result.category_name)}/${encodeURIComponent(result.product_name.replace(/\s+/g, '-').toLowerCase())}`} passHref>
                                     <Button variant="default" className="text-white">
                                       Buy
                                     </Button>

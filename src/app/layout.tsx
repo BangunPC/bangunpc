@@ -1,7 +1,6 @@
 export const runtime = "edge";
 
 import "~/styles/globals.css";
-
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
@@ -39,9 +38,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className={`${inter.variable} bg-background text-foreground`}>
-              <Navbar  />
-              <div className="mt-navbar-min-h">{children}</div>
+            <div className={`${inter.variable} bg-background text-foreground flex flex-col min-h-1.2-screen`}>
+              <Navbar />
+              <div className="flex-grow mt-navbar-min-h mb-10">
+                {children}
+              </div>
               <Footer />
             </div>
           </ThemeProvider>

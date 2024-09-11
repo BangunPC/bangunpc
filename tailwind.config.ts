@@ -115,6 +115,7 @@ const config = {
       },
       spacing: {
         "navbar-min-h": "72px",
+        "1.2-screen": "120vh"
       },
     },
   },
