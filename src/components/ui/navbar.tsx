@@ -596,7 +596,7 @@ export function Navbar() {
                                 <td className="px-6 py-4 whitespace-nowrap">Rp {result.lowest_price.toLocaleString()}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                   {/* still error on category params */}
-                                <Link href={`/detail/${getCategorySlug(result.category_name)}/${encodeURIComponent(result.product_name.replace(/\s+/g, '-').toLowerCase())}-${result.product_id}`} passHref>
+                                <Link href={`/detail/${getCategorySlug(result.category_name)}/${encodeURIComponent(result.product_name.replace(/\s+/g, '-').toLowerCase())}`} passHref>
                                     <Button variant="default" className="text-white">
                                       Buy
                                     </Button>

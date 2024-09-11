@@ -7,33 +7,37 @@ import { redirect } from "next/navigation";
 
 async function getDetails(params: any) {
   const type = params.type;
-  const slug_param = params.slug;
-  const slug_split = slug_param.split("-");
-  const id = slug_split[slug_split.length - 1]!;
-  const slug = slug_param.replace(`-${id}`, "");
+  const slug = params.slug;
+  // const slug_split = slug_param.split("-");
+  // const id = slug_split[slug_split.length - 1]!;
+  // const slug = slug_param.replace(`-${id}`, "");
 
   const category = categoriesFromString[type]!;
-
+  console.log(slug);
+  
   const client = createClient();
-  const future = await Promise.all([
-    client
-      .schema("product")
-      .from(categoryViewsFromEnum[category]!)
-      .select()
-      .eq("slug", slug)
-      .single(),
+  const future = await client
+  .schema("product")
+  .from(categoryViewsFromEnum[category]!)
+  .select()
+  .eq("slug", slug)
+  .single()
+  .then(async (dataResult) => {
+    const data = dataResult.data;
+    
+    if (!data) {
+      console.log(dataResult.error);
+      redirect("/404");
+    }
 
-    client
+    const productDetailsResult = await client
       .schema("product")
       .from("v_product_details")
       .select()
-      .eq("product_id", id),
-  ]).then(([dataResult, productDetailsResult]) => {
-    const data = dataResult.data;
-    if (!data) {
-      redirect("/404");
-    }
+      .eq("product_id", data.product_id!);
+
     const product_details = productDetailsResult.data;
+
     return {
       data,
       product_details,
@@ -45,6 +49,7 @@ async function getDetails(params: any) {
       name: data.product_name,
     };
   });
+
   return { ...future };
 }
 

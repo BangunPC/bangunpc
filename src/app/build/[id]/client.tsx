@@ -297,7 +297,7 @@ const Component = ({
                                   className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
                                   href={`/detail/${
                                     categoriesFromEnum[item.category]
-                                  }/${component.slug}-${component.product_id}`}
+                                  }/${component.slug}`}
                                   passHref
                                 >
                                   <Image
