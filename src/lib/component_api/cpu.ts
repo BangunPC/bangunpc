@@ -1,3 +1,4 @@
+import { ComponentDetail, ComponentView } from "../db";
 import { createClient } from "../supabase/client";
 import { CpuCompatibility, CpuFilter } from "./filter";
 
@@ -112,13 +113,14 @@ export const getCpu = async (
 
   // filter end
 
-  const { data: cpuData, error } = await client_query;
+  const { data, error } = await client_query;
+  const cpuData = data as ComponentDetail[]
 
   if (!cpuData) {
     throw new Error("CPU data is null");
   }
 
-  let filteredData = cpuData;
+  let filteredData = cpuData as ComponentView["v_cpus"][];
 
   // compatibility start
   if (motherboardId) {
@@ -175,7 +177,10 @@ export const getCpu = async (
       psuWatt = gpuData.min_psu_watt!;
     }
 
-    const availablePowerWatt = psuWatt * 0.8 - gpuPowerWatt * 1.2
+    // Suppose the psu efficiency is 80%, 
+    // 120% extra watt of component power
+    // 50 watt for other component
+    const availablePowerWatt = psuWatt * 0.8 - gpuPowerWatt * 1.2 + 50
 
     filteredData = filteredData.filter((cpu) => 
       (cpu.max_power_watt! < psuWatt) &&
@@ -207,7 +212,7 @@ export const getCpu = async (
     }    
     
     if (!memoryData || error !== null || memoryData.length === 0) {
-      return { filteredData, count: filteredData.length };
+      return filteredData;
     }
 
     // All selected memory's type should be same 
@@ -239,5 +244,5 @@ export const getCpu = async (
 
   // compatibility end
 
-  return { filteredData, count: filteredData.length };
+  return filteredData;
 };

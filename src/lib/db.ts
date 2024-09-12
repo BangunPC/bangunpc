@@ -100,7 +100,13 @@ export const categoryTitlesFromEnum: Record<ComponentCategory, string> = {
   [ComponentCategory.CaseFan]: "Case Fan",
 };
 
-type ViewKeys = keyof Database["product"]["Views"];
+type DBView = Database["product"]["Views"];
+type ViewKeys = keyof DBView;
+type ComponentViewKeys = Exclude<ViewKeys, "v_products" | "v_product_details"| "v_product_images">;
+export type ComponentView = {
+  [K in ViewKeys]: DBView[K]["Row"];
+};
+export type ComponentDetail =  DBView[ComponentViewKeys]["Row"];
 
 export const categoryViewsFromEnum: Record<ComponentCategory, ViewKeys | null> =
   {

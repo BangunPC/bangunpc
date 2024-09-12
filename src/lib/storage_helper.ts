@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentCategory } from "./db";
+import { ComponentCategory, ComponentDetail } from "./db";
 
 class LocalStorageHelper {
   static setItem<T>(key: string, value: T) {
@@ -21,6 +21,13 @@ class LocalStorageHelper {
   }
 }
 
+export type SimulationStorageData = {
+  selectedMemoryAmount?: number;
+  selectedMemorySizeGb?: number;
+  selectedStorageAmount?: number;
+  currentTotalPowerWatt?: number;
+};
+
 export type ComponentStorageType = {
   storageId: string;
   id: string;
@@ -30,17 +37,13 @@ export type ComponentStorageType = {
   image: string;
   category: ComponentCategory;
   slug: string;
+  detail: ComponentDetail;
 };
 
 export class ComponentStorageHelper {
   static addComponent(component: ComponentStorageType) {
     const components = this.getComponents();
-    // const index = components.findIndex(c => c.id === component.id);
-    // if (index !== -1) {
-    //     components[index].quantity += component.quantity;
-    // } else {
     components.push(component);
-    // }
     LocalStorageHelper.setItem("components", components);
   }
 
@@ -57,30 +60,32 @@ export class ComponentStorageHelper {
   static removeComponentById(storageId: string) {
     let components: ComponentStorageType[] =
       LocalStorageHelper.getItem("components") ?? [];
-    components = components.filter((component) => component.storageId !== storageId);
+    components = components.filter(
+      (component) => component.storageId !== storageId
+    );
     LocalStorageHelper.setItem("components", components);
   }
 
-  static updateComponent(storageId: string, updatedComponent: ComponentStorageType) {
+  static updateComponent(
+    storageId: string,
+    updatedComponent: ComponentStorageType
+  ) {
     const components: ComponentStorageType[] =
       LocalStorageHelper.getItem("components") ?? [];
-    const index = components.findIndex((component) => component.storageId === storageId);
+    const index = components.findIndex(
+      (component) => component.storageId === storageId
+    );
     if (index !== -1) {
       components[index] = { ...components[index], ...updatedComponent };
       LocalStorageHelper.setItem("components", components);
     }
   }
 
-  /**
-   * Calculates the total price of all components in the cart.
-   *
-   * @return {number} The total price of all components.
-   */
   static totalPrice() {
     const components = this.getComponents();
     return components.reduce(
       (total, component) => total + component.price * component.quantity,
-      0,
+      0
     );
   }
 
@@ -89,4 +94,20 @@ export class ComponentStorageHelper {
   }
 }
 
-export { LocalStorageHelper, ComponentStorageHelper as ComponentStorage };
+export class SimulationStorageHelper {
+  static upsertSimulationData(partialData: Partial<SimulationStorageData>) {
+    const existingData = this.getSimulationData() ?? {};
+    const updatedData = { ...existingData, ...partialData };
+    LocalStorageHelper.setItem("simulation", updatedData);
+  }
+
+  static getSimulationData(): SimulationStorageData | null {
+    return LocalStorageHelper.getItem("simulation");
+  }
+
+  static clear() {
+    LocalStorageHelper.removeItem("simulation");
+  }
+}
+
+export { ComponentStorageHelper as ComponentStorage, SimulationStorageHelper as SimulationStorage };

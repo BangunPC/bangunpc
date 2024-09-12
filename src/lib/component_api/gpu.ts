@@ -87,5 +87,5 @@ export const getGpu = async (
     throw error;
   }
 
-  return { filteredData, count: filteredData.length };
+  return filteredData;
 };

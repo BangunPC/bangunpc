@@ -2,6 +2,8 @@
 
 import {
   ComponentCategory,
+  ComponentDetail,
+  ComponentView,
   casingKeys,
   categoriesFromString,
   categoryHeaders,
@@ -30,7 +32,6 @@ import { getPsu } from "~/lib/component_api/psu";
 import { getStorage } from "~/lib/component_api/storage";
 import {
   ComponentStorage,
-  ComponentStorageHelper,
   ComponentStorageType,
 } from "~/lib/storage_helper";
 import { componentImage } from "~/lib/utils";
@@ -49,7 +50,7 @@ const KategoriPage = ({
 
   useEffect(() => {
     const refresh = () => {
-      const components = ComponentStorageHelper.getComponents();
+      const components = ComponentStorage.getComponents();
       setPrice(components.reduce((acc, component) => acc + component.price, 0));
       setTotal(
         components.reduce((acc, component) => acc + component.quantity, 0),
@@ -65,7 +66,7 @@ const KategoriPage = ({
   const category = categoriesFromString[params.kategori]!;
   const [hideSidebar, setHideSidebar] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState<any>();
+  const [data, setData] = React.useState<ComponentDetail[]>();
   const [error, setError] = React.useState<any>();
 
   // fetch with getMotherboard when starting to load
@@ -298,7 +299,7 @@ const KategoriPage = ({
               {desktopSidebarButton}
               <Header
                 category={category}
-                itemCount={data?.count ?? <Spinner />}
+                itemCount={(data?.length ?? 0).toString() ?? <Spinner />}
               />
             </div>
             {loading ? (
@@ -312,7 +313,7 @@ const KategoriPage = ({
             ) : (
               <div>
                 <MobileTable
-                  data={data.filteredData}
+                  data={data}
                   headers={categoryHeaders[category]}
                   kategori={params.kategori}
                   isIframe={params.noTopH ?? false}
@@ -320,7 +321,7 @@ const KategoriPage = ({
                 />
                 <DesktopTable
                   // key={`${url.search}`}
-                  data={data.filteredData}
+                  data={data}
                   headers={categoryHeaders[category]}
                   kategori={params.kategori}
                   isIframe={params.noTopH ?? false}
@@ -420,7 +421,7 @@ const Header = ({
 );
 
 type TableType = {
-  data: any[] | undefined;
+  data: ComponentDetail[]  | undefined;
   headers: string[];
   kategori: string;
   isIframe: boolean;
@@ -455,19 +456,20 @@ const DesktopTable = ({
       </thead>
       <tbody className="h-min flex-col flex-nowrap content-start items-start justify-start gap-[3px] overflow-visible p-5">
         <tr className="h-4"></tr>
-        {data?.map((component: any) => {
+        {data?.map((component) => {
           const handleAddComponent = () => {
             const componentAdded: ComponentStorageType = {
               storageId: uuidv4(),
-              id: component.product_id,
-              name: component.product_name,
-              price: component.lowest_price,
+              id: component.product_id!.toString(),
+              name: component.product_name!,
+              price: component.lowest_price!,
               image: componentImage(component),
               category: categoriesFromString[kategori]!,
-              quantity: kategori === "memory" ? component.amount : 1,
-              slug: component.slug,
+              quantity: kategori === "memory" ? (component as ComponentView["v_memories"]).amount! : 1,
+              slug: component.slug!,
+              detail: component
             };
-            ComponentStorageHelper.addComponent(componentAdded);
+            ComponentStorage.addComponent(componentAdded);
             onSuccess?.();
             alert(
               "Komponen " + component.product_name + " berhasil ditambahkan. ",
@@ -489,7 +491,7 @@ const DesktopTable = ({
                   <Link
                     href={`/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
                   >
-                    {component.image_filenames.length > 0 && (
+                    {component.image_filenames!.length> 0 && (
                       <Image
                         src={componentImage(component)}
                         alt={`Gambar ${component.product_name}`}
@@ -537,19 +539,20 @@ const DesktopTable = ({
 const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
   return (
     <div className="flex flex-col gap-1 transition-all duration-200 tablet:hidden">
-      {data?.map((component: any) => {
+      {data?.map((component) => {
         const handleAddComponent = () => {
           const componentAdded: ComponentStorageType = {
             storageId: uuidv4(),
-            id: component.product_id,
-            name: component.product_name,
-            price: component.lowest_price,
+            id: component.product_id!.toString(),
+            name: component.product_name!,
+            price: component.lowest_price!,
             image: componentImage(component),
             category: categoriesFromString[kategori]!,
             quantity: 1,
-            slug: component.slug,
+            slug: component.slug!,
+            detail: component
           };
-          ComponentStorageHelper.addComponent(componentAdded);
+          ComponentStorage.addComponent(componentAdded);
           alert(
             "Komponen " + component.product_name + " berhasil ditambahkan. ",
           );
@@ -565,7 +568,7 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
               className="flex flex-row items-center gap-1"
             >
               <div className="flex flex-1 flex-row items-center gap-2">
-                {component.image_filenames.length > 0 && (
+                {component.image_filenames!.length > 0 && (
                   <Image
                     src={componentImage(component)}
                     alt={`Gambar ${component.product_name}`}

@@ -20,7 +20,7 @@ import {
   categoriesFromEnum,
   categoriesFromString,
 } from "~/lib/db";
-import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
+import { ComponentStorage, ComponentStorageType, SimulationStorage } from "~/lib/storage_helper";
 import { createQueryString, removeQueryString } from "~/lib/utils";
 import KategoriPage from "../katalog/[kategori]/page";
 import useSWR from "swr";
@@ -288,6 +288,7 @@ export default function SimulasiPage({
   const handleClear = () => {
     if (!isComponent) {
       ComponentStorage.clear();
+      SimulationStorage.clear();
     }
   };
 
