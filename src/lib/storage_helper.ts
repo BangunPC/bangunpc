@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentCategory, ComponentDetail } from "./db";
+import { ComponentCategory, ComponentDetail, ComponentDetailMap } from "./db";
 
 class LocalStorageHelper {
   static setItem<T>(key: string, value: T) {
@@ -22,9 +22,15 @@ class LocalStorageHelper {
 }
 
 export type SimulationStorageData = {
+  availableMemorySlot?: number;
+  availableNvmeSlot?: number;
+  availableSataSlot?: number;
+  maxMemorySizeGb?: number;
+  maxTotalPowerWatt?: number;
   selectedMemoryAmount?: number;
   selectedMemorySizeGb?: number;
-  selectedStorageAmount?: number;
+  selectedNvmeAmount?: number;
+  selectedSataAmount?: number;
   currentTotalPowerWatt?: number;
 };
 
@@ -41,7 +47,19 @@ export type ComponentStorageType = {
 };
 
 export class ComponentStorageHelper {
-  static addComponent(component: ComponentStorageType) {
+  static async addComponent(component: ComponentStorageType) {
+    await fetch('/api/data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ sessionKey: component.storageId, value: component }),
+    });
+    // setInput('');
+    // // Refresh data
+    // fetch('/api/data')
+    //   .then(response => response.json())
+    //   .then(data => setData(data));
     const components = this.getComponents();
     components.push(component);
     LocalStorageHelper.setItem("components", components);
@@ -51,11 +69,34 @@ export class ComponentStorageHelper {
     return LocalStorageHelper.getItem("components") ?? [];
   }
 
-  static getComponentsByCategory(category: ComponentCategory) {
-    const components: ComponentStorageType[] =
-      LocalStorageHelper.getItem("components") ?? [];
-    return components.filter((component) => component.category === category);
+  static async getComponentsByCategory(category: ComponentCategory) {
+    // const components: ComponentStorageType[] =
+    //   LocalStorageHelper.getItem("components") ?? [];
+
+    const components = await fetch('/api/data')
+      .then(response => response.json())
+      .then(data => data.value);
+    
+    console.log(components);
+    
+      
+    return components.filter((component: any) => component.category === category);
   }
+  
+  static getComponentDetail = async <K extends ComponentCategory>(category: K): Promise<ComponentDetailMap[K] | undefined> => {
+    const components = await this.getComponentsByCategory(category);
+    
+    switch (category) {
+      case ComponentCategory.Memory:
+      case ComponentCategory.Storage:
+        // These categories return arrays
+        return components?.map((component: any) => component.detail) as ComponentDetailMap[K];
+      
+      default:
+        // Other categories return a single detail
+        return components?.[0]?.detail as ComponentDetailMap[K];
+    }
+  };
 
   static removeComponentById(storageId: string) {
     let components: ComponentStorageType[] =
@@ -103,6 +144,16 @@ export class SimulationStorageHelper {
 
   static getSimulationData(): SimulationStorageData | null {
     return LocalStorageHelper.getItem("simulation");
+  }
+
+  static initializeData(): void {
+    if(!this.getSimulationData()) {
+      this.upsertSimulationData({
+        availableMemorySlot: 2,
+        availableNvmeSlot: 1,
+        availableSataSlot: 1,
+      })
+    }
   }
 
   static clear() {

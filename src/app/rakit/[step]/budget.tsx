@@ -17,7 +17,7 @@ export default function BudgetSection() {
     30000000, 40000000, 50000000, 80000000,
   ];
 
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()!;
   const [budget, setBudget] = React.useState(searchParams.get("b") ?? 0);
   const multiSelect = searchParams.getAll("r");
 

@@ -41,6 +41,7 @@ export default function RootLayout({
             <div className={`${inter.variable} bg-background text-foreground flex flex-col min-h-1.2-screen`}>
               <Navbar />
               <div className="flex-grow mt-navbar-min-h mb-10">
+
                 {children}
               </div>
               <Footer />

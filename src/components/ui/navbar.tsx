@@ -240,7 +240,7 @@ export function Navbar() {
   }, [searchQuery]);
 
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()!;
   const katalog = searchParams.get("katalog") === "true";
   const login = searchParams.get("login") === "true";
   const register = searchParams.get("register") === "true";

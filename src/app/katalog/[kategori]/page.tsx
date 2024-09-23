@@ -33,6 +33,7 @@ import { getStorage } from "~/lib/component_api/storage";
 import {
   ComponentStorage,
   ComponentStorageType,
+  SimulationStorage,
 } from "~/lib/storage_helper";
 import { componentImage } from "~/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
@@ -78,30 +79,23 @@ const KategoriPage = ({
       min_price: 0,
       max_price: 0,
     };
-
-    const getComponentId = (category: ComponentCategory): number | undefined => {
-      const components = ComponentStorage.getComponentsByCategory(category);
-      const id = components?.[0]?.id ?? '';
-      const parsedId = parseInt(id, 10);
-      return isNaN(parsedId) ? undefined : parsedId;
-    };
     
-    const motherboardId = getComponentId(ComponentCategory.Motherboard);
-    const casingId = getComponentId(ComponentCategory.Casing);
-    const cpuId = getComponentId(ComponentCategory.CPU);
-    const gpuId = getComponentId(ComponentCategory.GPU);
-    const psuId = getComponentId(ComponentCategory.PSU);
-    const memoryIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Memory)
-      ?.map(component => parseInt(component.id, 10))
-      .filter(id => !isNaN(id));
+    const motherboard = ComponentStorage.getComponentDetail(ComponentCategory.Motherboard);
+    const casing = ComponentStorage.getComponentDetail(ComponentCategory.Casing)
+    const cpu = ComponentStorage.getComponentDetail(ComponentCategory.CPU)
+    const gpu = ComponentStorage.getComponentDetail(ComponentCategory.GPU);
+    const psu = ComponentStorage.getComponentDetail(ComponentCategory.PSU);
+    const memories = ComponentStorage.getComponentDetail(ComponentCategory.Memory);
+    // const storages = ComponentStorage.getComponentDetail(ComponentCategory.Storage)
+
     // const storageIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Storage)
     //   ?.map(component => parseInt(component.id, 10))
     //   .filter(id => !isNaN(id));
     
     switch (category) {
       case ComponentCategory.Motherboard:
-        const motherboardCompatibility = params.isCompatibiliyChecked ? { casingId, cpuId } : {}
-        getMotherboard(motherboardCompatibility, defaultQuery)
+        const motherboardCompatibility = params.isCompatibiliyChecked ? { casing, cpu } : {}
+        getMotherboard({}, defaultQuery)
           .then((res) => {
             setData(res);
             setLoading(false);
@@ -114,8 +108,8 @@ const KategoriPage = ({
         break;
       case ComponentCategory.CPU:
         //TODO: Add memories check
-        const cpuCompatibility = params.isCompatibiliyChecked ? { motherboardId, psuId, gpuId, memoryIds } : {}
-        getCpu(cpuCompatibility, defaultQuery)
+        const cpuCompatibility = params.isCompatibiliyChecked ? { motherboard, psu, gpu, memories } : {}
+        getCpu({}, defaultQuery)
           .then((res) => {
             setData(res);
             setLoading(false);
@@ -139,6 +133,7 @@ const KategoriPage = ({
           });
         break;
       case ComponentCategory.Memory:
+        const memoryCompatibility = params.isCompatibiliyChecked ? { memories, motherboard } : {}
         getMemory({}, defaultQuery)
           .then((res) => {
             setData(res);
@@ -457,7 +452,7 @@ const DesktopTable = ({
       <tbody className="h-min flex-col flex-nowrap content-start items-start justify-start gap-[3px] overflow-visible p-5">
         <tr className="h-4"></tr>
         {data?.map((component) => {
-          const handleAddComponent = () => {
+          const handleAddComponent = async () => {
             const componentAdded: ComponentStorageType = {
               storageId: uuidv4(),
               id: component.product_id!.toString(),
@@ -469,7 +464,55 @@ const DesktopTable = ({
               slug: component.slug!,
               detail: component
             };
-            ComponentStorage.addComponent(componentAdded);
+            await ComponentStorage.addComponent(componentAdded);
+            const currentSimulation = SimulationStorage.getSimulationData()
+            
+            // Updating data in the simulation storage
+            switch (kategori) {
+              case "cpu":
+                const cpu = component as ComponentView["v_cpus"]
+                SimulationStorage.upsertSimulationData({
+                  currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (cpu.max_power_watt ?? 0)
+                })
+                break;
+              
+              case "motherboard":
+                const mobo = component as ComponentView["v_motherboards"]
+                const maxMemorySizeGb = (currentSimulation?.maxMemorySizeGb ?? 0) < (mobo.max_memory_gb ?? 0)  ? 
+                  (mobo.max_memory_gb ?? 0) : (currentSimulation?.maxMemorySizeGb ?? 0)
+                SimulationStorage.upsertSimulationData({
+                  availableMemorySlot: mobo.memory_slot ?? 0,
+                  maxMemorySizeGb: maxMemorySizeGb
+                })
+                break;
+
+              case "gpu":
+                const gpu = component as ComponentView["v_gpus"]
+                SimulationStorage.upsertSimulationData({
+                  currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (gpu.tdp_watt ?? 0)
+                })
+                break;
+
+              case "memory":
+                const memory = component as ComponentView["v_memories"]
+                const memoryAmount = memory.amount ?? 0
+                const capacityGb = memory.capacity_gb ?? 0
+
+                SimulationStorage.upsertSimulationData({
+                  selectedMemoryAmount: currentSimulation?.selectedMemoryAmount ?? 0 + memoryAmount,
+                  selectedMemorySizeGb:  currentSimulation?.selectedMemorySizeGb ?? 0 + (memoryAmount * capacityGb)
+                })
+                break;
+
+              case "storage":
+                SimulationStorage.upsertSimulationData({
+                  selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) + 1
+                })
+                break;
+            
+              default:
+                break;
+            }
             onSuccess?.();
             alert(
               "Komponen " + component.product_name + " berhasil ditambahkan. ",
@@ -552,7 +595,49 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
             slug: component.slug!,
             detail: component
           };
+
           ComponentStorage.addComponent(componentAdded);
+          const currentSimulation = SimulationStorage.getSimulationData()
+          
+          // Updating data in the simulation storage
+          console.log(kategori);
+          
+          switch (kategori) {
+            case "cpu":
+              const cpu = component as ComponentView["v_cpus"]
+              SimulationStorage.upsertSimulationData({
+                currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (cpu.max_power_watt ?? 0)
+              })
+              break;
+
+            case "gpu":
+              const gpu = component as ComponentView["v_gpus"]
+              SimulationStorage.upsertSimulationData({
+                currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (gpu.tdp_watt ?? 0)
+              })
+              break;
+
+            case "memory":
+              const memory = component as ComponentView["v_memories"]
+              const memoryAmount = memory.amount ?? 0
+              const capacityGb = memory.capacity_gb ?? 0
+
+              SimulationStorage.upsertSimulationData({
+                selectedMemoryAmount: currentSimulation?.selectedMemoryAmount ?? 0 + memoryAmount,
+                selectedMemorySizeGb:  currentSimulation?.selectedMemorySizeGb ?? 0 + (memoryAmount * capacityGb)
+              })
+              break;
+
+            case "storage":
+              SimulationStorage.upsertSimulationData({
+                selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) + 1
+              })
+              break;
+          
+            default:
+              break;
+          }
+
           alert(
             "Komponen " + component.product_name + " berhasil ditambahkan. ",
           );

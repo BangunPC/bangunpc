@@ -134,6 +134,31 @@ export const categoryViewsFromEnum: Record<ComponentCategory, ViewKeys | null> =
     [ComponentCategory.CaseFan]: null,
   };
 
+  export type ComponentDetailMap = {
+    [ComponentCategory.Motherboard]: ComponentView["v_motherboards"];
+    [ComponentCategory.CPU]: ComponentView["v_cpus"];
+    [ComponentCategory.GPU]: ComponentView["v_gpus"];
+    [ComponentCategory.Memory]: ComponentView["v_memories"][];
+    [ComponentCategory.PSU]: ComponentView["v_power_supplies"];
+    [ComponentCategory.Storage]: ComponentView["v_internal_storages"][];
+    [ComponentCategory.Casing]: ComponentView["v_casings"];
+    [ComponentCategory.Headphone]: undefined;
+    [ComponentCategory.Keyboard]: undefined;
+    [ComponentCategory.Mouse]: undefined    
+    [ComponentCategory.Speaker]: undefined
+    [ComponentCategory.Webcam]: undefined 
+    [ComponentCategory.Printer]: undefined 
+    [ComponentCategory.Monitor]: undefined    
+    [ComponentCategory.OS]: undefined    
+    [ComponentCategory.SoundCard]: undefined    
+    [ComponentCategory.WiredNetwork]: undefined
+    [ComponentCategory.WirelessNetwork]: undefined
+    [ComponentCategory.Cable]: undefined   
+    [ComponentCategory.ExternalDrive]: undefined    
+    [ComponentCategory.Cooler]: undefined;
+    [ComponentCategory.CaseFan]: undefined;
+  };
+  
 export const casingHeaders = [
   "Brand Name",
   "Casing Type",

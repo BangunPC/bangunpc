@@ -17,6 +17,7 @@ import KategoriRam from "~/components/ui/icon/kategori-ram";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
   ComponentCategory,
+  ComponentView,
   categoriesFromEnum,
   categoriesFromString,
 } from "~/lib/db";
@@ -56,7 +57,7 @@ export default function SimulasiPage({
 }) {
   const isComponent = params?.params?.id ?? null;
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()!;
 
   const [kategori, setKategori] = useState<string | null>(null);
 
@@ -153,7 +154,7 @@ export default function SimulasiPage({
     },
   ];
 
-  const refresh = () => {
+  const refresh = async () => {
     if (isComponent) {
       setComponentCpu(params?.cpu ? [params?.cpu] : []);
       // setComponentCpuCooler(params?.cpu_cooler ? [params?.cpu_cooler] : []);
@@ -169,28 +170,28 @@ export default function SimulasiPage({
       return;
     }
     setComponentCpu(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.CPU),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.CPU),
     );
     // setComponentCooler(
     //   ComponentStorage.getComponentsByCategory(ComponentCategory.Cooler),
     // );
     setComponentMotherboard(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Motherboard),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.Motherboard),
     );
     setComponentMemory(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Memory),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.Memory),
     );
     setComponentStorage(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Storage),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.Storage),
     );
     setComponentGpu(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.GPU),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.GPU),
     );
     setComponentPsu(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.PSU),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.PSU),
     );
     setComponentCasing(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Casing),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.Casing),
     );
     // setComponentCaseFan(
     //   ComponentStorage.getComponentsByCategory(ComponentCategory.CaseFan),
@@ -236,6 +237,7 @@ export default function SimulasiPage({
     // setComponentPrinter(
     //   ComponentStorage.getComponentsByCategory(ComponentCategory.Printer),
     // );
+    SimulationStorage.initializeData()
   };
 
   useEffect(() => {
@@ -292,9 +294,47 @@ export default function SimulasiPage({
     }
   };
 
-  const handleRemoveComponent = (storageId: string) => {
+  const handleRemoveComponent = (component: ComponentStorageType) => {
     if (!isComponent) {
-      ComponentStorage.removeComponentById(storageId);
+      ComponentStorage.removeComponentById(component.storageId);
+      const currentSimulation = SimulationStorage.getSimulationData()
+
+      // Updating data in the simulation storage
+      switch (component.category) {
+        case ComponentCategory.CPU:
+          const cpu = component.detail as ComponentView["v_cpus"]
+          SimulationStorage.upsertSimulationData({
+            currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) - (cpu.max_power_watt ?? 0)
+          })
+          break;
+
+        case ComponentCategory.GPU:
+          const gpu = component.detail as ComponentView["v_gpus"]
+          SimulationStorage.upsertSimulationData({
+            currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) - (gpu.tdp_watt ?? 0)
+          })
+          break;
+
+        case ComponentCategory.Memory:
+          const memory = component.detail as ComponentView["v_memories"]
+          const memoryAmount = memory.amount ?? 0
+          const capacityGb = memory.capacity_gb ?? 0
+
+          SimulationStorage.upsertSimulationData({
+            selectedMemoryAmount: (currentSimulation?.selectedMemoryAmount ?? 0) - memoryAmount,
+            selectedMemorySizeGb:  (currentSimulation?.selectedMemorySizeGb ?? 0) - (capacityGb + memoryAmount)
+          })
+          break;
+
+        case ComponentCategory.Storage:
+          SimulationStorage.upsertSimulationData({
+            selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) - 1
+          })
+          break;
+      
+        default:
+          break;
+      }
     }
   };
 
@@ -414,7 +454,9 @@ export default function SimulasiPage({
                               <Button
                                 variant="outline"
                                 className="w-fit text-base my-2"
-                                disabled={item.components.reduce((total, item) => total + item.quantity, 0) >= 4}
+                                disabled={
+                                  item.components.reduce((total, item) => 
+                                    total + item.quantity, 0) >= (SimulationStorage.getSimulationData()?.selectedMemoryAmount ?? 2)}
                                 onClick={() => handleAddComponent(item)}
                               >
                                 + {item.title}
@@ -490,7 +532,7 @@ export default function SimulasiPage({
                                       "Apakah Anda yakin ingin menghapus komponen ini?",
                                     )
                                   ) {
-                                    handleRemoveComponent(component.storageId);
+                                    handleRemoveComponent(component);
                                   }
                                 }
                               }}
