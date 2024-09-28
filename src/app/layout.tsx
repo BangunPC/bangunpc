@@ -10,6 +10,7 @@ import React from "react";
 import Footer from "~/components/ui/footer";
 import { Navbar } from "~/components/ui/navbar";
 import ProgressBarProvider from "~/components/provider/progress-bar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,6 +43,12 @@ export default function RootLayout({
             <div className={`${inter.variable} bg-background text-foreground`}>
               <Navbar  />
               <div className="mt-navbar-min-h">{children}</div>
+              <Toaster
+          position="top-center"
+          toastOptions={{
+            className: 'z-50',
+          }}
+        />
               <Footer />
             </div>
           </ThemeProvider>

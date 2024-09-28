@@ -30,6 +30,7 @@ import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
 import Divider from "~/components/ui/divider";
 import { Input } from "~/components/ui/input";
+import ConfirmationModal from "~/components/ui/ConfirmationModal";
 
 const headers = [
   "Kategori Komponen",
@@ -286,15 +287,21 @@ export default function SimulasiPage({
 
   const { trigger } = useSWRMutation(ApiPaths.insertRakitan, insertRakitan);
 
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [componentToDelete, setComponentToDelete] = useState<string | null>(null);
+
   const handleClear = () => {
     if (!isComponent) {
       ComponentStorage.clear();
+      refresh();
     }
   };
 
   const handleRemoveComponent = (id: string) => {
     if (!isComponent) {
       ComponentStorage.removeComponentById(id);
+      refresh();
     }
   };
 
@@ -316,14 +323,7 @@ export default function SimulasiPage({
             <Button
               variant="destructive"
               disabled={components.every((c) => c.components.length === 0)}
-              onClick={() => {
-                const confirmed = window.confirm(
-                  "Apakah Anda yakin ingin mengulang dari awal?\nSemua komponen akan dihapus dan tidak dapat dikembalikan.",
-                );
-                if (confirmed) {
-                  handleClear();
-                }
-              }}
+              onClick={() => setIsResetModalOpen(true)}
               className="text-lg"
             >
               <Undo2 className="mr-2 inline-block" />
@@ -472,13 +472,8 @@ export default function SimulasiPage({
                               className="h-[24px] items-center text-white "
                               onClick={() => {
                                 if (item.components.length > 0) {
-                                  if (
-                                    window.confirm(
-                                      "Apakah Anda yakin ingin menghapus komponen ini?",
-                                    )
-                                  ) {
-                                    handleRemoveComponent(component.id);
-                                  }
+                                  setComponentToDelete(component.id);
+                                  setIsDeleteModalOpen(true);
                                 }
                               }}
                             >
@@ -538,6 +533,34 @@ export default function SimulasiPage({
           </DialogContent>
         </Dialog>
       </main>
+
+      <ConfirmationModal
+        isOpen={isResetModalOpen}
+        onClose={() => setIsResetModalOpen(false)}
+        onConfirm={() => {
+          handleClear();
+          setIsResetModalOpen(false);
+        }}
+        title="Reset Pilihan"
+        description="Apakah Anda yakin ingin mengulang dari awal? Semua komponen akan dihapus dan tidak dapat dikembalikan."
+      />
+
+      <ConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          setComponentToDelete(null);
+        }}
+        onConfirm={() => {
+          if (componentToDelete) {
+            handleRemoveComponent(componentToDelete);
+          }
+          setIsDeleteModalOpen(false);
+          setComponentToDelete(null);
+        }}
+        title="Hapus Komponen"
+        description="Apakah Anda yakin ingin menghapus komponen ini?"
+      />
     </div>
   );
 }

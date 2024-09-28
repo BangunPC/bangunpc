@@ -3,6 +3,7 @@
 import { Heart, MapPin, Send } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import toast from "react-hot-toast";
 import {
   Accordion,
   AccordionContent,
@@ -152,7 +153,7 @@ const Component = ({
               <Button
                 variant="ghost"
                 className="flex items-center gap-2 font-semibold"
-                onClick={() => alert("Coming Soon")}
+                onClick={() => toast.success("Coming Soon")}
               >
                 <Heart className="fill-none " width="24" height="24" />
                 <span className="text-lg">Tambah ke wishlist</span>
@@ -163,10 +164,11 @@ const Component = ({
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href).then(
                     () => {
-                      alert("Link copied to clipboard");
+                      toast.success('Link copied to clipboard');
                     },
                     (err) => {
                       console.error("Failed to copy link:", err);
+                      toast.error('Failed to copy link');
                     },
                   );
                 }}

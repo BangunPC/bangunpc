@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, Send, MessageCircle } from 'lucide-react';
 import { createClient } from '~/lib/supabase/client'; // Adjust the import path as necessary
-
+import toast from 'react-hot-toast';
 
 const FeedbackModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,12 +31,12 @@ const FeedbackModal = () => {
     if (error) {
 
       console.error('Error inserting feedback:', error);
-      alert('Error sending feedback.'); // {{ edit_2 }}
+      toast.error('Error sending feedback. Please try again.');
 
     } else {
       console.log('Feedback inserted:', data);
 
-      alert('Feedback sent successfully!'); // {{ edit_3 }}
+      toast.success('Feedback sent successfully!');
 
     }
   };

@@ -34,6 +34,7 @@ import {
 } from "~/lib/storage_helper";
 import { componentImage } from "~/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
+import toast from 'react-hot-toast';
 
 const KategoriPage = ({
   params,
@@ -443,9 +444,7 @@ const DesktopTable = ({
             };
             ComponentStorageHelper.addComponent(componentAdded);
             onSuccess?.();
-            alert(
-              "Komponen " + component.product_name + " berhasil ditambahkan. ",
-            );
+            toast.success(`${component.product_name} has been added to your build.`);
           };
 
           const handleRedirect = () =>
@@ -523,9 +522,7 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
             slug: component.slug,
           };
           ComponentStorageHelper.addComponent(componentAdded);
-          alert(
-            "Komponen " + component.product_name + " berhasil ditambahkan. ",
-          );
+          toast.success(`${component.product_name} has been added to your build.`);
           onSuccess?.();
         };
         return (

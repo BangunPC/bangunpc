@@ -4,6 +4,7 @@ import { Send } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import toast from 'react-hot-toast';
 import {
   Accordion,
   AccordionContent,
@@ -425,27 +426,6 @@ const Component = ({
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-        {/* <Accordion type="single" collapsible defaultValue="item-1">
-          <AccordionItem value="item-1" className="border-none">
-            <AccordionTrigger className="text-3xl font-semibold">
-              Komentar
-            </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-1 ">
-              <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
-                <div className="flex flex-col gap-1">
-                  <div className="flex flex-col gap-1">
-                    {data.comments.map((comment) => (
-                      <div key={comment.id} className="flex flex-col gap-1">
-                        <span className="text-primary">{comment.name}</span>
-                        <span className="text-sm">{comment.comment}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion> */}
         <Accordion type="single" collapsible defaultValue="item-1">
           <AccordionItem value="item-1" className="border-none">
             <AccordionTrigger className="text-3xl font-semibold">
@@ -484,32 +464,17 @@ const Component = ({
               Beli Sekarang
             </Button>
           </a>
-          {/* <Link href={`/simulasi/${data.build_id}`} passHref legacyBehavior>
-            <Button
-              variant="default"
-              className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-            >
-              + Customize
-            </Button>
-          </Link> */}
-
-          {/* <Button
-            variant="ghost"
-            className="flex items-center px-2 font-semibold"
-            onClick={() => alert("Coming Soon")}
-          >
-            <Heart className="fill-none " width="24" height="24" />
-          </Button> */}
           <Button
             variant="ghost"
             className="flex items-center px-2 font-semibold"
             onClick={() => {
               navigator.clipboard.writeText(window.location.href).then(
                 () => {
-                  alert("Link copied to clipboard");
+                  toast.success('Link copied to clipboard');
                 },
                 (err) => {
                   console.error("Failed to copy link:", err);
+                  toast.error('Failed to copy link');
                 },
               );
             }}
