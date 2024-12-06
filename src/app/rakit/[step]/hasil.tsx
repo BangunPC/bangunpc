@@ -13,7 +13,7 @@ export default function HasilSection({
 }: {
   component: RecommendationHasilType;
 }) {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()!;
   const budget = searchParams.get("b") ?? 0;
   const multiSelect = searchParams.getAll("r");
   const currentPage = parseInt(searchParams.get("p") ?? "1");

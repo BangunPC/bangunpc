@@ -12,14 +12,14 @@ const Footer = () => {
       url: "https://www.instagram.com/bangunpc/",
     },
     {
-      logo: "/images/facebook.svg",
-      alt: "facebook",
-      url: "https://www.facebook.com/bangunpc/",
-    },
-    {
       logo: "/images/twitter.svg",
       alt: "twitter",
       url: "https://twitter.com/bangunpc/",
+    },
+    {
+      logo: "/images/youtube.svg",
+      alt: "youtube",
+      url: "https://www.youtube.com/@BangunPC/",
     },
     // {
     //   logo: "/images/linkedin.svg",

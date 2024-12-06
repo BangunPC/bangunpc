@@ -5,8 +5,9 @@ import useSWR from "swr";
 import { ApiPaths, fetchWithId } from "~/lib/api";
 import SimulasiPage from "../page";
 import { ComponentStorageType } from "~/lib/storage_helper";
-import { ComponentCategory } from "~/lib/db";
+import { ComponentCategory, ComponentDetail } from "~/lib/db";
 import { productImage } from "~/lib/utils";
+import { v4 as uuidv4 } from 'uuid';
 
 export type CommonRakitanDataType = {
   product_id: number;
@@ -16,6 +17,7 @@ export type CommonRakitanDataType = {
   product_detail_id: number;
   marketplace_id: number;
   price: number;
+  datail: ComponentDetail;
 };
 
 const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
@@ -37,8 +39,7 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
         const cpu = rakitan.cpu as CommonRakitanDataType;
         const cpu_cooler = rakitan.cpu_cooler as CommonRakitanDataType;
         const gpu = rakitan.gpu as CommonRakitanDataType;
-        const internal_storages =
-          rakitan.internal_storages as CommonRakitanDataType[];
+        const internal_storages = rakitan.internal_storages as CommonRakitanDataType[];
         const memories = rakitan.memories as CommonRakitanDataType[];
         const monitors = rakitan.monitors as CommonRakitanDataType;
         const motherboard = rakitan.motherboard as CommonRakitanDataType;
@@ -70,6 +71,7 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
   ): ComponentStorageType | undefined {
     if (!data) return undefined;
     return {
+      storageId: uuidv4(),
       id: data.product_id.toString(),
       name: data.name,
       price: data.price,
@@ -77,6 +79,7 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
       category: category,
       quantity: 1,
       slug: data.slug,
+      detail: data.datail
     };
   }
 

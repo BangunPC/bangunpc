@@ -2,6 +2,8 @@
 
 import {
   ComponentCategory,
+  ComponentDetail,
+  ComponentView,
   casingKeys,
   categoriesFromString,
   categoryHeaders,
@@ -29,16 +31,18 @@ import { getMotherboard } from "~/lib/component_api/motherboard";
 import { getPsu } from "~/lib/component_api/psu";
 import { getStorage } from "~/lib/component_api/storage";
 import {
-  ComponentStorageHelper,
+  ComponentStorage,
   ComponentStorageType,
+  SimulationStorage,
 } from "~/lib/storage_helper";
 import { componentImage } from "~/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
+import { v4 as uuidv4 } from 'uuid';
 
 const KategoriPage = ({
   params,
 }: {
-  params: { kategori: string; noTopH: boolean | null; onSuccess?: () => void };
+  params: { isCompatibiliyChecked: boolean | null; kategori: string; noTopH: boolean | null; onSuccess?: () => void };
 }) => {
   
   const [price, setPrice] = React.useState(0);
@@ -47,7 +51,7 @@ const KategoriPage = ({
 
   useEffect(() => {
     const refresh = () => {
-      const components = ComponentStorageHelper.getComponents();
+      const components = ComponentStorage.getComponents();
       setPrice(components.reduce((acc, component) => acc + component.price, 0));
       setTotal(
         components.reduce((acc, component) => acc + component.quantity, 0),
@@ -63,7 +67,7 @@ const KategoriPage = ({
   const category = categoriesFromString[params.kategori]!;
   const [hideSidebar, setHideSidebar] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState<any>();
+  const [data, setData] = React.useState<ComponentDetail[]>();
   const [error, setError] = React.useState<any>();
 
   // fetch with getMotherboard when starting to load
@@ -75,8 +79,22 @@ const KategoriPage = ({
       min_price: 0,
       max_price: 0,
     };
+    
+    const motherboard = ComponentStorage.getComponentDetail(ComponentCategory.Motherboard);
+    const casing = ComponentStorage.getComponentDetail(ComponentCategory.Casing)
+    const cpu = ComponentStorage.getComponentDetail(ComponentCategory.CPU)
+    const gpu = ComponentStorage.getComponentDetail(ComponentCategory.GPU);
+    const psu = ComponentStorage.getComponentDetail(ComponentCategory.PSU);
+    const memories = ComponentStorage.getComponentDetail(ComponentCategory.Memory);
+    // const storages = ComponentStorage.getComponentDetail(ComponentCategory.Storage)
+
+    // const storageIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Storage)
+    //   ?.map(component => parseInt(component.id, 10))
+    //   .filter(id => !isNaN(id));
+    
     switch (category) {
       case ComponentCategory.Motherboard:
+        const motherboardCompatibility = params.isCompatibiliyChecked ? { casing, cpu } : {}
         getMotherboard({}, defaultQuery)
           .then((res) => {
             setData(res);
@@ -89,6 +107,8 @@ const KategoriPage = ({
           });
         break;
       case ComponentCategory.CPU:
+        //TODO: Add memories check
+        const cpuCompatibility = params.isCompatibiliyChecked ? { motherboard, psu, gpu, memories } : {}
         getCpu({}, defaultQuery)
           .then((res) => {
             setData(res);
@@ -113,6 +133,7 @@ const KategoriPage = ({
           });
         break;
       case ComponentCategory.Memory:
+        const memoryCompatibility = params.isCompatibiliyChecked ? { memories, motherboard } : {}
         getMemory({}, defaultQuery)
           .then((res) => {
             setData(res);
@@ -273,7 +294,7 @@ const KategoriPage = ({
               {desktopSidebarButton}
               <Header
                 category={category}
-                itemCount={data?.count ?? <Spinner />}
+                itemCount={(data?.length ?? 0).toString() ?? <Spinner />}
               />
             </div>
             {loading ? (
@@ -287,7 +308,7 @@ const KategoriPage = ({
             ) : (
               <div>
                 <MobileTable
-                  data={data.filteredData}
+                  data={data}
                   headers={categoryHeaders[category]}
                   kategori={params.kategori}
                   isIframe={params.noTopH ?? false}
@@ -295,7 +316,7 @@ const KategoriPage = ({
                 />
                 <DesktopTable
                   // key={`${url.search}`}
-                  data={data.filteredData}
+                  data={data}
                   headers={categoryHeaders[category]}
                   kategori={params.kategori}
                   isIframe={params.noTopH ?? false}
@@ -395,7 +416,7 @@ const Header = ({
 );
 
 type TableType = {
-  data: any[] | undefined;
+  data: ComponentDetail[]  | undefined;
   headers: string[];
   kategori: string;
   isIframe: boolean;
@@ -430,18 +451,68 @@ const DesktopTable = ({
       </thead>
       <tbody className="h-min flex-col flex-nowrap content-start items-start justify-start gap-[3px] overflow-visible p-5">
         <tr className="h-4"></tr>
-        {data?.map((component: any) => {
-          const handleAddComponent = () => {
+        {data?.map((component) => {
+          const handleAddComponent = async () => {
             const componentAdded: ComponentStorageType = {
-              id: component.product_id,
-              name: component.product_name,
-              price: component.lowest_price,
+              storageId: uuidv4(),
+              id: component.product_id!.toString(),
+              name: component.product_name!,
+              price: component.lowest_price!,
               image: componentImage(component),
               category: categoriesFromString[kategori]!,
-              quantity: 1,
-              slug: component.slug,
+              quantity: kategori === "memory" ? (component as ComponentView["v_memories"]).amount! : 1,
+              slug: component.slug!,
+              detail: component
             };
-            ComponentStorageHelper.addComponent(componentAdded);
+            await ComponentStorage.addComponent(componentAdded);
+            const currentSimulation = SimulationStorage.getSimulationData()
+            
+            // Updating data in the simulation storage
+            switch (kategori) {
+              case "cpu":
+                const cpu = component as ComponentView["v_cpus"]
+                SimulationStorage.upsertSimulationData({
+                  currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (cpu.max_power_watt ?? 0)
+                })
+                break;
+              
+              case "motherboard":
+                const mobo = component as ComponentView["v_motherboards"]
+                const maxMemorySizeGb = (currentSimulation?.maxMemorySizeGb ?? 0) < (mobo.max_memory_gb ?? 0)  ? 
+                  (mobo.max_memory_gb ?? 0) : (currentSimulation?.maxMemorySizeGb ?? 0)
+                SimulationStorage.upsertSimulationData({
+                  availableMemorySlot: mobo.memory_slot ?? 0,
+                  maxMemorySizeGb: maxMemorySizeGb
+                })
+                break;
+
+              case "gpu":
+                const gpu = component as ComponentView["v_gpus"]
+                SimulationStorage.upsertSimulationData({
+                  currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (gpu.tdp_watt ?? 0)
+                })
+                break;
+
+              case "memory":
+                const memory = component as ComponentView["v_memories"]
+                const memoryAmount = memory.amount ?? 0
+                const capacityGb = memory.capacity_gb ?? 0
+
+                SimulationStorage.upsertSimulationData({
+                  selectedMemoryAmount: currentSimulation?.selectedMemoryAmount ?? 0 + memoryAmount,
+                  selectedMemorySizeGb:  currentSimulation?.selectedMemorySizeGb ?? 0 + (memoryAmount * capacityGb)
+                })
+                break;
+
+              case "storage":
+                SimulationStorage.upsertSimulationData({
+                  selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) + 1
+                })
+                break;
+            
+              default:
+                break;
+            }
             onSuccess?.();
             alert(
               "Komponen " + component.product_name + " berhasil ditambahkan. ",
@@ -450,20 +521,20 @@ const DesktopTable = ({
 
           const handleRedirect = () =>
             router.push(
-              `/detail/${kategori}/${component.slug}-${component.product_id}${isIframe ? "?iframe=true" : ""}`,
+              `/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`,
             );
           return (
             <>
               <tr
-                data-href={`/detail/${kategori}/${component.slug}-${component.product_id}${isIframe ? "?iframe=true" : ""}`}
+                data-href={`/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
                 key={component.product_id}
                 className="h-[56px] cursor-pointer transition-transform hover:z-10 hover:scale-[1.01]"
               >
                 <td className="w-16">
                   <Link
-                    href={`/detail/${kategori}/${component.slug}-${component.product_id}${isIframe ? "?iframe=true" : ""}`}
+                    href={`/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
                   >
-                    {component.image_filenames.length > 0 && (
+                    {component.image_filenames!.length> 0 && (
                       <Image
                         src={componentImage(component)}
                         alt={`Gambar ${component.product_name}`}
@@ -511,18 +582,62 @@ const DesktopTable = ({
 const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
   return (
     <div className="flex flex-col gap-1 transition-all duration-200 tablet:hidden">
-      {data?.map((component: any) => {
+      {data?.map((component) => {
         const handleAddComponent = () => {
           const componentAdded: ComponentStorageType = {
-            id: component.product_id,
-            name: component.product_name,
-            price: component.lowest_price,
+            storageId: uuidv4(),
+            id: component.product_id!.toString(),
+            name: component.product_name!,
+            price: component.lowest_price!,
             image: componentImage(component),
             category: categoriesFromString[kategori]!,
             quantity: 1,
-            slug: component.slug,
+            slug: component.slug!,
+            detail: component
           };
-          ComponentStorageHelper.addComponent(componentAdded);
+
+          ComponentStorage.addComponent(componentAdded);
+          const currentSimulation = SimulationStorage.getSimulationData()
+          
+          // Updating data in the simulation storage
+          console.log(kategori);
+          
+          switch (kategori) {
+            case "cpu":
+              const cpu = component as ComponentView["v_cpus"]
+              SimulationStorage.upsertSimulationData({
+                currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (cpu.max_power_watt ?? 0)
+              })
+              break;
+
+            case "gpu":
+              const gpu = component as ComponentView["v_gpus"]
+              SimulationStorage.upsertSimulationData({
+                currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (gpu.tdp_watt ?? 0)
+              })
+              break;
+
+            case "memory":
+              const memory = component as ComponentView["v_memories"]
+              const memoryAmount = memory.amount ?? 0
+              const capacityGb = memory.capacity_gb ?? 0
+
+              SimulationStorage.upsertSimulationData({
+                selectedMemoryAmount: currentSimulation?.selectedMemoryAmount ?? 0 + memoryAmount,
+                selectedMemorySizeGb:  currentSimulation?.selectedMemorySizeGb ?? 0 + (memoryAmount * capacityGb)
+              })
+              break;
+
+            case "storage":
+              SimulationStorage.upsertSimulationData({
+                selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) + 1
+              })
+              break;
+          
+            default:
+              break;
+          }
+
           alert(
             "Komponen " + component.product_name + " berhasil ditambahkan. ",
           );
@@ -534,11 +649,11 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
             className="dark:texthover:bg-zinc-700 rounded-xl border bg-white p-2 shadow-lg transition-all hover:border-zinc-300 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:border-zinc-600 dark:hover:bg-zinc-700"
           >
             <Link
-              href={`/detail/${kategori}/${component.slug}/${component.product_id}`}
+              href={`/katalog/${kategori}/${component.slug}`}
               className="flex flex-row items-center gap-1"
             >
               <div className="flex flex-1 flex-row items-center gap-2">
-                {component.image_filenames.length > 0 && (
+                {component.image_filenames!.length > 0 && (
                   <Image
                     src={componentImage(component)}
                     alt={`Gambar ${component.product_name}`}

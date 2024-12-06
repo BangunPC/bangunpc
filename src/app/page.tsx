@@ -171,7 +171,7 @@ function HeroSection() {
           </Button>
         </div>
         <p className="pt-16 text-lg text-gray-500 dark:text-gray-300">
-          Terafiliasi dengan marketplace favorit kamu
+          Temukan komponen PC di marketplace favoritmu
         </p>
         <div className="flex flex-row gap-16 pt-8">
           <Image

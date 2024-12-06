@@ -24,7 +24,9 @@ export type MotherboardFilter = {
 
 export type CpuCompatibility = {
   motherboardId?: number | undefined;
-  memories?: { id: number; amount: number }[] | undefined;
+  gpuId?: number | undefined;
+  psuId?: number | undefined;
+  memoryIds?: number[] | undefined;
 };
 
 export type CpuFilter = {

@@ -17,10 +17,11 @@ import KategoriRam from "~/components/ui/icon/kategori-ram";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
   ComponentCategory,
+  ComponentView,
   categoriesFromEnum,
   categoriesFromString,
 } from "~/lib/db";
-import { ComponentStorage, ComponentStorageType } from "~/lib/storage_helper";
+import { ComponentStorage, ComponentStorageType, SimulationStorage } from "~/lib/storage_helper";
 import { createQueryString, removeQueryString } from "~/lib/utils";
 import KategoriPage from "../katalog/[kategori]/page";
 import useSWR from "swr";
@@ -56,7 +57,7 @@ export default function SimulasiPage({
 }) {
   const isComponent = params?.params?.id ?? null;
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()!;
 
   const [kategori, setKategori] = useState<string | null>(null);
 
@@ -153,7 +154,7 @@ export default function SimulasiPage({
     },
   ];
 
-  const refresh = () => {
+  const refresh = async () => {
     if (isComponent) {
       setComponentCpu(params?.cpu ? [params?.cpu] : []);
       // setComponentCpuCooler(params?.cpu_cooler ? [params?.cpu_cooler] : []);
@@ -169,28 +170,28 @@ export default function SimulasiPage({
       return;
     }
     setComponentCpu(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.CPU),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.CPU),
     );
     // setComponentCooler(
     //   ComponentStorage.getComponentsByCategory(ComponentCategory.Cooler),
     // );
     setComponentMotherboard(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Motherboard),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.Motherboard),
     );
     setComponentMemory(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Memory),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.Memory),
     );
     setComponentStorage(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Storage),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.Storage),
     );
     setComponentGpu(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.GPU),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.GPU),
     );
     setComponentPsu(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.PSU),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.PSU),
     );
     setComponentCasing(
-      ComponentStorage.getComponentsByCategory(ComponentCategory.Casing),
+      await ComponentStorage.getComponentsByCategory(ComponentCategory.Casing),
     );
     // setComponentCaseFan(
     //   ComponentStorage.getComponentsByCategory(ComponentCategory.CaseFan),
@@ -236,6 +237,7 @@ export default function SimulasiPage({
     // setComponentPrinter(
     //   ComponentStorage.getComponentsByCategory(ComponentCategory.Printer),
     // );
+    SimulationStorage.initializeData()
   };
 
   useEffect(() => {
@@ -247,27 +249,26 @@ export default function SimulasiPage({
     return () => clearInterval(interval);
   }, []);
 
-  type cpuQuery = {
-    motherboardId: number | undefined;
-    memories: { id: number; amount: number }[] | undefined;
-  };
+  // type cpuQuery = {
+  //   motherboardId: number | undefined;
+  //   memories: { id: number; amount: number }[] | undefined;
+  // };
 
   const handleAddComponent = (item: (typeof components)[0]) => {
-    let query = {} as any;
-    switch (item.title) {
-      case "CPU":
-        query = {} as cpuQuery;
-        if (motherboard.length > 0) {
-          query.motherboardId = parseInt(motherboard[0]!.id);
-        }
-        if (memory.length > 0) {
-          query.memories = memory.map((item) => ({
-            id: parseInt(item.id),
-            amount: item.quantity,
-          }));
-        }
-        break;
-    }
+    // switch (item.title) {
+    //   case "CPU":
+    //     let query = {} as cpuQuery;
+    //     if (motherboard.length > 0) {
+    //       query.motherboardId = parseInt(motherboard[0]!.id);
+    //     }
+    //     if (memory.length > 0) {
+    //       query.memories = memory.map((item) => ({
+    //         id: parseInt(item.id),
+    //         amount: item.quantity,
+    //       }));
+    //     }
+    //     break;
+    // }
 
     const params = createQueryString(
       searchParams,
@@ -289,28 +290,67 @@ export default function SimulasiPage({
   const handleClear = () => {
     if (!isComponent) {
       ComponentStorage.clear();
+      SimulationStorage.clear();
     }
   };
 
-  const handleRemoveComponent = (id: string) => {
+  const handleRemoveComponent = (component: ComponentStorageType) => {
     if (!isComponent) {
-      ComponentStorage.removeComponentById(id);
+      ComponentStorage.removeComponentById(component.storageId);
+      const currentSimulation = SimulationStorage.getSimulationData()
+
+      // Updating data in the simulation storage
+      switch (component.category) {
+        case ComponentCategory.CPU:
+          const cpu = component.detail as ComponentView["v_cpus"]
+          SimulationStorage.upsertSimulationData({
+            currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) - (cpu.max_power_watt ?? 0)
+          })
+          break;
+
+        case ComponentCategory.GPU:
+          const gpu = component.detail as ComponentView["v_gpus"]
+          SimulationStorage.upsertSimulationData({
+            currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) - (gpu.tdp_watt ?? 0)
+          })
+          break;
+
+        case ComponentCategory.Memory:
+          const memory = component.detail as ComponentView["v_memories"]
+          const memoryAmount = memory.amount ?? 0
+          const capacityGb = memory.capacity_gb ?? 0
+
+          SimulationStorage.upsertSimulationData({
+            selectedMemoryAmount: (currentSimulation?.selectedMemoryAmount ?? 0) - memoryAmount,
+            selectedMemorySizeGb:  (currentSimulation?.selectedMemorySizeGb ?? 0) - (capacityGb + memoryAmount)
+          })
+          break;
+
+        case ComponentCategory.Storage:
+          SimulationStorage.upsertSimulationData({
+            selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) - 1
+          })
+          break;
+      
+        default:
+          break;
+      }
     }
   };
 
   return (
     <div className="m-auto mt-1 w-full max-w-screen-desktop p-4">
-      <header className="flex text-3xl font-semibold">
+      <header className="flex text-3xl font-semibold mt-4">
         <span className="whitespace-nowrap">
           {isComponent ? "TODO: Nama Rakitan" : "Simulasi Rakit PC"}
         </span>
-        {!isComponent && (
+        {/* {!isComponent && (
           <span className="ml-2 text-base italic">
             Versi Alpha, kompatibilitas tidak dijamin 100%
           </span>
-        )}
+        )} */}
       </header>
-      <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-4 p-4">
+      <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-4">
         <div className="flex justify-end gap-2">
           {!isComponent && (
             <Button
@@ -324,7 +364,7 @@ export default function SimulasiPage({
                   handleClear();
                 }
               }}
-              className="text-lg"
+              className="text-base"
             >
               <Undo2 className="mr-2 inline-block" />
               Reset Pilihan
@@ -378,18 +418,18 @@ export default function SimulasiPage({
                         <span className="rounded-sm p-1 dark:bg-white">
                           {item.icon}
                         </span>
-                        <span className="ml-1">{item.title}</span>
+                        <span className="ml-2">{item.title}</span>
                       </div>
                     </td>
                     <td>
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-2">
                         {item.components.map((component) => (
                           <Link
-                            key={component.id}
+                            key={component.storageId}
                             className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                            href={`/detail/${
+                            href={`/katalog/${
                               categoriesFromEnum[component.category]
-                            }/${component.slug}-${component.id}`}
+                            }/${component.slug}`}
                             passHref
                           >
                             <Image
@@ -398,35 +438,50 @@ export default function SimulasiPage({
                               height={32}
                               alt={component.name}
                             />
-                            <span className="ml-1">{component.name}</span>
+                            <span className="ml-2">{component.name}</span>
                           </Link>
                         ))}
-                        {item.components.length == 0 ? (
+                        {item.components.length === 0 ? (
                           <Button
-                            className="w-fit text-lg text-white"
+                            className="w-fit text-base h-9 text-white my-2"
                             onClick={() => handleAddComponent(item)}
                           >
                             + Pilih {item.title}
                           </Button>
                         ) : (
-                          (item.title == "Memory" ||
-                            item.title == "Storage") && (
-                            <Button
-                              variant="outline"
-                              className="w-fit text-lg"
-                              onClick={() => handleAddComponent(item)}
-                            >
-                              + {item.title}
-                            </Button>
-                          )
+                          <>
+                            {item.title === "Memory" && (
+                              <Button
+                                variant="outline"
+                                className="w-fit text-base my-2"
+                                disabled={
+                                  item.components.reduce((total, item) => 
+                                    total + item.quantity, 0) >= (SimulationStorage.getSimulationData()?.selectedMemoryAmount ?? 2)}
+                                onClick={() => handleAddComponent(item)}
+                              >
+                                + {item.title}
+                              </Button>
+                            )}
+                            {item.title === "Storage" && (
+                              <Button
+                                variant="outline"
+                                className="w-fit text-base my-2"
+                                disabled={item.kategori === ComponentCategory.Storage}
+                                onClick={() => handleAddComponent(item)}
+                              >
+                                + {item.title}
+                              </Button>
+                            )}
+                          </>
                         )}
+
                       </div>
                     </td>
                     <td>
                       <div className="flex flex-col gap-1">
                         {item.components.map((component) => (
-                          <div key={component.id} className="flex h-[38px]">
-                            <span className="my-auto whitespace-nowrap text-start">
+                          <div key={component.storageId} className="flex h-[48px] flex-row items-center">
+                            <span className="whitespace-nowrap">
                               {component.price
                                 ? `Rp ${component.price.toLocaleString(
                                     "id-ID",
@@ -464,12 +519,12 @@ export default function SimulasiPage({
                       <div className="flex h-full flex-col gap-1">
                         {item.components.map((component) => (
                           <div
-                            key={component.id}
-                            className="flex flex-row items-center gap-1"
+                            key={component.storageId}
+                            className="flex flex-row items-center gap-1 my-2"
                           >
                             <Button
                               variant="destructive"
-                              className="h-[24px] items-center text-white "
+                              className="h-8 items-center text-white "
                               onClick={() => {
                                 if (item.components.length > 0) {
                                   if (
@@ -477,7 +532,7 @@ export default function SimulasiPage({
                                       "Apakah Anda yakin ingin menghapus komponen ini?",
                                     )
                                   ) {
-                                    handleRemoveComponent(component.id);
+                                    handleRemoveComponent(component);
                                   }
                                 }
                               }}
@@ -526,6 +581,7 @@ export default function SimulasiPage({
               {kategori && categoriesFromString[kategori] && (
                 <KategoriPage
                   params={{
+                    isCompatibiliyChecked: true,
                     kategori: kategori,
                     noTopH: true,
                     onSuccess: () => {
@@ -591,7 +647,7 @@ const ManageListModal: React.FC<MLMProps> = ({
         <Button
           variant="success"
           disabled={disabled}
-          className="text-lg text-white"
+          className="text-base text-white"
         >
           <Save className="mr-2 inline-block" />
           Simpan

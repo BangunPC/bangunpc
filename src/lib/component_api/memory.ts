@@ -106,5 +106,5 @@ export const getMemory = async (
     throw error;
   }
 
-  return { filteredData, count: filteredData.length };
+  return filteredData;
 };

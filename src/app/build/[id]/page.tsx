@@ -51,7 +51,7 @@ export default async function HasilPage({
   );
 }
 // export async function generateMetadata() {
-//     const params = useSearchParams();
+//     const params = useSearchParams()!;
 //   const type = params.get("type")!;
 
 //   const component = await getDetails(params);

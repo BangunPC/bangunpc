@@ -92,5 +92,5 @@ export const getCasing = async (
     throw error;
   }
 
-  return { filteredData, count: filteredData.length };
+  return filteredData;
 };

@@ -1,3 +1,4 @@
+import { ComponentDetail, ComponentView } from "../db";
 import { createClient } from "../supabase/client";
 import { MotherboardCompatibility, MotherboardFilter } from "./filter";
 
@@ -35,13 +36,14 @@ export const getMotherboard = async (
 
   // filter end
 
-  const { data: motherboardData, error } = await client_query;
+  const { data, error } = await client_query;
+  const motherboardData = data as ComponentDetail[];
 
   if (!motherboardData) {
     throw new Error("Motherboard data is null");
   }
 
-  let filteredData = motherboardData;
+  let filteredData = motherboardData as ComponentView["v_motherboards"][];
 
   // compatibility start
 
@@ -89,7 +91,7 @@ export const getMotherboard = async (
     if (!memoryData) {
       throw new Error("Memory data is null");
     }
-
+    
     if (memoryData && memoryData.length > 0) {
       filteredData = filteredData.filter((motherboard) => {
         const memoryCount = memories.reduce(
@@ -125,5 +127,5 @@ export const getMotherboard = async (
 
   // compatibility end
 
-  return { filteredData, count: filteredData.length };
+  return filteredData;
 };

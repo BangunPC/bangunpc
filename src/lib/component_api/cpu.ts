@@ -1,8 +1,9 @@
+import { ComponentDetail, ComponentView } from "../db";
 import { createClient } from "../supabase/client";
 import { CpuCompatibility, CpuFilter } from "./filter";
 
 export const getCpu = async (
-  { motherboardId, memories }: CpuCompatibility,
+  { motherboardId, psuId, gpuId, memoryIds }: CpuCompatibility,
   {
     query,
     base_clock_ghz,
@@ -112,22 +113,23 @@ export const getCpu = async (
 
   // filter end
 
-  const { data: cpuData, error } = await client_query;
+  const { data, error } = await client_query;
+  const cpuData = data as ComponentDetail[]
 
   if (!cpuData) {
     throw new Error("CPU data is null");
   }
 
-  let filteredData = cpuData;
+  let filteredData = cpuData as ComponentView["v_cpus"][];
 
   // compatibility start
-
   if (motherboardId) {
     const { data: motherboardData } = await client
       .schema("product")
       .from("v_motherboards")
-      .select()
+      .select('cpu_socket_id')
       .eq("product_id", motherboardId);
+
     if (!motherboardData) {
       throw new Error("Motherboard data is null");
     }
@@ -140,43 +142,107 @@ export const getCpu = async (
       (cpu) => cpu.cpu_socket_id == cpuSocketId,
     );
   }
-  if (memories) {
-    const { data: memoryData, error } = await client
-      .schema("product")
-      .from("v_memories")
-      .select("product_id, memory_type, capacity_gb, amount")
-      .in(
-        "product_id",
-        memories.map((memory) => memory.id),
-      );
 
-    if (!memoryData || error !== null || memoryData.length === 0) {
-      return { filteredData, count: filteredData.length };
+  if (psuId) {
+    const { data: psuData } = await client
+      .schema("product")
+      .from("v_power_supplies")
+      .select('wattage')
+      .eq("product_id", psuId)
+      .single();
+
+    if (!psuData) {
+      throw new Error("PSU data is null");
     }
 
-    const memoryType = memoryData[0]?.memory_type;
-    if (memoryData.some((memory) => memory.memory_type !== memoryType)) {
-      console.log("Memory type mismatch");
+    let psuWatt = psuData?.wattage;
+    if (psuWatt == null) {
+      throw new Error("PSU wattage is null");
+    }
+
+    let gpuPowerWatt = 0;
+    if(gpuId) {
+      const { data: gpuData } = await client
+      .schema("product")
+      .from("v_gpus")
+      .select('tdp_watt, min_psu_watt')
+      .eq("product_id", psuId)
+      .single();
+
+      if (!gpuData) {
+        throw new Error("PSU data is null");
+      }
+
+      gpuPowerWatt = gpuData.tdp_watt!;
+      psuWatt = gpuData.min_psu_watt!;
+    }
+
+    // Suppose the psu efficiency is 80%, 
+    // 120% extra watt of component power
+    // 50 watt for other component
+    const availablePowerWatt = psuWatt * 0.8 - gpuPowerWatt * 1.2 + 50
+
+    filteredData = filteredData.filter((cpu) => 
+      (cpu.max_power_watt! < psuWatt) &&
+      (cpu.max_power_watt! * 1.2 < availablePowerWatt)
+    );
+  }
+
+  if (memoryIds) {
+    interface MemoryData {
+      product_id: number | null;
+      memory_type: "DDR3" | "DDR4" | "DDR5" | null;
+      capacity_gb: number | null;
+      amount: number | null;
+    }
+    const memoryData: MemoryData[] = []    
+
+    for (const memoryId of memoryIds) {
+      const { data, error } = await client
+        .schema("product")
+        .from("v_memories")
+        .select("product_id, memory_type, capacity_gb, amount")
+        .eq("product_id", memoryId)
+        .single()
+
+      if (error) 
+        console.error(`Error fetching data for memoryId ${memoryId}:`, error);
+      else
+        memoryData.push(data);
+    }    
+    
+    if (!memoryData || error !== null || memoryData.length === 0) {
+      return filteredData;
+    }
+
+    // All selected memory's type should be same 
+    const firstMemoryType = memoryData[0]?.memory_type;
+    if (memoryData.some((memory) => memory.memory_type !== firstMemoryType)) {
+      alert("Memory type mismatch");
       filteredData = [];
     } else {
-      filteredData = filteredData.filter(() => {
-        const totalMemory = memoryData.reduce((total, memory) => {
-          const inputMemory = memories.find(
-            (inputMemory) => inputMemory.id === memory.product_id,
-          ) ?? { amount: 0 };
-          return total + (memory.amount ?? 0) * inputMemory.amount;
-        }, 0);
-        // return (cpu.max_memory_gb ?? 0) >= totalMemory;
-        // TODO: Fix this
-        return 0 >= totalMemory;
-      });
+      const totalMemorySizeGB = memoryData.reduce((total, memory) => {
+          return total + (memory.capacity_gb ?? 0) * (memory.amount ?? 0)
+      }, 0);
+
+      filteredData = filteredData.filter((cpu) => (cpu.max_memory_gb ?? 0) >= totalMemorySizeGB);
+
+      // const totalMemory = memoryData.reduce((total, memory) => {
+      //   return total + (memory.amount ?? 0); //* inputMemory.amount
+      //   //? For temporary, not use amount when selecting component, id only
+      //   // const inputMemory = memories.find(
+      //   //   (inputMemory) => inputMemory.id === memory.product_id,
+      //   // ) ?? { amount: 0 };
+      // }, 0);
+      
     }
   }
+  
   if (error) {
     throw error;
   }
 
   // compatibility end
 
-  return { filteredData, count: filteredData.length };
+  return filteredData;
 };

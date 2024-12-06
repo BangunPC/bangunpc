@@ -1,7 +1,6 @@
 export const runtime = "edge";
 
 import "~/styles/globals.css";
-
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
@@ -19,7 +18,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Rakit PC Impianmu | Bangun PC",
   description:
-    "Solusi praktis dalam memilih dan merakit komponen-komponen PC sesuai dengan kebutuhan dan budget yang dimiliki yang terafiliasi dengan e-commerce di Indonesia",
+    "Solusi praktis dalam memilih dan merakit komponen-komponen PC sesuai dengan kebutuhan dan budget yang dimiliki yang terhubung dengan e-commerce di Indonesia",
   icons: [{ rel: "icon", url: "/favicon.svg" }],
 };
 
@@ -39,9 +38,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className={`${inter.variable} bg-background text-foreground`}>
-              <Navbar  />
-              <div className="mt-navbar-min-h">{children}</div>
+            <div className={`${inter.variable} bg-background text-foreground flex flex-col min-h-1.2-screen dark:bg-gray-800`}>
+              <Navbar />
+              <div className="flex-grow mt-navbar-min-h mb-10">
+
+                {children}
+              </div>
               <Footer />
             </div>
           </ThemeProvider>

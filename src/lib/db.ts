@@ -100,7 +100,13 @@ export const categoryTitlesFromEnum: Record<ComponentCategory, string> = {
   [ComponentCategory.CaseFan]: "Case Fan",
 };
 
-type ViewKeys = keyof Database["product"]["Views"];
+type DBView = Database["product"]["Views"];
+type ViewKeys = keyof DBView;
+type ComponentViewKeys = Exclude<ViewKeys, "v_products" | "v_product_details"| "v_product_images">;
+export type ComponentView = {
+  [K in ViewKeys]: DBView[K]["Row"];
+};
+export type ComponentDetail =  DBView[ComponentViewKeys]["Row"];
 
 export const categoryViewsFromEnum: Record<ComponentCategory, ViewKeys | null> =
   {
@@ -128,6 +134,31 @@ export const categoryViewsFromEnum: Record<ComponentCategory, ViewKeys | null> =
     [ComponentCategory.CaseFan]: null,
   };
 
+  export type ComponentDetailMap = {
+    [ComponentCategory.Motherboard]: ComponentView["v_motherboards"];
+    [ComponentCategory.CPU]: ComponentView["v_cpus"];
+    [ComponentCategory.GPU]: ComponentView["v_gpus"];
+    [ComponentCategory.Memory]: ComponentView["v_memories"][];
+    [ComponentCategory.PSU]: ComponentView["v_power_supplies"];
+    [ComponentCategory.Storage]: ComponentView["v_internal_storages"][];
+    [ComponentCategory.Casing]: ComponentView["v_casings"];
+    [ComponentCategory.Headphone]: undefined;
+    [ComponentCategory.Keyboard]: undefined;
+    [ComponentCategory.Mouse]: undefined    
+    [ComponentCategory.Speaker]: undefined
+    [ComponentCategory.Webcam]: undefined 
+    [ComponentCategory.Printer]: undefined 
+    [ComponentCategory.Monitor]: undefined    
+    [ComponentCategory.OS]: undefined    
+    [ComponentCategory.SoundCard]: undefined    
+    [ComponentCategory.WiredNetwork]: undefined
+    [ComponentCategory.WirelessNetwork]: undefined
+    [ComponentCategory.Cable]: undefined   
+    [ComponentCategory.ExternalDrive]: undefined    
+    [ComponentCategory.Cooler]: undefined;
+    [ComponentCategory.CaseFan]: undefined;
+  };
+  
 export const casingHeaders = [
   "Brand Name",
   "Casing Type",
