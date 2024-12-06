@@ -56,8 +56,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { ModeToggle } from "./mode-toggle";
 import { FloatingNav } from "./floating-navbar";
 import FormRegister from "../register/from-register";
-import FeedbackModal from "./FeedbackModal";
+import FeedbackDialog from "./feedback-dialog";
 import { componentImage } from "~/lib/utils";
+import { SearchDialog } from "../common/search-dialog";
 
 export const components = [
   {
@@ -175,9 +176,6 @@ export function Navbar() {
   const supabase = createClient();
 
   const [user, setUser] = React.useState<SupabaseUser | null>(null);
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [searchResults, setSearchResults] = React.useState<Database['product']['Tables']['products']['Row'][] | null>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
   const path = usePathname();
 
   function refreshAuth() {
@@ -205,39 +203,6 @@ export function Navbar() {
     console.log("PATHNAME: ", path);
     refreshAuth();
   }, [path]);
-
-  React.useEffect(() => {
-    const fetchSearchResults = async () => {
-      if (searchQuery.length > 2) {
-        setIsLoading(true);
-        try {
-          const { data, error } = await search(searchQuery);
-          if (!error) {
-            setSearchResults(data.map((product) => ({
-              ...product,
-              id: product.product_id,
-              name: product.product_name,
-              is_published: true,
-              product_fts: null,
-              product_trgms: null,
-            })));
-          } else {
-            console.error('Error fetching search results:', error);
-            setSearchResults([]);
-          }
-        } catch (error) {
-          console.error('Error fetching search results:', error);
-        } finally {
-          setIsLoading(false);
-        }
-      } else {
-        setSearchResults([]);
-      }
-    };
-
-    const debounceTimer = setTimeout(fetchSearchResults, 300);
-    return () => clearTimeout(debounceTimer);
-  }, [searchQuery]);
 
   const router = useRouter();
   const searchParams = useSearchParams()!;
@@ -357,17 +322,6 @@ export function Navbar() {
       </DialogContent>
     </Dialog>
   );
-
-  const getCategorySlug = (categoryName: string) => {
-    switch (categoryName.toLowerCase()) {
-      case 'power supply':
-        return 'psu';
-      case 'internal storage':
-        return 'storage';
-      default:
-        return categoryName.toLowerCase().replace(/\s+/g, '-');
-    }
-  };
 
   return (
     <FloatingNav>
@@ -559,61 +513,8 @@ export function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
           <div className="flex flex-col justify-center items-center gap-4 tablet:flex-row tablet:justify-end">
-            <Dialog>
-              <DialogTrigger>
-                <Search size={20} className="cursor-pointer" />
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[1000px] max-h-[95vh] overflow-y-auto fit-content">
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-25"
-                  />
-                  {isLoading ? (
-                    <div className="text-center">Loading...</div>
-                  ) : (
-                    <div className="flex justify-center">
-                      <div className="w-full max-w-4xl overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200">
-                          <thead className="bg-gray-50">
-                            <tr>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-white divide-y divide-gray-200">
-                            {searchResults?.map((result: any) => (
-                              <tr key={result.product_id} className="tablet:table-row">
-                                <td className="px-6 py-4 whitespace-nowrap flex items-center">
-                                  <Image src={componentImage(result)} alt={result.product_name} width={64} height={64} className="h-16 w-16 object-contain mr-4" />
-                                  {result.product_name}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">{result.category_name}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">Rp {result.lowest_price.toLocaleString()}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                  {/* still error on category params */}
-                                <Link href={`/katalog/${getCategorySlug(result.category_name)}/${encodeURIComponent(result.product_name.replace(/\s+/g, '-').toLowerCase())}`} passHref>
-                                    <Button variant="default" className="text-white">
-                                      Buy
-                                    </Button>
-                                  </Link>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </DialogContent>
-            </Dialog>
-
+            <SearchDialog/>
+            <FeedbackDialog />
             {user ? profileButton : (
               <>
                 {loginButton}
@@ -691,7 +592,6 @@ export function Navbar() {
         </>
 
       )}
-      <FeedbackModal />
     </FloatingNav>
   );
 }
