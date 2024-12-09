@@ -94,7 +94,7 @@ const KategoriPage = ({
     
     switch (category) {
       case ComponentCategory.Motherboard:
-        const motherboardCompatibility = params.isCompatibiliyChecked ? { casing, cpu } : {}
+        // const motherboardCompatibility = params.isCompatibiliyChecked ? { casing, cpu } : {}
         getMotherboard({}, defaultQuery)
           .then((res) => {
             setData(res);
@@ -108,7 +108,7 @@ const KategoriPage = ({
         break;
       case ComponentCategory.CPU:
         //TODO: Add memories check
-        const cpuCompatibility = params.isCompatibiliyChecked ? { motherboard, psu, gpu, memories } : {}
+        // const cpuCompatibility = params.isCompatibiliyChecked ? { motherboard, psu, gpu, memories } : {}
         getCpu({}, defaultQuery)
           .then((res) => {
             setData(res);
@@ -133,7 +133,7 @@ const KategoriPage = ({
           });
         break;
       case ComponentCategory.Memory:
-        const memoryCompatibility = params.isCompatibiliyChecked ? { memories, motherboard } : {}
+        // const memoryCompatibility = params.isCompatibiliyChecked ? { memories, motherboard } : {}
         getMemory({}, defaultQuery)
           .then((res) => {
             setData(res);

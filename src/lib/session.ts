@@ -51,6 +51,6 @@ export async function getSession() {
   return { userID: session.userId }
 }
 
-export async function deleteSession() {
+export function deleteSession() {
   cookies().delete(cookie.name)
 }
