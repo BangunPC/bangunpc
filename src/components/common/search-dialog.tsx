@@ -66,61 +66,42 @@ export function SearchDialog() {
       <DialogTrigger asChild>
         <Search size={20} className="cursor-pointer" />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-fit max-h-[95vh] overflow-y-auto">
-        <div className={searchResults.length !== 0 ? '' : ''}>
-          {/* Input Search */}
-          <div className="sticky top-0 w-full">
-            <input
-              type="text"
-              placeholder="Cari Komponen PC..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-25"
-            />
-          </div>
-
-          {/* Loading State */}
+      <DialogContent className="sm:max-w-[1000px] max-h-[95vh] overflow-y-auto fit-content">
+        <div className={searchResults.length !== 0 ? 'space-y-4' : ''}>
+          <input
+            type="text"
+            placeholder="Cari Komponen PC..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-25"
+          />
           {isLoading ? (
-            <div className="text-center mt-4">Loading...</div>
+            <div className="text-center">Loading...</div>
           ) : searchResults.length !== 0 ? (
-            <div className="flex justify-center mt-4">
-              <div className="w-full max-w-screen-lg overflow-x-auto">
+            <div className="flex justify-center">
+              <div className="w-full max-w-4xl overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                    </tr>
+                  </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {searchResults.map((result: any) => (
-                      <tr key={result.product_id} className="tablet:table-row space-x-4">
-                        <td className="px-6 py-2 whitespace-nowrap flex items-center">
-                          <Image
-                            src={componentImage(result)}
-                            alt={result.product_name}
-                            width={64}
-                            height={64}
-                            className="h-16 w-16 object-contain mr-4"
-                          />
-                          <div className="flex flex-col max-w-lg">
-                            <div
-                              className="w-full font-semibold text-base truncate max-w-[250px]"
-                              title={result.product_name}
-                            >
-                              {result.product_name}
-                            </div>
-                            <div className="text-slate-500 font-semibold text-sm">
-                              {result.category_name}
-                            </div>
-                          </div>
+                      <tr key={result.product_id} className="tablet:table-row">
+                        <td className="px-6 py-4 whitespace-nowrap flex items-center">
+                          <Image src={componentImage(result)} alt={result.product_name} width={64} height={64} className="h-16 w-16 object-contain mr-4" />
+                          {result.product_name}
                         </td>
+                        <td className="px-6 py-4 whitespace-nowrap">{result.category_name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Rp {result.lowest_price.toLocaleString()}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          Rp {result.lowest_price.toLocaleString()}
-                        </td>
-                        <td className="px-6 whitespace-nowrap">
-                          <Link
-                            href={`/katalog/${getCategorySlug(result.category_name)}/${encodeURIComponent(
-                              result.product_name.replace(/\s+/g, '-').toLowerCase()
-                            )}`}
-                            passHref
-                          >
-                            <Button size="sm" variant="default" className="text-white">
-                              Beli
+                          <Link href={`/katalog/${getCategorySlug(result.category_name)}/${encodeURIComponent(result.product_name.replace(/\s+/g, '-').toLowerCase())}`} passHref>
+                            <Button variant="default" className="text-white">
+                              Buy
                             </Button>
                           </Link>
                         </td>
@@ -131,11 +112,10 @@ export function SearchDialog() {
               </div>
             </div>
           ) : searchQuery.trim().length !== 0 && (
-            <div className="text-center mt-4">No results found.</div>
+            <div className="text-center">No results found.</div>
           )}
         </div>
       </DialogContent>
-
     </EmptyDialog>
   )
 }
