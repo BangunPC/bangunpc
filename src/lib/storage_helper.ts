@@ -48,13 +48,13 @@ export type ComponentStorageType = {
 
 export class ComponentStorageHelper {
   static async addComponent(component: ComponentStorageType) {
-    await fetch('/api/data', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ sessionKey: component.storageId, value: component }),
-    });
+    // await fetch('/api/data', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ sessionKey: component.storageId, value: component }),
+    // });
     // setInput('');
     // // Refresh data
     // fetch('/api/data')
@@ -73,12 +73,8 @@ export class ComponentStorageHelper {
     // const components: ComponentStorageType[] =
     //   LocalStorageHelper.getItem("components") ?? [];
 
-    const components = await fetch('/api/data')
-      .then(response => response.json())
-      .then(data => data.value);
-    
-    console.log(components);
-    
+    const components: ComponentStorageType[] =
+      LocalStorageHelper.getItem("components") ?? [];  
       
     return components.filter((component: any) => component.category === category);
   }
