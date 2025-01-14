@@ -10,7 +10,7 @@ import {
   AccordionTrigger,
 } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
-import { categoryTitlesFromEnum, ComponentCategory } from "~/lib/db";
+import { categoryEnumToTitle, ComponentCategory } from "~/lib/db";
 
 // TODO: fix colors
 
@@ -125,9 +125,9 @@ const Component = ({
             )}
             <span>
               Kategori:{" "}
-              <Link className="text-primary" href={"/katalog/" + type} passHref>
+              <Link className="text-primary" href={"/produk/" + type} passHref>
                 <Button variant="link" className="p-0 text-base">
-                  {categoryTitlesFromEnum[category]}
+                  {categoryEnumToTitle[category]}
                 </Button>
               </Link>
             </span>

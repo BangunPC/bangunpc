@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {  Send, MessageCircle } from 'lucide-react';
 import { createClient } from '~/lib/supabase/client'; // Adjust the import path as necessary
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
-import { Button } from './button';
+import { Button } from '../ui/button';
 
 const FeedbackDialog: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

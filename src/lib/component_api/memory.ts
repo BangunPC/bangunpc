@@ -67,7 +67,7 @@ export const getMemory = async (
       );
     });
 
-    // TODO(katalog): account for quantity, not amount
+    // TODO(produk): account for quantity, not amount
     if (memories) {
       // Fetching memory required data
       const { data: memoryData, error } = await client

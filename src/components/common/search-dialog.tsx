@@ -1,28 +1,62 @@
 import {
-  EmptyDialog,
   DialogContent,
-  DialogTrigger,
-} from "~/components/ui/empty-dialog"
-import { Search } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { componentImage } from "~/lib/utils";
-import { Button } from "../ui/button";
-import { Database } from "~/lib/schema";
-import React from "react";
-import { search } from "~/lib/api";
+} from "~/components/ui/dialog"
+import { Loader2, Search } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { componentImage } from "~/lib/utils"
+import { Button } from "../ui/button"
+import { Database } from "~/lib/schema"
+import { useState, useEffect, useCallback } from "react"
+import { search } from "~/lib/api"
+import { Command as CommandPrimitive } from 'cmdk'
+import { Dialog, DialogProps } from "@radix-ui/react-dialog"
+import { useRouter } from "next/navigation"
+import { categoryTitleToSlug } from "~/lib/db"
 
-export function SearchDialog() {
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [searchResults, setSearchResults] = React.useState<Database['product']['Tables']['products']['Row'][]>([])
-  const [isLoading, setIsLoading] = React.useState(false)
+const searchItems = [
+  {
+    title: 'Home',
+    url: '/',
+  },
+  {
+    title: 'Blog',
+    url: '/blog',
+  },
+  {
+    title: 'Products',
+    url: '/products',
+  },
+  {
+    title: 'Contact',
+    url: '/contact',
+  },
+]
 
-  React.useEffect(() => {
+export function SearchDialog({ ...props }: DialogProps) {
+  const router = useRouter()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [open, setOpen] = useState(false)
+  const [searchResults, setSearchResults] = useState<Database['product']['Tables']['products']['Row'][]>([])
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+      const down = (e: KeyboardEvent) => {
+        if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+          e.preventDefault()
+          setOpen((open) => !open)
+        }
+      }
+      document.addEventListener('keydown', down)
+      return () => document.removeEventListener('keydown', down)
+    }, [])
+    
+  useEffect(() => {
     const fetchSearchResults = async () => {
       if (searchQuery.length > 2) {
-        setIsLoading(true);
+        setIsLoading(true)
         try {
-          const { data, error } = await search(searchQuery);
+          const { data, error } = await search(searchQuery)
           if (!error) {
             setSearchResults(data.map((product) => ({
               ...product,
@@ -31,111 +65,118 @@ export function SearchDialog() {
               is_published: true,
               product_fts: null,
               product_trgms: null,
-            })));
+            })))
           } else {
-            console.error('Error fetching search results:', error);
-            setSearchResults([]);
+            console.error('Error fetching search results:', error)
+            setSearchResults([])
           }
         } catch (error) {
-          console.error('Error fetching search results:', error);
+          console.error('Error fetching search results:', error)
         } finally {
-          setIsLoading(false);
+          setIsLoading(false)
         }
       } else {
-        setSearchResults([]);
+        setSearchResults([])
       }
-    };
+    }
 
-    const debounceTimer = setTimeout(fetchSearchResults, 300);
-    return () => clearTimeout(debounceTimer);
+    const debounceTimer = setTimeout(fetchSearchResults, 500)
+    return () => clearTimeout(debounceTimer)
   }, [searchQuery])
+
+  const runCommand = useCallback((command: () => unknown) => {
+      command()
+      setOpen(false)
+    }, [])
 
   const getCategorySlug = (categoryName: string) => {
     switch (categoryName.toLowerCase()) {
       case 'power supply':
-        return 'psu';
+        return 'psu'
       case 'internal storage':
-        return 'storage';
+        return 'storage'
       default:
-        return categoryName.toLowerCase().replace(/\s+/g, '-');
+        return categoryName.toLowerCase().replace(/\s+/g, '-')
     }
   }
 
   return(
-    <EmptyDialog>
-      <DialogTrigger asChild>
-        <Search size={20} className="cursor-pointer" />
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-fit max-h-[95vh] overflow-y-auto">
-        <div className={searchResults.length !== 0 ? '' : ''}>
-          {/* Input Search */}
-          <div className="sticky top-0 w-full">
-            <input
-              type="text"
-              placeholder="Cari Komponen PC..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-25"
-            />
-          </div>
-
-          {/* Loading State */}
-          {isLoading ? (
-            <div className="text-center mt-4">Loading...</div>
-          ) : searchResults.length !== 0 ? (
-            <div className="flex justify-center mt-4">
-              <div className="w-full max-w-screen-lg overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {searchResults.map((result: any) => (
-                      <tr key={result.product_id} className="tablet:table-row space-x-4">
-                        <td className="px-6 py-2 whitespace-nowrap flex items-center">
-                          <Image
-                            src={componentImage(result)}
-                            alt={result.product_name}
-                            width={64}
-                            height={64}
-                            className="h-16 w-16 object-contain mr-4"
-                          />
-                          <div className="flex flex-col max-w-lg">
-                            <div
-                              className="w-full font-semibold text-base truncate max-w-[250px]"
-                              title={result.product_name}
-                            >
-                              {result.product_name}
-                            </div>
-                            <div className="text-slate-500 font-semibold text-sm">
-                              {result.category_name}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          Rp {result.lowest_price.toLocaleString()}
-                        </td>
-                        <td className="px-6 whitespace-nowrap">
-                          <Link
-                            href={`/katalog/${getCategorySlug(result.category_name)}/${encodeURIComponent(
-                              result.product_name.replace(/\s+/g, '-').toLowerCase()
-                            )}`}
-                            passHref
-                          >
-                            <Button size="sm" variant="default" className="text-white">
-                              Beli
-                            </Button>
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+    <>
+      <Search size={20} className="cursor-pointer" onClick={() => setOpen((open) => !open)}/>
+      <Dialog open={open} onOpenChange={setOpen} {...props}>
+        <DialogContent className="overflow-hidden p-0">
+          <div className="flex h-full w-full flex-col overflow-hidden rounded-md bg-white dark:bg-gray-900">
+            <CommandPrimitive className="flex h-full w-full flex-col overflow-hidden">
+              {/* Input Search */}
+              <div className="flex items-center border-b px-3 dark:border-gray-800">
+                <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+                <CommandPrimitive.Input
+                  className="flex h-12 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-white"
+                  placeholder="Cari Komponen PC..."
+                  value={searchQuery}
+                  onValueChange={setSearchQuery}
+                />
               </div>
-            </div>
-          ) : searchQuery.trim().length !== 0 && (
-            <div className="text-center mt-4">No results found.</div>
-          )}
-        </div>
-      </DialogContent>
-
-    </EmptyDialog>
+              <CommandPrimitive.List className="max-h-[480px] overflow-y-auto overflow-x-hidden">
+                {isLoading ? (
+                  <div className="flex items-center justify-center py-6">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  </div>
+                ) : searchResults.length !== 0 ? (
+                  searchResults.map((product: any) => (
+                    <div key={product.id} className="p-4 z-0">
+                      <div className="flex items-center gap-4">
+                        {/* Product info - always visible */}
+                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                          <div className="h-16 w-16 flex-shrink-0 relative">
+                            <Image
+                              src={componentImage(product)}
+                              alt={product.name}
+                              layout="fill"
+                              objectFit="contain"
+                              className="rounded-md"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-sm font-semibold text-gray-900 truncate">
+                              {product.name}
+                            </h3>
+                            <p className="mt-1 text-sm text-gray-500">
+                              {product.category_name}
+                            </p>
+                            {/* Price - visible on mobile only */}
+                            <p className="mt-1 text-sm font-medium text-gray-900 md:hidden">
+                              Rp {product.lowest_price?.toLocaleString('id-ID')}
+                            </p>
+                          </div>
+                        </div>
+        
+                        {/* Price column - visible on md and up */}
+                        <div className="hidden md:block w-32 text-right">
+                          <p className="text-sm font-medium text-gray-900">
+                            Rp {product.lowest_price?.toLocaleString('id-ID')}
+                          </p>
+                        </div>
+        
+                        {/* Action button */}
+                        <div className="flex-shrink-0">
+                          <Button size="sm" variant="default" className="text-white" onClick={() => runCommand(() => router.push(`/produk/${categoryTitleToSlug[product.category_name]}/${product.slug}`))}>
+                            Beli
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : searchQuery.trim().length !== 0 && (
+                  <div className="py-6 text-center text-sm">
+                    Komponen tidak ditemukan
+                  </div>
+                )}
+              </CommandPrimitive.List>
+            </CommandPrimitive>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

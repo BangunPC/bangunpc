@@ -25,140 +25,104 @@ export enum ComponentCategory {
   CaseFan,
 }
 
-export const categoriesFromString: Record<string, ComponentCategory> = {
-  headphone: ComponentCategory.Headphone,
-  keyboard: ComponentCategory.Keyboard,
-  mouse: ComponentCategory.Mouse,
-  speaker: ComponentCategory.Speaker,
-  webcam: ComponentCategory.Webcam,
-  printer: ComponentCategory.Printer,
-  monitor: ComponentCategory.Monitor,
-  os: ComponentCategory.OS,
-  soundcard: ComponentCategory.SoundCard,
-  wirednetwork: ComponentCategory.WiredNetwork,
-  wirelessnetwork: ComponentCategory.WirelessNetwork,
-  cable: ComponentCategory.Cable,
-  externaldrive: ComponentCategory.ExternalDrive,
-  motherboard: ComponentCategory.Motherboard,
-  cpu: ComponentCategory.CPU,
-  gpu: ComponentCategory.GPU,
-  memory: ComponentCategory.Memory,
-  cooler: ComponentCategory.Cooler,
-  psu: ComponentCategory.PSU,
-  storage: ComponentCategory.Storage,
-  casing: ComponentCategory.Casing,
-  casefan: ComponentCategory.CaseFan,
-};
+const categoryData: [ComponentCategory, string, string][] = [ 
+  [ComponentCategory.Headphone, "headphone", "Headphone"], 
+  [ComponentCategory.Keyboard, "keyboard", "Keyboard"], 
+  [ComponentCategory.Mouse, "mouse", "Mouse"], 
+  [ComponentCategory.Speaker, "speaker", "Speaker"], 
+  [ComponentCategory.Webcam, "webcam", "Webcam"], 
+  [ComponentCategory.Printer, "printer", "Printer"], 
+  [ComponentCategory.Monitor, "monitor", "Monitor"], 
+  [ComponentCategory.OS, "os", "Operating System"], 
+  [ComponentCategory.SoundCard, "soundcard", "Sound Card"], 
+  [ComponentCategory.WiredNetwork, "wirednetwork", "Wired Network Device"], 
+  [ComponentCategory.WirelessNetwork, "wirelessnetwork", "Wireless Network Device"], 
+  [ComponentCategory.Cable, "cable", "Cable"], 
+  [ComponentCategory.ExternalDrive, "externaldrive", "External Drive"], 
+  [ComponentCategory.Motherboard, "motherboard", "Motherboard"], 
+  [ComponentCategory.CPU, "cpu", "CPU"], 
+  [ComponentCategory.GPU, "gpu", "GPU"], 
+  [ComponentCategory.Memory, "memory", "RAM"], 
+  [ComponentCategory.Cooler, "cooler", "CPU Cooler"], 
+  [ComponentCategory.PSU, "psu", "Power Supply"], 
+  [ComponentCategory.Storage, "storage", "Internal Storage"], 
+  [ComponentCategory.Casing, "casing", "Casing"], 
+  [ComponentCategory.CaseFan, "casefan", "Case Fan"]
+]
 
-export const categoriesFromEnum: Record<ComponentCategory, string> = {
-  [ComponentCategory.Headphone]: "headphone",
-  [ComponentCategory.Keyboard]: "keyboard",
-  [ComponentCategory.Mouse]: "mouse",
-  [ComponentCategory.Speaker]: "speaker",
-  [ComponentCategory.Webcam]: "webcam",
-  [ComponentCategory.Printer]: "printer",
-  [ComponentCategory.Monitor]: "monitor",
-  [ComponentCategory.OS]: "os",
-  [ComponentCategory.SoundCard]: "soundcard",
-  [ComponentCategory.WiredNetwork]: "wirednetwork",
-  [ComponentCategory.WirelessNetwork]: "wirelessnetwork",
-  [ComponentCategory.Cable]: "cable",
-  [ComponentCategory.ExternalDrive]: "externaldrive",
-  [ComponentCategory.Motherboard]: "motherboard",
-  [ComponentCategory.CPU]: "cpu",
-  [ComponentCategory.GPU]: "gpu",
-  [ComponentCategory.Memory]: "memory",
-  [ComponentCategory.Cooler]: "cooler",
-  [ComponentCategory.PSU]: "psu",
-  [ComponentCategory.Storage]: "storage",
-  [ComponentCategory.Casing]: "casing",
-  [ComponentCategory.CaseFan]: "casefan",
-};
+export const categorySlugToEnum: Record<string, ComponentCategory> = {}
+export const categoryTitleToEnum: Record<string, ComponentCategory> = {}
+export const categoryEnumToString: Record<ComponentCategory, string> = {} as Record<ComponentCategory, string>
+export const categoryTitleToSlug: Record<string, string> = {}
+export const categoryEnumToTitle: Record<ComponentCategory, string> = {} as Record<ComponentCategory, string>
 
-export const categoryTitlesFromEnum: Record<ComponentCategory, string> = {
-  [ComponentCategory.Headphone]: "Headphone",
-  [ComponentCategory.Keyboard]: "Keyboard",
-  [ComponentCategory.Mouse]: "Mouse",
-  [ComponentCategory.Speaker]: "Speaker",
-  [ComponentCategory.Webcam]: "Webcam",
-  [ComponentCategory.Printer]: "Printer",
-  [ComponentCategory.Monitor]: "Monitor",
-  [ComponentCategory.OS]: "Operating System",
-  [ComponentCategory.SoundCard]: "Sound Card",
-  [ComponentCategory.WiredNetwork]: "Wired Network Device",
-  [ComponentCategory.WirelessNetwork]: "Wireless Network Device",
-  [ComponentCategory.Cable]: "Cable",
-  [ComponentCategory.ExternalDrive]: "External Drive",
-  [ComponentCategory.Motherboard]: "Motherboard",
-  [ComponentCategory.CPU]: "Computer Processor",
-  [ComponentCategory.GPU]: "GPU",
-  [ComponentCategory.Memory]: "Memory",
-  [ComponentCategory.Cooler]: "CPU Cooler",
-  [ComponentCategory.PSU]: "Power Supply",
-  [ComponentCategory.Storage]: "Internal Storage",
-  [ComponentCategory.Casing]: "PC Casing",
-  [ComponentCategory.CaseFan]: "Case Fan",
-};
+categoryData.forEach(([enumValue, slug, title]) => { 
+  categorySlugToEnum[slug] = enumValue
+  categoryTitleToEnum[title] = enumValue
+  categoryEnumToString[enumValue] = slug
+  categoryTitleToSlug[title] = slug
+  categoryEnumToTitle[enumValue] = title
+})
 
 type DBView = Database["product"]["Views"];
 type ViewKeys = keyof DBView;
-type ComponentViewKeys = Exclude<ViewKeys, "v_products" | "v_product_details"| "v_product_images">;
+type ComponentViewKeys = Exclude<ViewKeys, "v_products" | "v_product_details" | "v_product_images">;
 export type ComponentView = {
   [K in ViewKeys]: DBView[K]["Row"];
 };
-export type ComponentDetail =  DBView[ComponentViewKeys]["Row"];
+export type ComponentDetail = DBView[ComponentViewKeys]["Row"];
 
 export const categoryViewsFromEnum: Record<ComponentCategory, ViewKeys | null> =
-  {
-    [ComponentCategory.Headphone]: null,
-    [ComponentCategory.Keyboard]: null,
-    [ComponentCategory.Mouse]: null,
-    [ComponentCategory.Speaker]: null,
-    [ComponentCategory.Webcam]: null,
-    [ComponentCategory.Printer]: null,
-    [ComponentCategory.Monitor]: null,
-    [ComponentCategory.OS]: null,
-    [ComponentCategory.SoundCard]: null,
-    [ComponentCategory.WiredNetwork]: null,
-    [ComponentCategory.WirelessNetwork]: null,
-    [ComponentCategory.Cable]: null,
-    [ComponentCategory.ExternalDrive]: null,
-    [ComponentCategory.Motherboard]: "v_motherboards",
-    [ComponentCategory.CPU]: "v_cpus",
-    [ComponentCategory.GPU]: "v_gpus",
-    [ComponentCategory.Memory]: "v_memories",
-    [ComponentCategory.Cooler]: null,
-    [ComponentCategory.PSU]: "v_power_supplies",
-    [ComponentCategory.Storage]: "v_internal_storages",
-    [ComponentCategory.Casing]: "v_casings",
-    [ComponentCategory.CaseFan]: null,
-  };
+{
+  [ComponentCategory.Headphone]: null,
+  [ComponentCategory.Keyboard]: null,
+  [ComponentCategory.Mouse]: null,
+  [ComponentCategory.Speaker]: null,
+  [ComponentCategory.Webcam]: null,
+  [ComponentCategory.Printer]: null,
+  [ComponentCategory.Monitor]: null,
+  [ComponentCategory.OS]: null,
+  [ComponentCategory.SoundCard]: null,
+  [ComponentCategory.WiredNetwork]: null,
+  [ComponentCategory.WirelessNetwork]: null,
+  [ComponentCategory.Cable]: null,
+  [ComponentCategory.ExternalDrive]: null,
+  [ComponentCategory.Motherboard]: "v_motherboards",
+  [ComponentCategory.CPU]: "v_cpus",
+  [ComponentCategory.GPU]: "v_gpus",
+  [ComponentCategory.Memory]: "v_memories",
+  [ComponentCategory.Cooler]: null,
+  [ComponentCategory.PSU]: "v_power_supplies",
+  [ComponentCategory.Storage]: "v_internal_storages",
+  [ComponentCategory.Casing]: "v_casings",
+  [ComponentCategory.CaseFan]: null,
+};
 
-  export type ComponentDetailMap = {
-    [ComponentCategory.Motherboard]: ComponentView["v_motherboards"];
-    [ComponentCategory.CPU]: ComponentView["v_cpus"];
-    [ComponentCategory.GPU]: ComponentView["v_gpus"];
-    [ComponentCategory.Memory]: ComponentView["v_memories"][];
-    [ComponentCategory.PSU]: ComponentView["v_power_supplies"];
-    [ComponentCategory.Storage]: ComponentView["v_internal_storages"][];
-    [ComponentCategory.Casing]: ComponentView["v_casings"];
-    [ComponentCategory.Headphone]: undefined;
-    [ComponentCategory.Keyboard]: undefined;
-    [ComponentCategory.Mouse]: undefined    
-    [ComponentCategory.Speaker]: undefined
-    [ComponentCategory.Webcam]: undefined 
-    [ComponentCategory.Printer]: undefined 
-    [ComponentCategory.Monitor]: undefined    
-    [ComponentCategory.OS]: undefined    
-    [ComponentCategory.SoundCard]: undefined    
-    [ComponentCategory.WiredNetwork]: undefined
-    [ComponentCategory.WirelessNetwork]: undefined
-    [ComponentCategory.Cable]: undefined   
-    [ComponentCategory.ExternalDrive]: undefined    
-    [ComponentCategory.Cooler]: undefined;
-    [ComponentCategory.CaseFan]: undefined;
-  };
-  
+export type ComponentDetailMap = {
+  [ComponentCategory.Motherboard]: ComponentView["v_motherboards"];
+  [ComponentCategory.CPU]: ComponentView["v_cpus"];
+  [ComponentCategory.GPU]: ComponentView["v_gpus"];
+  [ComponentCategory.Memory]: ComponentView["v_memories"][];
+  [ComponentCategory.PSU]: ComponentView["v_power_supplies"];
+  [ComponentCategory.Storage]: ComponentView["v_internal_storages"][];
+  [ComponentCategory.Casing]: ComponentView["v_casings"];
+  [ComponentCategory.Headphone]: undefined;
+  [ComponentCategory.Keyboard]: undefined;
+  [ComponentCategory.Mouse]: undefined
+  [ComponentCategory.Speaker]: undefined
+  [ComponentCategory.Webcam]: undefined
+  [ComponentCategory.Printer]: undefined
+  [ComponentCategory.Monitor]: undefined
+  [ComponentCategory.OS]: undefined
+  [ComponentCategory.SoundCard]: undefined
+  [ComponentCategory.WiredNetwork]: undefined
+  [ComponentCategory.WirelessNetwork]: undefined
+  [ComponentCategory.Cable]: undefined
+  [ComponentCategory.ExternalDrive]: undefined
+  [ComponentCategory.Cooler]: undefined;
+  [ComponentCategory.CaseFan]: undefined;
+};
+
 export const casingHeaders = [
   "Brand Name",
   "Casing Type",

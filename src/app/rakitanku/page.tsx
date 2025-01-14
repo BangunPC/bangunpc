@@ -1,7 +1,7 @@
 "use client";
 import { Plus, Settings2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import PageTitle from "~/components/ui/page-title";
+import PageTitle from "~/components/common/page-title";
 import useSWR from "swr";
 import { ApiPaths, fetcher } from "~/lib/api";
 import Link from "next/link";

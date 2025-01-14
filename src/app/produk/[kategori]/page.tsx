@@ -5,9 +5,9 @@ import {
   ComponentDetail,
   ComponentView,
   casingKeys,
-  categoriesFromString,
+  categorySlugToEnum,
   categoryHeaders,
-  categoryTitlesFromEnum,
+  categoryEnumToTitle,
   cpuKeys,
   gpuKeys,
   memoryKeys,
@@ -64,7 +64,7 @@ const KategoriPage = ({
     return () => clearInterval(interval);
   }, []);
 
-  const category = categoriesFromString[params.kategori]!;
+  const category = categorySlugToEnum[params.kategori]!;
   const [hideSidebar, setHideSidebar] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState<ComponentDetail[]>();
@@ -407,7 +407,7 @@ const Header = ({
 }) => (
   <div className="flex flex-col">
     <span className="text-5xl font-semibold">
-      Pilih {categoryTitlesFromEnum[category]}
+      Pilih {categoryEnumToTitle[category]}
     </span>
     <span className="flex items-center gap-2 text-lg font-semibold">
       Tersedia {itemCount} produk siap kamu pilih
@@ -459,7 +459,7 @@ const DesktopTable = ({
               name: component.product_name!,
               price: component.lowest_price!,
               image: componentImage(component),
-              category: categoriesFromString[kategori]!,
+              category: categorySlugToEnum[kategori]!,
               quantity: kategori === "memory" ? (component as ComponentView["v_memories"]).amount! : 1,
               slug: component.slug!,
               detail: component
@@ -521,18 +521,18 @@ const DesktopTable = ({
 
           const handleRedirect = () =>
             router.push(
-              `/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`,
+              `/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`,
             );
           return (
             <>
               <tr
-                data-href={`/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
+                data-href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
                 key={component.product_id}
                 className="h-[56px] cursor-pointer transition-transform hover:z-10 hover:scale-[1.01]"
               >
                 <td className="w-16">
                   <Link
-                    href={`/katalog/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
+                    href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
                   >
                     {component.image_filenames!.length> 0 && (
                       <Image
@@ -551,7 +551,7 @@ const DesktopTable = ({
 
                 <ComponentFallback
                   headers={headers}
-                  kategori={categoriesFromString[kategori]!}
+                  kategori={categorySlugToEnum[kategori]!}
                   component={component}
                   isMobile={false}
                   onClick={handleRedirect}
@@ -590,7 +590,7 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
             name: component.product_name!,
             price: component.lowest_price!,
             image: componentImage(component),
-            category: categoriesFromString[kategori]!,
+            category: categorySlugToEnum[kategori]!,
             quantity: 1,
             slug: component.slug!,
             detail: component
@@ -649,7 +649,7 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
             className="dark:texthover:bg-zinc-700 rounded-xl border bg-white p-2 shadow-lg transition-all hover:border-zinc-300 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:border-zinc-600 dark:hover:bg-zinc-700"
           >
             <Link
-              href={`/katalog/${kategori}/${component.slug}`}
+              href={`/produk/${kategori}/${component.slug}`}
               className="flex flex-row items-center gap-1"
             >
               <div className="flex flex-1 flex-row items-center gap-2">
@@ -682,7 +682,7 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
             <div className="grid grid-cols-3 gap-1 sm:grid-cols-4">
               <ComponentFallback
                 headers={headers}
-                kategori={categoriesFromString[kategori]!}
+                kategori={categorySlugToEnum[kategori]!}
                 component={component}
                 isMobile={true}
               />

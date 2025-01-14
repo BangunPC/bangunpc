@@ -64,31 +64,30 @@ export const getCasing = async (
     );
   }
 
-  // TODO(katalog): multiple gpu
-  if (gpus && gpus.length > 0) {
-    const { data: gpuData, error } = await client
-      .schema("product")
-      .from("v_gpus")
-      .select("length_mm")
-      .in(
-        "product_id",
-        gpus.map((gpu) => gpu.id),
-      )
-      .limit(1)
-      .single();
-    if (error) {
-      console.log(`ERROR! GPU`);
-      throw error;
-    }
-    filteredData = filteredData.filter(
-      (item) => item.max_gpu_length_mm! >= gpuData.length_mm!,
-    );
-  }
+  // TODO(produk): multiple gpu
+  // if (gpus && gpus.length > 0) {
+  //   const { data: gpuData, error } = await client
+  //     .schema("product")
+  //     .from("v_gpus")
+  //     .select("length_mm")
+  //     .in(
+  //       "product_id",
+  //       gpus.map((gpu) => gpu.id),
+  //     )
+  //     .limit(1)
+  //     .single();
+  //   if (error) {
+  //     console.log(`ERROR! GPU`);
+  //     throw error;
+  //   }
+  //   filteredData = filteredData.filter(
+  //     (item) => item.max_gpu_length_mm! >= gpuData.length_mm!,
+  //   );
+  // }
 
   // compatibility end
 
   if (error) {
-    console.log("ERROR! FILTER");
     throw error;
   }
 

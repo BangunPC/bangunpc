@@ -7,23 +7,22 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
-import KategoriCasing from "~/components/ui/icon/kategori-casing";
-import KategoriCpu from "~/components/ui/icon/kategori-cpu";
-import KategoriGpu from "~/components/ui/icon/kategori-gpu";
-import KategoriInternalStorage from "~/components/ui/icon/kategori-internal-storage";
-import KategoriMotherboard from "~/components/ui/icon/kategori-motherboard";
-import KategoriPsu from "~/components/ui/icon/kategori-psu";
-import KategoriRam from "~/components/ui/icon/kategori-ram";
+import KategoriCasing from "~/components/icon/kategori-casing";
+import KategoriCpu from "~/components/icon/kategori-cpu";
+import KategoriGpu from "~/components/icon/kategori-gpu";
+import KategoriInternalStorage from "~/components/icon/kategori-internal-storage";
+import KategoriMotherboard from "~/components/icon/kategori-motherboard";
+import KategoriPsu from "~/components/icon/kategori-psu";
+import KategoriRam from "~/components/icon/kategori-ram";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
   ComponentCategory,
   ComponentView,
-  categoriesFromEnum,
-  categoriesFromString,
+  categoryEnumToString,
+  categorySlugToEnum,
 } from "~/lib/db";
 import { ComponentStorage, ComponentStorageType, SimulationStorage } from "~/lib/storage_helper";
 import { createQueryString, removeQueryString } from "~/lib/utils";
-import KategoriPage from "../katalog/[kategori]/page";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { ApiPaths, fetcher, insertRakitan } from "~/lib/api";
@@ -31,6 +30,7 @@ import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
 import Divider from "~/components/ui/divider";
 import { Input } from "~/components/ui/input";
+import KategoriPage from "../produk/[kategori]/page";
 
 const headers = [
   "Kategori Komponen",
@@ -108,49 +108,49 @@ export default function SimulasiPage({
       icon: <KategoriMotherboard width="27" height="27" />,
       title: "Motherboard",
       components: motherboard,
-      iframe: `/katalog/motherboard`,
+      iframe: `/produk/motherboard`,
     },
     {
       kategori: ComponentCategory.CPU,
       icon: <KategoriCpu width="27" height="27" />,
       title: "CPU",
       components: cpu,
-      iframe: `/katalog/cpu`,
+      iframe: `/produk/cpu`,
     },
     {
       kategori: ComponentCategory.GPU,
       icon: <KategoriGpu width="27" height="27" />,
       title: "GPU",
       components: gpu,
-      iframe: `/katalog/gpu`,
+      iframe: `/produk/gpu`,
     },
     {
       kategori: ComponentCategory.Memory,
       icon: <KategoriRam width="27" height="27" />,
       title: "Memory",
       components: memory,
-      iframe: `/katalog/memory`,
+      iframe: `/produk/memory`,
     },
     {
       kategori: ComponentCategory.PSU,
       icon: <KategoriPsu width="27" height="27" />,
       title: "Power Supply",
       components: psu,
-      iframe: `/katalog/psu`,
+      iframe: `/produk/psu`,
     },
     {
       kategori: ComponentCategory.Storage,
       icon: <KategoriInternalStorage width="27" height="27" />,
       title: "Storage",
       components: storage,
-      iframe: `/katalog/storage`,
+      iframe: `/produk/storage`,
     },
     {
       kategori: ComponentCategory.Casing,
       icon: <KategoriCasing width="27" height="27" />,
       title: "PC Case",
       components: casing,
-      iframe: `/katalog/casing`,
+      iframe: `/produk/casing`,
     },
   ];
 
@@ -273,7 +273,7 @@ export default function SimulasiPage({
     const params = createQueryString(
       searchParams,
       "kategori",
-      categoriesFromEnum[item.kategori]!,
+      categoryEnumToString[item.kategori]!,
     );
 
     router.push("?" + params);
@@ -427,8 +427,8 @@ export default function SimulasiPage({
                           <Link
                             key={component.storageId}
                             className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                            href={`/katalog/${
-                              categoriesFromEnum[component.category]
+                            href={`/produk/${
+                              categoryEnumToString[component.category]
                             }/${component.slug}`}
                             passHref
                           >
@@ -567,7 +567,7 @@ export default function SimulasiPage({
         </div>
         <Dialog
           open={
-            kategori !== null && categoriesFromString[kategori] !== undefined
+            kategori !== null && categorySlugToEnum[kategori] !== undefined
           }
           onOpenChange={() => {
             closeIframe();
@@ -578,7 +578,7 @@ export default function SimulasiPage({
           </DialogTrigger>
           <DialogContent className="inset-4 m-auto max-w-fit translate-x-0 translate-y-0 px-0 py-4">
             <ScrollArea className="-z-10 w-full px-4">
-              {kategori && categoriesFromString[kategori] && (
+              {kategori && categorySlugToEnum[kategori] && (
                 <KategoriPage
                   params={{
                     isCompatibiliyChecked: true,

@@ -2,9 +2,9 @@ import { redirect } from "next/navigation";
 import BudgetSection from "./budget";
 import RencanaSection from "./rencana";
 import HasilSection from "./hasil";
-import StepBudget from "~/components/ui/icon/step-budget";
-import StepKebutuhan from "~/components/ui/icon/step-kebutuhan";
-import StepHasil from "~/components/ui/icon/step-hasil";
+import StepBudget from "~/components/icon/step-budget";
+import StepKebutuhan from "~/components/icon/step-kebutuhan";
+import StepHasil from "~/components/icon/step-hasil";
 import { createClient } from "~/lib/supabase/server";
 
 async function getRencanaList() {

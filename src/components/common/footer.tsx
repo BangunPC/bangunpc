@@ -1,8 +1,8 @@
 import React from "react";
-import { NavbarIcon } from "./icon/navbar-icon";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "./button";
+import { NavbarIcon } from "../icon/navbar-icon";
+import { Button } from "../ui/button";
 
 const Footer = () => {
   const socialMedia = [

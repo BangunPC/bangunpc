@@ -11,16 +11,16 @@ import {
   AccordionTrigger,
 } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
-import KategoriCasing from "~/components/ui/icon/kategori-casing";
-import KategoriCpu from "~/components/ui/icon/kategori-cpu";
-import KategoriCpuCooler from "~/components/ui/icon/kategori-cpu-cooler";
-import KategoriGpu from "~/components/ui/icon/kategori-gpu";
-import KategoriInternalStorage from "~/components/ui/icon/kategori-internal-storage";
-import KategoriMonitor from "~/components/ui/icon/kategori-monitor";
-import KategoriMotherboard from "~/components/ui/icon/kategori-motherboard";
-import KategoriPsu from "~/components/ui/icon/kategori-psu";
-import KategoriRam from "~/components/ui/icon/kategori-ram";
-import { categoriesFromEnum, ComponentCategory } from "~/lib/db";
+import KategoriCasing from "~/components/icon/kategori-casing";
+import KategoriCpu from "~/components/icon/kategori-cpu";
+import KategoriCpuCooler from "~/components/icon/kategori-cpu-cooler";
+import KategoriGpu from "~/components/icon/kategori-gpu";
+import KategoriInternalStorage from "~/components/icon/kategori-internal-storage";
+import KategoriMonitor from "~/components/icon/kategori-monitor";
+import KategoriMotherboard from "~/components/icon/kategori-motherboard";
+import KategoriPsu from "~/components/icon/kategori-psu";
+import KategoriRam from "~/components/icon/kategori-ram";
+import { categoryEnumToString, ComponentCategory } from "~/lib/db";
 import { Database } from "~/lib/schema";
 import { productImage } from "~/lib/utils";
 
@@ -249,7 +249,7 @@ const Component = ({
               )}
               {/* <span>
               Kategori:{" "}
-              <Link className="text-primary" href={"/katalog/" + type} passHref>
+              <Link className="text-primary" href={"/produk/" + type} passHref>
                 <Button variant="link" className="p-0 text-base">
                   {categoryTitlesFromEnum[category]}
                 </Button>
@@ -295,8 +295,8 @@ const Component = ({
                                 <Link
                                   key={component.product_id}
                                   className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                                  href={`/katalog/${
-                                    categoriesFromEnum[item.category]
+                                  href={`/produk/${
+                                    categoryEnumToString[item.category]
                                   }/${component.slug}`}
                                   passHref
                                 >

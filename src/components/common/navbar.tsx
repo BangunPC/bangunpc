@@ -25,20 +25,20 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
-import { ComponentCategory, categoriesFromEnum,  } from "~/lib/db";
+import { ComponentCategory, categoryEnumToString,  } from "~/lib/db";
 import { createClient } from "~/lib/supabase/client";
 import { Database } from "~/lib/schema";
 import { search } from "~/lib/api";
 import { cn, createQueryString, removeQueryString } from "~/lib/utils";
-import { Button } from "./button";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./dialog";
-import Divider from "./divider";
+} from "../ui/dialog";
+import Divider from "../ui/divider";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,17 +48,18 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "./dropdown-menu";
-import { NavbarIcon } from "./icon/navbar-icon";
-import NavbarMobileToggle from "./icon/navbar-mobile-toggle";
+} from "../ui/dropdown-menu";
+import { NavbarIcon } from "../icon/navbar-icon";
+import NavbarMobileToggle from "../icon/navbar-mobile-toggle";
 // import { ModeToggle } from "./mode-toggle";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
-import { ModeToggle } from "./mode-toggle";
-import { FloatingNav } from "./floating-navbar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { ModeToggle } from "../ui/mode-toggle";
+import { FloatingNav } from "../ui/floating-navbar";
 import FormRegister from "../register/from-register";
 import FeedbackDialog from "./feedback-dialog";
 import { componentImage } from "~/lib/utils";
-import { SearchDialog } from "../common/search-dialog";
+import { SearchDialog } from "./search-dialog";
+import { SearchCommand } from "./search-command";
 
 export const components = [
   {
@@ -68,8 +69,8 @@ export const components = [
       <Image
         width={120}
         height={120}
-        src="/images/katalog_memory.svg"
-        alt="katalog_ram"
+        src="/images/produk_memory.svg"
+        alt="produk_ram"
       />
     ),
   },
@@ -80,8 +81,8 @@ export const components = [
       <Image
         width={120}
         height={120}
-        src="/images/katalog_motherboard.svg"
-        alt="katalog_motherboard"
+        src="/images/produk_motherboard.svg"
+        alt="produk_motherboard"
       />
     ),
   },
@@ -92,8 +93,8 @@ export const components = [
       <Image
         width={120}
         height={120}
-        src="/images/katalog_cpu.svg"
-        alt="katalog_cpu"
+        src="/images/produk_cpu.svg"
+        alt="produk_cpu"
       />
     ),
   },
@@ -104,8 +105,8 @@ export const components = [
       <Image
         width={120}
         height={120}
-        src="/images/katalog_cpu_coolers.svg"
-        alt="katalog_cpu_cooler"
+        src="/images/produk_cpu_coolers.svg"
+        alt="produk_cpu_cooler"
       />
     ),
   },
@@ -116,8 +117,8 @@ export const components = [
       <Image
         width={120}
         height={120}
-        src="/images/katalog_gpu.svg"
-        alt="katalog_gpu"
+        src="/images/produk_gpu.svg"
+        alt="produk_gpu"
       />
     ),
   },
@@ -128,8 +129,8 @@ export const components = [
       <Image
         width={120}
         height={120}
-        src="/images/katalog_psu.svg"
-        alt="katalog_psu"
+        src="/images/produk_psu.svg"
+        alt="produk_psu"
       />
     ),
   },
@@ -140,8 +141,8 @@ export const components = [
       <Image
         width={120}
         height={120}
-        src="/images/katalog_storage.svg"
-        alt="katalog_internal_storage"
+        src="/images/produk_storage.svg"
+        alt="produk_internal_storage"
       />
     ),
   },
@@ -152,8 +153,8 @@ export const components = [
       <Image
         width={120}
         height={120}
-        src="/images/katalog_casing.svg"
-        alt="katalog_casing"
+        src="/images/produk_casing.svg"
+        alt="produk_casing"
       />
     ),
   },
@@ -164,8 +165,8 @@ export const components = [
       <Image
         width={120}
         height={120}
-        src="/images/katalog_monitor.svg"
-        alt="katalog_monitor"
+        src="/images/produk_monitor.svg"
+        alt="produk_monitor"
       />
     ),
   },
@@ -206,22 +207,22 @@ export function Navbar() {
 
   const router = useRouter();
   const searchParams = useSearchParams()!;
-  const katalog = searchParams.get("katalog") === "true";
+  const produk = searchParams.get("produk") === "true";
   const login = searchParams.get("login") === "true";
   const register = searchParams.get("register") === "true";
 
   const peripherals = [
-    { name: "Headphones", href: "?katalog=false" },
-    { name: "Keyboard", href: "?katalog=false" },
-    { name: "Mouse", href: "?katalog=false" },
-    { name: "Speaker", href: "?katalog=false" },
-    { name: "Webcam", href: "?katalog=false" },
+    { name: "Headphones", href: "?produk=false" },
+    { name: "Keyboard", href: "?produk=false" },
+    { name: "Mouse", href: "?produk=false" },
+    { name: "Speaker", href: "?produk=false" },
+    { name: "Webcam", href: "?produk=false" },
   ];
 
   const accessories = [
-    { name: "Case Fan", href: "?katalog=false" },
-    { name: "External Hard Drive", href: "?katalog=false" },
-    { name: "Thermal Paste", href: "?katalog=false" },
+    { name: "Case Fan", href: "?produk=false" },
+    { name: "External Hard Drive", href: "?produk=false" },
+    { name: "Thermal Paste", href: "?produk=false" },
   ];
 
   const profileButton = (
@@ -334,17 +335,17 @@ export function Navbar() {
             <NavigationMenuList>
               <NavigationMenuItem>
                 <Dialog
-                  open={katalog}
+                  open={produk}
                   onOpenChange={(open) => {
                     router.push(
                       "?" +
                       (open
                         ? createQueryString(
                           searchParams,
-                          "katalog",
+                          "produk",
                           open.toString(),
                         )
-                        : removeQueryString(searchParams, "katalog")),
+                        : removeQueryString(searchParams, "produk")),
                       { scroll: false },
                     );
                   }}
@@ -356,7 +357,7 @@ export function Navbar() {
                         "bg-transparent",
                       )}
                     >
-                      Katalog
+                      Produk
                     </NavigationMenuLink>{" "}
                   </DialogTrigger>
                   <DialogContent className="h-full overflow-auto p-2 tablet:max-h-[642px] tablet:max-w-fit tablet:p-4">
@@ -403,7 +404,7 @@ export function Navbar() {
                           {components.map((item) => (
                             <Link
                               key={item.name}
-                              href={`/katalog/${categoriesFromEnum[item.enum]}`}
+                              href={`/produk/${categoryEnumToString[item.enum]}`}
                             >
                               <Button
                                 variant="outline"
@@ -514,6 +515,7 @@ export function Navbar() {
           </NavigationMenu>
           <div className="flex flex-col justify-center items-center gap-4 tablet:flex-row tablet:justify-end">
             <SearchDialog/>
+            {/* <SearchCommand/> */}
             <FeedbackDialog />
             {user ? profileButton : (
               <>
@@ -531,11 +533,11 @@ export function Navbar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="tablet:hidden">
                 <Link
-                  href={`?${createQueryString(searchParams, "katalog", "true")}`}
+                  href={`?${createQueryString(searchParams, "produk", "true")}`}
                   passHref
                 >
                   <DropdownMenuItem className="cursor-pointer p-4">
-                    Katalog
+                    Produk
                   </DropdownMenuItem>
                 </Link>
                 <DropdownMenuSub>

@@ -6,9 +6,9 @@ import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import React from "react";
-import Footer from "~/components/ui/footer";
-import { Navbar } from "~/components/ui/navbar";
+import { Navbar } from "~/components/common/navbar";
 import ProgressBarProvider from "~/components/provider/progress-bar";
+import Footer from "~/components/common/footer";
 
 const inter = Inter({
   subsets: ["latin"],

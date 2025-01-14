@@ -6,8 +6,9 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 // import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import Carousel from "~/components/ui/carousel";
-import CardPc from "~/components/ui/card-pc";
+import Carousel from "~/components/common/carousel";
+import CardPc from "~/components/common/card-pc";
+import { SearchCommand } from "~/components/common/search-command";
 // import { HeroHighlight, Highlight } from "~/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
@@ -18,10 +19,11 @@ export default function HomePage() {
       <CarouselSection />
       <PacketPersonalComputerSection />
       {/* <RakitSekarangSection /> */}
-      {/* <KatalogKomponenSection /> */}
+      {/* <ProdukKomponenSection /> */}
       {/* <PilihLayananSection /> */}
       <CariKomponenSection />
       {/* <MudahMurahSection /> */}
+      <SearchCommand />
     </main>
   );
 }
@@ -461,7 +463,7 @@ function PacketPersonalComputerSection() {
   );
 }
 
-// function KatalogKomponenSection() {
+// function ProdukKomponenSection() {
 //   return (
 //     <div className="flex justify-center py-8 tablet:py-16">
 //       <div className="mx-4 max-w-7xl grid-cols-7 gap-8 tablet:grid">
@@ -487,7 +489,7 @@ function PacketPersonalComputerSection() {
 //               panduan dan dukungan yang dibutuhkan. Bersama kami, wujudkan
 //               impian PC Anda!
 //             </p>
-//             <Link href="?katalog=true" passHref legacyBehavior replace scroll={false}>
+//             <Link href="?produk=true" passHref legacyBehavior replace scroll={false}>
 //               <Button className="m-auto mt-0 w-fit gap-2 bg-black p-5 hover:bg-zinc-900 tablet:m-0 tablet:mt-6">
 //                 <Image
 //                   src="/images/icon-cart.svg"
@@ -495,7 +497,7 @@ function PacketPersonalComputerSection() {
 //                   width={20}
 //                   height={20}
 //                 />
-//                 Katalog Komponen PC
+//                 Produk Komponen PC
 //               </Button>
 //             </Link>
 //           </div>
@@ -514,10 +516,10 @@ function PacketPersonalComputerSection() {
 //       icon: "/images/vector-rakit-pc.svg",
 //     },
 //     {
-//       title: "Katalog",
+//       title: "Produk",
 //       description:
 //         "Temukan komponen PC yang anda inginkan yang sudah terkategorisasi dan terafiliasi dengan marketplace yang ada di Indonesia.",
-//       icon: "/images/vector-katalog.svg",
+//       icon: "/images/vector-produk.svg",
 //     },
 //     {
 //       title: "Showcase",

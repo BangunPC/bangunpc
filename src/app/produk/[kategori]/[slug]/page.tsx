@@ -1,5 +1,5 @@
-import { categoriesFromString, categoryViewsFromEnum } from "~/lib/db";
-import { v_spec } from "~/lib/katalog_types";
+import { categorySlugToEnum, categoryViewsFromEnum } from "~/lib/db";
+import { v_spec } from "~/lib/produk_types";
 import { createClient } from "~/lib/supabase/server";
 import { productImage } from "~/lib/utils";
 import Component from "./client";
@@ -12,8 +12,7 @@ async function getDetails(params: any) {
   // const id = slug_split[slug_split.length - 1]!;
   // const slug = slug_param.replace(`-${id}`, "");
 
-  const category = categoriesFromString[kategori]!;
-  console.log(slug);
+  const category = categorySlugToEnum[kategori]!;
   
   const client = createClient();
   const future = await client
@@ -70,7 +69,7 @@ export default async function Page({
   );
 
   const kategori = params.kategori;
-  const category = categoriesFromString[kategori]!;
+  const category = categorySlugToEnum[kategori]!;
 
   const componentInfo = v_spec[kategori!]?.flatMap((v) => ({
     title: v[1],
