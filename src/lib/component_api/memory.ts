@@ -1,9 +1,9 @@
 import { createClient } from "../supabase/client";
-import { MemoryCompatibility, MemoryFilter } from "./filter";
+import { MemoryCompatibility, ProductFilter } from "./filter";
 
 export const getMemory = async (
   { memories, motherboardId }: MemoryCompatibility,
-  { query, min_price, max_price }: MemoryFilter,
+  { query, min_price, max_price }: ProductFilter,
 ) => {
   const client = createClient();
 

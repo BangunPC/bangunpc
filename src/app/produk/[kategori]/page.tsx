@@ -1,19 +1,14 @@
 "use client";
 
 import {
-  ComponentCategory,
+  CategoryEnum,
   ComponentDetail,
   ComponentView,
-  casingKeys,
   categorySlugToEnum,
-  categoryHeaders,
+  categoryEnumToHeader,
   categoryEnumToTitle,
-  cpuKeys,
-  gpuKeys,
-  memoryKeys,
-  motherboardKeys,
-  psuKeys,
-  storageKeys,
+  casingHeaderMapping,
+  categoryEnumToKey,
 } from "~/lib/db";
 
 import { SidebarClose, SidebarOpen } from "lucide-react";
@@ -38,6 +33,7 @@ import {
 import { componentImage } from "~/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
 import { v4 as uuidv4 } from 'uuid';
+import { getMonitor } from "~/lib/component_api/monitor";
 
 const KategoriPage = ({
   params,
@@ -64,7 +60,7 @@ const KategoriPage = ({
     return () => clearInterval(interval);
   }, []);
 
-  const category = categorySlugToEnum[params.kategori]!;
+  const categoryEnum = categorySlugToEnum[params.kategori]!;
   const [hideSidebar, setHideSidebar] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState<ComponentDetail[]>();
@@ -80,20 +76,20 @@ const KategoriPage = ({
       max_price: 0,
     };
     
-    const motherboard = ComponentStorage.getComponentDetail(ComponentCategory.Motherboard);
-    const casing = ComponentStorage.getComponentDetail(ComponentCategory.Casing)
-    const cpu = ComponentStorage.getComponentDetail(ComponentCategory.CPU)
-    const gpu = ComponentStorage.getComponentDetail(ComponentCategory.GPU);
-    const psu = ComponentStorage.getComponentDetail(ComponentCategory.PSU);
-    const memories = ComponentStorage.getComponentDetail(ComponentCategory.Memory);
+    const motherboard = ComponentStorage.getComponentDetail(CategoryEnum.Motherboard);
+    const casing = ComponentStorage.getComponentDetail(CategoryEnum.Casing)
+    const cpu = ComponentStorage.getComponentDetail(CategoryEnum.CPU)
+    const gpu = ComponentStorage.getComponentDetail(CategoryEnum.GPU);
+    const psu = ComponentStorage.getComponentDetail(CategoryEnum.PSU);
+    const memories = ComponentStorage.getComponentDetail(CategoryEnum.Memory);
     // const storages = ComponentStorage.getComponentDetail(ComponentCategory.Storage)
 
     // const storageIds = ComponentStorage.getComponentsByCategory(ComponentCategory.Storage)
     //   ?.map(component => parseInt(component.id, 10))
     //   .filter(id => !isNaN(id));
     
-    switch (category) {
-      case ComponentCategory.Motherboard:
+    switch (categoryEnum) {
+      case CategoryEnum.Motherboard:
         // const motherboardCompatibility = params.isCompatibiliyChecked ? { casing, cpu } : {}
         getMotherboard({}, defaultQuery)
           .then((res) => {
@@ -106,7 +102,7 @@ const KategoriPage = ({
             setError(err);
           });
         break;
-      case ComponentCategory.CPU:
+      case CategoryEnum.CPU:
         //TODO: Add memories check
         // const cpuCompatibility = params.isCompatibiliyChecked ? { motherboard, psu, gpu, memories } : {}
         getCpu({}, defaultQuery)
@@ -120,7 +116,7 @@ const KategoriPage = ({
             setError(err);
           });
         break;
-      case ComponentCategory.GPU:
+      case CategoryEnum.GPU:
         getGpu({}, defaultQuery)
           .then((res) => {
             setData(res);
@@ -132,7 +128,7 @@ const KategoriPage = ({
             setError(err);
           });
         break;
-      case ComponentCategory.Memory:
+      case CategoryEnum.Memory:
         // const memoryCompatibility = params.isCompatibiliyChecked ? { memories, motherboard } : {}
         getMemory({}, defaultQuery)
           .then((res) => {
@@ -145,7 +141,7 @@ const KategoriPage = ({
             setError(err);
           });
         break;
-      case ComponentCategory.PSU:
+      case CategoryEnum.PSU:
         getPsu({}, defaultQuery)
           .then((res) => {
             setData(res);
@@ -157,7 +153,7 @@ const KategoriPage = ({
             setError(err);
           });
         break;
-      case ComponentCategory.Storage:
+      case CategoryEnum.Storage:
         getStorage({}, defaultQuery)
           .then((res) => {
             setData(res);
@@ -169,8 +165,20 @@ const KategoriPage = ({
             setError(err);
           });
         break;
-      case ComponentCategory.Casing:
+      case CategoryEnum.Casing:
         getCasing({}, defaultQuery)
+          .then((res) => {
+            setData(res);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            setError(err);
+          });
+        break;
+      case CategoryEnum.Monitor:
+        getMonitor({}, defaultQuery)
           .then((res) => {
             setData(res);
             setLoading(false);
@@ -293,7 +301,7 @@ const KategoriPage = ({
             <div className="flex flex-col tablet:flex-row">
               {desktopSidebarButton}
               <Header
-                category={category}
+                category={categoryEnum}
                 itemCount={(data?.length ?? 0).toString() ?? <Spinner />}
               />
             </div>
@@ -309,7 +317,7 @@ const KategoriPage = ({
               <div>
                 <MobileTable
                   data={data}
-                  headers={categoryHeaders[category]}
+                  headers={categoryEnumToHeader[categoryEnum]}
                   kategori={params.kategori}
                   isIframe={params.noTopH ?? false}
                   onSuccess={params.onSuccess}
@@ -317,7 +325,7 @@ const KategoriPage = ({
                 <DesktopTable
                   // key={`${url.search}`}
                   data={data}
-                  headers={categoryHeaders[category]}
+                  headers={categoryEnumToHeader[categoryEnum]}
                   kategori={params.kategori}
                   isIframe={params.noTopH ?? false}
                   onSuccess={params.onSuccess}
@@ -335,45 +343,18 @@ export default KategoriPage;
 
 const ComponentFallback = ({
   headers,
-  kategori,
+  categoryEnum,
   component,
   isMobile,
   onClick,
 }: {
   headers: string[];
-  kategori: ComponentCategory;
+  categoryEnum: CategoryEnum;
   component: any;
   isMobile: boolean;
   onClick?: () => void;
 }) => {
-  let keys: any[] = [];
-  switch (kategori) {
-    case ComponentCategory.Motherboard:
-      keys = motherboardKeys;
-      break;
-    case ComponentCategory.CPU:
-      keys = cpuKeys;
-      break;
-    case ComponentCategory.GPU:
-      keys = gpuKeys;
-      break;
-    case ComponentCategory.Memory:
-      keys = memoryKeys;
-      break;
-    // case "cooler":
-    case ComponentCategory.PSU:
-      keys = psuKeys;
-      break;
-    // case "cable":
-    case ComponentCategory.Storage:
-      keys = storageKeys;
-      break;
-    case ComponentCategory.Casing:
-      keys = casingKeys;
-      break;
-    default:
-      break;
-  }
+  let keys = categoryEnumToKey[categoryEnum]
 
   if (isMobile)
     return (
@@ -402,7 +383,7 @@ const Header = ({
   category,
   itemCount,
 }: {
-  category: ComponentCategory;
+  category: CategoryEnum;
   itemCount: string;
 }) => (
   <div className="flex flex-col">
@@ -551,7 +532,7 @@ const DesktopTable = ({
 
                 <ComponentFallback
                   headers={headers}
-                  kategori={categorySlugToEnum[kategori]!}
+                  categoryEnum={categorySlugToEnum[kategori]!}
                   component={component}
                   isMobile={false}
                   onClick={handleRedirect}
@@ -682,7 +663,7 @@ const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
             <div className="grid grid-cols-3 gap-1 sm:grid-cols-4">
               <ComponentFallback
                 headers={headers}
-                kategori={categorySlugToEnum[kategori]!}
+                categoryEnum={categorySlugToEnum[kategori]!}
                 component={component}
                 isMobile={true}
               />

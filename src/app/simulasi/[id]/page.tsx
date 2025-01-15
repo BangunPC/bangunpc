@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { ApiPaths, fetchWithId } from "~/lib/api";
 import SimulasiPage from "../page";
 import { ComponentStorageType } from "~/lib/storage_helper";
-import { ComponentCategory, ComponentDetail } from "~/lib/db";
+import { CategoryEnum, ComponentDetail } from "~/lib/db";
 import { productImage } from "~/lib/utils";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -66,7 +66,7 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
   }, [data]);
 
   function commonDataToComponentStorageType(
-    category: ComponentCategory,
+    category: CategoryEnum,
     data?: CommonRakitanDataType,
   ): ComponentStorageType | undefined {
     if (!data) return undefined;
@@ -86,37 +86,37 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
   const compParams = {
     params,
     cpu: commonDataToComponentStorageType(
-      ComponentCategory.CPU,
+      CategoryEnum.CPU,
       dataParsed?.cpu,
     ),
     cpu_cooler: commonDataToComponentStorageType(
-      ComponentCategory.Cooler,
+      CategoryEnum.Cooler,
       dataParsed?.cpu_cooler,
     ),
     gpu: commonDataToComponentStorageType(
-      ComponentCategory.GPU,
+      CategoryEnum.GPU,
       dataParsed?.gpu,
     ),
     internal_storages: dataParsed?.internal_storages.map(
-      (d) => commonDataToComponentStorageType(ComponentCategory.Storage, d)!,
+      (d) => commonDataToComponentStorageType(CategoryEnum.Storage, d)!,
     ),
     memories: dataParsed?.memories.map(
-      (d) => commonDataToComponentStorageType(ComponentCategory.Memory, d)!,
+      (d) => commonDataToComponentStorageType(CategoryEnum.Memory, d)!,
     ),
     monitors: commonDataToComponentStorageType(
-      ComponentCategory.PSU,
+      CategoryEnum.PSU,
       dataParsed?.monitors,
     ),
     motherboard: commonDataToComponentStorageType(
-      ComponentCategory.Motherboard,
+      CategoryEnum.Motherboard,
       dataParsed?.motherboard,
     ),
     power_supply: commonDataToComponentStorageType(
-      ComponentCategory.PSU,
+      CategoryEnum.PSU,
       dataParsed?.power_supply,
     ),
     casing: commonDataToComponentStorageType(
-      ComponentCategory.Casing,
+      CategoryEnum.Casing,
       dataParsed?.casing,
     ),
   };

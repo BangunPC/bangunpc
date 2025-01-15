@@ -1,10 +1,10 @@
 import { ComponentDetail, ComponentView } from "../db";
 import { createClient } from "../supabase/client";
-import { MotherboardCompatibility, MotherboardFilter } from "./filter";
+import { MotherboardCompatibility, ProductFilter } from "./filter";
 
 export const getMotherboard = async (
   { casingId, cpuId, memories }: MotherboardCompatibility,
-  { query, min_price, max_price }: MotherboardFilter,
+  { query, min_price, max_price }: ProductFilter,
 ) => {
   const client = createClient();
 

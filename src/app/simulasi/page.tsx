@@ -16,9 +16,9 @@ import KategoriPsu from "~/components/icon/kategori-psu";
 import KategoriRam from "~/components/icon/kategori-ram";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
-  ComponentCategory,
+  CategoryEnum,
   ComponentView,
-  categoryEnumToString,
+  categoryEnumToSlug,
   categorySlugToEnum,
 } from "~/lib/db";
 import { ComponentStorage, ComponentStorageType, SimulationStorage } from "~/lib/storage_helper";
@@ -104,49 +104,49 @@ export default function SimulasiPage({
 
   const components = [
     {
-      kategori: ComponentCategory.Motherboard,
+      kategori: CategoryEnum.Motherboard,
       icon: <KategoriMotherboard width="27" height="27" />,
       title: "Motherboard",
       components: motherboard,
       iframe: `/produk/motherboard`,
     },
     {
-      kategori: ComponentCategory.CPU,
+      kategori: CategoryEnum.CPU,
       icon: <KategoriCpu width="27" height="27" />,
       title: "CPU",
       components: cpu,
       iframe: `/produk/cpu`,
     },
     {
-      kategori: ComponentCategory.GPU,
+      kategori: CategoryEnum.GPU,
       icon: <KategoriGpu width="27" height="27" />,
       title: "GPU",
       components: gpu,
       iframe: `/produk/gpu`,
     },
     {
-      kategori: ComponentCategory.Memory,
+      kategori: CategoryEnum.Memory,
       icon: <KategoriRam width="27" height="27" />,
       title: "Memory",
       components: memory,
       iframe: `/produk/memory`,
     },
     {
-      kategori: ComponentCategory.PSU,
+      kategori: CategoryEnum.PSU,
       icon: <KategoriPsu width="27" height="27" />,
       title: "Power Supply",
       components: psu,
       iframe: `/produk/psu`,
     },
     {
-      kategori: ComponentCategory.Storage,
+      kategori: CategoryEnum.Storage,
       icon: <KategoriInternalStorage width="27" height="27" />,
       title: "Storage",
       components: storage,
       iframe: `/produk/storage`,
     },
     {
-      kategori: ComponentCategory.Casing,
+      kategori: CategoryEnum.Casing,
       icon: <KategoriCasing width="27" height="27" />,
       title: "PC Case",
       components: casing,
@@ -170,28 +170,28 @@ export default function SimulasiPage({
       return;
     }
     setComponentCpu(
-      await ComponentStorage.getComponentsByCategory(ComponentCategory.CPU),
+      await ComponentStorage.getComponentsByCategory(CategoryEnum.CPU),
     );
     // setComponentCooler(
     //   ComponentStorage.getComponentsByCategory(ComponentCategory.Cooler),
     // );
     setComponentMotherboard(
-      await ComponentStorage.getComponentsByCategory(ComponentCategory.Motherboard),
+      await ComponentStorage.getComponentsByCategory(CategoryEnum.Motherboard),
     );
     setComponentMemory(
-      await ComponentStorage.getComponentsByCategory(ComponentCategory.Memory),
+      await ComponentStorage.getComponentsByCategory(CategoryEnum.Memory),
     );
     setComponentStorage(
-      await ComponentStorage.getComponentsByCategory(ComponentCategory.Storage),
+      await ComponentStorage.getComponentsByCategory(CategoryEnum.Storage),
     );
     setComponentGpu(
-      await ComponentStorage.getComponentsByCategory(ComponentCategory.GPU),
+      await ComponentStorage.getComponentsByCategory(CategoryEnum.GPU),
     );
     setComponentPsu(
-      await ComponentStorage.getComponentsByCategory(ComponentCategory.PSU),
+      await ComponentStorage.getComponentsByCategory(CategoryEnum.PSU),
     );
     setComponentCasing(
-      await ComponentStorage.getComponentsByCategory(ComponentCategory.Casing),
+      await ComponentStorage.getComponentsByCategory(CategoryEnum.Casing),
     );
     // setComponentCaseFan(
     //   ComponentStorage.getComponentsByCategory(ComponentCategory.CaseFan),
@@ -273,7 +273,7 @@ export default function SimulasiPage({
     const params = createQueryString(
       searchParams,
       "kategori",
-      categoryEnumToString[item.kategori]!,
+      categoryEnumToSlug[item.kategori]!,
     );
 
     router.push("?" + params);
@@ -301,21 +301,21 @@ export default function SimulasiPage({
 
       // Updating data in the simulation storage
       switch (component.category) {
-        case ComponentCategory.CPU:
+        case CategoryEnum.CPU:
           const cpu = component.detail as ComponentView["v_cpus"]
           SimulationStorage.upsertSimulationData({
             currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) - (cpu.max_power_watt ?? 0)
           })
           break;
 
-        case ComponentCategory.GPU:
+        case CategoryEnum.GPU:
           const gpu = component.detail as ComponentView["v_gpus"]
           SimulationStorage.upsertSimulationData({
             currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) - (gpu.tdp_watt ?? 0)
           })
           break;
 
-        case ComponentCategory.Memory:
+        case CategoryEnum.Memory:
           const memory = component.detail as ComponentView["v_memories"]
           const memoryAmount = memory.amount ?? 0
           const capacityGb = memory.capacity_gb ?? 0
@@ -326,7 +326,7 @@ export default function SimulasiPage({
           })
           break;
 
-        case ComponentCategory.Storage:
+        case CategoryEnum.Storage:
           SimulationStorage.upsertSimulationData({
             selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) - 1
           })
@@ -428,7 +428,7 @@ export default function SimulasiPage({
                             key={component.storageId}
                             className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
                             href={`/produk/${
-                              categoryEnumToString[component.category]
+                              categoryEnumToSlug[component.category]
                             }/${component.slug}`}
                             passHref
                           >
@@ -466,7 +466,7 @@ export default function SimulasiPage({
                               <Button
                                 variant="outline"
                                 className="w-fit text-base my-2"
-                                disabled={item.kategori === ComponentCategory.Storage}
+                                disabled={item.kategori === CategoryEnum.Storage}
                                 onClick={() => handleAddComponent(item)}
                               >
                                 + {item.title}

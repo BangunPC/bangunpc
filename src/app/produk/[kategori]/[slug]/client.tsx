@@ -10,7 +10,7 @@ import {
   AccordionTrigger,
 } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
-import { categoryEnumToTitle, ComponentCategory } from "~/lib/db";
+import { categoryEnumToTitle, CategoryEnum } from "~/lib/db";
 
 // TODO: fix colors
 
@@ -33,7 +33,7 @@ const Component = ({
   componentInfo: any[];
   lowest_price: string | undefined;
   type: string;
-  category: ComponentCategory;
+  category: CategoryEnum;
   spec_url: string | undefined;
   review_urls: string[] | undefined;
 }) => {

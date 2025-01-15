@@ -1,4 +1,4 @@
-import { categorySlugToEnum, categoryViewsFromEnum } from "~/lib/db";
+import { categorySlugToEnum, categoryEnumToView } from "~/lib/db";
 import { v_spec } from "~/lib/produk_types";
 import { createClient } from "~/lib/supabase/server";
 import { productImage } from "~/lib/utils";
@@ -17,7 +17,7 @@ async function getDetails(params: any) {
   const client = createClient();
   const future = await client
   .schema("product")
-  .from(categoryViewsFromEnum[category]!)
+  .from(categoryEnumToView[category]!)
   .select()
   .eq("slug", slug)
   .single()
@@ -26,26 +26,23 @@ async function getDetails(params: any) {
     
     if (!data) {
       console.log(dataResult.error);
-      redirect("/404");
+      // redirect("/404");
     }
 
     const productDetailsResult = await client
       .schema("product")
       .from("v_product_details")
       .select()
-      .eq("product_id", data.product_id!);
+      .eq("product_id", data?.product_id!);
 
     const product_details = productDetailsResult.data;
 
     return {
       data,
       product_details,
-      // @ts-expect-error
-      review_urls: data.review_urls ?? [],
-      // @ts-expect-error
-      spec_url: data.spec_url,
-      // @ts-expect-error
-      name: data.product_name,
+      review_urls: data?.review_urls! ?? [],
+      spec_url: data?.spec_url,
+      name: data?.product_name,
     };
   });
 

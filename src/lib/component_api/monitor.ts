@@ -1,11 +1,11 @@
 import { ComponentDetail, ComponentView } from "../db";
 import { createClient } from "../supabase/client";
-import { MotherboardCompatibility, MotherboardFilter } from "./filter";
+import { MonitorCompatibility, ProductFilter } from "./filter";
 
 //! Not Done yet, need to fix
 export const getMonitor = async (
-  { casingId, cpuId, memories }: MotherboardCompatibility,
-  { query, min_price, max_price }: MotherboardFilter,
+  { gpuId,motherboardId, monitorIds }: MonitorCompatibility,
+  { query, min_price, max_price }: ProductFilter,
 ) => {
   const client = createClient();
 
@@ -35,92 +35,50 @@ export const getMonitor = async (
 
   await client_query.order("product_name", { ascending: true });
 
-  // filter end
-
   const { data, error } = await client_query;
-  const motherboardData = data as ComponentDetail[];
+  const monitorData = data as ComponentDetail[];
 
-  if (!motherboardData) {
+  if (!monitorData) {
     throw new Error("Motherboard data is null");
   }
 
-  let filteredData = motherboardData as ComponentView["v_motherboards"][];
+  let filteredData = monitorData as ComponentView["v_monitors"][];
 
   // compatibility start
+  let hdmiSlot = 0
+  let vgaSlot = 0
+  let displayPortSlot = 0
 
-  if (casingId) {
-    const { data: casingData } = await client
-      .schema("product")
-      .from("v_casings")
-      .select("mobo_supports")
-      .eq("product_id", casingId)
-      .limit(1)
-      .single();
+  // if (gpuId) {
+  //   const { data: gpuData } = await client
+  //     .schema("product")
+  //     .from("v_gpus")
+  //     .select("display_output")
+  //     .eq("product_id", gpuId)
+  //     .limit(1)
+  //     .single();
 
-    if (!casingData) {
-      throw new Error("Casing data is null");
-    }
+  //   if (!gpuData) {
+  //     throw new Error("GPU data is null");
+  //   }
 
-    filteredData = filteredData.filter((motherboard) =>
-      casingData?.mobo_supports?.includes(motherboard.form_factor ?? ""),
-    );
-  }
+  //   filteredData = filteredData.filter((monitor) =>
+  //     gpuData?.display_output?.includes(monitor.inputs ?? ""),
+  //   );
+  // }
 
-  if (cpuId) {
-    const { data: cpuData } = await client
-      .schema("product")
-      .from("v_cpus")
-      .select("cpu_socket_id")
-      .eq("product_id", cpuId)
-      .limit(1)
-      .single();
-    filteredData = filteredData.filter(
-      (motherboard) => motherboard.cpu_socket_id === cpuData?.cpu_socket_id,
-    );
-  }
-
-  if (memories && memories.length > 0) {
-    const { data: memoryData } = await client
-      .schema("product")
-      .from("v_memories")
-      .select("product_id, memory_type, capacity_gb, frequency_mhz")
-      .in(
-        "product_id",
-        memories.map((memory) => memory.id),
-      );
-
-    if (!memoryData) {
-      throw new Error("Memory data is null");
-    }
-    
-    if (memoryData && memoryData.length > 0) {
-      filteredData = filteredData.filter((motherboard) => {
-        const memoryCount = memories.reduce(
-          (total, memory) => total + memory.amount,
-          0,
-        );
-
-        const totalMemoryGb = memoryData.reduce((total, memory) => {
-          return (
-            total +
-            (memory.capacity_gb ?? 0) *
-              (memories.find(
-                (inputMemory) => inputMemory.id === memory.product_id,
-              )?.amount ?? 0)
-          );
-        }, 0);
-
-        return (
-          (motherboard.memory_type ? motherboard.memory_type : "_") ===
-            (memoryData[0]?.memory_type ? memoryData[0].memory_type : "") &&
-          (motherboard.memory_slot ?? 0) >= memoryCount &&
-          (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
-          (motherboard.memory_frequency_mhz ?? 0) >=
-            (memoryData[0]?.frequency_mhz ?? -1)
-        );
-      });
-    }
-  }
+  // if (motherboardId) {
+  //   const { data: moboData } = await client
+  //     .schema("product")
+  //     .from("v_motherboards")
+  //     .select("")
+  //     .eq("product_id", motherboardId)
+  //     .limit(1)
+  //     .single();
+  //   // filteredData = filteredData.filter(
+  //   //   (motherboard) => motherboard.cpu_socket_id === moboData?.cpu_socket_id,
+  //   // );
+  // }
 
   if (error) {
     throw error;

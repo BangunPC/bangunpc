@@ -1,9 +1,9 @@
 import { createClient } from "../supabase/client";
-import { GpuCompatibility, GpuFilter } from "./filter";
+import { GpuCompatibility, ProductFilter } from "./filter";
 
 export const getGpu = async (
   { casingId, motherboardId, psuId }: GpuCompatibility,
-  { query, min_price, max_price }: GpuFilter,
+  { query, min_price, max_price }: ProductFilter,
 ) => {
   const client = createClient();
 

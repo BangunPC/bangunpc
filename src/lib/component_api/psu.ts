@@ -1,9 +1,9 @@
 import { createClient } from "../supabase/client";
-import { PsuCompatibility, PsuFilter } from "./filter";
+import { PsuCompatibility, ProductFilter } from "./filter";
 
 export const getPsu = async (
   { cpuId, gpuId, memories, motherboardId, storages }: PsuCompatibility,
-  { query, min_price, max_price }: PsuFilter,
+  { query, min_price, max_price }: ProductFilter,
 ) => {
   const client = createClient();
 

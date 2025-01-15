@@ -25,7 +25,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
-import { ComponentCategory, categoryEnumToString,  } from "~/lib/db";
+import { CategoryEnum, categoryEnumToSlug,  } from "~/lib/db";
 import { createClient } from "~/lib/supabase/client";
 import { Database } from "~/lib/schema";
 import { search } from "~/lib/api";
@@ -64,7 +64,7 @@ import { SearchCommand } from "./search-command";
 export const components = [
   {
     name: "Memory / RAM",
-    enum: ComponentCategory.Memory,
+    enum: CategoryEnum.Memory,
     icon: (
       <Image
         width={120}
@@ -76,7 +76,7 @@ export const components = [
   },
   {
     name: "Motherboard",
-    enum: ComponentCategory.Motherboard,
+    enum: CategoryEnum.Motherboard,
     icon: (
       <Image
         width={120}
@@ -88,7 +88,7 @@ export const components = [
   },
   {
     name: "CPU",
-    enum: ComponentCategory.CPU,
+    enum: CategoryEnum.CPU,
     icon: (
       <Image
         width={120}
@@ -100,7 +100,7 @@ export const components = [
   },
   {
     name: "CPU Cooler",
-    enum: ComponentCategory.Cooler,
+    enum: CategoryEnum.Cooler,
     icon: (
       <Image
         width={120}
@@ -112,7 +112,7 @@ export const components = [
   },
   {
     name: "Video Card / GPU",
-    enum: ComponentCategory.GPU,
+    enum: CategoryEnum.GPU,
     icon: (
       <Image
         width={120}
@@ -124,7 +124,7 @@ export const components = [
   },
   {
     name: "Power Supply",
-    enum: ComponentCategory.PSU,
+    enum: CategoryEnum.PSU,
     icon: (
       <Image
         width={120}
@@ -136,7 +136,7 @@ export const components = [
   },
   {
     name: "Internal Storage",
-    enum: ComponentCategory.Storage,
+    enum: CategoryEnum.Storage,
     icon: (
       <Image
         width={120}
@@ -148,7 +148,7 @@ export const components = [
   },
   {
     name: "PC Case",
-    enum: ComponentCategory.Casing,
+    enum: CategoryEnum.Casing,
     icon: (
       <Image
         width={120}
@@ -160,7 +160,7 @@ export const components = [
   },
   {
     name: "Monitor",
-    enum: ComponentCategory.Monitor,
+    enum: CategoryEnum.Monitor,
     icon: (
       <Image
         width={120}
@@ -404,7 +404,7 @@ export function Navbar() {
                           {components.map((item) => (
                             <Link
                               key={item.name}
-                              href={`/produk/${categoryEnumToString[item.enum]}`}
+                              href={`/produk/${categoryEnumToSlug[item.enum]}`}
                             >
                               <Button
                                 variant="outline"

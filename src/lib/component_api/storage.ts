@@ -1,9 +1,9 @@
 import { createClient } from "../supabase/client";
-import { StorageCompatibility, StorageFilter } from "./filter";
+import { StorageCompatibility, ProductFilter } from "./filter";
 
 export const getStorage = async (
   { motherboardId, storages }: StorageCompatibility,
-  { query, min_price, max_price }: StorageFilter,
+  { query, min_price, max_price }: ProductFilter,
 ) => {
   const client = createClient();
 

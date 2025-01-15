@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentCategory, ComponentDetail, ComponentDetailMap } from "./db";
+import { CategoryEnum, ComponentDetail, ComponentDetailMap } from "./db";
 
 class LocalStorageHelper {
   static setItem<T>(key: string, value: T) {
@@ -41,7 +41,7 @@ export type ComponentStorageType = {
   price: number;
   quantity: number;
   image: string;
-  category: ComponentCategory;
+  category: CategoryEnum;
   slug: string;
   detail: ComponentDetail;
 };
@@ -69,7 +69,7 @@ export class ComponentStorageHelper {
     return LocalStorageHelper.getItem("components") ?? [];
   }
 
-  static async getComponentsByCategory(category: ComponentCategory) {
+  static async getComponentsByCategory(category: CategoryEnum) {
     // const components: ComponentStorageType[] =
     //   LocalStorageHelper.getItem("components") ?? [];
 
@@ -79,12 +79,12 @@ export class ComponentStorageHelper {
     return components.filter((component: any) => component.category === category);
   }
   
-  static getComponentDetail = async <K extends ComponentCategory>(category: K): Promise<ComponentDetailMap[K] | undefined> => {
+  static getComponentDetail = async <K extends CategoryEnum>(category: K): Promise<ComponentDetailMap[K] | undefined> => {
     const components = await this.getComponentsByCategory(category);
     
     switch (category) {
-      case ComponentCategory.Memory:
-      case ComponentCategory.Storage:
+      case CategoryEnum.Memory:
+      case CategoryEnum.Storage:
         // These categories return arrays
         return components?.map((component: any) => component.detail) as ComponentDetailMap[K];
       

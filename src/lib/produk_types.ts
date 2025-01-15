@@ -110,6 +110,21 @@ export const v_internal_storages = [
   ["type", "Type"],
   ["write_speed_mbs", "Write Speed (MB/s)"],
 ];
+export const v_monitors = [
+  ["brand_name", "Brand Name"],
+  ["panel_type", "Panel Type"],
+  ["resolution", "Resolution"],
+  ["aspect_ratio", "Aspect Ratio"],
+  ["size_inch", "Size (inch)"],
+  ["srgb_percentage", "Srgb (%)"],
+  ["refresh_rate_hz", "Refresh Rate (Hz)"],
+  ["brightness_nits", "Brightness (nits)"],
+  ["has_speaker", "Built-in Speaker"],
+  ["inputs", "Input Port"],
+  ["vesa_mount_mm", "Vesa Mount (mm)"],
+  ["warranty_years", "Warranty (year/s)"],
+  ["spesial_features", "Special Feature"],
+];
 
 export const v_spec: Record<string, string[][] | undefined> = {
   headphone: undefined,
@@ -118,7 +133,7 @@ export const v_spec: Record<string, string[][] | undefined> = {
   speaker: undefined,
   webcam: undefined,
   printer: undefined,
-  monitor: undefined,
+  monitor: v_monitors,
   os: undefined,
   soundcard: undefined,
   wirednetwork: undefined,
