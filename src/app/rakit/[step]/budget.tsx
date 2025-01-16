@@ -101,7 +101,7 @@ export default function BudgetSection() {
         <Link
           prefetch={true}
           href={`/rakit/rencana${getDest(budget.toString())}`}
-          passHref
+          
         >
           <Button
             className="mt-4 justify-center font-semibold"

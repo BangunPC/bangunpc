@@ -88,7 +88,7 @@ const Footer = () => {
                   className="flex items-center justify-center"
                   target="_blank"
                   rel="noopener noreferrer"
-                  passHref
+                  
                 >
                   <Button
                     variant="outline"
@@ -112,7 +112,7 @@ const Footer = () => {
           <ul className="flex flex-col">
             {services.map((item) => {
               return (
-                <Link key={item.name} href={item.url} passHref>
+                <Link key={item.name} href={item.url} >
                   <Button variant="ghost" className="m-0 w-full justify-start">
                     <li>{item.name}</li>
                   </Button>
@@ -126,7 +126,7 @@ const Footer = () => {
           <ul className="flex flex-col">
             {about.map((item) => {
               return (
-                <Link key={item.name} href={item.url} passHref>
+                <Link key={item.name} href={item.url} >
                   <Button variant="ghost" className="m-0 w-full justify-start">
                     <li>{item.name}</li>
                   </Button>

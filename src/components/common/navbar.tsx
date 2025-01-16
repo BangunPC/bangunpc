@@ -248,23 +248,27 @@ export function Navbar() {
             </div>
           </div>
           <Divider className="my-1" />
-          <Link href="/profile" passHref className="w-full justify-start">
+          <Link href="/profile" 
+           
+          className="w-full justify-start">
             <Button variant="ghost" className="w-full justify-start">
               <Settings2 size={18} className="mr-2" /> Pengaturan Akun
             </Button>
           </Link>
-          <Link href="/wishlist" passHref className="w-full justify-start">
+          <Link href="/wishlist" 
+           
+          className="w-full justify-start">
             <Button variant="ghost" className="w-full justify-start">
               <Heart size={18} className="mr-2" /> Wishlist
             </Button>
           </Link>
-          <Link href="/rakitanku" passHref className="w-full justify-start">
+          <Link href="/rakitanku"  className="w-full justify-start">
             <Button variant="ghost" className="w-full justify-start">
               <MonitorSmartphone size={18} className="mr-2" /> Rakitan-ku
             </Button>
           </Link>
           <Divider className="my-1" />
-          <Link href="/signout" passHref className="w-full justify-start">
+          <Link href="/signout"  className="w-full justify-start">
             <Button variant="ghost" className="w-full justify-start">
               <LogOut size={18} className="mr-2" /> Keluar
             </Button>
@@ -425,9 +429,9 @@ export function Navbar() {
                 <NavigationMenuTrigger className={"bg-transparent"}>
                   Jasa
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="">
+                <NavigationMenuContent>
                   <ul className="w-[160px] p-4">
-                    <Link href="/jasa" legacyBehavior passHref>
+                    <Link href="/jasa" legacyBehavior >
                       <NavigationMenuLink
                         className={cn(
                           navigationMenuTriggerStyle(),
@@ -437,7 +441,7 @@ export function Navbar() {
                         Jasa Rakit PC
                       </NavigationMenuLink>
                     </Link>
-                    <Link href="/servis" legacyBehavior passHref>
+                    <Link href="/servis" legacyBehavior >
                       <NavigationMenuLink
                         className={cn(
                           navigationMenuTriggerStyle(),
@@ -451,21 +455,12 @@ export function Navbar() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Popover>
-                  <PopoverTrigger>
-                    <div
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "bg-transparent",
-                      )}
-                    >
-                      Rakit PC{" "}
-                      <ChevronDown size={18} className="inline-block" />
-                    </div>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-fit p-0">
+                  <NavigationMenuTrigger className={"bg-transparent"}>
+                      Rakit PC
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
                     <ul className="w-[240px] p-4">
-                      <Link href="/simulasi" legacyBehavior passHref>
+                      <Link href="/simulasi" legacyBehavior >
                         <NavigationMenuLink
                           className={cn(
                             navigationMenuTriggerStyle(),
@@ -475,7 +470,7 @@ export function Navbar() {
                           Simulasi Rakit PC
                         </NavigationMenuLink>
                       </Link>
-                      <Link href="/rakit/budget" legacyBehavior passHref>
+                      <Link href="/rakit/budget" legacyBehavior >
                         <NavigationMenuLink
                           className={cn(
                             navigationMenuTriggerStyle(),
@@ -485,7 +480,7 @@ export function Navbar() {
                           Rekomendasi Rakitan
                         </NavigationMenuLink>
                       </Link>
-                      <Link href="/showcase" legacyBehavior passHref>
+                      <Link href="/showcase" legacyBehavior >
                         <NavigationMenuLink
                           className={cn(
                             navigationMenuTriggerStyle(),
@@ -496,11 +491,12 @@ export function Navbar() {
                         </NavigationMenuLink>
                       </Link>
                     </ul>
-                  </PopoverContent>
-                </Popover>
+                  </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/blog" legacyBehavior passHref>
+                <Link href="/blog" legacyBehavior 
+                
+                >
                   <NavigationMenuLink
                     className={cn(
                       navigationMenuTriggerStyle(),
@@ -534,7 +530,7 @@ export function Navbar() {
               <DropdownMenuContent align="end" className="tablet:hidden">
                 <Link
                   href={`?${createQueryString(searchParams, "produk", "true")}`}
-                  passHref
+                  
                 >
                   <DropdownMenuItem className="cursor-pointer p-4">
                     Produk
@@ -547,7 +543,7 @@ export function Navbar() {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent className="w-fit p-0">
                       <ul className="w-[240px] p-4">
-                        <Link href="/simulasi" legacyBehavior passHref>
+                        <Link href="/simulasi" legacyBehavior >
                           <DropdownMenuItem
                             className={cn(
                               navigationMenuTriggerStyle(),
@@ -557,7 +553,7 @@ export function Navbar() {
                             Simulasi Rakit PC
                           </DropdownMenuItem>
                         </Link>
-                        <Link href="/rakit/budget" legacyBehavior passHref>
+                        <Link href="/rakit/budget" legacyBehavior >
                           <DropdownMenuItem
                             className={cn(
                               navigationMenuTriggerStyle(),
@@ -567,7 +563,7 @@ export function Navbar() {
                             Rekomendasi Rakitan
                           </DropdownMenuItem>
                         </Link>
-                        <Link href="/showcase" legacyBehavior passHref>
+                        <Link href="/showcase" legacyBehavior >
                           <DropdownMenuItem
                             className={cn(
                               navigationMenuTriggerStyle(),
@@ -582,7 +578,7 @@ export function Navbar() {
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
 
-                <Link href="/blog" passHref>
+                <Link href="/blog" >
                   <DropdownMenuItem className="cursor-pointer p-4">
                     Blog
                   </DropdownMenuItem>

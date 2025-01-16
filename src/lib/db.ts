@@ -29,7 +29,7 @@ type DBView = Database["product"]["Views"];
 type ViewKeys = keyof DBView;
 type ComponentViewKeys = Exclude<ViewKeys, "v_products" | "v_product_details" | "v_product_images">;
 export type ComponentView = {
-  [K in ViewKeys]: DBView[K]["Row"];
+  [K in ComponentViewKeys]: DBView[K]["Row"];
 };
 export type ComponentDetail = DBView[ComponentViewKeys]["Row"]
 
@@ -98,7 +98,7 @@ export const monitorHeaderMapping = {
   refresh_rate_hz: "Refresh Rate (Hz)",
 }
 
-const categoryData: [CategoryEnum, string, string, ViewKeys | null, object?][] = [ 
+const categoryData: [CategoryEnum, string, string, ComponentViewKeys | null, object?][] = [ 
   [CategoryEnum.Motherboard, "motherboard", "Motherboard", "v_motherboards", motherboardHeaderMapping], 
   [CategoryEnum.CPU, "cpu", "CPU", "v_cpus", cpuHeaderMapping], 
   [CategoryEnum.GPU, "gpu", "GPU", "v_gpus", gpuHeaderMapping], 
@@ -128,8 +128,8 @@ export const categoryTitleToEnum: Record<string, CategoryEnum> = {}
 export const categoryEnumToSlug: Record<CategoryEnum, string> = {} as Record<CategoryEnum, string>
 export const categoryTitleToSlug: Record<string, string> = {}
 export const categoryEnumToTitle: Record<CategoryEnum, string> = {} as Record<CategoryEnum, string>
-export const categoryEnumToView: Record<CategoryEnum, ViewKeys | null> =
-{} as Record<CategoryEnum, ViewKeys | null>
+export const categoryEnumToView: Record<CategoryEnum, ComponentViewKeys | null> =
+{} as Record<CategoryEnum, ComponentViewKeys | null>
 export const categoryEnumToHeader: Record<CategoryEnum, string[]> = {} as Record<CategoryEnum, string[]>
 export const categoryEnumToKey: Record<CategoryEnum, string[]> = {} as Record<CategoryEnum, string[]>
 

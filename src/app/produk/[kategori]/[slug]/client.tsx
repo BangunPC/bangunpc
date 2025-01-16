@@ -1,6 +1,7 @@
 "use client";
 
 import { Heart, MapPin, Send } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import {
@@ -31,7 +32,7 @@ const Component = ({
   product_details: any;
   imageUrls: string[];
   componentInfo: any[];
-  lowest_price: string | undefined;
+  lowest_price: string | undefined
   type: string;
   category: CategoryEnum;
   spec_url: string | undefined;
@@ -77,14 +78,6 @@ const Component = ({
           <div className="my-4 grid auto-rows-fr grid-cols-4 justify-center gap-1 tablet:grid-cols-5">
             {imageUrls.map((url: string | undefined) => (
               <img
-                // onMouseEnter={() => {
-                //   const compimg = document.getElementById(
-                //     'compimg'
-                //   ) as HTMLImageElement | null;
-                //   if (compimg && url) {
-                //     compimg.src = url;
-                //   }
-                // }}
                 onClick={() => {
                   const compimg = document.getElementById(
                     "compimg",
@@ -108,13 +101,6 @@ const Component = ({
             <h1 className="text-4xl tablet:font-bold">{name}</h1>
           </header>
           <main className="flex flex-col gap-2">
-            {/* <div className="flex items-center gap-2">
-              <Shop className="fill-none stroke-black" width="24" height="24" />
-              <span className="text-lg">
-                {product_details!.length} penjual dari Tokopedia, Shopee &
-                lainnya
-              </span>
-            </div> */}
             {lowest_price && (
               <span className="">
                 <span className="text-4xl font-bold text-primary">
@@ -125,18 +111,16 @@ const Component = ({
             )}
             <span>
               Kategori:{" "}
-              <Link className="text-primary" href={"/produk/" + type} passHref>
-                <Button variant="link" className="p-0 text-base">
+              <Link className="text-primary" href={"/produk/" + type}>
+                <span className="text-base hover:underline">
                   {categoryEnumToTitle[category]}
-                </Button>
+                </span>
               </Link>
             </span>
             <div className="flex flex-row gap-2">
               <Button
                 variant="success"
                 className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-                // onClick={() => router.replace("#compare", { scroll: true })}
-                // onClick={() => router.replace("#compare", { scroll: true })}
               >
                 Beli Sekarang
               </Button>
@@ -226,15 +210,6 @@ const Component = ({
                       dark:bg-slate-800
                       "
                     >
-                      {/* {detail.marketplace_name === "Tokopedia" && (
-                        <TokopediaSvg className="h-8 w-fit" />
-                      )}
-                      {detail.marketplace_name === "Shopee" && (
-                        <ShopeeSvg className="h-8 w-fit" />
-                      )}
-                      {detail.marketplace_name === "Blibli" && (
-                        <BlibliSvg className="h-8 w-fit" />
-                      )} */}
                       <span className="text-xl font-semibold">
                         Rp{detail.price.toLocaleString("id-ID")}
                       </span>
@@ -242,7 +217,9 @@ const Component = ({
                         <MapPin />
                         {detail.seller_city}
                       </div>
-                      <Link href={detail.url} passHref>
+                      <Link href={detail.url} 
+                      
+                      >
                         <Button className="bg-green-600 text-center">
                           Beli Sekarang
                         </Button>
@@ -267,65 +244,57 @@ const Component = ({
                   <tbody>
                     <tr className="h-4" />
                     {product_details?.map((detail: any) => (
-                      // [detail.id,
-                      // detail.marketplace_id,
-                      // detail.price,
-                      // detail.product_detail_description_id,
-                      // detail.product_id,
-                      // detail.seller_city,
-                      // detail.stock,
-                      // detail.url].map((detail: any) => (
-                      //   <div>
-                      //     <div className="text-lg font-semibold">{detail}</div>
-                      //   </div>
-                      // ))
-                      <>
-                        <tr
-                          key={"marketplate-" + detail.id}
-                          className="drop-shadow-sm"
-                        >
-                          <td className="rounded-s-lg bg-slate-200 p-2 pl-8 dark:bg-slate-800">
-                            {/* {detail.marketplace_name === "Tokopedia" && (
-                              <TokopediaSvg className="h-8 w-fit" />
+                      <tr key={"marketplace-" + detail.id} className="drop-shadow-sm">
+                        <td className="rounded-s-lg bg-slate-200 p-2 pl-8 dark:bg-slate-800">
+                            {detail.marketplace_name === "Tokopedia" && (
+                              <Image
+                                src="/images/logo-tokopedia.svg"
+                                height={32}
+                                width={96}
+                                alt="Tokopedia Logo"
+                              />
                             )}
                             {detail.marketplace_name === "Shopee" && (
-                              <ShopeeSvg className="h-8 w-fit" />
+                              <Image
+                                src="/images/logo-shopee.svg"
+                                height={32}
+                                width={96}
+                                alt="Shopee Logo"
+                              />
                             )}
                             {detail.marketplace_name === "Blibli" && (
-                              <BlibliSvg className="h-8 w-fit" />
-                            )} */}
+                              <Image
+                                src="/images/logo-blibli.svg"
+                                height={32}
+                                width={96}
+                                alt="Blibli Logo"
+                              />
+                            )}
                           </td>
-                          <td className="bg-slate-200 p-2 dark:bg-slate-800">
-                            {detail.seller_name}
-                          </td>
-                          <td className="bg-slate-200 p-2 dark:bg-slate-800">
-                            {detail.seller_city}
-                          </td>
-                          <td className="bg-slate-200 p-2 font-semibold dark:bg-slate-800">
-                            Rp {detail.price.toLocaleString("id-ID")}
-                          </td>
-                          <td className="bg-slate-200 p-2 dark:bg-slate-800">
-                            {detail.stock}
-                          </td>
-                          <td className="bg-slate-200 p-2 dark:bg-slate-800">
-                            {detail.product_detail_description ?? "-"}
-                          </td>
-                          <td className="flex justify-end rounded-e-lg bg-slate-200 p-2 pr-8 dark:bg-slate-800">
-                            <Link href={detail.url} passHref>
-                              <Button
-                                variant="success"
-                                className="text-center text-white"
-                              >
-                                Beli
-                              </Button>
-                            </Link>
-                          </td>
-                        </tr>
-                        <tr
-                          key={"marketplategap-" + detail.id}
-                          className="h-1"
-                        />
-                      </>
+                        <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                          {detail.seller_name}
+                        </td>
+                        <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                          {detail.seller_city}
+                        </td>
+                        <td className="bg-slate-200 p-2 font-semibold dark:bg-slate-800">
+                          Rp {detail.price.toLocaleString("id-ID")}
+                        </td>
+                        <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                          {detail.stock}
+                        </td>
+                        <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                          {detail.product_detail_description ?? "-"}
+                        </td>
+                        <td className="flex justify-end rounded-e-lg bg-slate-200 p-2 pr-8 dark:bg-slate-800">
+                          <Link href={detail.url} target="_blank"
+                          >
+                            <Button variant="success" className="text-center text-white">
+                              Beli
+                            </Button>
+                          </Link>
+                        </td>
+                      </tr>
                     ))}
                   </tbody>
                 </table>
@@ -340,17 +309,17 @@ const Component = ({
           <AccordionTrigger className="flex w-full justify-start text-3xl font-semibold">
             Spesifikasi
             {spec_url ? (
-              <a
+              <Link
                 href={spec_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ml-2 mr-auto"
                 onClick={(e) => e.stopPropagation()}
               >
-                <Button variant="outline" className=" text-sm">
+                <Button variant="outline" className="text-sm">
                   Buka Spesifikasi Resmi
                 </Button>
-              </a>
+              </Link>
             ) : (
               <span className="mr-auto" />
             )}

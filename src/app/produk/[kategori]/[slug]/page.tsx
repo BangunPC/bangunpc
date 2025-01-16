@@ -41,8 +41,8 @@ async function getDetails(params: any) {
       data,
       product_details,
       review_urls: data?.review_urls! ?? [],
-      spec_url: data?.spec_url,
-      name: data?.product_name,
+      spec_url: data?.spec_url!,
+      name: data?.product_name!,
     };
   });
 

@@ -71,7 +71,7 @@ export default function HomePage() {
 //               >
 //                 <Link
 //                   href="/rakit/budget"
-//                   passHref
+//                   
 //                   className="m-auto tablet:m-0 tablet:mt-6"
 //                 >
 //                   <Button className="w-fit gap-4 rounded-xl bg-black p-7 text-lg hover:bg-zinc-900 ">
@@ -146,7 +146,7 @@ function HeroSection() {
           Sesuaikan dengan kebutuhan dan budget Anda
         </p>
         <div className="flex flex-row gap-4 pt-8">
-          <Link href="/rakit/budget" passHref>
+          <Link href="/rakit/budget">
             <Button className="via-52% h-14 w-60 gap-[5px] rounded-2xl bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
               <Image
                 src="/images/icon-computer.svg"
@@ -489,7 +489,7 @@ function PacketPersonalComputerSection() {
 //               panduan dan dukungan yang dibutuhkan. Bersama kami, wujudkan
 //               impian PC Anda!
 //             </p>
-//             <Link href="?produk=true" passHref legacyBehavior replace scroll={false}>
+//             <Link href="?produk=true"  legacyBehavior replace scroll={false}>
 //               <Button className="m-auto mt-0 w-fit gap-2 bg-black p-5 hover:bg-zinc-900 tablet:m-0 tablet:mt-6">
 //                 <Image
 //                   src="/images/icon-cart.svg"
@@ -634,7 +634,7 @@ function CariKomponenSection() {
 //           </h1>
 //         </div>
 //         <div className="flex flex-row gap-4 pt-8">
-//           <Link href="/rakit/budget" passHref>
+//           <Link href="/rakit/budget" >
 //             <Button className="via-52% h-14 w-60 gap-[5px] rounded-2xl bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
 //               <Image
 //                 src="/images/icon-computer.svg"

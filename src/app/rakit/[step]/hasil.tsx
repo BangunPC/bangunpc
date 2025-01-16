@@ -133,7 +133,9 @@ export default function HasilSection({
       <div className="h-4" />
 
       <div className="flex justify-start">
-        <Link prefetch={false} href={`/rakit/rencana${getDest()}`} passHref>
+        <Link prefetch={false} href={`/rakit/rencana${getDest()}`} 
+        
+        >
           <Button className="justify-center font-semibold">
             <ArrowLeft className="mr-2 inline-block" />
             Kembali

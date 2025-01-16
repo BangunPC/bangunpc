@@ -96,7 +96,7 @@ export default function RencanaSection({
         <Link
           prefetch={false}
           href={`/rakit/budget${getDest(multiSelect)}`}
-          passHref
+          
         >
           <Button className="mt-4 justify-center font-semibold">
             <ArrowLeft className="mr-2 inline-block" />
@@ -107,7 +107,7 @@ export default function RencanaSection({
         <Link
           prefetch={false}
           href={`/rakit/hasil${getDest(multiSelect)}`}
-          passHref
+          
         >
           <Button
             className="mt-4 justify-center font-semibold"

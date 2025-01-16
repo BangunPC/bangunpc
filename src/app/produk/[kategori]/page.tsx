@@ -354,7 +354,7 @@ const ComponentFallback = ({
   isMobile: boolean;
   onClick?: () => void;
 }) => {
-  let keys = categoryEnumToKey[categoryEnum]
+  const keys = categoryEnumToKey[categoryEnum]
 
   if (isMobile)
     return (

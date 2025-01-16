@@ -430,7 +430,7 @@ export default function SimulasiPage({
                             href={`/produk/${
                               categoryEnumToSlug[component.category]
                             }/${component.slug}`}
-                            passHref
+                            
                           >
                             <Image
                               src={component.image}

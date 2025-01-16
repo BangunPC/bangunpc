@@ -42,12 +42,12 @@ export const getMonitor = async (
     throw new Error("Motherboard data is null");
   }
 
-  let filteredData = monitorData as ComponentView["v_monitors"][];
+  const filteredData = monitorData as ComponentView["v_monitors"][];
 
   // compatibility start
-  let hdmiSlot = 0
-  let vgaSlot = 0
-  let displayPortSlot = 0
+  // let hdmiSlot = 0
+  // let vgaSlot = 0
+  // let displayPortSlot = 0
 
   // if (gpuId) {
   //   const { data: gpuData } = await client

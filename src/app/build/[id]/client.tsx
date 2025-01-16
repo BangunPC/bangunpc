@@ -249,7 +249,7 @@ const Component = ({
               )}
               {/* <span>
               Kategori:{" "}
-              <Link className="text-primary" href={"/produk/" + type} passHref>
+              <Link className="text-primary" href={"/produk/" + type} >
                 <Button variant="link" className="p-0 text-base">
                   {categoryTitlesFromEnum[category]}
                 </Button>
@@ -298,7 +298,7 @@ const Component = ({
                                   href={`/produk/${
                                     categoryEnumToSlug[item.category]
                                   }/${component.slug}`}
-                                  passHref
+                                  
                                 >
                                   <Image
                                     src={productImage(
@@ -484,7 +484,7 @@ const Component = ({
               Beli Sekarang
             </Button>
           </a>
-          {/* <Link href={`/simulasi/${data.build_id}`} passHref legacyBehavior>
+          {/* <Link href={`/simulasi/${data.build_id}`}  legacyBehavior>
             <Button
               variant="default"
               className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
