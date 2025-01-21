@@ -9,41 +9,46 @@ import {
   categoryEnumToTitle,
   casingHeaderMapping,
   categoryEnumToKey,
-} from "~/lib/db";
+} from "@/lib/db";
 
 import { SidebarClose, SidebarOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-import { Button } from "~/components/ui/button";
-import Spinner from "~/components/ui/spinner-loading";
-import { getCasing } from "~/lib/component_api/casing";
-import { getCpu } from "~/lib/component_api/cpu";
-import { getGpu } from "~/lib/component_api/gpu";
-import { getMemory } from "~/lib/component_api/memory";
-import { getMotherboard } from "~/lib/component_api/motherboard";
-import { getPsu } from "~/lib/component_api/psu";
-import { getStorage } from "~/lib/component_api/storage";
+import React, { use, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner-loading";
+import { getCasing } from "@/lib/component_api/casing";
+import { getCpu } from "@/lib/component_api/cpu";
+import { getGpu } from "@/lib/component_api/gpu";
+import { getMemory } from "@/lib/component_api/memory";
+import { getMotherboard } from "@/lib/component_api/motherboard";
+import { getPsu } from "@/lib/component_api/psu";
+import { getStorage } from "@/lib/component_api/storage";
 import {
   ComponentStorage,
   ComponentStorageType,
   SimulationStorage,
-} from "~/lib/storage_helper";
-import { componentImage } from "~/lib/utils";
+} from "@/lib/storage_helper";
+import { componentImage } from "@/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
 import { v4 as uuidv4 } from 'uuid';
-import { getMonitor } from "~/lib/component_api/monitor";
+import { getMonitor } from "@/lib/component_api/monitor";
 
-const KategoriPage = ({
-  params,
-}: {
-  params: { isCompatibiliyChecked: boolean | null; kategori: string; noTopH: boolean | null; onSuccess?: () => void };
-}) => {
-  
+const KategoriPage = (
+  props: {
+    params: Promise<{ 
+      isCompatibilityChecked: boolean | null; 
+      kategori: string; 
+      noTopH: boolean | null; 
+      onSuccess?: () => void }>
+  }
+) => {
+  const params = use(props.params);
+
   const [price, setPrice] = React.useState(0);
   const [total, setTotal] = React.useState(0);
-  
+
 
   useEffect(() => {
     const refresh = () => {

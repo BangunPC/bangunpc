@@ -7,7 +7,7 @@ export class ApiPaths {
   static viewRakitan = "api/rakitanku/view";
 }
 
-export const search = async function (search_text: string) {
+export const searchProduct = async function (search_text: string) {
   const supabase = createClient();
   const { data, error } = await supabase
     .schema("product")

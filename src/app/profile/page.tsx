@@ -1,8 +1,8 @@
 "use client";
 import { Bell, MessageSquareText, UserRound } from "lucide-react";
 import React from "react";
-import { Button } from "~/components/ui/button";
-import TextField from "~/components/ui/text-field";
+import { Button } from "@/components/ui/button";
+import TextField from "@/components/ui/text-field";
 
 const ProfilePage = () => {
   return (

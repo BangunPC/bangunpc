@@ -5,17 +5,15 @@ import * as React from "react";
 
 import { User as SupabaseUser } from "@supabase/supabase-js";
 import {
-  ChevronDown,
   Heart,
   LogOut,
   MonitorSmartphone,
-  Search,
   Settings2,
   User,
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import FormLogin from "~/components/login/form-login";
+import FormLogin from "@/components/login/form-login";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,12 +22,10 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "~/components/ui/navigation-menu";
-import { CategoryEnum, categoryEnumToSlug,  } from "~/lib/db";
-import { createClient } from "~/lib/supabase/client";
-import { Database } from "~/lib/schema";
-import { search } from "~/lib/api";
-import { cn, createQueryString, removeQueryString } from "~/lib/utils";
+} from "@/components/ui/navigation-menu";
+import { CategoryEnum, categoryEnumToSlug,  } from "@/lib/db";
+import { createClient } from "@/lib/supabase/client"
+import { cn, createQueryString, removeQueryString } from "@/lib/utils";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -57,9 +53,10 @@ import { ModeToggle } from "../ui/mode-toggle";
 import { FloatingNav } from "../ui/floating-navbar";
 import FormRegister from "../register/from-register";
 import FeedbackDialog from "./feedback-dialog";
-import { componentImage } from "~/lib/utils";
+import { componentImage } from "@/lib/utils";
 import { SearchDialog } from "./search-dialog";
 import { SearchCommand } from "./search-command";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export const components = [
   {
@@ -225,7 +222,7 @@ export function Navbar() {
     { name: "Thermal Paste", href: "?produk=false" },
   ];
 
-  const profileButton = (
+  const ProfileButton = (
     <Popover>
       <PopoverTrigger>
         <User
@@ -248,15 +245,15 @@ export function Navbar() {
             </div>
           </div>
           <Divider className="my-1" />
+          
           <Link href="/profile" 
-           
-          className="w-full justify-start">
+           className="w-full justify-start">
             <Button variant="ghost" className="w-full justify-start">
               <Settings2 size={18} className="mr-2" /> Pengaturan Akun
             </Button>
           </Link>
+
           <Link href="/wishlist" 
-           
           className="w-full justify-start">
             <Button variant="ghost" className="w-full justify-start">
               <Heart size={18} className="mr-2" /> Wishlist
@@ -278,7 +275,7 @@ export function Navbar() {
     </Popover>
   );
 
-  const loginButton = (
+  const LoginButton = (
     <Dialog
       open={login}
       onOpenChange={(open) => {
@@ -292,11 +289,16 @@ export function Navbar() {
       }}
     >
       <DialogTrigger>
-        <Button className="w-24 rounded-xl bg-primary px-4 text-white hover:bg-primary/80">
+        <div className="w-24 rounded-xl bg-primary px-4 py-2 text-white hover:bg-primary/80">
           Masuk
-        </Button>
+        </div>
       </DialogTrigger>
       <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
+      <VisuallyHidden>
+        <DialogTitle>
+          Menu
+        </DialogTitle>
+      </VisuallyHidden>
         <FormLogin onRegisterClick={() => {
           router.push(
             "?" + createQueryString(searchParams, "register", "true")
@@ -305,7 +307,7 @@ export function Navbar() {
       </DialogContent>
     </Dialog>
   );
-  const registerModal = (
+  const RegisterModal = (
     <Dialog
       open={register}
       onOpenChange={(open) => {
@@ -333,8 +335,6 @@ export function Navbar() {
       <Link href="/" className="scale-[70%]">
         <NavbarIcon />
       </Link>
-      {true && (
-        <>
           <NavigationMenu className="m-auto hidden tablet:block">
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -513,10 +513,12 @@ export function Navbar() {
             <SearchDialog/>
             {/* <SearchCommand/> */}
             <FeedbackDialog />
-            {user ? profileButton : (
+            {user ? (
+              <>{ProfileButton}</>
+            ) : (
               <>
-                {loginButton}
-                {registerModal}
+                {LoginButton}
+                {RegisterModal}
               </>
             )}
             <ModeToggle />
@@ -586,10 +588,6 @@ export function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-
-        </>
-
-      )}
     </FloatingNav>
   );
 }

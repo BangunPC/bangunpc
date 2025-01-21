@@ -1,14 +1,14 @@
 export const runtime = "edge";
 
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@/components/theme-provider"
 import { Inter } from "next/font/google";
-import React from "react";
-import { Navbar } from "~/components/common/navbar";
-import ProgressBarProvider from "~/components/provider/progress-bar";
-import Footer from "~/components/common/footer";
+import React, { Suspense } from "react";
+import { Navbar } from "@/components/common/navbar";
+import ProgressBarProvider from "@/components/provider/progress-bar";
+import Footer from "@/components/common/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <GoogleAnalytics gaId="G-SXXB5CHSKR" />
       <body>
         <ProgressBarProvider>
@@ -39,7 +39,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <div className={`${inter.variable} bg-background text-foreground flex flex-col min-h-1.2-screen dark:bg-gray-800`}>
-              <Navbar />
+              <Suspense>
+                <Navbar />
+              </Suspense>
               <div className="flex-grow mt-navbar-min-h mb-10">
 
                 {children}

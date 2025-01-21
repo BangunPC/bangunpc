@@ -4,32 +4,32 @@ import { Banknote, Save, Trash, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { Button } from "~/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
-import KategoriCasing from "~/components/icon/kategori-casing";
-import KategoriCpu from "~/components/icon/kategori-cpu";
-import KategoriGpu from "~/components/icon/kategori-gpu";
-import KategoriInternalStorage from "~/components/icon/kategori-internal-storage";
-import KategoriMotherboard from "~/components/icon/kategori-motherboard";
-import KategoriPsu from "~/components/icon/kategori-psu";
-import KategoriRam from "~/components/icon/kategori-ram";
-import { ScrollArea } from "~/components/ui/scroll-area";
+import React, { use, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import KategoriCasing from "@/components/icon/kategori-casing";
+import KategoriCpu from "@/components/icon/kategori-cpu";
+import KategoriGpu from "@/components/icon/kategori-gpu";
+import KategoriInternalStorage from "@/components/icon/kategori-internal-storage";
+import KategoriMotherboard from "@/components/icon/kategori-motherboard";
+import KategoriPsu from "@/components/icon/kategori-psu";
+import KategoriRam from "@/components/icon/kategori-ram";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   CategoryEnum,
   ComponentView,
   categoryEnumToSlug,
   categorySlugToEnum,
-} from "~/lib/db";
-import { ComponentStorage, ComponentStorageType, SimulationStorage } from "~/lib/storage_helper";
-import { createQueryString, removeQueryString } from "~/lib/utils";
+} from "@/lib/db";
+import { ComponentStorage, ComponentStorageType, SimulationStorage } from "@/lib/storage_helper";
+import { createQueryString, removeQueryString } from "@/lib/utils";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-import { ApiPaths, fetcher, insertRakitan } from "~/lib/api";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
-import { Label } from "~/components/ui/label";
-import Divider from "~/components/ui/divider";
-import { Input } from "~/components/ui/input";
+import { ApiPaths, fetcher, insertRakitan } from "@/lib/api";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import Divider from "@/components/ui/divider";
+import { Input } from "@/components/ui/input";
 import KategoriPage from "../produk/[kategori]/page";
 
 const headers = [
@@ -39,23 +39,24 @@ const headers = [
   "Aksi",
 ];
 
-export default function SimulasiPage({
-  params,
-}: {
-  params: {
-    params?: { id: number } | undefined;
-    cpu?: ComponentStorageType | undefined;
-    cpu_cooler?: ComponentStorageType | undefined;
-    gpu?: ComponentStorageType | undefined;
-    internal_storages?: ComponentStorageType[] | undefined;
-    memories?: ComponentStorageType[] | undefined;
-    monitors?: ComponentStorageType | undefined;
-    motherboard?: ComponentStorageType | undefined;
-    power_supply?: ComponentStorageType | undefined;
-    casing?: ComponentStorageType | undefined;
-  };
-}) {
-  const isComponent = params?.params?.id ?? null;
+export default function SimulasiPage(
+  props : {
+    params: Promise<{
+      params?: { id: number } | undefined;
+      cpu?: ComponentStorageType | undefined;
+      cpu_cooler?: ComponentStorageType | undefined;
+      gpu?: ComponentStorageType | undefined;
+      internal_storages?: ComponentStorageType[] | undefined;
+      memories?: ComponentStorageType[] | undefined;
+      monitors?: ComponentStorageType | undefined;
+      motherboard?: ComponentStorageType | undefined;
+      power_supply?: ComponentStorageType | undefined;
+      casing?: ComponentStorageType | undefined;
+    }>
+  }
+) {
+  const params = use(props.params)
+  const isComponent = params.params?.id ?? null;
   const router = useRouter();
   const searchParams = useSearchParams()!;
 
@@ -580,14 +581,14 @@ export default function SimulasiPage({
             <ScrollArea className="-z-10 w-full px-4">
               {kategori && categorySlugToEnum[kategori] && (
                 <KategoriPage
-                  params={{
-                    isCompatibiliyChecked: true,
+                  params={Promise.resolve({
+                    isCompatibilityChecked: true,
                     kategori: kategori,
                     noTopH: true,
                     onSuccess: () => {
                       closeIframe();
                     },
-                  }}
+                  })}
                 />
               )}
             </ScrollArea>

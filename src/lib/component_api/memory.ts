@@ -103,7 +103,7 @@ export const getMemory = async (
   // compatibility end
 
   if (error) {
-    throw error;
+    return error;
   }
 
   return filteredData;

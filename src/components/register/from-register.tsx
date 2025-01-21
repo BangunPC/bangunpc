@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "~/components/ui/button";
-import { NavbarIcon } from "~/components/icon/navbar-icon";
-import { createClient } from "~/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import { NavbarIcon } from "@/components/icon/navbar-icon";
+import { createClient } from "@/lib/supabase/client";
 import Spinner from "../ui/spinner-loading";
 import { Turnstile } from "@marsidev/react-turnstile";
 

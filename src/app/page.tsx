@@ -5,11 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 // import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import Carousel from "~/components/common/carousel";
-import CardPc from "~/components/common/card-pc";
-import { SearchCommand } from "~/components/common/search-command";
-// import { HeroHighlight, Highlight } from "~/components/ui/hero-highlight";
+import { Button } from "@/components/ui/button";
+import Carousel from "@/components/common/carousel";
+import CardPc from "@/components/common/card-pc";
+import { SearchCommand } from "@/components/common/search-command";
+// import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
 export default function HomePage() {

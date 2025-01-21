@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
+import { Suspense, use, useMemo } from "react";
 import useSWR from "swr";
-import { ApiPaths, fetchWithId } from "~/lib/api";
+import { ApiPaths, fetchWithId } from "@/lib/api";
 import SimulasiPage from "../page";
-import { ComponentStorageType } from "~/lib/storage_helper";
-import { CategoryEnum, ComponentDetail } from "~/lib/db";
-import { productImage } from "~/lib/utils";
+import { ComponentStorageType } from "@/lib/storage_helper";
+import { CategoryEnum, ComponentDetail } from "@/lib/db";
+import { productImage } from "@/lib/utils";
 import { v4 as uuidv4 } from 'uuid';
 
 export type CommonRakitanDataType = {
@@ -20,7 +20,8 @@ export type CommonRakitanDataType = {
   datail: ComponentDetail;
 };
 
-const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
+const RakitanDetailPage = (props: {params: Promise<{ id: number }>}) => {
+  const params = use(props.params)
   const { data, isLoading, error } = useSWR(
     [ApiPaths.viewRakitan, params.id],
     ([url, id]) => fetchWithId(url, id),
@@ -127,7 +128,9 @@ const RakitanDetailPage = ({ params }: { params: { id: number } }) => {
       {error && <div>Error: {error.message}</div>}
       {dataParsed && (
         <>
-          <SimulasiPage params={compParams} />
+          <Suspense>
+            <SimulasiPage params={Promise.resolve(compParams)} />
+          </Suspense>
         </>
       )}
     </div>

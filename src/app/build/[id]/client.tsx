@@ -9,20 +9,20 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "~/components/ui/accordion";
-import { Button } from "~/components/ui/button";
-import KategoriCasing from "~/components/icon/kategori-casing";
-import KategoriCpu from "~/components/icon/kategori-cpu";
-import KategoriCpuCooler from "~/components/icon/kategori-cpu-cooler";
-import KategoriGpu from "~/components/icon/kategori-gpu";
-import KategoriInternalStorage from "~/components/icon/kategori-internal-storage";
-import KategoriMonitor from "~/components/icon/kategori-monitor";
-import KategoriMotherboard from "~/components/icon/kategori-motherboard";
-import KategoriPsu from "~/components/icon/kategori-psu";
-import KategoriRam from "~/components/icon/kategori-ram";
-import { categoryEnumToSlug, CategoryEnum } from "~/lib/db";
-import { Database } from "~/lib/schema";
-import { productImage } from "~/lib/utils";
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import KategoriCasing from "@/components/icon/kategori-casing";
+import KategoriCpu from "@/components/icon/kategori-cpu";
+import KategoriCpuCooler from "@/components/icon/kategori-cpu-cooler";
+import KategoriGpu from "@/components/icon/kategori-gpu";
+import KategoriInternalStorage from "@/components/icon/kategori-internal-storage";
+import KategoriMonitor from "@/components/icon/kategori-monitor";
+import KategoriMotherboard from "@/components/icon/kategori-motherboard";
+import KategoriPsu from "@/components/icon/kategori-psu";
+import KategoriRam from "@/components/icon/kategori-ram";
+import { categoryEnumToSlug, CategoryEnum } from "@/lib/db";
+import { Database } from "@/lib/schema";
+import { productImage } from "@/lib/utils";
 
 // TODO: fix colors
 
@@ -54,27 +54,27 @@ const Component = ({
     data.review_urls!.replaceAll("watch?v=", "embed/"),
   ) as string[];
 
-  const cpu = data.cpu ? (data.cpu as Object as ComponentJson) : null;
+  const cpu = data.cpu ? (data.cpu as object as ComponentJson) : null;
   const cpu_cooler = data.cpu_cooler
-    ? (data.cpu_cooler as Object as ComponentJson)
+    ? (data.cpu_cooler as object as ComponentJson)
     : null;
-  const gpu = data.gpu ? (data.gpu as Object as ComponentJson) : null;
+  const gpu = data.gpu ? (data.gpu as object as ComponentJson) : null;
   const internal_storages = data.internal_storages
-    ? (data.internal_storages as Object[] as ComponentJson[])
+    ? (data.internal_storages as object[] as ComponentJson[])
     : null;
   const memories = data.memories
-    ? (data.memories as Object[] as ComponentJson[])
+    ? (data.memories as object[] as ComponentJson[])
     : null;
   const monitors = data.monitors
-    ? (data.monitors as Object as ComponentJson)
+    ? (data.monitors as object as ComponentJson)
     : null;
   const motherboard = data.motherboard
-    ? (data.motherboard as Object as ComponentJson)
+    ? (data.motherboard as object as ComponentJson)
     : null;
   const power_supply = data.power_supply
-    ? (data.power_supply as Object as ComponentJson)
+    ? (data.power_supply as object as ComponentJson)
     : null;
-  const casing = data.casing ? (data.casing as Object as ComponentJson) : null;
+  const casing = data.casing ? (data.casing as object as ComponentJson) : null;
 
   const components = [
     {

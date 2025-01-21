@@ -9,9 +9,9 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "~/components/ui/accordion";
-import { Button } from "~/components/ui/button";
-import { categoryEnumToTitle, CategoryEnum } from "~/lib/db";
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { categoryEnumToTitle, CategoryEnum } from "@/lib/db";
 
 // TODO: fix colors
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { components } from "~/components/common/navbar";
-import { categoryEnumToSlug } from "~/lib/db";
+import { components } from "@/components/common/navbar";
+import { categoryEnumToSlug } from "@/lib/db";
 
 export default function Page() {
   return <main className="m-auto flex max-w-3xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">

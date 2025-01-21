@@ -2,13 +2,14 @@ import { redirect } from "next/navigation";
 import BudgetSection from "./budget";
 import RencanaSection from "./rencana";
 import HasilSection from "./hasil";
-import StepBudget from "~/components/icon/step-budget";
-import StepKebutuhan from "~/components/icon/step-kebutuhan";
-import StepHasil from "~/components/icon/step-hasil";
-import { createClient } from "~/lib/supabase/server";
+import StepBudget from "@/components/icon/step-budget";
+import StepKebutuhan from "@/components/icon/step-kebutuhan";
+import StepHasil from "@/components/icon/step-hasil";
+import { createSupaServerClient } from "@/lib/supabase/server";
+import { Suspense } from "react";
 
 async function getRencanaList() {
-  const supabase = createClient();
+  const supabase = createSupaServerClient();
   const { data, error } = await supabase
     .schema("pc_build")
     .from("categories")
@@ -18,7 +19,7 @@ async function getRencanaList() {
 }
 
 async function getRecommendation(budget: number, categoryIndexes: number[]) {
-  const supabase = createClient();
+  const supabase = createSupaServerClient();
   const categories_name = await supabase
     .schema("pc_build")
     .from("categories")
@@ -46,13 +47,14 @@ export type RecommendationHasilType = Awaited<
   ReturnType<typeof getRecommendation>
 >;
 
-export default async function RakitPage({
-  params,
-  searchParams,
-}: {
-  params: { step: string };
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
+export default async function RakitPage(
+  props: {
+    params: Promise<{ step: string }>;
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   let component: RecommendationHasilType = {
     data: null,
     error: null,
@@ -94,11 +96,17 @@ export default async function RakitPage({
       <div className="h-4" />
       <div className="m-auto mb-8 w-full max-w-screen-desktop p-4 h-max">
         {params.step === "budget" ? (
-          <BudgetSection />
+          <Suspense>
+            <BudgetSection />
+          </Suspense>
         ) : params.step === "rencana" ? (
-          <RencanaSection rencanaList={rencanaList} />
+          <Suspense>
+            <RencanaSection rencanaList={rencanaList} />
+          </Suspense>
         ) : (
-          <HasilSection component={component} />
+          <Suspense>
+            <HasilSection component={component} />
+          </Suspense>
         )}
       </div>
     </div>

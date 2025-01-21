@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
 import { Search, Loader2 } from 'lucide-react';
-import { Dialog, DialogContent } from '~/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const searchItems = [
   {

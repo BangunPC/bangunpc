@@ -3,8 +3,8 @@
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import { pcImage } from "~/lib/utils";
+import { Button } from "@/components/ui/button";
+import { pcImage } from "@/lib/utils";
 import { RecommendationHasilType } from "./page";
 import { useSearchParams } from "next/navigation";
 

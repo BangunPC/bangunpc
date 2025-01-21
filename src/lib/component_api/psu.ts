@@ -166,7 +166,7 @@ export const getPsu = async (
   // compatibility end
 
   if (error) {
-    throw error;
+    return error;
   }
 
   return filteredData;

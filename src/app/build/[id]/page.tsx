@@ -1,10 +1,10 @@
-import { createClient } from "~/lib/supabase/server";
+import { createSupaServerClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Component from "./client";
-import { pcImage } from "~/lib/utils";
+import { pcImage } from "@/lib/utils";
 
 async function getDetails(id: number) {
-  const client = createClient();
+  const client = createSupaServerClient();
   const future = await Promise.all([
     client
       .schema("pc_build")
@@ -24,11 +24,12 @@ async function getDetails(id: number) {
   return { ...future };
 }
 
-export default async function HasilPage({
-  params,
-}: {
-  params: { id: number };
-}) {
+export default async function HasilPage(
+  props: {
+    params: Promise<{ id: number }>;
+  }
+) {
+  const params = await props.params;
   //   const router = useRouter();
   const component = await getDetails(params.id);
 

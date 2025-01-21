@@ -1,18 +1,18 @@
 import {
   DialogContent,
-} from "~/components/ui/dialog"
+} from "@/components/ui/dialog"
 import { Loader2, Search } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { componentImage } from "~/lib/utils"
+import { componentImage } from "@/lib/utils"
 import { Button } from "../ui/button"
-import { Database } from "~/lib/schema"
+import { Database } from "@/lib/schema"
 import { useState, useEffect, useCallback } from "react"
-import { search } from "~/lib/api"
+import { searchProduct } from "@/lib/api"
 import { Command as CommandPrimitive } from 'cmdk'
 import { Dialog, DialogProps } from "@radix-ui/react-dialog"
 import { useRouter } from "next/navigation"
-import { categoryTitleToSlug } from "~/lib/db"
+import { categoryTitleToSlug } from "@/lib/db"
 
 const searchItems = [
   {
@@ -56,7 +56,7 @@ export function SearchDialog({ ...props }: DialogProps) {
       if (searchQuery.length > 2) {
         setIsLoading(true)
         try {
-          const { data, error } = await search(searchQuery)
+          const { data, error } = await searchProduct(searchQuery)
           if (!error) {
             setSearchResults(data.map((product) => ({
               ...product,
@@ -65,6 +65,7 @@ export function SearchDialog({ ...props }: DialogProps) {
               is_published: true,
               product_fts: null,
               product_trgms: null,
+              created_at: null
             })))
           } else {
             console.error('Error fetching search results:', error)

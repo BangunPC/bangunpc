@@ -1,9 +1,9 @@
-import { categorySlugToEnum, categoryEnumToView } from "~/lib/db";
-import { v_spec } from "~/lib/produk_types";
-import { createClient } from "~/lib/supabase/server";
-import { productImage } from "~/lib/utils";
+import { categorySlugToEnum, categoryEnumToView } from "@/lib/db";
+import { v_spec } from "@/lib/produk_types";
+import { createSupaServerClient } from "@/lib/supabase/server";
+import { productImage } from "@/lib/utils";
 import Component from "./client";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 async function getDetails(params: any) {
   const kategori = params.kategori;
@@ -14,7 +14,7 @@ async function getDetails(params: any) {
 
   const category = categorySlugToEnum[kategori]!;
   
-  const client = createClient();
+  const client = createSupaServerClient();
   const future = await client
   .schema("product")
   .from(categoryEnumToView[category]!)
@@ -49,12 +49,13 @@ async function getDetails(params: any) {
   return { ...future };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { slug: string; kategori: string };
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ slug: string; kategori: string }>;
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+  }
+) {
+  const params = await props.params;
   //   const router = useRouter();
   const component = await getDetails(params);
 
