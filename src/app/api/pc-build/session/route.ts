@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { serialize } from "cookie"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
