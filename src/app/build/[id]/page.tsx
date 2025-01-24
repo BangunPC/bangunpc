@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { createSupaServerClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Component from "./client";

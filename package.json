@@ -10,7 +10,10 @@
     "start": "next start",
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check .",
-    "gentypes": "npx supabase gen types typescript --project-id \"onawoodgnwkncueeyusr\" > src/lib/schema.ts --schema public --schema product --schema pc_build"
+    "gentypes": "npx supabase gen types typescript --project-id \"onawoodgnwkncueeyusr\" > src/lib/schema.ts --schema public --schema product --schema pc_build",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "preview": "npm run pages:build && wrangler pages dev",
+    "deploy": "npm run pages:build && wrangler pages deploy"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.1.0",
@@ -60,7 +63,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.2",
+    "@cloudflare/next-on-pages": "^1.13.7",
     "@types/eslint": "^9.6.1",
     "@types/node": "^22.10.7",
     "@types/react": "19.0.7",

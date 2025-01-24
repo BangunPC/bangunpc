@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { createSupaServerClient } from '@/lib/supabase/server'
 import { PCBuildType } from './types'
 

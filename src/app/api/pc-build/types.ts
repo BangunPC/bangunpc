@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { z } from 'zod';
 
 // Component Build Schema

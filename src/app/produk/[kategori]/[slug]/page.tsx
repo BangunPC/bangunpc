@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { categorySlugToEnum, categoryEnumToView } from "@/lib/db";
 import { v_spec } from "@/lib/produk_types";
 import { createSupaServerClient } from "@/lib/supabase/server";

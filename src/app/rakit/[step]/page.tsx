@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { redirect } from "next/navigation";
 import BudgetSection from "./budget";
 import RencanaSection from "./rencana";
