@@ -1,5 +1,6 @@
 import {
   DialogContent,
+  DialogTitle,
 } from "@/components/ui/dialog"
 import { Loader2, Search } from "lucide-react"
 import Image from "next/image"
@@ -13,6 +14,7 @@ import { Command as CommandPrimitive } from 'cmdk'
 import { Dialog, DialogProps } from "@radix-ui/react-dialog"
 import { useRouter } from "next/navigation"
 import { categoryTitleToSlug } from "@/lib/db"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 
 const searchItems = [
   {
@@ -106,6 +108,11 @@ export function SearchDialog({ ...props }: DialogProps) {
       <Search size={20} className="cursor-pointer" onClick={() => setOpen((open) => !open)}/>
       <Dialog open={open} onOpenChange={setOpen} {...props}>
         <DialogContent className="overflow-hidden p-0">
+          <VisuallyHidden>
+            <DialogTitle>
+              Menu
+            </DialogTitle>
+          </VisuallyHidden>
           <div className="flex h-full w-full flex-col overflow-hidden rounded-md bg-white dark:bg-gray-900">
             <CommandPrimitive className="flex h-full w-full flex-col overflow-hidden">
               {/* Input Search */}

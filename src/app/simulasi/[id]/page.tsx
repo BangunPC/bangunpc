@@ -3,11 +3,11 @@
 import { Suspense, use, useMemo } from "react";
 import useSWR from "swr";
 import { ApiPaths, fetchWithId } from "@/lib/api";
-import SimulasiPage from "../page";
 import { ComponentStorageType } from "@/lib/storage_helper";
 import { CategoryEnum, ComponentDetail } from "@/lib/db";
 import { productImage } from "@/lib/utils";
 import { v4 as uuidv4 } from 'uuid';
+import SimulasiPage from "../page";
 
 export type CommonRakitanDataType = {
   product_id: number;
@@ -129,7 +129,7 @@ const RakitanDetailPage = (props: {params: Promise<{ id: number }>}) => {
       {dataParsed && (
         <>
           <Suspense>
-            <SimulasiPage params={Promise.resolve(compParams)} />
+            <SimulasiPage params={compParams} />
           </Suspense>
         </>
       )}

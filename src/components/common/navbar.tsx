@@ -321,6 +321,11 @@ export function Navbar() {
       }}
     >
       <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
+        <VisuallyHidden>
+          <DialogTitle>
+            Menu
+          </DialogTitle>
+        </VisuallyHidden>
         <FormRegister onLoginClick={() => {
           router.push(
             "?" + createQueryString(searchParams, "login", "true")
@@ -365,6 +370,11 @@ export function Navbar() {
                     </NavigationMenuLink>{" "}
                   </DialogTrigger>
                   <DialogContent className="h-full overflow-auto p-2 tablet:max-h-[642px] tablet:max-w-fit tablet:p-4">
+                    <VisuallyHidden>
+                      <DialogTitle>
+                        Menu
+                      </DialogTitle>
+                    </VisuallyHidden>
                     <DialogHeader className="border-b border-b-slate-200 pb-4">
                       <DialogTitle>Pilih Kategori Komponen PC</DialogTitle>
                     </DialogHeader>

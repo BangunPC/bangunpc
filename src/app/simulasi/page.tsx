@@ -4,7 +4,7 @@ import { Banknote, Save, Trash, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import KategoriCasing from "@/components/icon/kategori-casing";
@@ -31,6 +31,8 @@ import { Label } from "@/components/ui/label";
 import Divider from "@/components/ui/divider";
 import { Input } from "@/components/ui/input";
 import KategoriPage from "../produk/[kategori]/page";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const headers = [
   "Kategori Komponen",
@@ -39,24 +41,23 @@ const headers = [
   "Aksi",
 ];
 
-export default function SimulasiPage(
-  props : {
-    params: Promise<{
-      params?: { id: number } | undefined;
-      cpu?: ComponentStorageType | undefined;
-      cpu_cooler?: ComponentStorageType | undefined;
-      gpu?: ComponentStorageType | undefined;
-      internal_storages?: ComponentStorageType[] | undefined;
-      memories?: ComponentStorageType[] | undefined;
-      monitors?: ComponentStorageType | undefined;
-      motherboard?: ComponentStorageType | undefined;
-      power_supply?: ComponentStorageType | undefined;
-      casing?: ComponentStorageType | undefined;
-    }>
-  }
-) {
-  const params = use(props.params)
-  const isComponent = params.params?.id ?? null;
+export default function SimulasiPage({
+  params,
+}: {
+  params: {
+    params?: { id: number } | undefined;
+    cpu?: ComponentStorageType | undefined;
+    cpu_cooler?: ComponentStorageType | undefined;
+    gpu?: ComponentStorageType | undefined;
+    internal_storages?: ComponentStorageType[] | undefined;
+    memories?: ComponentStorageType[] | undefined;
+    monitors?: ComponentStorageType | undefined;
+    motherboard?: ComponentStorageType | undefined;
+    power_supply?: ComponentStorageType | undefined;
+    casing?: ComponentStorageType | undefined;
+  };
+}) {
+  const isComponent = params?.params?.id ?? null;
   const router = useRouter();
   const searchParams = useSearchParams()!;
 
@@ -578,17 +579,22 @@ export default function SimulasiPage(
             <div role="dialog" aria-modal="true" className="hidden"></div>
           </DialogTrigger>
           <DialogContent className="inset-4 m-auto max-w-fit translate-x-0 translate-y-0 px-0 py-4">
+            <VisuallyHidden>
+              <DialogTitle>
+                Menu
+              </DialogTitle>
+            </VisuallyHidden>
             <ScrollArea className="-z-10 w-full px-4">
               {kategori && categorySlugToEnum[kategori] && (
                 <KategoriPage
-                  params={Promise.resolve({
-                    isCompatibilityChecked: true,
+                  params={{
+                    isCompatibiliyChecked: true,
                     kategori: kategori,
                     noTopH: true,
                     onSuccess: () => {
                       closeIframe();
                     },
-                  })}
+                  }}
                 />
               )}
             </ScrollArea>
@@ -655,6 +661,11 @@ const ManageListModal: React.FC<MLMProps> = ({
         </Button>
       </DialogTrigger>
       <DialogContent>
+        <VisuallyHidden>
+          <DialogTitle>
+            Menu
+          </DialogTitle>
+        </VisuallyHidden>
         <span className="text-xl font-semibold">Daftar Simpanan Saya</span>
         <RadioGroup
           onValueChange={(value) => {

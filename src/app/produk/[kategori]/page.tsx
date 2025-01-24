@@ -15,7 +15,7 @@ import { SidebarClose, SidebarOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner-loading";
 import { getCasing } from "@/lib/component_api/casing";
@@ -35,20 +35,15 @@ import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
 import { v4 as uuidv4 } from 'uuid';
 import { getMonitor } from "@/lib/component_api/monitor";
 
-const KategoriPage = (
-  props: {
-    params: Promise<{ 
-      isCompatibilityChecked: boolean | null; 
-      kategori: string; 
-      noTopH: boolean | null; 
-      onSuccess?: () => void }>
-  }
-) => {
-  const params = use(props.params);
-
+const KategoriPage = ({
+  params,
+}: {
+  params: { isCompatibiliyChecked: boolean | null; kategori: string; noTopH: boolean | null; onSuccess?: () => void };
+}) => {
+  
   const [price, setPrice] = React.useState(0);
   const [total, setTotal] = React.useState(0);
-
+  
 
   useEffect(() => {
     const refresh = () => {
@@ -409,22 +404,80 @@ type TableType = {
   onSuccess?: () => void;
 };
 
-const DesktopTable = ({
-  data,
-  headers,
-  kategori,
-  isIframe,
-  onSuccess,
-}: TableType) => {
-  const header = ["", "Product Name", ...headers, "Price (Rp)", "Action"];
+const DesktopTable = ({ data, headers, kategori, isIframe, onSuccess }: TableType) => {
+  const header = ["", "Product Name", ...headers, "Price (Rp)", "Action"]
+  const router = useRouter()
 
-  const router = useRouter();
-  
+  const handleAddComponent = async (component: ComponentDetail) => {
+    const componentAdded: ComponentStorageType = {
+      storageId: uuidv4(),
+      id: component.product_id!.toString(),
+      name: component.product_name!,
+      price: component.lowest_price!,
+      image: componentImage(component),
+      category: categorySlugToEnum[kategori]!,
+      quantity: kategori === "memory" ? (component as ComponentView["v_memories"]).amount! : 1,
+      slug: component.slug!,
+      detail: component,
+    }
+    await ComponentStorage.addComponent(componentAdded)
+    const currentSimulation = SimulationStorage.getSimulationData()
+
+    // Updating data in the simulation storage
+    switch (kategori) {
+      case "cpu":
+        const cpu = component as ComponentView["v_cpus"]
+        SimulationStorage.upsertSimulationData({
+          currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (cpu.max_power_watt ?? 0),
+        })
+        break
+
+      case "motherboard":
+        const mobo = component as ComponentView["v_motherboards"]
+        const maxMemorySizeGb =
+          (currentSimulation?.maxMemorySizeGb ?? 0) < (mobo.max_memory_gb ?? 0)
+            ? (mobo.max_memory_gb ?? 0)
+            : (currentSimulation?.maxMemorySizeGb ?? 0)
+        SimulationStorage.upsertSimulationData({
+          availableMemorySlot: mobo.memory_slot ?? 0,
+          maxMemorySizeGb: maxMemorySizeGb,
+        })
+        break
+
+      case "gpu":
+        const gpu = component as ComponentView["v_gpus"]
+        SimulationStorage.upsertSimulationData({
+          currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (gpu.tdp_watt ?? 0),
+        })
+        break
+
+      case "memory":
+        const memory = component as ComponentView["v_memories"]
+        const memoryAmount = memory.amount ?? 0
+        const capacityGb = memory.capacity_gb ?? 0
+
+        SimulationStorage.upsertSimulationData({
+          selectedMemoryAmount: currentSimulation?.selectedMemoryAmount ?? 0 + memoryAmount,
+          selectedMemorySizeGb: currentSimulation?.selectedMemorySizeGb ?? 0 + memoryAmount * capacityGb,
+        })
+        break
+
+      case "storage":
+        SimulationStorage.upsertSimulationData({
+          selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) + 1,
+        })
+        break
+
+      default:
+        break
+    }
+    onSuccess?.()
+    alert("Komponen " + component.product_name + " berhasil ditambahkan. ")
+  }
+
   return (
     <table className="hidden tablet:table">
-      <thead
-        className={`sticky z-[1] text-xs backdrop-blur top-0`}
-      >
+      <thead className="sticky z-[1] text-xs backdrop-blur top-0">
         <tr>
           {header.map((item) => (
             <th key={item}>
@@ -436,134 +489,50 @@ const DesktopTable = ({
         </tr>
       </thead>
       <tbody className="h-min flex-col flex-nowrap content-start items-start justify-start gap-[3px] overflow-visible p-5">
-        <tr className="h-4"></tr>
-        {data?.map((component) => {
-          const handleAddComponent = async () => {
-            const componentAdded: ComponentStorageType = {
-              storageId: uuidv4(),
-              id: component.product_id!.toString(),
-              name: component.product_name!,
-              price: component.lowest_price!,
-              image: componentImage(component),
-              category: categorySlugToEnum[kategori]!,
-              quantity: kategori === "memory" ? (component as ComponentView["v_memories"]).amount! : 1,
-              slug: component.slug!,
-              detail: component
-            };
-            await ComponentStorage.addComponent(componentAdded);
-            const currentSimulation = SimulationStorage.getSimulationData()
-            
-            // Updating data in the simulation storage
-            switch (kategori) {
-              case "cpu":
-                const cpu = component as ComponentView["v_cpus"]
-                SimulationStorage.upsertSimulationData({
-                  currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (cpu.max_power_watt ?? 0)
-                })
-                break;
-              
-              case "motherboard":
-                const mobo = component as ComponentView["v_motherboards"]
-                const maxMemorySizeGb = (currentSimulation?.maxMemorySizeGb ?? 0) < (mobo.max_memory_gb ?? 0)  ? 
-                  (mobo.max_memory_gb ?? 0) : (currentSimulation?.maxMemorySizeGb ?? 0)
-                SimulationStorage.upsertSimulationData({
-                  availableMemorySlot: mobo.memory_slot ?? 0,
-                  maxMemorySizeGb: maxMemorySizeGb
-                })
-                break;
+        {data?.map((component) => (
+          <tr
+            key={component.product_id}
+            className="h-[56px] cursor-pointer transition-transform hover:z-10 hover:scale-[1.01] mb-2"
+          >
+            <td className="w-16">
+              <Link href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}>
+                {component.image_filenames!.length > 0 && (
+                  <Image
+                    src={componentImage(component) || "/placeholder.svg"}
+                    alt={`Gambar ${component.product_name}`}
+                    width={64}
+                    height={64}
+                    className="aspect-square min-w-[64px]"
+                  />
+                )}
+              </Link>
+            </td>
+            <td onClick={() => router.push(`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`)}>
+              {component.product_name ?? "-"}
+            </td>
 
-              case "gpu":
-                const gpu = component as ComponentView["v_gpus"]
-                SimulationStorage.upsertSimulationData({
-                  currentTotalPowerWatt: (currentSimulation?.currentTotalPowerWatt ?? 0) + (gpu.tdp_watt ?? 0)
-                })
-                break;
+            <ComponentFallback
+              headers={headers}
+              categoryEnum={categorySlugToEnum[kategori]!}
+              component={component}
+              isMobile={false}
+              onClick={() => router.push(`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`)}
+            />
 
-              case "memory":
-                const memory = component as ComponentView["v_memories"]
-                const memoryAmount = memory.amount ?? 0
-                const capacityGb = memory.capacity_gb ?? 0
-
-                SimulationStorage.upsertSimulationData({
-                  selectedMemoryAmount: currentSimulation?.selectedMemoryAmount ?? 0 + memoryAmount,
-                  selectedMemorySizeGb:  currentSimulation?.selectedMemorySizeGb ?? 0 + (memoryAmount * capacityGb)
-                })
-                break;
-
-              case "storage":
-                SimulationStorage.upsertSimulationData({
-                  selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) + 1
-                })
-                break;
-            
-              default:
-                break;
-            }
-            onSuccess?.();
-            alert(
-              "Komponen " + component.product_name + " berhasil ditambahkan. ",
-            );
-          };
-
-          const handleRedirect = () =>
-            router.push(
-              `/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`,
-            );
-          return (
-            <>
-              <tr
-                data-href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
-                key={component.product_id}
-                className="h-[56px] cursor-pointer transition-transform hover:z-10 hover:scale-[1.01]"
-              >
-                <td className="w-16">
-                  <Link
-                    href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
-                  >
-                    {component.image_filenames!.length> 0 && (
-                      <Image
-                        src={componentImage(component)}
-                        alt={`Gambar ${component.product_name}`}
-                        width={64}
-                        height={64}
-                        className="aspect-square min-w-[64px]"
-                      />
-                    )}
-                  </Link>
-                </td>
-                <td onClick={handleRedirect}>
-                  {component.product_name ?? "-"}
-                </td>
-
-                <ComponentFallback
-                  headers={headers}
-                  categoryEnum={categorySlugToEnum[kategori]!}
-                  component={component}
-                  isMobile={false}
-                  onClick={handleRedirect}
-                />
-
-                <td onClick={handleRedirect}>
-                  {component.lowest_price?.toLocaleString("id-ID") ?? "-"}
-                </td>
-                <td className="cursor-default">
-                  <Button
-                    variant="default"
-                    onClick={handleAddComponent}
-                    className="text-white"
-                  >
-                    Tambah
-                  </Button>
-                </td>
-              </tr>
-              <tr key={component.product_id + "gap"} className="h-2"></tr>
-            </>
-          );
-        })}
+            <td onClick={() => router.push(`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`)}>
+              {component.lowest_price?.toLocaleString("id-ID") ?? "-"}
+            </td>
+            <td className="cursor-default">
+              <Button variant="default" onClick={() => handleAddComponent(component)} className="text-white">
+                Tambah
+              </Button>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
-  );
-};
+  )
+}
 
 const MobileTable = ({ data, headers, kategori, onSuccess }: TableType) => {
   return (

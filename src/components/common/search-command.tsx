@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import { DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
 import { Search, Loader2 } from 'lucide-react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 const searchItems = [
   {
@@ -57,6 +58,11 @@ export function SearchCommand({ ...props }: DialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen} {...props}>
       <DialogContent className="overflow-hidden p-0">
+        <VisuallyHidden>
+          <DialogTitle>
+            Menu
+          </DialogTitle>
+        </VisuallyHidden>
         <div className="flex h-full w-full flex-col overflow-hidden rounded-md bg-white dark:bg-gray-900">
           <CommandPrimitive className="flex h-full w-full flex-col overflow-hidden">
             <div className="flex items-center border-b px-3 dark:border-gray-800">

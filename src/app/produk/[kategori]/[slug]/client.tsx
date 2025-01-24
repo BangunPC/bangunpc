@@ -3,7 +3,7 @@
 import { Heart, MapPin, Send } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -38,6 +38,20 @@ const Component = ({
   spec_url: string | undefined;
   review_urls: string[] | undefined;
 }) => {
+  const [urls, setUrls] = useState<string[]>([]);
+  useEffect(() => {
+    if(review_urls) {
+      const processedUrls = review_urls?.map((url) => {
+        try {
+          return `https://www.youtube.com/embed${new URL(url).pathname}`;
+        } catch (error) {
+          return '';
+        }
+      }).filter(Boolean);
+      
+      setUrls(processedUrls);
+    }
+  }, [review_urls]);
   return (
     <div className="m-auto flex max-w-3xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
       <div className="flex flex-col gap-2 tablet:flex-row tablet:gap-8">
@@ -196,7 +210,7 @@ const Component = ({
                 <div className="flex w-full flex-col gap-2 tablet:hidden">
                   {product_details?.map((detail: any) => (
                     <div
-                      key={"marketplacemobile-" + detail.id}
+                      key={detail.product_detail_id}
                       className="
                       flex
                       flex-col
@@ -244,7 +258,7 @@ const Component = ({
                   <tbody>
                     <tr className="h-4" />
                     {product_details?.map((detail: any) => (
-                      <tr key={"marketplace-" + detail.id} className="drop-shadow-sm">
+                      <tr key={detail.product_detail_id} className="drop-shadow-sm">
                         <td className="rounded-s-lg bg-slate-200 p-2 pl-8 dark:bg-slate-800">
                             {detail.marketplace_name === "Tokopedia" && (
                               <Image
@@ -306,24 +320,26 @@ const Component = ({
 
       <Accordion type="single" collapsible defaultValue="spec-details">
         <AccordionItem value="spec-details">
+        <div className="relative">
           <AccordionTrigger className="flex w-full justify-start text-3xl font-semibold">
             Spesifikasi
-            {spec_url ? (
-              <Link
-                href={spec_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ml-2 mr-auto"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <Button variant="outline" className="text-sm">
-                  Buka Spesifikasi Resmi
-                </Button>
-              </Link>
-            ) : (
-              <span className="mr-auto" />
-            )}
+            <span className="mr-auto" />
           </AccordionTrigger>
+          
+          {spec_url && (
+            <Link
+              href={spec_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute left-[140px] top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-md border border-neutral-400
+              dark:border-neutral-100 bg-transparent px-3 py-1.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-300 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none dark:text-neutral-50 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 ml-8 mr-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Buka Spesifikasi Resmi
+            </Link>
+          )}
+        </div>
+
           <AccordionContent>
             <table className="flex flex-col gap-2 rounded-lg border bg-slate-200 drop-shadow-sm dark:bg-slate-800">
               <thead className="hidden">
@@ -360,10 +376,10 @@ const Component = ({
               Video Review
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-1 tablet:grid tablet:grid-cols-3">
-              {review_urls?.map((url: any) => (
+              {urls.map((url: any) => (
                 <iframe
                   key={url}
-                  src={`https://www.youtube.com/embed${new URL(url).pathname}`}
+                  src={url}
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   className="mb-1 aspect-video w-full rounded-xl"

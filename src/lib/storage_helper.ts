@@ -1,23 +1,41 @@
-"use client";
-
 import { CategoryEnum, ComponentDetail, ComponentDetailMap } from "./db";
 
-class LocalStorageHelper {
+// Memory storage for server-side
+const serverStorage = new Map<string, string>();
+
+class StorageHelper {
   static setItem<T>(key: string, value: T) {
-    localStorage.setItem(key, JSON.stringify(value));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      serverStorage.set(key, JSON.stringify(value));
+    }
   }
 
   static getItem<T>(key: string): T | null {
-    const item = localStorage.getItem(key);
-    return item ? (JSON.parse(item) as T) : null;
+    if (typeof window !== 'undefined') {
+      const item = localStorage.getItem(key);
+      return item ? (JSON.parse(item) as T) : null;
+    } else {
+      const item = serverStorage.get(key);
+      return item ? (JSON.parse(item) as T) : null;
+    }
   }
 
   static removeItem(key: string) {
-    localStorage.removeItem(key);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(key);
+    } else {
+      serverStorage.delete(key);
+    }
   }
 
   static clear() {
-    localStorage.clear();
+    if (typeof window !== 'undefined') {
+      localStorage.clear();
+    } else {
+      serverStorage.clear();
+    }
   }
 }
 
@@ -48,35 +66,20 @@ export type ComponentStorageType = {
 
 export class ComponentStorageHelper {
   static async addComponent(component: ComponentStorageType) {
-    // await fetch('/api/data', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ sessionKey: component.storageId, value: component }),
-    // });
-    // setInput('');
-    // // Refresh data
-    // fetch('/api/data')
-    //   .then(response => response.json())
-    //   .then(data => setData(data));
     const components = this.getComponents();
     components.push(component);
-    LocalStorageHelper.setItem("components", components);
+    StorageHelper.setItem("components", components);
   }
 
   static getComponents(): ComponentStorageType[] {
-    return LocalStorageHelper.getItem("components") ?? [];
+    return StorageHelper.getItem("components") ?? [];
   }
 
   static async getComponentsByCategory(category: CategoryEnum) {
-    // const components: ComponentStorageType[] =
-    //   LocalStorageHelper.getItem("components") ?? [];
-
-    const components: ComponentStorageType[] =
-      LocalStorageHelper.getItem("components") ?? [];  
+    const components: ComponentStorageType[] = 
+      StorageHelper.getItem("components") ?? [];  
       
-    return components.filter((component: any) => component.category === category);
+    return components.filter((component) => component.category === category);
   }
   
   static getComponentDetail = async <K extends CategoryEnum>(category: K): Promise<ComponentDetailMap[K] | undefined> => {
@@ -85,22 +88,20 @@ export class ComponentStorageHelper {
     switch (category) {
       case CategoryEnum.Memory:
       case CategoryEnum.Storage:
-        // These categories return arrays
-        return components?.map((component: any) => component.detail) as ComponentDetailMap[K];
+        return components?.map((component) => component.detail) as ComponentDetailMap[K];
       
       default:
-        // Other categories return a single detail
         return components?.[0]?.detail as ComponentDetailMap[K];
     }
   };
 
   static removeComponentById(storageId: string) {
     let components: ComponentStorageType[] =
-      LocalStorageHelper.getItem("components") ?? [];
+      StorageHelper.getItem("components") ?? [];
     components = components.filter(
       (component) => component.storageId !== storageId
     );
-    LocalStorageHelper.setItem("components", components);
+    StorageHelper.setItem("components", components);
   }
 
   static updateComponent(
@@ -108,13 +109,13 @@ export class ComponentStorageHelper {
     updatedComponent: ComponentStorageType
   ) {
     const components: ComponentStorageType[] =
-      LocalStorageHelper.getItem("components") ?? [];
+      StorageHelper.getItem("components") ?? [];
     const index = components.findIndex(
       (component) => component.storageId === storageId
     );
     if (index !== -1) {
       components[index] = { ...components[index], ...updatedComponent };
-      LocalStorageHelper.setItem("components", components);
+      StorageHelper.setItem("components", components);
     }
   }
 
@@ -127,7 +128,7 @@ export class ComponentStorageHelper {
   }
 
   static clear() {
-    LocalStorageHelper.removeItem("components");
+    StorageHelper.removeItem("components");
   }
 }
 
@@ -135,11 +136,11 @@ export class SimulationStorageHelper {
   static upsertSimulationData(partialData: Partial<SimulationStorageData>) {
     const existingData = this.getSimulationData() ?? {};
     const updatedData = { ...existingData, ...partialData };
-    LocalStorageHelper.setItem("simulation", updatedData);
+    StorageHelper.setItem("simulation", updatedData);
   }
 
   static getSimulationData(): SimulationStorageData | null {
-    return LocalStorageHelper.getItem("simulation");
+    return StorageHelper.getItem("simulation");
   }
 
   static initializeData(): void {
@@ -148,12 +149,12 @@ export class SimulationStorageHelper {
         availableMemorySlot: 2,
         availableNvmeSlot: 1,
         availableSataSlot: 1,
-      })
+      });
     }
   }
 
   static clear() {
-    LocalStorageHelper.removeItem("simulation");
+    StorageHelper.removeItem("simulation");
   }
 }
 
