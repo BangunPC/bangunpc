@@ -33,6 +33,7 @@ import { Input } from "@/components/ui/input";
 import KategoriPage from "../produk/[kategori]/page";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { KategoriList } from "../produk/[kategori]/KategoriList";
 
 const headers = [
   "Kategori Komponen",
@@ -296,6 +297,21 @@ export default function SimulasiPage(
       SimulationStorage.clear();
     }
   };
+  const handleSaveNew = async (name: string) => {
+    const res = await trigger({
+      title: name,
+      cpuId: cpu[0]?.id,
+      motherboardId: motherboard[0]?.id,
+      memoryId: memory[0]?.id,
+      storageId: storage[0]?.id,
+      gpuId: gpu[0]?.id,
+      psuId: psu[0]?.id,
+      casingId: casing[0]?.id,
+      // caseFanId: caseFan[0]?.id,
+    });
+
+    return res;
+  }
 
   const handleRemoveComponent = (component: ComponentStorageType) => {
     if (!isComponent) {
@@ -375,21 +391,7 @@ export default function SimulasiPage(
           )}
           <ManageListModal
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onSaveNew={async (name) => {
-              const res = await trigger({
-                title: name,
-                cpuId: cpu[0]?.id,
-                motherboardId: motherboard[0]?.id,
-                memoryId: memory[0]?.id,
-                storageId: storage[0]?.id,
-                gpuId: gpu[0]?.id,
-                psuId: psu[0]?.id,
-                casingId: casing[0]?.id,
-                // caseFanId: caseFan[0]?.id,
-              });
-
-              return res;
-            }}
+            onSaveNew={handleSaveNew}
             onSaveReplace={(build_id) => {
               // TODO: update
               console.log(`build_id: ${build_id}`);
@@ -586,15 +588,15 @@ export default function SimulasiPage(
             </VisuallyHidden>
             <ScrollArea className="-z-10 w-full px-4">
               {kategori && categorySlugToEnum[kategori] && (
-                <KategoriPage
-                  params={Promise.resolve({
+                <KategoriList
+                  params={{
                     isCompatibilityChecked: true,
                     kategori: kategori,
                     noTopH: true,
                     onSuccess: () => {
                       closeIframe();
                     },
-                  })}
+                  }}
                 />
               )}
             </ScrollArea>
