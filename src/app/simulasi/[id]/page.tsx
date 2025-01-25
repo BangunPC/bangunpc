@@ -129,7 +129,7 @@ const RakitanDetailPage = (props: {params: Promise<{ id: number }>}) => {
       {dataParsed && (
         <>
           <Suspense>
-            <SimulasiPage params={compParams} />
+            <SimulasiPage params={Promise.resolve(compParams)} />
           </Suspense>
         </>
       )}

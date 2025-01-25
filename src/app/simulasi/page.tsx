@@ -4,7 +4,7 @@ import { Banknote, Save, Trash, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import KategoriCasing from "@/components/icon/kategori-casing";
@@ -41,23 +41,24 @@ const headers = [
   "Aksi",
 ];
 
-export default function SimulasiPage({
-  params,
-}: {
-  params: {
-    params?: { id: number } | undefined;
-    cpu?: ComponentStorageType | undefined;
-    cpu_cooler?: ComponentStorageType | undefined;
-    gpu?: ComponentStorageType | undefined;
-    internal_storages?: ComponentStorageType[] | undefined;
-    memories?: ComponentStorageType[] | undefined;
-    monitors?: ComponentStorageType | undefined;
-    motherboard?: ComponentStorageType | undefined;
-    power_supply?: ComponentStorageType | undefined;
-    casing?: ComponentStorageType | undefined;
-  };
-}) {
-  const isComponent = params?.params?.id ?? null;
+export default function SimulasiPage(
+  props : {
+    params: Promise<{
+      params?: { id: number } | undefined;
+      cpu?: ComponentStorageType | undefined;
+      cpu_cooler?: ComponentStorageType | undefined;
+      gpu?: ComponentStorageType | undefined;
+      internal_storages?: ComponentStorageType[] | undefined;
+      memories?: ComponentStorageType[] | undefined;
+      monitors?: ComponentStorageType | undefined;
+      motherboard?: ComponentStorageType | undefined;
+      power_supply?: ComponentStorageType | undefined;
+      casing?: ComponentStorageType | undefined;
+    }>
+  }
+) {
+  const params = use(props.params)
+  const isComponent = params.params?.id ?? null;
   const router = useRouter();
   const searchParams = useSearchParams()!;
 
@@ -324,7 +325,7 @@ export default function SimulasiPage({
 
           SimulationStorage.upsertSimulationData({
             selectedMemoryAmount: (currentSimulation?.selectedMemoryAmount ?? 0) - memoryAmount,
-            selectedMemorySizeGb:  (currentSimulation?.selectedMemorySizeGb ?? 0) - (capacityGb + memoryAmount)
+            selectedMemorySizeGb: (currentSimulation?.selectedMemorySizeGb ?? 0) - (capacityGb + memoryAmount)
           })
           break;
 
@@ -333,7 +334,7 @@ export default function SimulasiPage({
             selectedNvmeAmount: (currentSimulation?.selectedNvmeAmount ?? 0) - 1
           })
           break;
-      
+
         default:
           break;
       }
@@ -429,10 +430,9 @@ export default function SimulasiPage({
                           <Link
                             key={component.storageId}
                             className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                            href={`/produk/${
-                              categoryEnumToSlug[component.category]
-                            }/${component.slug}`}
-                            
+                            href={`/produk/${categoryEnumToSlug[component.category]
+                              }/${component.slug}`}
+
                           >
                             <Image
                               src={component.image}
@@ -457,7 +457,7 @@ export default function SimulasiPage({
                                 variant="outline"
                                 className="w-fit text-base my-2"
                                 disabled={
-                                  item.components.reduce((total, item) => 
+                                  item.components.reduce((total, item) =>
                                     total + item.quantity, 0) >= (SimulationStorage.getSimulationData()?.selectedMemoryAmount ?? 2)}
                                 onClick={() => handleAddComponent(item)}
                               >
@@ -486,8 +486,8 @@ export default function SimulasiPage({
                             <span className="whitespace-nowrap">
                               {component.price
                                 ? `Rp ${component.price.toLocaleString(
-                                    "id-ID",
-                                  )}`
+                                  "id-ID",
+                                )}`
                                 : "-"}
                             </span>
                           </div>
@@ -587,14 +587,14 @@ export default function SimulasiPage({
             <ScrollArea className="-z-10 w-full px-4">
               {kategori && categorySlugToEnum[kategori] && (
                 <KategoriPage
-                  params={{
-                    isCompatibiliyChecked: true,
+                  params={Promise.resolve({
+                    isCompatibilityChecked: true,
                     kategori: kategori,
                     noTopH: true,
                     onSuccess: () => {
                       closeIframe();
                     },
-                  }}
+                  })}
                 />
               )}
             </ScrollArea>
