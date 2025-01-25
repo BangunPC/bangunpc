@@ -1,7 +1,12 @@
 {
   "name": "bangunpc",
   "vars": {
-    "NODE_VERSION": "22.12.0"
+    "NODE_VERSION": "22.12.0",
+    "NEXT_PUBLIC_SUPABASE_URL":"https://onawoodgnwkncueeyusr.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uYXdvb2RnbndrbmN1ZWV5dXNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzUzMzcxNTYsImV4cCI6MTk5MDkxMzE1Nn0.dT6SgSvYkFmsA4XZYa2hIDilroAo1Jjsu3ddOvfzP1s",
+    "NEXT_PUBLIC_SUPABASE_GOOGLE_CLIENT_ID":"377825732348-lqg6n6hq3o5r73qsmdskonq13b3dc73f.apps.googleusercontent.com",
+    "NEXT_PUBLIC_SUPABASE_GOOGLE_CLIENT_SECRET":"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",
+    "NEXT_PUBLIC_SITE_URL":"https://onawoodgnwkncueeyusr.supabase.co/auth/v1/callback"
   },
   "compatibility_date": "2025-01-25",
   "compatibility_flags": [
