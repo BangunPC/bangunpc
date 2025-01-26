@@ -52,7 +52,7 @@ export default function HasilSection({
 
       {data && (
         <div className="m-auto grid w-fit grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-3 tablet:grid-cols-3 desktop:grid-cols-4">
-          {data.map((item) => (
+          {data.map((item: any) => (
             <Link
               prefetch={false}
               href={`/build/${item.recommendation_id}`}
@@ -78,7 +78,7 @@ export default function HasilSection({
                 {item.gpu}
               </span> */}
                 <div className="flex flex-wrap gap-2">
-                  {item.categories_name?.map((category) => (
+                  {item.categories_name?.map((category: any) => (
                     <span
                       key={category}
                       className="w-fit rounded-md border border-primary px-2 py-1 text-xs text-primary"

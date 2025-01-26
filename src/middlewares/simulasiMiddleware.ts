@@ -1,15 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { refreshBuildSessionExpire } from '@/lib/build-session'
+import { NextRequest, NextResponse } from 'next/server'
 
-export function simulasiMiddleware(req: NextRequest) {
+export async function simulasiMiddleware(req: NextRequest) {
   // Add specific middleware logic here
-  const cookie = req.cookies.get('b-session')
-  console.log(cookie);
+  // const cookie = req.cookies.get('b-session')
+  // await createBuildSession({motherboard_product_id: 79, motherboard_product_detail_id: 121})
+  // await updateBuildSessionData({ cpu_product_id: 51, cpu_product_detail_id: 60 })
+  // await refreshBuildSessionExpire()
+  // await deleteSession()
   
-  // Setting cookies on the response using the `ResponseCookies` API
+  await refreshBuildSessionExpire()
+  // const buildData = await getBuildSessionData()
+  
   const response = NextResponse.next()
-  return response;
+  return response
 }
 
 export const config = {
   matcher: '/simulasi',
-};
+}

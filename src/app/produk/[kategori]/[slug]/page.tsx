@@ -16,7 +16,7 @@ async function getDetails(params: any) {
 
   const category = categorySlugToEnum[kategori]!;
   
-  const client = createSupaServerClient();
+  const client = await createSupaServerClient();
   const future = await client
   .schema("product")
   .from(categoryEnumToView[category]!)
@@ -63,8 +63,7 @@ export default async function Page(
 
   const { data, product_details, review_urls, spec_url, name } = component;
 
-  // @ts-expect-error
-  const imageUrls = data.image_filenames.map((image: string) =>
+  const imageUrls = data!.image_filenames!.map((image: string) =>
     productImage(data!.product_id!, image),
   );
 

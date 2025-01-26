@@ -9,7 +9,8 @@ async function handleSingleComponent(
   component: { slug: string; detailId?: number },
   isTemporary: boolean = false
 ) {
-  const { data, error } = await createSupaServerClient()
+  const supabase = await createSupaServerClient()
+  const { data, error } = await supabase
     .schema('pc_build')
     .from('builds')
     .insert({
@@ -105,7 +106,8 @@ export class PCBuildService {
   // }
 
   static async getBuild(buildId: number) {
-    const { data, error } = await createSupaServerClient()
+    const supabase = await createSupaServerClient()
+    const { data, error } = await supabase
       .schema('pc_build')
       .from('v_builds')
       .select('*')

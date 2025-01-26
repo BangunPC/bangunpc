@@ -4,14 +4,15 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(req: NextRequest) {
   // Apply the CORS middleware 
-  let response = corsMiddleware(req); 
+  let response = corsMiddleware(req) 
 
   // Check if the request is for the specific path 
   if (req.nextUrl.pathname.startsWith('/simulasi')) { 
     // Apply the specific middleware and get the response 
-    response = simulasiMiddleware(req) || response; 
-  } 
-    return response || NextResponse.next();
+    response = await simulasiMiddleware(req) || response 
+  }
+  
+  return response || NextResponse.next()
 }
 
 export const config = {

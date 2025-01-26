@@ -6,7 +6,7 @@ import Component from "./client";
 import { pcImage } from "@/lib/utils";
 
 async function getDetails(id: number) {
-  const client = createSupaServerClient();
+  const client = await createSupaServerClient();
   const future = await Promise.all([
     client
       .schema("pc_build")
@@ -37,8 +37,7 @@ export default async function HasilPage(
 
   const { data } = component;
 
-  // @ts-expect-error
-  const imageUrls = data.image_filenames.map((image: string) =>
+  const imageUrls = data!.image_filenames!.map((image: string) =>
     pcImage(data!.build_id!, image),
   );
 

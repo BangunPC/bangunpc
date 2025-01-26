@@ -11,7 +11,7 @@ import { createSupaServerClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 
 async function getRencanaList() {
-  const supabase = createSupaServerClient();
+  const supabase = await createSupaServerClient();
   const { data, error } = await supabase
     .schema("pc_build")
     .from("categories")
@@ -21,15 +21,17 @@ async function getRencanaList() {
 }
 
 async function getRecommendation(budget: number, categoryIndexes: number[]) {
-  const supabase = createSupaServerClient();
+  const supabase = await createSupaServerClient();
   const categories_name = await supabase
     .schema("pc_build")
     .from("categories")
     .select("category_name")
     .order("id");
+
   const categories = categories_name
     .data!.filter((item, index) => categoryIndexes.includes(index))
     .map((item) => item.category_name!);
+
   const { data, error, count } = await supabase
     .schema("pc_build")
     .from("v_recommendation")
@@ -40,6 +42,7 @@ async function getRecommendation(budget: number, categoryIndexes: number[]) {
     .lte("total_price", budget)
     .containedBy("categories_name", categories)
     .limit(3);
+    
   return { data, error, count };
 }
 

@@ -11,7 +11,7 @@ const MAX_AGE_SESSION = 60 * 60 * 24 * 7 // 7 days
 
 // Check cookie session to get current build
 export async function GET(_req: Request) {
-  const supabase = createSupaServerClient()
+  const supabase = await createSupaServerClient()
   const cookieStore = await cookies()
   const buildSessionKey = cookieStore.get('b-session')?.value
   let response = new Response(

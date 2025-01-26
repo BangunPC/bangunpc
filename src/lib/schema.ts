@@ -308,24 +308,24 @@ export type Database = {
           build_id: number
           created_at: string
           expires_at: string
+          id: number
           last_accessed_at: string
-          session_key: string
           user_id: string | null
         }
         Insert: {
           build_id: number
           created_at?: string
           expires_at?: string
+          id?: number
           last_accessed_at?: string
-          session_key: string
           user_id?: string | null
         }
         Update: {
           build_id?: number
           created_at?: string
           expires_at?: string
+          id?: number
           last_accessed_at?: string
-          session_key?: string
           user_id?: string | null
         }
         Relationships: [
@@ -460,9 +460,12 @@ export type Database = {
         Returns: string
       }
     }
-    Enums: Record<string, never>;
-    CompositeTypes: Record<string, never>;
-
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   product: {
     Tables: {
@@ -2909,9 +2912,12 @@ export type Database = {
         Returns: unknown
       }
     }
-    Enums: Record<string, never>;
-    CompositeTypes: Record<string, never>;
-
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -3110,7 +3116,9 @@ export type Database = {
         Relationships: []
       }
     }
-    Views: Record<string, never>
+    Views: {
+      [_ in never]: never
+    }
     Functions: {
       gtrgm_compress: {
         Args: {
@@ -3179,8 +3187,9 @@ export type Database = {
       status: "done" | "on-going" | "cancelled"
       storage_type: "SSD" | "HDD"
     }
-    CompositeTypes: Record<string, never>;
-
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
 }
 
