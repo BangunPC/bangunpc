@@ -460,12 +460,8 @@ export type Database = {
         Returns: string
       }
     }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
+    Enums: Record<string, never>
+    CompositeTypes: Record<string, never>
   }
   product: {
     Tables: {
@@ -2912,12 +2908,8 @@ export type Database = {
         Returns: unknown
       }
     }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
+    Enums: Record<string, never>
+    CompositeTypes: Record<string, never>
   }
   public: {
     Tables: {
@@ -3116,9 +3108,7 @@ export type Database = {
         Relationships: []
       }
     }
-    Views: {
-      [_ in never]: never
-    }
+    Views: Record<string, never>  
     Functions: {
       gtrgm_compress: {
         Args: {
@@ -3187,9 +3177,7 @@ export type Database = {
       status: "done" | "on-going" | "cancelled"
       storage_type: "SSD" | "HDD"
     }
-    CompositeTypes: {
-      [_ in never]: never
-    }
+    CompositeTypes: Record<string, never>    
   }
 }
 

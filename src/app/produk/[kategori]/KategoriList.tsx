@@ -74,6 +74,8 @@ export function KategoriList(props: {
 
   useEffect(() => {
     setLoading(true);
+    // console.log(props.data);
+    
     const defaultQuery = {
       query: "",
       min_price: 0,

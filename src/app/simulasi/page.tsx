@@ -30,7 +30,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import Divider from "@/components/ui/divider";
 import { Input } from "@/components/ui/input";
-import KategoriPage from "../produk/[kategori]/page";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { KategoriList } from "../produk/[kategori]/KategoriList";
