@@ -1,5 +1,6 @@
-import { ComponentDetail, ComponentView } from "../db";
-import { createClient } from "../supabase/client";
+import { createSupaServerClient } from "@/lib/supabase/server";
+import { ComponentDetail, ComponentView } from "../../db";
+import { createClient } from "../../supabase/client";
 import { CpuCompatibility, CpuFilter } from "./filter";
 
 export const getCpu = async (
@@ -28,15 +29,15 @@ export const getCpu = async (
     total_thread,
   }: CpuFilter,
 ) => {
-  const client = createClient();
+  const supabase = await createSupaServerClient()
 
-  if (!client) {
+  if (!supabase) {
     throw new Error("Supabase client is null");
   }
 
   // filter start
 
-  const client_query = client
+  const client_query = supabase
     .schema("product")
     .from("v_cpus")
     .select("*", { count: "exact" });
@@ -124,7 +125,7 @@ export const getCpu = async (
 
   // compatibility start
   if (motherboardId) {
-    const { data: motherboardData } = await client
+    const { data: motherboardData } = await supabase
       .schema("product")
       .from("v_motherboards")
       .select('cpu_socket_id')
@@ -144,7 +145,7 @@ export const getCpu = async (
   }
 
   if (psuId) {
-    const { data: psuData } = await client
+    const { data: psuData } = await supabase
       .schema("product")
       .from("v_power_supplies")
       .select('wattage')
@@ -162,7 +163,7 @@ export const getCpu = async (
 
     let gpuPowerWatt = 0;
     if(gpuId) {
-      const { data: gpuData } = await client
+      const { data: gpuData } = await supabase
       .schema("product")
       .from("v_gpus")
       .select('tdp_watt, min_psu_watt')
@@ -198,7 +199,7 @@ export const getCpu = async (
     const memoryData: MemoryData[] = []    
 
     for (const memoryId of memoryIds) {
-      const { data, error } = await client
+      const { data, error } = await supabase
         .schema("product")
         .from("v_memories")
         .select("product_id, memory_type, capacity_gb, amount")

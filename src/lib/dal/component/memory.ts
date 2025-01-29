@@ -1,19 +1,20 @@
-import { createClient } from "../supabase/client";
+import { createSupaServerClient } from "@/lib/supabase/server";
+import { createClient } from "../../supabase/client";
 import { MemoryCompatibility, ProductFilter } from "./filter";
 
 export const getMemory = async (
   { memories, motherboardId }: MemoryCompatibility,
   { query, min_price, max_price }: ProductFilter,
 ) => {
-  const client = createClient();
+  const supabase = await createSupaServerClient()
 
-  if (!client) {
+  if (!supabase) {
     throw new Error("Supabase client is null");
   }
 
   // filter start
 
-  const client_query = client
+  const client_query = supabase
     .schema("product")
     .from("v_memories")
     .select("*", { count: "exact" });
@@ -47,7 +48,7 @@ export const getMemory = async (
 
   if (motherboardId) {
     // Fetching mobo required data
-    const { data: motherboardData, error } = await client
+    const { data: motherboardData, error } = await supabase
       .schema("product")
       .from("v_motherboards")
       .select("memory_type, memory_slot, max_memory_gb, memory_frequency_mhz")
@@ -70,7 +71,7 @@ export const getMemory = async (
     // TODO(produk): account for quantity, not amount
     if (memories) {
       // Fetching memory required data
-      const { data: memoryData, error } = await client
+      const { data: memoryData, error } = await supabase
         .schema("product")
         .from("v_memories")
         .select("memory_type, capacity_gb, amount")

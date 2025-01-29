@@ -2,10 +2,10 @@
 
 import { Suspense, use, useMemo } from "react";
 import useSWR from "swr";
-import { ApiPaths, fetchWithId } from "@/lib/api";
-import { ComponentStorageType } from "@/lib/storage_helper";
-import { CategoryEnum, ComponentDetail } from "@/lib/db";
-import { productImage } from "@/lib/utils";
+import { ApiPaths, fetchWithId } from "@/app/lib/api";
+import { ComponentStorageType } from "@/app/lib/storage_helper";
+import { ComponentCategoryEnum, ComponentDetail } from "@/app/lib/db";
+import { productImage } from "@/app/lib/utils";
 import { v4 as uuidv4 } from 'uuid';
 import SimulasiPage from "../page";
 
@@ -67,7 +67,7 @@ const RakitanDetailPage = (props: {params: Promise<{ id: number }>}) => {
   }, [data]);
 
   function commonDataToComponentStorageType(
-    category: CategoryEnum,
+    category: ComponentCategoryEnum,
     data?: CommonRakitanDataType,
   ): ComponentStorageType | undefined {
     if (!data) return undefined;
@@ -87,37 +87,37 @@ const RakitanDetailPage = (props: {params: Promise<{ id: number }>}) => {
   const compParams = {
     params,
     cpu: commonDataToComponentStorageType(
-      CategoryEnum.CPU,
+      ComponentCategoryEnum.CPU,
       dataParsed?.cpu,
     ),
     cpu_cooler: commonDataToComponentStorageType(
-      CategoryEnum.Cooler,
+      ComponentCategoryEnum.Cooler,
       dataParsed?.cpu_cooler,
     ),
     gpu: commonDataToComponentStorageType(
-      CategoryEnum.GPU,
+      ComponentCategoryEnum.GPU,
       dataParsed?.gpu,
     ),
     internal_storages: dataParsed?.internal_storages.map(
-      (d) => commonDataToComponentStorageType(CategoryEnum.Storage, d)!,
+      (d) => commonDataToComponentStorageType(ComponentCategoryEnum.Storage, d)!,
     ),
     memories: dataParsed?.memories.map(
-      (d) => commonDataToComponentStorageType(CategoryEnum.Memory, d)!,
+      (d) => commonDataToComponentStorageType(ComponentCategoryEnum.Memory, d)!,
     ),
     monitors: commonDataToComponentStorageType(
-      CategoryEnum.PSU,
+      ComponentCategoryEnum.PSU,
       dataParsed?.monitors,
     ),
     motherboard: commonDataToComponentStorageType(
-      CategoryEnum.Motherboard,
+      ComponentCategoryEnum.Motherboard,
       dataParsed?.motherboard,
     ),
     power_supply: commonDataToComponentStorageType(
-      CategoryEnum.PSU,
+      ComponentCategoryEnum.PSU,
       dataParsed?.power_supply,
     ),
     casing: commonDataToComponentStorageType(
-      CategoryEnum.Casing,
+      ComponentCategoryEnum.Casing,
       dataParsed?.casing,
     ),
   };
@@ -128,9 +128,9 @@ const RakitanDetailPage = (props: {params: Promise<{ id: number }>}) => {
       {error && <div>Error: {error.message}</div>}
       {dataParsed && (
         <>
-          <Suspense>
+          {/* <Suspense>
             <SimulasiPage params={Promise.resolve(compParams)} />
-          </Suspense>
+          </Suspense> */}
         </>
       )}
     </div>

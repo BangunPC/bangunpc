@@ -1,19 +1,19 @@
-import { createClient } from "../supabase/client";
+import { createSupaServerClient } from "@/lib/supabase/server";
 import { StorageCompatibility, ProductFilter } from "./filter";
 
 export const getStorage = async (
   { motherboardId, storages }: StorageCompatibility,
   { query, min_price, max_price }: ProductFilter,
 ) => {
-  const client = createClient();
+  const supabase = await createSupaServerClient()
 
-  if (!client) {
+  if (!supabase) {
     throw new Error("Supabase client is null");
   }
 
   // filter start
 
-  const client_query = client
+  const client_query = supabase
     .schema("product")
     .from("v_internal_storages")
     .select("*", { count: "exact" });
@@ -47,7 +47,7 @@ export const getStorage = async (
 
   if (motherboardId) {
     console.log(`Filtering storage by motherboard id: ${motherboardId}`);
-    const { data: motherboardData, error } = await client
+    const { data: motherboardData, error } = await supabase
       .schema("product")
       .from("v_motherboards")
       .select("sata3_slot, pcie_m2_slot")
@@ -72,7 +72,7 @@ export const getStorage = async (
       console.log(
         `Filtering storage by storages: ${storages.map((storage) => storage.id).join(", ")}`,
       );
-      const { data: storageData, error } = await client
+      const { data: storageData, error } = await supabase
         .schema("product")
         .from("v_internal_storages")
         .select("form_factor")

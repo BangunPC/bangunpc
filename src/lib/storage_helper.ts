@@ -1,4 +1,4 @@
-import { CategoryEnum, ComponentDetail, ComponentDetailMap } from "./db";
+import { ComponentCategoryEnum, ComponentDetail, ComponentDetailMap } from "@/lib/db";
 
 // Memory storage for server-side
 const serverStorage = new Map<string, string>();
@@ -59,7 +59,7 @@ export type ComponentStorageType = {
   price: number;
   quantity: number;
   image: string;
-  category: CategoryEnum;
+  category: ComponentCategoryEnum;
   slug: string;
   detail: ComponentDetail;
 };
@@ -75,19 +75,19 @@ export class ComponentStorageHelper {
     return StorageHelper.getItem("components") ?? [];
   }
 
-  static async getComponentsByCategory(category: CategoryEnum) {
+  static async getComponentsByCategory(category: ComponentCategoryEnum) {
     const components: ComponentStorageType[] = 
       StorageHelper.getItem("components") ?? [];  
       
     return components.filter((component) => component.category === category);
   }
   
-  static getComponentDetail = async <K extends CategoryEnum>(category: K): Promise<ComponentDetailMap[K] | undefined> => {
+  static getComponentDetail = async <K extends ComponentCategoryEnum>(category: K): Promise<ComponentDetailMap[K] | undefined> => {
     const components = await this.getComponentsByCategory(category);
     
     switch (category) {
-      case CategoryEnum.Memory:
-      case CategoryEnum.Storage:
+      case ComponentCategoryEnum.Memory:
+      case ComponentCategoryEnum.Storage:
         return components?.map((component) => component.detail) as ComponentDetailMap[K];
       
       default:

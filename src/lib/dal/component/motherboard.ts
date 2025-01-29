@@ -1,23 +1,22 @@
-import { ComponentDetail, ComponentView } from "../db";
-import { createClient } from "../supabase/client";
+import { createSupaServerClient } from "@/lib/supabase/server";
+import { ComponentDetail, ComponentView } from "../../db";
 import { MotherboardCompatibility, ProductFilter } from "./filter";
 
 export const getMotherboard = async (
   { casingId, cpuId, memories }: MotherboardCompatibility,
   { query, min_price, max_price }: ProductFilter,
 ) => {
-  const client = createClient();
+  const supabase = await createSupaServerClient()
 
-  if (!client) {
-    throw new Error("Supabase client is null");
+  if (!supabase) {
+    throw new Error("Supabase client is null")
   }
 
   // filter start
-
-  const client_query = client
+  const client_query = supabase
     .schema("product")
     .from("v_motherboards")
-    .select("*", { count: "exact" });
+    .select("*", { count: "exact" })
 
   if (min_price) {
     await client_query.gte("lowest_price", min_price);
@@ -48,7 +47,7 @@ export const getMotherboard = async (
   // compatibility start
 
   if (casingId) {
-    const { data: casingData } = await client
+    const { data: casingData } = await supabase
       .schema("product")
       .from("v_casings")
       .select("mobo_supports")
@@ -66,7 +65,7 @@ export const getMotherboard = async (
   }
 
   if (cpuId) {
-    const { data: cpuData } = await client
+    const { data: cpuData } = await supabase
       .schema("product")
       .from("v_cpus")
       .select("cpu_socket_id")
@@ -79,7 +78,7 @@ export const getMotherboard = async (
   }
 
   if (memories && memories.length > 0) {
-    const { data: memoryData } = await client
+    const { data: memoryData } = await supabase
       .schema("product")
       .from("v_memories")
       .select("product_id, memory_type, capacity_gb, frequency_mhz")

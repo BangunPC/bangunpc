@@ -1,19 +1,19 @@
-import { createClient } from "../supabase/client";
+import { createSupaServerClient } from "@/lib/supabase/server";
 import { GpuCompatibility, ProductFilter } from "./filter";
 
 export const getGpu = async (
   { casingId, motherboardId, psuId }: GpuCompatibility,
   { query, min_price, max_price }: ProductFilter,
 ) => {
-  const client = createClient();
+  const supabase = await createSupaServerClient()
 
-  if (!client) {
+  if (!supabase) {
     throw new Error("Supabase client is null");
   }
 
   // filter start
 
-  const client_query = client
+  const client_query = supabase
     .schema("product")
     .from("v_gpus")
     .select("*", { count: "exact" });
@@ -46,7 +46,7 @@ export const getGpu = async (
   // compatibility start
 
   if (casingId) {
-    const { data: casingData } = await client
+    const { data: casingData } = await supabase
       .schema("product")
       .from("v_casings")
       .select("max_gpu_length_mm")
@@ -64,7 +64,7 @@ export const getGpu = async (
   }
 
   if (psuId) {
-    const { data: psuData } = await client
+    const { data: psuData } = await supabase
       .schema("product")
       .from("v_power_supplies")
       .select("wattage")

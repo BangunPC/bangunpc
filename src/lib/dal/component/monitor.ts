@@ -1,5 +1,6 @@
-import { ComponentDetail, ComponentView } from "../db";
-import { createClient } from "../supabase/client";
+import { createSupaServerClient } from "@/lib/supabase/server";
+import { ComponentDetail, ComponentView } from "../../db";
+import { createClient } from "../../supabase/client";
 import { MonitorCompatibility, ProductFilter } from "./filter";
 
 //! Not Done yet, need to fix
@@ -7,15 +8,15 @@ export const getMonitor = async (
   { gpuId,motherboardId, monitorIds }: MonitorCompatibility,
   { query, min_price, max_price }: ProductFilter,
 ) => {
-  const client = createClient();
+  const supabase = await createSupaServerClient()
 
-  if (!client) {
+  if (!supabase) {
     throw new Error("Supabase client is null");
   }
 
   // filter start
 
-  const client_query = client
+  const client_query = supabase
     .schema("product")
     .from("v_monitors")
     .select("*", { count: "exact" });

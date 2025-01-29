@@ -1,20 +1,20 @@
-import { createClient } from "../supabase/client";
+import { createSupaServerClient } from "@/lib/supabase/server";
 import { CasingCompatibility, ProductFilter } from "./filter";
 
 export const getCasing = async (
   { gpuId, motherboardId }: CasingCompatibility,
   { query, min_price, max_price }: ProductFilter,
 ) => {
-  const client = createClient();
+  const supabase = await createSupaServerClient()
 
-  if (!client) {
+  if (!supabase) {
     console.log("ERROR!");
     throw new Error("Supabase client is null");
   }
 
   // filter start
 
-  const client_query = client
+  const client_query = supabase
     .schema("product")
     .from("v_casings")
     .select("*", { count: "exact" });
@@ -48,7 +48,7 @@ export const getCasing = async (
   // compatibility start
 
   if (motherboardId) {
-    const { data: motherboardData, error } = await client
+    const { data: motherboardData, error } = await supabase
       .schema("product")
       .from("v_motherboards")
       .select("form_factor")

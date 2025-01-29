@@ -23,7 +23,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { CategoryEnum, categoryEnumToSlug,  } from "@/lib/db";
+import { ComponentCategoryEnum, categoryEnumToSlug,  } from "@/lib/db";
 import { createClient } from "@/lib/supabase/client"
 import { cn, createQueryString, removeQueryString } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -61,7 +61,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 export const components = [
   {
     name: "Memory / RAM",
-    enum: CategoryEnum.Memory,
+    enum: ComponentCategoryEnum.Memory,
     icon: (
       <Image
         width={120}
@@ -73,7 +73,7 @@ export const components = [
   },
   {
     name: "Motherboard",
-    enum: CategoryEnum.Motherboard,
+    enum: ComponentCategoryEnum.Motherboard,
     icon: (
       <Image
         width={120}
@@ -85,7 +85,7 @@ export const components = [
   },
   {
     name: "CPU",
-    enum: CategoryEnum.CPU,
+    enum: ComponentCategoryEnum.CPU,
     icon: (
       <Image
         width={120}
@@ -97,7 +97,7 @@ export const components = [
   },
   {
     name: "CPU Cooler",
-    enum: CategoryEnum.Cooler,
+    enum: ComponentCategoryEnum.Cooler,
     icon: (
       <Image
         width={120}
@@ -109,7 +109,7 @@ export const components = [
   },
   {
     name: "Video Card / GPU",
-    enum: CategoryEnum.GPU,
+    enum: ComponentCategoryEnum.GPU,
     icon: (
       <Image
         width={120}
@@ -121,7 +121,7 @@ export const components = [
   },
   {
     name: "Power Supply",
-    enum: CategoryEnum.PSU,
+    enum: ComponentCategoryEnum.PSU,
     icon: (
       <Image
         width={120}
@@ -133,7 +133,7 @@ export const components = [
   },
   {
     name: "Internal Storage",
-    enum: CategoryEnum.Storage,
+    enum: ComponentCategoryEnum.Storage,
     icon: (
       <Image
         width={120}
@@ -145,7 +145,7 @@ export const components = [
   },
   {
     name: "PC Case",
-    enum: CategoryEnum.Casing,
+    enum: ComponentCategoryEnum.Casing,
     icon: (
       <Image
         width={120}
@@ -157,7 +157,7 @@ export const components = [
   },
   {
     name: "Monitor",
-    enum: CategoryEnum.Monitor,
+    enum: ComponentCategoryEnum.Monitor,
     icon: (
       <Image
         width={120}

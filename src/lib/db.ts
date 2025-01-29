@@ -1,6 +1,6 @@
 import { Database } from "./schema";
 
-export enum CategoryEnum {
+export enum ComponentCategoryEnum {
   Headphone,
   Keyboard,
   Mouse,
@@ -23,6 +23,42 @@ export enum CategoryEnum {
   Storage,
   Casing,
   CaseFan,
+}
+
+export type MultiComponentCategoryEnum = ComponentCategoryEnum.Memory | ComponentCategoryEnum.Storage | ComponentCategoryEnum.Monitor;
+
+export function isMultiComponentCategoryEnum(componentCategoryEnum: ComponentCategoryEnum | undefined): componentCategoryEnum is MultiComponentCategoryEnum {
+  return (
+    componentCategoryEnum === ComponentCategoryEnum.Memory || 
+    componentCategoryEnum === ComponentCategoryEnum.Storage || 
+    componentCategoryEnum === ComponentCategoryEnum.Monitor
+  );
+}
+
+export function multiComponentCategoryEnumToTable(componentCategoryEnum: MultiComponentCategoryEnum) {
+  let targetTable: PCBuildTables
+
+    switch (componentCategoryEnum) {
+      case ComponentCategoryEnum.Memory:
+        targetTable = 'build_memories'
+        break;
+
+      case ComponentCategoryEnum.Storage:
+        targetTable = 'build_internal_storages'
+        break;
+
+      case ComponentCategoryEnum.Monitor:
+       targetTable = 'build_monitors'
+       break;
+    }
+  return targetTable
+}
+
+export type PCBuildTables = keyof Database["pc_build"]["Tables"]
+export type SingleComponentUpdate = Database["pc_build"]["Tables"]["builds"]["Update"];
+export type MultiComponentPayload = {
+  product_id: number
+  product_detail_id?: number | null
 }
 
 type DBView = Database["product"]["Views"];
@@ -98,40 +134,40 @@ export const monitorHeaderMapping = {
   refresh_rate_hz: "Refresh Rate (Hz)",
 }
 
-const categoryData: [CategoryEnum, string, string, ComponentViewKeys | null, object?][] = [ 
-  [CategoryEnum.Motherboard, "motherboard", "Motherboard", "v_motherboards", motherboardHeaderMapping], 
-  [CategoryEnum.CPU, "cpu", "CPU", "v_cpus", cpuHeaderMapping], 
-  [CategoryEnum.GPU, "gpu", "GPU", "v_gpus", gpuHeaderMapping], 
-  [CategoryEnum.Memory, "memory", "RAM", "v_memories", memoryHeaderMapping], 
-  [CategoryEnum.PSU, "psu", "Power Supply", "v_cpus", cpuHeaderMapping], 
-  [CategoryEnum.Storage, "storage", "Internal Storage", "v_internal_storages", storageHeaderMapping], 
-  [CategoryEnum.Casing, "casing", "Casing", "v_casings", casingHeaderMapping], 
-  [CategoryEnum.Monitor, "monitor", "Monitor", "v_monitors", monitorHeaderMapping], 
-  [CategoryEnum.CaseFan, "casefan", "Case Fan", null],
-  [CategoryEnum.Cooler, "cooler", "CPU Cooler", null], 
-  [CategoryEnum.Headphone, "headphone", "Headphone", null], 
-  [CategoryEnum.Keyboard, "keyboard", "Keyboard", null], 
-  [CategoryEnum.Mouse, "mouse", "Mouse", null], 
-  [CategoryEnum.Speaker, "speaker", "Speaker", null], 
-  [CategoryEnum.Webcam, "webcam", "Webcam", null], 
-  [CategoryEnum.Printer, "printer", "Printer", null], 
-  [CategoryEnum.OS, "os", "Operating System", null], 
-  [CategoryEnum.SoundCard, "soundcard", "Sound Card", null], 
-  [CategoryEnum.WiredNetwork, "wirednetwork", "Wired Network Device", null], 
-  [CategoryEnum.WirelessNetwork, "wirelessnetwork", "Wireless Network Device", null], 
-  [CategoryEnum.Cable, "cable", "Cable", null], 
-  [CategoryEnum.ExternalDrive, "externaldrive", "External Drive", null]
+const categoryData: [ComponentCategoryEnum, string, string, ComponentViewKeys | null, object?][] = [ 
+  [ComponentCategoryEnum.Motherboard, "motherboard", "Motherboard", "v_motherboards", motherboardHeaderMapping], 
+  [ComponentCategoryEnum.CPU, "cpu", "CPU", "v_cpus", cpuHeaderMapping], 
+  [ComponentCategoryEnum.GPU, "gpu", "GPU", "v_gpus", gpuHeaderMapping], 
+  [ComponentCategoryEnum.Memory, "memory", "RAM", "v_memories", memoryHeaderMapping], 
+  [ComponentCategoryEnum.PSU, "psu", "Power Supply", "v_power_supplies", psuHeaderMapping], 
+  [ComponentCategoryEnum.Storage, "storage", "Internal Storage", "v_internal_storages", storageHeaderMapping], 
+  [ComponentCategoryEnum.Casing, "casing", "Casing", "v_casings", casingHeaderMapping], 
+  [ComponentCategoryEnum.Monitor, "monitor", "Monitor", "v_monitors", monitorHeaderMapping], 
+  [ComponentCategoryEnum.CaseFan, "casefan", "Case Fan", null],
+  [ComponentCategoryEnum.Cooler, "cooler", "CPU Cooler", null], 
+  [ComponentCategoryEnum.Headphone, "headphone", "Headphone", null], 
+  [ComponentCategoryEnum.Keyboard, "keyboard", "Keyboard", null], 
+  [ComponentCategoryEnum.Mouse, "mouse", "Mouse", null], 
+  [ComponentCategoryEnum.Speaker, "speaker", "Speaker", null], 
+  [ComponentCategoryEnum.Webcam, "webcam", "Webcam", null], 
+  [ComponentCategoryEnum.Printer, "printer", "Printer", null], 
+  [ComponentCategoryEnum.OS, "os", "Operating System", null], 
+  [ComponentCategoryEnum.SoundCard, "soundcard", "Sound Card", null], 
+  [ComponentCategoryEnum.WiredNetwork, "wirednetwork", "Wired Network Device", null], 
+  [ComponentCategoryEnum.WirelessNetwork, "wirelessnetwork", "Wireless Network Device", null], 
+  [ComponentCategoryEnum.Cable, "cable", "Cable", null], 
+  [ComponentCategoryEnum.ExternalDrive, "externaldrive", "External Drive", null]
 ]
 
-export const categorySlugToEnum: Record<string, CategoryEnum> = {}
-export const categoryTitleToEnum: Record<string, CategoryEnum> = {}
-export const categoryEnumToSlug: Record<CategoryEnum, string> = {} as Record<CategoryEnum, string>
+export const categorySlugToEnum: Record<string, ComponentCategoryEnum> = {}
+export const categoryTitleToEnum: Record<string, ComponentCategoryEnum> = {}
+export const categoryEnumToSlug: Record<ComponentCategoryEnum, string> = {} as Record<ComponentCategoryEnum, string>
 export const categoryTitleToSlug: Record<string, string> = {}
-export const categoryEnumToTitle: Record<CategoryEnum, string> = {} as Record<CategoryEnum, string>
-export const categoryEnumToView: Record<CategoryEnum, ComponentViewKeys | null> =
-{} as Record<CategoryEnum, ComponentViewKeys | null>
-export const categoryEnumToHeader: Record<CategoryEnum, string[]> = {} as Record<CategoryEnum, string[]>
-export const categoryEnumToKey: Record<CategoryEnum, string[]> = {} as Record<CategoryEnum, string[]>
+export const categoryEnumToTitle: Record<ComponentCategoryEnum, string> = {} as Record<ComponentCategoryEnum, string>
+export const categoryEnumToView: Record<ComponentCategoryEnum, ComponentViewKeys | null> =
+{} as Record<ComponentCategoryEnum, ComponentViewKeys | null>
+export const categoryEnumToHeader: Record<ComponentCategoryEnum, string[]> = {} as Record<ComponentCategoryEnum, string[]>
+export const categoryEnumToKey: Record<ComponentCategoryEnum, string[]> = {} as Record<ComponentCategoryEnum, string[]>
 
 categoryData.forEach(([enumValue, slug, title, view, headerMapping]) => { 
   categorySlugToEnum[slug] = enumValue
@@ -145,26 +181,26 @@ categoryData.forEach(([enumValue, slug, title, view, headerMapping]) => {
 })
 
 export type ComponentDetailMap = {
-  [CategoryEnum.Motherboard]: ComponentView["v_motherboards"];
-  [CategoryEnum.CPU]: ComponentView["v_cpus"];
-  [CategoryEnum.GPU]: ComponentView["v_gpus"];
-  [CategoryEnum.Memory]: ComponentView["v_memories"][];
-  [CategoryEnum.PSU]: ComponentView["v_power_supplies"];
-  [CategoryEnum.Storage]: ComponentView["v_internal_storages"][];
-  [CategoryEnum.Casing]: ComponentView["v_casings"];
-  [CategoryEnum.Headphone]: undefined;
-  [CategoryEnum.Keyboard]: undefined;
-  [CategoryEnum.Mouse]: undefined
-  [CategoryEnum.Speaker]: undefined
-  [CategoryEnum.Webcam]: undefined
-  [CategoryEnum.Printer]: undefined
-  [CategoryEnum.Monitor]: undefined
-  [CategoryEnum.OS]: undefined
-  [CategoryEnum.SoundCard]: undefined
-  [CategoryEnum.WiredNetwork]: undefined
-  [CategoryEnum.WirelessNetwork]: undefined
-  [CategoryEnum.Cable]: undefined
-  [CategoryEnum.ExternalDrive]: undefined
-  [CategoryEnum.Cooler]: undefined;
-  [CategoryEnum.CaseFan]: undefined;
+  [ComponentCategoryEnum.Motherboard]: ComponentView["v_motherboards"];
+  [ComponentCategoryEnum.CPU]: ComponentView["v_cpus"];
+  [ComponentCategoryEnum.GPU]: ComponentView["v_gpus"];
+  [ComponentCategoryEnum.Memory]: ComponentView["v_memories"][];
+  [ComponentCategoryEnum.PSU]: ComponentView["v_power_supplies"];
+  [ComponentCategoryEnum.Storage]: ComponentView["v_internal_storages"][];
+  [ComponentCategoryEnum.Casing]: ComponentView["v_casings"];
+  [ComponentCategoryEnum.Headphone]: undefined;
+  [ComponentCategoryEnum.Keyboard]: undefined;
+  [ComponentCategoryEnum.Mouse]: undefined
+  [ComponentCategoryEnum.Speaker]: undefined
+  [ComponentCategoryEnum.Webcam]: undefined
+  [ComponentCategoryEnum.Printer]: undefined
+  [ComponentCategoryEnum.Monitor]: undefined
+  [ComponentCategoryEnum.OS]: undefined
+  [ComponentCategoryEnum.SoundCard]: undefined
+  [ComponentCategoryEnum.WiredNetwork]: undefined
+  [ComponentCategoryEnum.WirelessNetwork]: undefined
+  [ComponentCategoryEnum.Cable]: undefined
+  [ComponentCategoryEnum.ExternalDrive]: undefined
+  [ComponentCategoryEnum.Cooler]: undefined;
+  [ComponentCategoryEnum.CaseFan]: undefined;
 }

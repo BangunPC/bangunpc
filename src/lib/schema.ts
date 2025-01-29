@@ -1,10 +1,38 @@
-export type Json =
+export type DataResponse =
   | string
   | number
   | boolean
   | null
-  | { [key: string]: Json | undefined }
-  | Json[]
+  | { [key: string]: DataResponse | undefined }
+  | DataResponse[]
+
+
+export type SingleComponentResponse = {
+  product_id: number
+  name: string
+  slug: string
+  image_filename: string
+  product_detail_id: number | null
+  marketplace_id: number | null
+  price: number | null
+}
+
+export type MultiComponentResponse = SingleComponentResponse & {
+  component_id: number
+}
+  
+export type BuildResponseData = {
+  cpu: SingleComponentResponse
+  gpu: SingleComponentResponse
+  motherboard: SingleComponentResponse
+  power_supply: SingleComponentResponse
+  casing: SingleComponentResponse
+  cpu_cooler: SingleComponentResponse
+  internal_storages: MultiComponentResponse[]
+  memories: MultiComponentResponse[]
+  monitors: MultiComponentResponse[]
+  total_price: number
+}
 
 export type Database = {
   pc_build: {
@@ -60,20 +88,20 @@ export type Database = {
         Row: {
           build_id: number
           id: number
-          internal_storage_product_detail_id: number | null
-          internal_storage_product_id: number
+          product_detail_id: number | null
+          product_id: number
         }
         Insert: {
           build_id: number
           id?: number
-          internal_storage_product_detail_id?: number | null
-          internal_storage_product_id: number
+          product_detail_id?: number | null
+          product_id: number
         }
         Update: {
           build_id?: number
           id?: number
-          internal_storage_product_detail_id?: number | null
-          internal_storage_product_id?: number
+          product_detail_id?: number | null
+          product_id?: number
         }
         Relationships: [
           {
@@ -103,20 +131,20 @@ export type Database = {
         Row: {
           build_id: number
           id: number
-          memory_product_detail_id: number | null
-          memory_product_id: number
+          product_detail_id: number | null
+          product_id: number
         }
         Insert: {
           build_id: number
           id?: number
-          memory_product_detail_id?: number | null
-          memory_product_id: number
+          product_detail_id?: number | null
+          product_id: number
         }
         Update: {
           build_id?: number
           id?: number
-          memory_product_detail_id?: number | null
-          memory_product_id?: number
+          product_detail_id?: number | null
+          product_id?: number
         }
         Relationships: [
           {
@@ -146,20 +174,20 @@ export type Database = {
         Row: {
           build_id: number
           id: number
-          monitor_product_detail_id: number | null
-          monitor_product_id: number
+          product_detail_id: number | null
+          product_id: number
         }
         Insert: {
           build_id: number
           id?: number
-          monitor_product_detail_id?: number | null
-          monitor_product_id: number
+          product_detail_id?: number | null
+          product_id: number
         }
         Update: {
           build_id?: number
           id?: number
-          monitor_product_detail_id?: number | null
-          monitor_product_id?: number
+          product_detail_id?: number | null
+          product_id?: number
         }
         Relationships: [
           {
@@ -415,15 +443,15 @@ export type Database = {
       v_builds: {
         Row: {
           build_id: number | null
-          casing: Json | null
-          cpu: Json | null
-          cpu_cooler: Json | null
-          gpu: Json | null
-          internal_storages: Json | null
-          memories: Json | null
-          monitors: Json | null
-          motherboard: Json | null
-          power_supply: Json | null
+          casing: SingleComponentResponse | null
+          cpu: SingleComponentResponse | null
+          cpu_cooler: SingleComponentResponse | null
+          gpu: SingleComponentResponse | null
+          internal_storages: MultiComponentResponse[] | null
+          memories: MultiComponentResponse[] | null
+          monitors: MultiComponentResponse[] | null
+          motherboard: SingleComponentResponse | null
+          power_supply: SingleComponentResponse | null
           total_price: number | null
         }
         Relationships: []
@@ -431,18 +459,18 @@ export type Database = {
       v_recommendation: {
         Row: {
           build_id: number | null
-          casing: Json | null
+          casing: SingleComponentResponse | null
           categories_name: string[] | null
-          cpu: Json | null
-          cpu_cooler: Json | null
+          cpu: SingleComponentResponse | null
+          cpu_cooler: SingleComponentResponse | null
           description: string | null
-          gpu: Json | null
+          gpu: SingleComponentResponse | null
           image_filenames: string[] | null
-          internal_storages: Json | null
-          memories: Json | null
-          monitors: Json | null
-          motherboard: Json | null
-          power_supply: Json | null
+          internal_storages: MultiComponentResponse[] | null
+          memories: MultiComponentResponse[] | null
+          monitors: MultiComponentResponse[] | null
+          motherboard: SingleComponentResponse | null
+          power_supply: SingleComponentResponse | null
           recommendation_id: number | null
           review_urls: string | null
           slug: string | null
@@ -609,7 +637,7 @@ export type Database = {
       casings: {
         Row: {
           colors: string[] | null
-          drive_bays: Json | null
+          drive_bays: DataResponse | null
           dust_cover: string | null
           expansion_slot: number | null
           fan_slots: number | null
@@ -628,7 +656,7 @@ export type Database = {
         }
         Insert: {
           colors?: string[] | null
-          drive_bays?: Json | null
+          drive_bays?: DataResponse | null
           dust_cover?: string | null
           expansion_slot?: number | null
           fan_slots?: number | null
@@ -647,7 +675,7 @@ export type Database = {
         }
         Update: {
           colors?: string[] | null
-          drive_bays?: Json | null
+          drive_bays?: DataResponse | null
           dust_cover?: string | null
           expansion_slot?: number | null
           fan_slots?: number | null
@@ -2077,7 +2105,7 @@ export type Database = {
           stock: number | null
           updated_at: string | null
           url: string
-          variants: Json[] | null
+          variants: DataResponse[] | null
         }
         Insert: {
           created_at?: string | null
@@ -2093,7 +2121,7 @@ export type Database = {
           stock?: number | null
           updated_at?: string | null
           url?: string
-          variants?: Json[] | null
+          variants?: DataResponse[] | null
         }
         Update: {
           created_at?: string | null
@@ -2109,7 +2137,7 @@ export type Database = {
           stock?: number | null
           updated_at?: string | null
           url?: string
-          variants?: Json[] | null
+          variants?: DataResponse[] | null
         }
         Relationships: [
           {
@@ -2292,17 +2320,17 @@ export type Database = {
       psu_efficiency_ratings: {
         Row: {
           id: number
-          loading_to_efficiency_percentage: Json | null
+          loading_to_efficiency_percentage: DataResponse | null
           name: string
         }
         Insert: {
           id?: number
-          loading_to_efficiency_percentage?: Json | null
+          loading_to_efficiency_percentage?: DataResponse | null
           name: string
         }
         Update: {
           id?: number
-          loading_to_efficiency_percentage?: Json | null
+          loading_to_efficiency_percentage?: DataResponse | null
           name?: string
         }
         Relationships: []
@@ -2439,7 +2467,7 @@ export type Database = {
           casing_type: string | null
           colors: string[] | null
           description: string | null
-          drive_bays: Json | null
+          drive_bays: DataResponse | null
           dust_cover: string | null
           expansion_slot: number | null
           fan_slots: number | null

@@ -20,7 +20,7 @@ import KategoriMonitor from "@/components/icon/kategori-monitor";
 import KategoriMotherboard from "@/components/icon/kategori-motherboard";
 import KategoriPsu from "@/components/icon/kategori-psu";
 import KategoriRam from "@/components/icon/kategori-ram";
-import { categoryEnumToSlug, CategoryEnum } from "@/lib/db";
+import { categoryEnumToSlug, ComponentCategoryEnum } from "@/lib/db";
 import { Database } from "@/lib/schema";
 import { productImage } from "@/lib/utils";
 
@@ -81,55 +81,55 @@ const Component = ({
       title: "CPU",
       icon: <KategoriCpu width="27" height="27" />,
       components: cpu ? [cpu] : [],
-      category: CategoryEnum.CPU,
+      category: ComponentCategoryEnum.CPU,
     },
     {
       title: "Cooler",
       icon: <KategoriCpuCooler width="27" height="27" />,
       components: cpu_cooler ? [cpu_cooler] : [],
-      category: CategoryEnum.Cooler,
+      category: ComponentCategoryEnum.Cooler,
     },
     {
       title: "GPU",
       icon: <KategoriGpu width="27" height="27" />,
       components: gpu ? [gpu] : [],
-      category: CategoryEnum.GPU,
+      category: ComponentCategoryEnum.GPU,
     },
     {
       title: "Internal Storage",
       icon: <KategoriInternalStorage width="27" height="27" />,
       components: internal_storages ? [...internal_storages] : [],
-      category: CategoryEnum.Storage,
+      category: ComponentCategoryEnum.Storage,
     },
     {
       title: "Memories",
       icon: <KategoriRam width="27" height="27" />,
       components: memories ? [...memories] : [],
-      category: CategoryEnum.Memory,
+      category: ComponentCategoryEnum.Memory,
     },
     {
       title: "Monitors",
       icon: <KategoriMonitor width="27" height="27" />,
       components: monitors ? [monitors] : [],
-      category: CategoryEnum.Monitor,
+      category: ComponentCategoryEnum.Monitor,
     },
     {
       title: "Motherboard",
       icon: <KategoriMotherboard width="27" height="27" />,
       components: motherboard ? [motherboard] : [],
-      category: CategoryEnum.Motherboard,
+      category: ComponentCategoryEnum.Motherboard,
     },
     {
       title: "Power Supply",
       icon: <KategoriPsu width="27" height="27" />,
       components: power_supply ? [power_supply] : [],
-      category: CategoryEnum.PSU,
+      category: ComponentCategoryEnum.PSU,
     },
     {
       title: "Casing",
       icon: <KategoriCasing width="27" height="27" />,
       components: casing ? [casing] : [],
-      category: CategoryEnum.Casing,
+      category: ComponentCategoryEnum.Casing,
     },
   ];
   return (

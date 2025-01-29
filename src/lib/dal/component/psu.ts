@@ -1,15 +1,15 @@
-import { createClient } from "../supabase/client";
+import { createSupaServerClient } from "@/lib/supabase/server";
 import { PsuCompatibility, ProductFilter } from "./filter";
 
 export const getPsu = async (
   { cpuId, gpuId, memories, motherboardId, storages }: PsuCompatibility,
   { query, min_price, max_price }: ProductFilter,
 ) => {
-  const client = createClient();
+  const supabase = await createSupaServerClient()
 
   // filter start
 
-  const client_query = client
+  const client_query = supabase
     .schema("product")
     .from("v_power_supplies")
     .select("*", { count: "exact" });
@@ -45,7 +45,7 @@ export const getPsu = async (
 
   if (cpuId) {
     // Fetching cpu required data
-    const { data: cpuData, error } = await client
+    const { data: cpuData, error } = await supabase
       .schema("product")
       .from("v_cpus")
       .select("max_power_watt")
@@ -61,7 +61,7 @@ export const getPsu = async (
 
   if (gpuId) {
     // Fetching gpu required data
-    const { data: gpuData, error } = await client
+    const { data: gpuData, error } = await supabase
       .schema("product")
       .from("v_gpus")
       .select("min_psu_watt")
@@ -77,7 +77,7 @@ export const getPsu = async (
 
   if (motherboardId) {
     // Fetching mobo required data
-    const { data: moboData, error } = await client
+    const { data: moboData, error } = await supabase
       .schema("product")
       .from("v_motherboards")
       .select("form_factor")
@@ -108,7 +108,7 @@ export const getPsu = async (
 
   if (memories) {
     // Fetching memory required data
-    const { data: memoryData, error } = await client
+    const { data: memoryData, error } = await supabase
       .schema("product")
       .from("v_memories")
       .select("memory_type, amount")
@@ -133,7 +133,7 @@ export const getPsu = async (
   }
   if (storages) {
     // Fetching memory required data
-    const { data: storageData, error } = await client
+    const { data: storageData, error } = await supabase
       .schema("product")
       .from("v_internal_storages")
       .select("type, form_factor")

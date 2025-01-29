@@ -1,10 +1,9 @@
-export const runtime = "edge"
-
 import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { createSupaServerClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
-import { Database } from '@/lib/schema'
+import { BuildResponseData } from '@/lib/schema'
+import { ComponentCategoryEnum, isMultiComponentCategoryEnum, MultiComponentCategoryEnum, multiComponentCategoryEnumToTable, MultiComponentPayload, SingleComponentUpdate as SingleComponentPayload } from './db'
  
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
@@ -34,6 +33,7 @@ export async function decrypt(encryptSession: string) {
   }
 }
 
+
 export async function getBuildSessionId() {
   const cookieStore = await cookies()
   const encryptSession = cookieStore.get(BUILD_SESSION_COOKIE_NAME)?.value!
@@ -42,21 +42,47 @@ export async function getBuildSessionId() {
   return decryptSession.sessionId as number | undefined
 }
 
-export async function createBuildSession(buildData: Database["pc_build"]["Tables"]["builds"]["Insert"], userId?: string) {
-  // TODO: Get userId from supabase auth session
-  
-  // Create a PC build in database
+// To create build session, suppose to only add one single or multi component
+export async function createBuildSession(
+  singleComponent?: SingleComponentPayload, 
+  multiComponent?: {
+    categoryEnum: MultiComponentCategoryEnum
+    value: MultiComponentPayload
+  }
+) {
   const supabase = await createSupaServerClient()
+
+  // Create new PC build with single component in database
   const { data: buildResponse, error } = await supabase
     .schema('pc_build')
     .from('builds')
-    .insert(buildData)
+    .insert(singleComponent ?? {})
     .select('id')
     .single()
-  
-  // Create a session in database
+
+  if(error)
+    return { error: error.message }
+
   const buildId = buildResponse?.id  
 
+  // Create new PC build with multi component in database
+  if(multiComponent) {
+    const { error } = await supabase
+      .schema('pc_build')
+      .from(multiComponentCategoryEnumToTable(multiComponent.categoryEnum))
+      .insert({
+        build_id: buildId,
+        ...multiComponent.value
+      })
+
+    if(error)
+      return { error: error.message }
+  }
+  
+  // TODO: Get userId from supabase auth session
+  const userId = null
+  
+  // Create a session in database
   if(buildId) {
     const { data: sessionResponse } = await supabase
       .schema('pc_build')
@@ -134,12 +160,12 @@ export async function getBuildSessionData() {
     .single()
   
   if (buildError)
-      return { data: null, error:buildError }
-      
-  return { data: buildResponse?.v_builds, error: null}
+      return { data: null, error:buildError.message }
+   
+  return { data: buildResponse?.v_builds as BuildResponseData, error: null}
 }
 
-async function getBuildIdSession() {
+async function getSessionBuildId() {
   const supabase = await createSupaServerClient()
   const sessionId = await getBuildSessionId()
 
@@ -159,21 +185,87 @@ async function getBuildIdSession() {
   return data.build_id
 }
 
-export async function updateBuildSessionData(buildData: Database["pc_build"]["Tables"]["builds"]["Update"]) {
+export async function updateBuildSessionComponent(
+  componentCategoryEnum: ComponentCategoryEnum, // To identify which component will be updated
+  updatedValue: {
+    productId?: number
+    productDetailId?: number
+  },
+  multiComponentId?: number // Only for multi component such monitors, memories, and internal storages
+) {
   const supabase = await createSupaServerClient()
-  const buildId = await getBuildIdSession()
-
+  const buildId = await getSessionBuildId()
+  
   if(!buildId)
     return { error: 'Build id is not found' }
-
-  const { error: buildError } = await supabase
-    .schema('pc_build')
-    .from('builds')
-    .update(buildData)
-    .eq('id', buildId)
   
-  if(buildError) 
-    return { error: buildError.message }
+  // For multi component
+  if (isMultiComponentCategoryEnum(componentCategoryEnum) && multiComponentId) {
+   const targetTable = multiComponentCategoryEnumToTable(componentCategoryEnum)
+   const { error: buildError } = await supabase
+     .schema('pc_build')
+     .from(targetTable)
+     .update({ 
+        product_id: updatedValue.productId, 
+        product_detail_id: updatedValue.productDetailId 
+      })
+     .eq('id', multiComponentId)
+
+     if (buildError)
+      return { error: buildError.message }
+  } else {
+    // For single component
+    let targetColumnDetail: Partial<SingleComponentPayload> = {}
+
+    switch (componentCategoryEnum) {
+      case ComponentCategoryEnum.CPU:
+        targetColumnDetail = {
+          cpu_product_id: updatedValue.productId,
+          cpu_product_detail_id: updatedValue.productDetailId
+        }
+        break
+
+      case ComponentCategoryEnum.GPU:
+        targetColumnDetail = {
+          gpu_product_id: updatedValue.productId,
+          gpu_product_detail_id: updatedValue.productDetailId
+        }
+        break
+      
+      case ComponentCategoryEnum.Motherboard:
+        targetColumnDetail = {
+          motherboard_product_id: updatedValue.productId,
+          motherboard_product_detail_id: updatedValue.productDetailId
+        }
+        break
+      
+      case ComponentCategoryEnum.PSU:
+        targetColumnDetail = {
+          power_supply_product_id: updatedValue.productId,
+          power_supply_product_detail_id: updatedValue.productDetailId
+        }
+        break
+      
+      case ComponentCategoryEnum.Casing:
+        targetColumnDetail = {
+          casing_product_id: updatedValue.productId,
+          casing_product_detail_id: updatedValue.productDetailId
+        }
+        break
+
+      default:
+        return { error: "Invalid componentCategory" }
+    }
+
+    const { error: buildError } = await supabase
+      .schema('pc_build')
+      .from('builds')
+      .update(targetColumnDetail)
+      .eq('id', buildId)
+    
+    if(buildError) 
+      return { error: buildError.message }
+  }
   
   const { error: refreshError } = await refreshBuildSessionExpire()
   
@@ -183,7 +275,99 @@ export async function updateBuildSessionData(buildData: Database["pc_build"]["Ta
     return { error: null }
 }
 
-export async function deleteSession() {
+export async function deleteBuildSessionComponent(
+  componentCategoryEnum: ComponentCategoryEnum,
+  isOnlyProductDetailId: boolean = false, // If just wanna delete productDetailId without delete productId
+  multiComponentId?: number // Only for multi component such monitors, memories, and internal storages
+) {
+  const supabase = await createSupaServerClient()
+  const buildId = await getSessionBuildId()
+  
+  if(!buildId)
+    return { error: 'Build id is not found' }
+  
+  if (isMultiComponentCategoryEnum(componentCategoryEnum) && multiComponentId) {
+    // Specific for multi component, the data that's been modified in it's own table
+    const targetTable = multiComponentCategoryEnumToTable(componentCategoryEnum)
+    if(isOnlyProductDetailId) {
+      // Update product_detail_id in builds table, set to null
+      const { error } = await supabase
+        .schema('pc_build')
+        .from(targetTable)
+        .update({ product_detail_id: null })
+        .eq('id', multiComponentId)
+
+      if(error) 
+        return { error: error.message }
+    } else {
+      // Delete row data in target table that related with buildId
+      const { error } = await supabase
+        .schema('pc_build')
+        .from(targetTable)
+        .delete()
+        .eq('id', multiComponentId)
+      
+      if(error) 
+        return { error: error.message }
+    }
+  } else {
+    let targetColumnDetail: Partial<SingleComponentPayload> = {}
+
+    switch (componentCategoryEnum) {
+      case ComponentCategoryEnum.CPU:
+        targetColumnDetail.cpu_product_detail_id = null
+        if (!isOnlyProductDetailId) 
+          targetColumnDetail.cpu_product_id = null
+        break
+
+      case ComponentCategoryEnum.GPU:
+        targetColumnDetail.gpu_product_detail_id = null
+        if (!isOnlyProductDetailId) 
+          targetColumnDetail.gpu_product_id = null
+        break
+      
+      case ComponentCategoryEnum.Motherboard:
+        targetColumnDetail.motherboard_product_detail_id = null
+        if (!isOnlyProductDetailId) 
+          targetColumnDetail.motherboard_product_id = null
+        break
+      
+      case ComponentCategoryEnum.PSU:
+        targetColumnDetail.power_supply_product_detail_id = null
+        if (!isOnlyProductDetailId) 
+          targetColumnDetail.power_supply_product_id = null
+        break
+      
+      case ComponentCategoryEnum.Casing:
+        targetColumnDetail.casing_product_detail_id = null
+        if (!isOnlyProductDetailId) 
+          targetColumnDetail.casing_product_id = null
+        break
+
+      default:
+        return { error: "Invalid componentCategory" }
+    }
+
+    // Update component_product_id or component_product_detail_id in builds table, set to null
+    const { error: buildError } = await supabase
+      .schema('pc_build')
+      .from('builds')
+      .update(targetColumnDetail)
+      .eq('id', buildId)
+    
+    if(buildError) 
+      return { error: buildError.message }
+  }
+  
+  const { error: refreshError } = await refreshBuildSessionExpire()
+  
+  if(refreshError) 
+    return { error: refreshError }
+  else 
+    return { error: null }
+}
+
+export async function deleteBuildSession() {
   const cookieStore = await cookies()
   const supabase = await createSupaServerClient()
   const sessionId = await getBuildSessionId()
@@ -192,7 +376,7 @@ export async function deleteSession() {
     return false
 
   // Get current buildId Session
-  const buildId = await getBuildIdSession()
+  const buildId = await getSessionBuildId()
 
   if(!buildId)
     return false
