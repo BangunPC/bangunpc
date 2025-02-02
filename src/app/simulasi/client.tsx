@@ -4,7 +4,7 @@ import { Banknote, Save, Trash, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import KategoriCasing from "@/components/icon/kategori-casing";
@@ -22,7 +22,7 @@ import {
   isMultiComponentCategoryEnum,
 } from "@/lib/db";
 import { createQueryString, productImage, removeQueryString } from "@/lib/utils";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { RadioGroup } from "@/components/ui/radio-group";
 // import { Label } from "@/components/ui/label";
 import Divider from "@/components/ui/divider";
 // import { Input } from "@/components/ui/input";
@@ -86,7 +86,7 @@ export function SimulasiClient({
       kategori: ComponentCategoryEnum.Memory,
       icon: <KategoriRam width="27" height="27" />,
       title: "Memory",
-      components: buildData?.memories || [],
+      components: buildData?.memories ?? [],
       iframe: `/produk/memory`,
     },
     {
@@ -100,13 +100,13 @@ export function SimulasiClient({
       kategori: ComponentCategoryEnum.Storage,
       icon: <KategoriInternalStorage width="27" height="27" />,
       title: "Storage",
-      components: buildData?.internal_storages || [],
+      components: buildData?.internal_storages ?? [],
       iframe: `/produk/storage`,
     },
     {
       kategori: ComponentCategoryEnum.Casing,
       icon: <KategoriCasing width="27" height="27" />,
-      title: "PC Case",
+      title: "Casing",
       components: buildData?.casing ? [buildData.casing] : [],
       iframe: `/produk/casing`,
     },
@@ -347,7 +347,7 @@ export function SimulasiClient({
           <div className="flex items-center rounded-xl bg-white p-4 text-lg shadow-bm shadow-black/5 dark:bg-navbar">
             <Banknote width="24" height="24" className="mr-1 inline-block" />
             Total: Rp{" "}
-            {buildData?.total_price?.toLocaleString("id-ID") || "0"}
+            {buildData?.total_price?.toLocaleString("id-ID") ?? "0"}
           </div>
         </div>
         <Dialog

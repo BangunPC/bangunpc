@@ -13,7 +13,7 @@ import { SidebarClose, SidebarOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { componentImage } from "@/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
@@ -32,26 +32,38 @@ export function KategoriClient({
   const [hideSidebar, setHideSidebar] = useState(false)
   const router = useRouter()
 
-  const handleAddComponent = async (component: ComponentDetail) => {
-    const buildId = await getBuildSessionId()
-    let error: string | undefined
-
-    if (buildId) { 
-      const result = await insertBuildSessionComponent(componentCategoryEnum, { product_id: component.product_id! })
-      
-      if (result?.error)
-        error = result.error
+  const handleInsertOrCreateSession = async (product_id: number) => {
+    const buildId = await getBuildSessionId();
+  
+    if (buildId) {
+      const result = await insertBuildSessionComponent(componentCategoryEnum, { product_id });
+      return result?.error;
     } else {
-      const result = await createBuildSession(componentCategoryEnum, {product_id: component.product_id!})
-
-      if (result?.error)
-        error = result.error
+      const result = await createBuildSession(componentCategoryEnum, { product_id });
+      return result?.error;
     }
-
-    if(!error) {
-      router.push("/simulasi")
+  };
+  
+  const handleAddComponent = async (component: ComponentDetail) => {
+    const { product_id } = component;
+  
+    if (!product_id) {
+      console.error("Product ID is missing");
+      return;
     }
-  }
+  
+    try {
+      const error = await handleInsertOrCreateSession(product_id);
+  
+      if (!error) {
+        router.push("/simulasi");
+      } else {
+        console.error("Error occurred:", error);
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+    }
+  };
 
   const desktopSidebarButton = (
     <Button

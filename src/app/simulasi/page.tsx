@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import LoadingComponent from "@/components/common/loading";
 
 type Params = Promise<{ buildCode: string }>
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 export async function generateMetadata(props: {
   params: Params

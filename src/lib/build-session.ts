@@ -356,7 +356,7 @@ export async function deleteBuildSessionComponent(
         return { error: error.message }
     }
   } else {
-    let targetColumnDetail: Partial<SingleComponentPayload> = {}
+    const targetColumnDetail: Partial<SingleComponentPayload> = {}
 
     switch (componentCategoryEnum) {
       case ComponentCategoryEnum.CPU:
