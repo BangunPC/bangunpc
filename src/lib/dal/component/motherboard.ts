@@ -1,3 +1,5 @@
+'use server'
+
 import { createSupaServerClient } from "@/lib/supabase/server";
 import { ComponentDetail, ComponentView } from "../../db";
 import { MotherboardCompatibility, ProductFilter } from "./filter";

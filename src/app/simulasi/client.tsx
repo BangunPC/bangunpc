@@ -19,25 +19,24 @@ import {
   ComponentCategoryEnum,
   categoryEnumToSlug,
   categorySlugToEnum,
+  isMultiComponentCategoryEnum,
 } from "@/lib/db";
-import { createQueryString, removeQueryString } from "@/lib/utils";
-import useSWR from "swr";
-import useSWRMutation from "swr/mutation";
-import { ApiPaths, fetcher, insertRakitan } from "@/lib/api";
+import { createQueryString, productImage, removeQueryString } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+// import { Label } from "@/components/ui/label";
 import Divider from "@/components/ui/divider";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { KategoriClient } from "../produk/[kategori]/client";
-import { BuildResponseData } from "@/lib/schema";
+import { BuildResponseData, MultiComponentResponse, SingleComponentResponse } from "@/lib/schema";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { deleteBuildSession, deleteBuildSessionComponent } from "@/lib/build-session";
 // import { deleteBuildSession, deleteBuildSessionComponent } from "@/lib/build-session";
 
 const headers = [
-  "Kategori Komponen",
+  "Kategori",
   "Komponen Dipilih", 
-  "Harga Satuan",
+  "Harga",
   "Aksi",
 ];
 
@@ -130,12 +129,12 @@ export function SimulasiClient({
   // const { trigger } = useSWRMutation(ApiPaths.insertRakitan, insertRakitan);
 
   const handleClear = async () => {
-    // if (!buildCode) {
-    //   const success = await deleteBuildSession();
-    //   if (success) {
-    //     router.refresh();
-    //   }
-    // }
+    if (!buildCode) {
+      const success = await deleteBuildSession();
+      if (success) {
+        router.refresh();
+      }
+    }
   };
 
   const handleSaveNew = async (name: string) => {
@@ -153,13 +152,28 @@ export function SimulasiClient({
     return true;
   }
 
-  const handleRemoveComponent = async (component: any) => {
-    // if (!buildCode) {
-    //   const { error } = await deleteBuildSessionComponent(component.category);
-    //   if (!error) {
-    //     router.refresh();
-    //   }
-    // }
+  const handleRemoveComponent = async (component: SingleComponentResponse, categoryEnum: ComponentCategoryEnum) => {
+    if (!buildCode) {
+      let responseError: string | null = null
+      if(isMultiComponentCategoryEnum(categoryEnum)) {
+        const { error } = await deleteBuildSessionComponent(
+          categoryEnum, 
+          (component as MultiComponentResponse).component_id);
+        if (!error) 
+          responseError = error
+      } else {
+        const { error } = await deleteBuildSessionComponent(
+          categoryEnum);
+        if (!error) 
+          responseError = error
+      }
+
+      if (!responseError)
+        router.refresh()
+      else
+        console.log(responseError);
+        
+    }
   };
 
   return (
@@ -172,22 +186,33 @@ export function SimulasiClient({
       <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-4">
         <div className="flex justify-end gap-2">
           {!buildCode && (
-            <Button
-              variant="destructive"
-              disabled={components.every((c) => c.components.length === 0)}
-              onClick={() => {
-                const confirmed = window.confirm(
-                  "Apakah Anda yakin ingin mengulang dari awal?\nSemua komponen akan dihapus dan tidak dapat dikembalikan.",
-                );
-                if (confirmed) {
-                  handleClear();
-                }
-              }}
-              className="text-base"
-            >
-              <Undo2 className="mr-2 inline-block" />
-              Reset Pilihan
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger  
+                disabled={components.every((c) => c.components.length === 0)}
+                variant="destructive" 
+                className="items-center text-white text-base"
+              >
+                <Undo2 className="mr-2 inline-block" />
+                Reset Pilihan
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Semua komponen yang telah Anda pilih akan dihapus
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Tidak</AlertDialogCancel>
+                  <AlertDialogAction 
+                    variant="destructive"
+                    onClick={handleClear}>
+                    Yakin
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+            
           )}
           <ManageListModal
             onSaveNew={handleSaveNew}
@@ -209,12 +234,12 @@ export function SimulasiClient({
               </tr>
             </thead>
             <tbody>
-              {components.map((item) => {
+              {components.map((item, index) => {
                 const bottomSpace = (item.title === "Memory" ||
                   item.title === "Storage") && <div className="h-[38px]" />;
                 return (
                   <tr
-                    key={item.title}
+                    key={index}
                     className="h-12 border-b border-zinc-500"
                   >
                     <td className="flex font-bold text-primary">
@@ -227,14 +252,14 @@ export function SimulasiClient({
                     </td>
                     <td>
                       <div className="flex flex-col gap-2">
-                        {item.components.map((component) => (
+                        {item.components.map((component, index) => (
                           <Link
-                            key={component.product_detail_id}
+                            key={index}
                             className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
                             href={`/produk/${categoryEnumToSlug[item.kategori]}/${component.slug}`}
                           >
                             <Image
-                              src={component.image_filename}
+                              src={productImage(component.product_id, component.image_filename)}
                               width={32}
                               height={32}
                               alt={component.name}
@@ -266,8 +291,8 @@ export function SimulasiClient({
                     </td>
                     <td>
                       <div className="flex flex-col gap-1">
-                        {item.components.map((component) => (
-                          <div key={component.product_detail_id} className="flex h-[48px] flex-row items-center">
+                        {item.components.map((component,index) => (
+                          <div key={index} className="flex h-[48px] flex-row items-center">
                             <span className="whitespace-nowrap">
                               {component.price
                                 ? `Rp ${component.price.toLocaleString("id-ID")}`
@@ -280,32 +305,33 @@ export function SimulasiClient({
                     </td>
                     <td>
                       <div className="flex h-full flex-col gap-1">
-                        {item.components.map((component) => (
+                        {item.components.map((component, index) => (
                           <div
-                            key={component.product_id}
+                            key={index}
                             className="flex flex-row items-center gap-1 my-2"
                           >
-                            <Button
-                              variant="destructive"
-                              className="h-8 items-center text-white"
-                              onClick={() => {
-                                if (item.components.length > 0) {
-                                  if (
-                                    window.confirm(
-                                      "Apakah Anda yakin ingin menghapus komponen ini?",
-                                    )
-                                  ) {
-                                    handleRemoveComponent({
-                                      category: item.kategori,
-                                      id: component.product_id
-                                    });
-                                  }
-                                }
-                              }}
-                            >
-                              <Trash size={16} className="mr-2 inline-block" />
-                              Hapus
-                            </Button>
+                            <AlertDialog>
+                              <AlertDialogTrigger variant="destructive" className="h-8 items-center text-white">
+                                <Trash size={16} className="mr-2 inline-block" />
+                                Hapus
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Komponen {component.name} akan dihapus
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Tidak</AlertDialogCancel>
+                                  <AlertDialogAction 
+                                    variant="destructive"
+                                    onClick={() => handleRemoveComponent(component, item.kategori)}>
+                                    Yakin
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
                           </div>
                         ))}
                         {bottomSpace}
@@ -362,10 +388,10 @@ const ManageListModal: FC<MLMProps> = ({
   onSaveReplace,
   defaultId,
 }) => {
-  const { data, isLoading, error, mutate } = useSWR(
-    ApiPaths.listRakitan,
-    fetcher,
-  );
+  // const { data, isLoading, error, mutate } = useSWR(
+  //   ApiPaths.listRakitan,
+  //   fetcher,
+  // );
   const [name, setName] = useState(defaultId ?? "option-new");
   const [newName, setNewName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -389,9 +415,9 @@ const ManageListModal: FC<MLMProps> = ({
       onOpenChange={(e) => {
         if (e) setName(defaultId ?? "option-new");
         setIsOpen(e);
-        mutate().catch((error) => {
-          console.log(error);
-        });
+        // mutate().catch((error) => {
+        //   console.log(error);
+        // });
       }}
       open={isOpen}
     >
@@ -417,7 +443,7 @@ const ManageListModal: FC<MLMProps> = ({
           value={name}
           className="gap-0"
         >
-          {isLoading && <div>Loading...</div>}
+          {/* {isLoading && <div>Loading...</div>}
           {error && <div>Error: {error.message}</div>}
           {data && typeof data !== "string" && data.data && (
             <>
@@ -464,7 +490,7 @@ const ManageListModal: FC<MLMProps> = ({
                 </span>
               </Label>
             </>
-          )}
+          )} */}
         </RadioGroup>
         <Divider />
         <Button

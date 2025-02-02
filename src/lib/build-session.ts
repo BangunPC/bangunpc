@@ -1,16 +1,16 @@
-import 'server-only'
+'use server'
 import { SignJWT, jwtVerify } from 'jose'
 import { createSupaServerClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import { BuildResponseData } from '@/lib/schema'
-import { ComponentCategoryEnum, isMultiComponentCategoryEnum, MultiComponentCategoryEnum, multiComponentCategoryEnumToTable, MultiComponentPayload, SingleComponentUpdate as SingleComponentPayload } from './db'
+import { ComponentCategoryEnum, isMultiComponentCategoryEnum, multiComponentCategoryEnumToTable, ComponentPayload, SingleComponentUpdate as SingleComponentPayload } from './db'
  
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
 const BUILD_SESSION_COOKIE_NAME = 'b-session'
  
 type SessionPayload = {
-  sessionId: number;
+  sessionId: number
   expiresAt: Date
 }
 
@@ -33,6 +33,52 @@ export async function decrypt(encryptSession: string) {
   }
 }
 
+function getSingleComponentBuildPayload(
+  componentCategoryEnum: ComponentCategoryEnum,
+  componentPayload: ComponentPayload
+) {
+  // For single component
+  let payload: Partial<SingleComponentPayload> = {}
+
+  switch (componentCategoryEnum) {
+    case ComponentCategoryEnum.CPU:
+      payload = {
+        cpu_product_id: componentPayload.product_id,
+        cpu_product_detail_id: componentPayload.product_detail_id
+      }
+      break
+
+    case ComponentCategoryEnum.GPU:
+      payload = {
+        gpu_product_id: componentPayload.product_id,
+        gpu_product_detail_id: componentPayload.product_detail_id
+      }
+      break
+    
+    case ComponentCategoryEnum.Motherboard:
+      payload = {
+        motherboard_product_id: componentPayload.product_id,
+        motherboard_product_detail_id: componentPayload.product_detail_id
+      }
+      break
+    
+    case ComponentCategoryEnum.PSU:
+      payload = {
+        power_supply_product_id: componentPayload.product_id,
+        power_supply_product_detail_id: componentPayload.product_detail_id
+      }
+      break
+    
+    case ComponentCategoryEnum.Casing:
+      payload = {
+        casing_product_id: componentPayload.product_id,
+        casing_product_detail_id: componentPayload.product_detail_id
+      }
+      break
+  }
+
+  return payload
+}
 
 export async function getBuildSessionId() {
   const cookieStore = await cookies()
@@ -42,37 +88,37 @@ export async function getBuildSessionId() {
   return decryptSession.sessionId as number | undefined
 }
 
-// To create build session, suppose to only add one single or multi component
+// To create build session, must be have 1 single or multi component
 export async function createBuildSession(
-  singleComponent?: SingleComponentPayload, 
-  multiComponent?: {
-    categoryEnum: MultiComponentCategoryEnum
-    value: MultiComponentPayload
-  }
+  componentCategoryEnum: ComponentCategoryEnum,
+  componentPayload: ComponentPayload
 ) {
   const supabase = await createSupaServerClient()
+  
+  // For single component
+  const singleComponentPayload = getSingleComponentBuildPayload(componentCategoryEnum, componentPayload)
 
-  // Create new PC build with single component in database
+  // Create new PC build with single component in database + get buildId
   const { data: buildResponse, error } = await supabase
     .schema('pc_build')
     .from('builds')
-    .insert(singleComponent ?? {})
+    .insert(singleComponentPayload)
     .select('id')
     .single()
 
   if(error)
     return { error: error.message }
 
-  const buildId = buildResponse?.id  
+  const buildId = buildResponse!.id  
 
   // Create new PC build with multi component in database
-  if(multiComponent) {
+  if(isMultiComponentCategoryEnum(componentCategoryEnum)) {
     const { error } = await supabase
       .schema('pc_build')
-      .from(multiComponentCategoryEnumToTable(multiComponent.categoryEnum))
+      .from(multiComponentCategoryEnumToTable(componentCategoryEnum))
       .insert({
         build_id: buildId,
-        ...multiComponent.value
+        ...componentPayload
       })
 
     if(error)
@@ -187,10 +233,7 @@ async function getSessionBuildId() {
 
 export async function updateBuildSessionComponent(
   componentCategoryEnum: ComponentCategoryEnum, // To identify which component will be updated
-  updatedValue: {
-    productId?: number
-    productDetailId?: number
-  },
+  componentPayload: ComponentPayload,
   multiComponentId?: number // Only for multi component such monitors, memories, and internal storages
 ) {
   const supabase = await createSupaServerClient()
@@ -198,69 +241,27 @@ export async function updateBuildSessionComponent(
   
   if(!buildId)
     return { error: 'Build id is not found' }
-  
+
   // For multi component
   if (isMultiComponentCategoryEnum(componentCategoryEnum) && multiComponentId) {
-   const targetTable = multiComponentCategoryEnumToTable(componentCategoryEnum)
-   const { error: buildError } = await supabase
-     .schema('pc_build')
-     .from(targetTable)
-     .update({ 
-        product_id: updatedValue.productId, 
-        product_detail_id: updatedValue.productDetailId 
-      })
-     .eq('id', multiComponentId)
+    const targetTable = multiComponentCategoryEnumToTable(componentCategoryEnum)
 
-     if (buildError)
+    const { error: buildError } = await supabase
+      .schema('pc_build')
+      .from(targetTable)
+      .update(componentPayload)
+      .eq('id', multiComponentId)
+    
+    if (buildError)
       return { error: buildError.message }
   } else {
     // For single component
-    let targetColumnDetail: Partial<SingleComponentPayload> = {}
-
-    switch (componentCategoryEnum) {
-      case ComponentCategoryEnum.CPU:
-        targetColumnDetail = {
-          cpu_product_id: updatedValue.productId,
-          cpu_product_detail_id: updatedValue.productDetailId
-        }
-        break
-
-      case ComponentCategoryEnum.GPU:
-        targetColumnDetail = {
-          gpu_product_id: updatedValue.productId,
-          gpu_product_detail_id: updatedValue.productDetailId
-        }
-        break
-      
-      case ComponentCategoryEnum.Motherboard:
-        targetColumnDetail = {
-          motherboard_product_id: updatedValue.productId,
-          motherboard_product_detail_id: updatedValue.productDetailId
-        }
-        break
-      
-      case ComponentCategoryEnum.PSU:
-        targetColumnDetail = {
-          power_supply_product_id: updatedValue.productId,
-          power_supply_product_detail_id: updatedValue.productDetailId
-        }
-        break
-      
-      case ComponentCategoryEnum.Casing:
-        targetColumnDetail = {
-          casing_product_id: updatedValue.productId,
-          casing_product_detail_id: updatedValue.productDetailId
-        }
-        break
-
-      default:
-        return { error: "Invalid componentCategory" }
-    }
+    const singleComponentPayload = getSingleComponentBuildPayload(componentCategoryEnum, componentPayload)
 
     const { error: buildError } = await supabase
       .schema('pc_build')
       .from('builds')
-      .update(targetColumnDetail)
+      .update(singleComponentPayload)
       .eq('id', buildId)
     
     if(buildError) 
@@ -275,10 +276,54 @@ export async function updateBuildSessionComponent(
     return { error: null }
 }
 
+export async function insertBuildSessionComponent(
+  componentCategoryEnum: ComponentCategoryEnum, // To identify which component will be updated
+  componentPayload: ComponentPayload,
+) {
+  const supabase = await createSupaServerClient()
+  const buildId = await getSessionBuildId()
+  
+  if(!buildId)
+    return { error: 'Build id is not found' }
+
+  if (isMultiComponentCategoryEnum(componentCategoryEnum)) {
+    // For multi component
+    const targetTable = multiComponentCategoryEnumToTable(componentCategoryEnum)
+    const newData = { build_id: buildId, ...componentPayload }
+
+    const { error: buildError } = await supabase
+      .schema('pc_build')
+      .from(targetTable)
+      .insert(newData)
+    
+    if (buildError)
+      return { error: buildError.message }
+  } else {
+    // For single component, the component product id is updated in builds table
+    const singleComponentPayload = getSingleComponentBuildPayload(componentCategoryEnum, componentPayload)
+
+    const { error: buildError } = await supabase
+      .schema('pc_build')
+      .from('builds')
+      .update(singleComponentPayload)
+      .eq('id', buildId)
+
+    if(buildError) 
+      return { error: buildError.message }
+  }
+  
+  const { error: refreshError } = await refreshBuildSessionExpire()
+  
+  if(refreshError) 
+    return { error: refreshError }
+  else 
+    return { error: null }
+}
+
 export async function deleteBuildSessionComponent(
   componentCategoryEnum: ComponentCategoryEnum,
+  multiComponentId?: number, // Only for multi component such monitors, memories, and internal storages
   isOnlyProductDetailId: boolean = false, // If just wanna delete productDetailId without delete productId
-  multiComponentId?: number // Only for multi component such monitors, memories, and internal storages
 ) {
   const supabase = await createSupaServerClient()
   const buildId = await getSessionBuildId()

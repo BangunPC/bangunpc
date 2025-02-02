@@ -49,13 +49,15 @@ export default async function SimulasiPage(
   } else {
     return (
       <SimulasiClient>
-        <KategoriPage
-          params={Promise.resolve({
-            isCompatibilityChecked: false,
-            kategori: (searchParams.kategori!) as string,
-            noTopH: true
-          })}
-        />
+        <Suspense fallback={<LoadingComponent/>}>
+          <KategoriPage
+            params={Promise.resolve({
+              isCompatibilityChecked: false,
+              kategori: (searchParams.kategori!) as string,
+              noTopH: true
+            })}
+          />
+        </Suspense>
       </SimulasiClient>
     );
   }

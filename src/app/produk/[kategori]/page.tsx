@@ -43,7 +43,7 @@ async function fetchComponentDetails(categoryEnum: ComponentCategoryEnum) {
 type Params = Promise<{ 
   isCompatibilityChecked?: boolean
   kategori: string
-  noTopH: boolean 
+  noTopH: boolean
 }>
 // type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
  
@@ -67,7 +67,7 @@ export default async function KategoriPage(props: {
 
   return (
     <Suspense fallback={<LoadingComponent />}>
-      <KategoriClient isCompatibilityChecked={params.isCompatibilityChecked ?? false} componentDetails={componentDetails} kategori={kategori} noTopH={noTopH} />
+      <KategoriClient componentDetails={componentDetails} kategori={kategori} noTopH={noTopH}/>
     </Suspense>
   )
 }

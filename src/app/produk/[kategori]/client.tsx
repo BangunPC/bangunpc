@@ -7,6 +7,7 @@ import {
   categoryEnumToHeader,
   categoryEnumToTitle,
   categoryEnumToKey,
+  ComponentPayload,
 } from "@/lib/db";
 import { SidebarClose, SidebarOpen } from "lucide-react";
 import Image from "next/image";
@@ -16,28 +17,40 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { componentImage } from "@/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
+import { createBuildSession, getBuildSessionId, insertBuildSessionComponent } from "@/lib/build-session";
 
 export function KategoriClient({
-  isCompatibilityChecked,
   componentDetails,
   kategori,
-  noTopH,
+  noTopH
 }: {
-  isCompatibilityChecked: boolean
   componentDetails: ComponentDetail[]
   kategori: string
   noTopH: boolean
 }) {
-  const categoryEnum = categorySlugToEnum[kategori]!
+  const componentCategoryEnum = categorySlugToEnum[kategori]!
   const [hideSidebar, setHideSidebar] = useState(false)
-  useEffect (() =>{
-    console.log(componentDetails);
-    
-  },[])
+  const router = useRouter()
 
   const handleAddComponent = async (component: ComponentDetail) => {
-    // Implement component addition logic here
-    console.log("Adding component:", component)
+    const buildId = await getBuildSessionId()
+    let error: string | undefined
+
+    if (buildId) { 
+      const result = await insertBuildSessionComponent(componentCategoryEnum, { product_id: component.product_id! })
+      
+      if (result?.error)
+        error = result.error
+    } else {
+      const result = await createBuildSession(componentCategoryEnum, {product_id: component.product_id!})
+
+      if (result?.error)
+        error = result.error
+    }
+
+    if(!error) {
+      router.push("/simulasi")
+    }
   }
 
   const desktopSidebarButton = (
@@ -115,19 +128,19 @@ export function KategoriClient({
           <div className={`w-full flex-1 px-3 desktop:p-0 ${hideSidebar ? "" : "hidden"} tablet:block`}>
             <div className="flex flex-col tablet:flex-row">
               {desktopSidebarButton}
-              <Header category={categoryEnum} itemCount={componentDetails.length.toString()} />
+              <Header category={componentCategoryEnum} itemCount={componentDetails.length.toString()} />
             </div>
             <div>
               <MobileTable
                 data={componentDetails}
-                headers={categoryEnumToHeader[categoryEnum]}
+                headers={categoryEnumToHeader[componentCategoryEnum]}
                 kategori={kategori}
                 isIframe={noTopH}
                 onAddComponent={handleAddComponent}
               />
               <DesktopTable
                 data={componentDetails}
-                headers={categoryEnumToHeader[categoryEnum]}
+                headers={categoryEnumToHeader[componentCategoryEnum]}
                 kategori={kategori}
                 isIframe={noTopH}
                 onAddComponent={handleAddComponent}
@@ -272,7 +285,7 @@ const DesktopTable = ({
               <td className="cursor-default">
                 <Button
                   variant="default"
-                  onClick={() => onAddComponent(component)}
+                  onClick={async () => await onAddComponent(component)}
                   className="text-white"
                 >
                   Tambah

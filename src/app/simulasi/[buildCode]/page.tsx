@@ -2,12 +2,12 @@
 
 import { Suspense, use, useMemo } from "react";
 import useSWR from "swr";
-import { ApiPaths, fetchWithId } from "@/app/lib/api";
-import { ComponentStorageType } from "@/app/lib/storage_helper";
-import { ComponentCategoryEnum, ComponentDetail } from "@/app/lib/db";
-import { productImage } from "@/app/lib/utils";
 import { v4 as uuidv4 } from 'uuid';
-import SimulasiPage from "../page";
+// import SimulasiPage from "../page";
+import { ApiPaths, fetchWithId } from "@/lib/api";
+import { ComponentCategoryEnum, ComponentDetail } from "@/lib/db";
+import { ComponentStorageType } from "@/lib/storage_helper";
+import { productImage } from "@/lib/utils";
 
 export type CommonRakitanDataType = {
   product_id: number;

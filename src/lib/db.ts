@@ -56,7 +56,7 @@ export function multiComponentCategoryEnumToTable(componentCategoryEnum: MultiCo
 
 export type PCBuildTables = keyof Database["pc_build"]["Tables"]
 export type SingleComponentUpdate = Database["pc_build"]["Tables"]["builds"]["Update"];
-export type MultiComponentPayload = {
+export type ComponentPayload = {
   product_id: number
   product_detail_id?: number | null
 }
