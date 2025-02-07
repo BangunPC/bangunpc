@@ -53,9 +53,7 @@ import { ModeToggle } from "../ui/mode-toggle";
 import { FloatingNav } from "../ui/floating-navbar";
 import FormRegister from "../register/from-register";
 import FeedbackDialog from "./feedback-dialog";
-import { componentImage } from "@/lib/utils";
 import { SearchDialog } from "./search-dialog";
-import { SearchCommand } from "./search-command";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export const components = [
@@ -221,6 +219,21 @@ export function Navbar() {
     { name: "External Hard Drive", href: "?produk=false" },
     { name: "Thermal Paste", href: "?produk=false" },
   ];
+  const message = 
+`Halo Tim Bangun PC, saya ingin rakit PC dengan spesifikasi:
+- CPU : 
+- GPU : 
+- Motherboard: 
+- CPU Cooler:  
+- RAM: 
+- PSU: 
+- Storage: 
+
+saya berdomisili di: 
+Terima kasih.`;
+  
+  const encodedMessage = encodeURIComponent(message);
+  const rakitPCUrl = `https://wa.me/6282295561944?text=${encodedMessage}`
 
   const ProfileButton = (
     <Popover>
@@ -437,71 +450,40 @@ export function Navbar() {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className={"bg-transparent"}>
-                  Jasa
+                    Rakit PC
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="w-[160px] p-4">
-                    <Link href="/jasa" legacyBehavior >
-                      <NavigationMenuLink
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "w-full bg-transparent",
-                        )}
-                      >
-                        Jasa Rakit PC
-                      </NavigationMenuLink>
-                    </Link>
-                    <Link href="/servis" legacyBehavior >
-                      <NavigationMenuLink
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "w-full bg-transparent",
-                        )}
-                      >
-                        Jasa Servis PC
-                      </NavigationMenuLink>
-                    </Link>
-                  </ul>
+                  <div className="w-[240px] p-2">
+                    <NavigationMenuLink
+                      href="/simulasi"
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start bg-transparent",
+                      )}
+                    >
+                      Simulasi Rakit PC
+                    </NavigationMenuLink>
+                    <NavigationMenuLink
+                      href={rakitPCUrl}
+                      target="_blank"
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start bg-transparent",
+                      )}
+                    >
+                      Jasa Rakit PC
+                    </NavigationMenuLink>
+                    <NavigationMenuLink
+                      href="/rakit/budget"
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start bg-transparent",
+                      )}
+                    >
+                      Rekomendasi Rakitan
+                    </NavigationMenuLink>
+                  </div>
                 </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                  <NavigationMenuTrigger className={"bg-transparent"}>
-                      Rakit PC
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="w-[240px] p-4">
-                      <Link href="/simulasi" legacyBehavior >
-                        <NavigationMenuLink
-                          className={cn(
-                            navigationMenuTriggerStyle(),
-                            "w-full justify-start bg-transparent",
-                          )}
-                        >
-                          Simulasi Rakit PC
-                        </NavigationMenuLink>
-                      </Link>
-                      <Link href="/rakit/budget" legacyBehavior >
-                        <NavigationMenuLink
-                          className={cn(
-                            navigationMenuTriggerStyle(),
-                            "w-full justify-start bg-transparent",
-                          )}
-                        >
-                          Rekomendasi Rakitan
-                        </NavigationMenuLink>
-                      </Link>
-                      <Link href="/showcase" legacyBehavior >
-                        <NavigationMenuLink
-                          className={cn(
-                            navigationMenuTriggerStyle(),
-                            "w-full justify-start bg-transparent",
-                          )}
-                        >
-                          Showcase
-                        </NavigationMenuLink>
-                      </Link>
-                    </ul>
-                  </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/blog" legacyBehavior 
