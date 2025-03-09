@@ -17,6 +17,7 @@ import { useMobile } from "@/hooks/use-mobile"
 import { z } from "zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
+import { submitFeedback } from "@/lib/dal/feedback"
 
 interface FeedbackButtonProps {
   buttonText?: string
@@ -26,7 +27,7 @@ interface FeedbackButtonProps {
 }
 
 export function FeedbackButton({
-  buttonText = "",
+  // buttonText = "",
   buttonVariant = "outline",
   buttonSize = "icon",
   iconOnly = false,
@@ -80,8 +81,8 @@ export function FeedbackButton({
 
 // Form schema using zod
 const formSchema = z.object({
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
+  message: z.string().min(1, {
+    message: "Pesan feedback tidak boleh kosong",
   }),
 })
 
@@ -108,21 +109,25 @@ function FeedbackForm({ onSubmitSuccess, className = "" }: FeedbackFormProps) {
     try {
       setIsSubmitting(true)
       // await submitFeedback(values)
+      const { error } = await submitFeedback(values.message)
 
-      // For demo purposes, simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // Reset the form
-      form.reset()
-
-      // Show a success message with toast
-      toast("Feedback submitted", {
-        description: "Thank you for your feedback!",
-      })
-
-      // Call the success callback if provided
-      if (onSubmitSuccess) {
-        onSubmitSuccess()
+      if (error) {
+        toast("Error", {
+          description: error
+        })
+      } else {
+        // Reset the form
+        form.reset()
+  
+        // Show a success message with toast
+        toast("Feedback Terkirim", {
+          description: "Terima kasih untuk masukan yang Anda berikan 😊",
+        })
+  
+        // Call the success callback if provided
+        if (onSubmitSuccess) {
+          onSubmitSuccess()
+        }
       }
     } catch (error) {
       toast("Error", {
@@ -154,8 +159,11 @@ function FeedbackForm({ onSubmitSuccess, className = "" }: FeedbackFormProps) {
           )}
         />
 
-        <Button type="submit" className="dark:bg-white dark:hover:bg-slate-100 bg-black hover:bg-slate-900 w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Kirim Feedback"}
+        <Button 
+          variant='raw'
+          type="submit" 
+          className="dark:bg-white dark:hover:bg-slate-100 bg-black hover:bg-slate-900 w-full" disabled={isSubmitting}>
+          {isSubmitting ? "Sedang mengirim..." : "Kirim Feedback"}
         </Button>
       </form>
     </Form>

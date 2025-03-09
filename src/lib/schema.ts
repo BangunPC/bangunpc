@@ -2944,17 +2944,17 @@ export type Database = {
       feedbacks: {
         Row: {
           created_at: string
-          description: string
+          message: string
           id: number
         }
         Insert: {
           created_at?: string
-          description: string
+          message: string
           id?: number
         }
         Update: {
           created_at?: string
-          description?: string
+          message?: string
           id?: number
         }
         Relationships: []
