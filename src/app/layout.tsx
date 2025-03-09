@@ -9,6 +9,7 @@ import React, { Suspense } from "react";
 import { Navbar } from "@/components/common/navbar";
 import ProgressBarProvider from "@/components/provider/progress-bar";
 import Footer from "@/components/common/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function RootLayout({
               </div>
               <Footer />
             </div>
+            <Toaster />
           </ThemeProvider>
         </ProgressBarProvider>
       </body>

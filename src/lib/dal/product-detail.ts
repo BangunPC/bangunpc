@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import { categoryEnumToView, ComponentCategoryEnum } from "../db"
 import { createSupaServerClient } from "../supabase/server"
 
+//TODO: get product data only for page metadata such as title, description, category, etc
+
 export async function getComponentProductDetail(slug: string, categoryEnum: ComponentCategoryEnum) {
     const supabase = await createSupaServerClient();
     const componentDetailResponse = await supabase

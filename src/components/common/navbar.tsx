@@ -52,9 +52,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { ModeToggle } from "../ui/mode-toggle";
 import { FloatingNav } from "../ui/floating-navbar";
 import FormRegister from "../register/from-register";
-import FeedbackDialog from "./feedback-dialog";
 import { SearchDialog } from "./search-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { FeedbackButton } from "@/components/common/feedback";
 
 export const components = [
   {
@@ -307,11 +307,6 @@ Terima kasih.`;
         </div>
       </DialogTrigger>
       <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
-      <VisuallyHidden>
-        <DialogTitle>
-          Menu
-        </DialogTitle>
-      </VisuallyHidden>
         <FormLogin onRegisterClick={() => {
           router.push(
             "?" + createQueryString(searchParams, "register", "true")
@@ -487,12 +482,11 @@ Terima kasih.`;
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/blog" legacyBehavior 
-                
                 >
                   <NavigationMenuLink
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      "bg-transparent",
+                      "bg-transparent cursor-pointer",
                     )}
                   >
                     Blog
@@ -504,7 +498,6 @@ Terima kasih.`;
           <div className="flex flex-col justify-center items-center gap-4 tablet:flex-row tablet:justify-end">
             <SearchDialog/>
             {/* <SearchCommand/> */}
-            <FeedbackDialog />
             {user ? (
               <>{ProfileButton}</>
             ) : (
@@ -513,6 +506,8 @@ Terima kasih.`;
                 {RegisterModal}
               </>
             )}
+            
+            <FeedbackButton />
             <ModeToggle />
 
             <DropdownMenu>
@@ -524,7 +519,6 @@ Terima kasih.`;
               <DropdownMenuContent align="end" className="tablet:hidden">
                 <Link
                   href={`?${createQueryString(searchParams, "produk", "true")}`}
-                  
                 >
                   <DropdownMenuItem className="cursor-pointer p-4">
                     Produk

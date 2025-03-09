@@ -5,14 +5,35 @@ import { v_spec } from "@/lib/produk_types";
 import { productImage } from "@/lib/utils";
 import KategoriSlugClient from "./client";
 import { getComponentProductDetail } from "@/lib/dal/product-detail"
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: Promise<{ slug: string; kategori: string }>
+  // searchParams: Promise<Record<string, string | string[] | undefined>>
+}
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = (await params).slug
+ 
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || []
+ 
+  return {
+    // title: product.title,
+    openGraph: {
+      images: ['/some-specific-page-image.jpg', ...previousImages],
+    },
+  }
+}
 
 export default async function Page(
-  props: {
-    params: Promise<{ slug: string; kategori: string }>;
-    // searchParams: Promise<Record<string, string | string[] | undefined>>;
-  }
+  { params }: Props
 ) {
-  const { slug, kategori } = await props.params;
+  const { slug, kategori } = await params;
   const categoryEnum = categorySlugToEnum[kategori]!;
 
   //   const router = useRouter();

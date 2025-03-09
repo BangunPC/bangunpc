@@ -206,22 +206,22 @@ function HeroSection() {
 function CarouselSection() {
   const carousel = [
     {
-      src: "/images/image 173.png",
-      alt: "image 173",
+      src: "/images/image-173.png",
+      alt: "image-173",
       title: "One-Stop Solution for Your PC Build Needs",
       description:
         "Merakit PC menjadi mudah, tanpa ribet, dan praktis. Sesuaikan dengan kebutuhan dan budget Anda.",
     },
     {
-      src: "/images/image 173.png",
-      alt: "image 173",
+      src: "/images/image-173.png",
+      alt: "image-173",
       title: "PC Essentials For Back To School",
       description:
         "PC yang sudah terafiliasi dengan marketplace favoritmu. Temukan komponen PC yang sesuai dengan kebutuhanmu.",
     },
     {
-      src: "/images/image 173.png",
-      alt: "image 173",
+      src: "/images/image-173.png",
+      alt: "image-173",
       title: "PC Essentials For Your Gaming Setup",
       description:
         "PC yang keren dan mempunyai fitur terbaik. Temukan komponen PC yang sesuai dengan kebutuhanmu.",
