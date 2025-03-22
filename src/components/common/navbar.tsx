@@ -225,6 +225,7 @@ export function Navbar() {
 - GPU : 
 - Motherboard: 
 - CPU Cooler:  
+- Casing: 
 - RAM: 
 - PSU: 
 - Storage: 
