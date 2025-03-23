@@ -111,8 +111,8 @@ export const getMotherboard = async (
         }, 0);
 
         return (
-          (motherboard.memory_type ? motherboard.memory_type : "_") ===
-            (memoryData[0]?.memory_type ? memoryData[0].memory_type : "") &&
+          (motherboard.memory_type ?? "_") ===
+            (memoryData[0]?.memory_type ?? "") &&
           (motherboard.memory_slot ?? 0) >= memoryCount &&
           (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
           (motherboard.memory_frequency_mhz ?? 0) >=
