@@ -7,7 +7,6 @@ import {
   categoryEnumToHeader,
   categoryEnumToTitle,
   categoryEnumToKey,
-  ComponentPayload,
 } from "@/lib/db";
 import { SidebarClose, SidebarOpen } from "lucide-react";
 import Image from "next/image";
@@ -15,9 +14,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { componentImage } from "@/lib/utils";
+import { cn, componentImage } from "@/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
 import { createBuildSession, getBuildSessionId, insertBuildSessionComponent } from "@/lib/build-session";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 export function KategoriClient({
   componentDetails,
@@ -68,7 +68,7 @@ export function KategoriClient({
   const desktopSidebarButton = (
     <Button
       variant="outline"
-      className="mr-2 mt-[6px] hidden aspect-square h-10 items-center justify-center p-0 tablet:flex desktop:hidden"
+      className="mr-4 hidden aspect-square h-10 w-10 items-center justify-center p-0 tablet:flex desktop:hidden"
       onClick={() => setHideSidebar(!hideSidebar)}
     >
       {hideSidebar ? <SidebarOpen /> : <SidebarClose />}
@@ -76,90 +76,101 @@ export function KategoriClient({
   )
 
   const mobileSidebarButton = (
-    <div className="px-4">
-      <Button variant="outline" className="block w-full tablet:hidden" onClick={() => setHideSidebar(!hideSidebar)}>
-        {hideSidebar ? "Filter" : "Kembali"}
-      </Button>
-    </div>
+    <Button 
+      variant="outline" 
+      className="mb-4 w-full tablet:hidden" 
+      onClick={() => setHideSidebar(!hideSidebar)}
+    >
+      {hideSidebar ? "Filter" : "Kembali"}
+    </Button>
   )
 
   return (
-    <div>
-      <div className="py-4">
-        {mobileSidebarButton}
-        <div className="flex flex-row pt-4 tablet:pt-0">
-          <div className={`${hideSidebar ? "hidden" : "m-auto"} tablet:m-0 desktop:block`}>
-            <CatalogueSidebar 
-              price={100000}
-              totalComponents={2} 
-              isIframe={noTopH ?? false}>
-              <SidebarSection title="Price Range">
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-400">
+    <div className="container mx-auto px-4 py-6 md:py-8">
+      {mobileSidebarButton}
+      
+      <div className="flex flex-col tablet:flex-row tablet:gap-8">
+        {/* Sidebar */}
+        <aside className={`${hideSidebar ? "hidden" : "block"} w-full tablet:max-w-xs desktop:block`}>
+          <CatalogueSidebar 
+            price={100000}
+            totalComponents={2} 
+            isIframe={noTopH ?? false}
+          >
+            <SidebarSection title="Price Range">
+              <div className="flex flex-col space-y-3">
+                <div>
+                  <label htmlFor="min-price" className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Min Price
-                  </span>
-                  <div className="flex flex-row items-center overflow-clip rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
-                    <label htmlFor="min-price" className="mx-1">
+                  </label>
+                  <div className="flex items-center overflow-hidden rounded-md border border-gray-300 focus-within:ring-2 focus-within:ring-indigo-600 dark:border-gray-600">
+                    <span className="px-3 text-gray-500 dark:text-gray-400">
                       Rp
-                    </label>
+                    </span>
                     <input
                       id="min-price"
-                      className="h-10 w-full"
+                      className="h-10 w-full border-0 bg-transparent focus:outline-none dark:text-white"
                       type="number"
                       placeholder="Min Price"
                     />
                   </div>
+                </div>
 
-                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-400">
+                <div>
+                  <label htmlFor="max-price" className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Max Price
-                  </span>
-                  <div className="flex flex-row items-center overflow-clip rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
-                    <label htmlFor="max-price" className="mx-1">
+                  </label>
+                  <div className="flex items-center overflow-hidden rounded-md border border-gray-300 focus-within:ring-2 focus-within:ring-indigo-600 dark:border-gray-600">
+                    <span className="px-3 text-gray-500 dark:text-gray-400">
                       Rp
-                    </label>
+                    </span>
                     <input
                       id="max-price"
-                      className="h-10 w-full"
+                      className="h-10 w-full border-0 bg-transparent focus:outline-none dark:text-white"
                       type="number"
                       placeholder="Max Price"
                     />
                   </div>
                 </div>
-              </SidebarSection>
-              <Button
-                variant="default"
-                className="text-white"
-                onClick={() => {
-                  // TODO: Implement filter
-                }}
-              >
-                Terapkan Filter
-              </Button>
-            </CatalogueSidebar>
+              </div>
+            </SidebarSection>
+            
+            <Button
+              variant="default"
+              className="mt-4 w-full text-white"
+              onClick={() => {
+                // TODO: Implement filter
+              }}
+            >
+              Terapkan Filter
+            </Button>
+          </CatalogueSidebar>
+        </aside>
+        
+        {/* Main Content */}
+        <main className={`flex-1 ${hideSidebar ? "block" : "hidden"} tablet:block`}>
+          <div className="mb-6 flex flex-col tablet:flex-row tablet:items-center tablet:justify-between">
+            {desktopSidebarButton}
+            <Header category={componentCategoryEnum} itemCount={componentDetails.length.toString()} />
           </div>
-          <div className={`w-full flex-1 px-3 desktop:p-0 ${hideSidebar ? "" : "hidden"} tablet:block`}>
-            <div className="flex flex-col tablet:flex-row">
-              {desktopSidebarButton}
-              <Header category={componentCategoryEnum} itemCount={componentDetails.length.toString()} />
-            </div>
-            <div>
-              <MobileTable
-                data={componentDetails}
-                headers={categoryEnumToHeader[componentCategoryEnum]}
-                kategori={kategori}
-                isIframe={noTopH}
-                onAddComponent={handleAddComponent}
-              />
-              <DesktopTable
-                data={componentDetails}
-                headers={categoryEnumToHeader[componentCategoryEnum]}
-                kategori={kategori}
-                isIframe={noTopH}
-                onAddComponent={handleAddComponent}
-              />
-            </div>
+          
+          <div>
+            <MobileTable
+              data={componentDetails}
+              headers={categoryEnumToHeader[componentCategoryEnum]}
+              kategori={kategori}
+              isIframe={noTopH}
+              onAddComponent={handleAddComponent}
+            />
+            <DesktopTable
+              data={componentDetails}
+              headers={categoryEnumToHeader[componentCategoryEnum]}
+              kategori={kategori}
+              isIframe={noTopH}
+              onAddComponent={handleAddComponent}
+            />
           </div>
-        </div>
+        </main>
       </div>
     </div>
   )
@@ -184,9 +195,9 @@ const ComponentFallback = ({
     return (
       <>
         {keys.map((key, index) => (
-          <div key={index} className="flex flex-col">
-            <div className="mb-2 mt-1 text-sm">{headers[index]}</div>
-            <div className="font-semibold">{component[key] ?? "-"}</div>
+          <div key={index} className="flex flex-col p-2">
+            <div className="mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">{headers[index]}</div>
+            <div className="font-medium">{component[key] ?? "-"}</div>
           </div>
         ))}
       </>
@@ -196,7 +207,7 @@ const ComponentFallback = ({
   return (
     <>
       {keys.map((key) => (
-        <td key={key} onClick={onClick}>
+        <td key={key} onClick={onClick} className="py-4 px-3">
           {component[key] ?? "-"}
         </td>
       ))}
@@ -212,12 +223,12 @@ const Header = ({
   itemCount: string;
 }) => (
   <div className="flex flex-col">
-    <span className="text-5xl font-semibold">
+    <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">
       Pilih {categoryEnumToTitle[category]}
-    </span>
-    <span className="flex items-center gap-2 text-lg font-semibold">
-      Tersedia {itemCount} produk siap kamu pilih
-    </span>
+    </h1>
+    <p className="mt-2 text-base font-medium text-gray-600 dark:text-gray-300 sm:text-lg">
+      Tersedia <span className="font-semibold">{itemCount}</span> produk siap kamu pilih
+    </p>
   </div>
 );
 
@@ -241,73 +252,99 @@ const DesktopTable = ({
   const router = useRouter();
 
   return (
-    <table className="hidden tablet:table">
-      <thead className="sticky z-[1] text-xs backdrop-blur top-0">
-        <tr>
-          {header.map((item, index) => (
-            <th key={index}>
-              <div className="flex h-full items-end">
-                <span className="text-start">{item}</span>
-              </div>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className="h-min flex-col flex-nowrap content-start items-start justify-start gap-[3px] overflow-visible p-5">
-        <tr className="h-4"></tr>
-        {data?.map((component) => {
-          const handleRedirect = () =>
-            router.push(
-              `/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`,
+    <div className="hidden w-full overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 tablet:block">
+      <table className="w-full">
+        <thead className="sticky top-0 z-10 bg-gray-50 dark:bg-gray-800">
+          <tr>
+            {header.map((item, index) => (
+              <th key={index} className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                {item}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
+          {data?.map((component) => {
+            const handleRedirect = () =>
+              router.push(
+                `/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`,
+              );
+
+            return (
+              <tr
+                key={component.product_id}
+                className="group cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+              >
+                <td className="py-4 px-3 w-20">
+                  <Link href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}>
+                    {component.image_filenames!.length > 0 && (
+                      <div className="h-16 w-16 overflow-hidden rounded-md">
+                        <Image
+                          src={componentImage(component)}
+                          alt={`Gambar ${component.product_name}`}
+                          width={64}
+                          height={64}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    )}
+                  </Link>
+                </td>
+                <td className="py-4 px-3 font-medium" onClick={handleRedirect}>
+                  {/* {component.product_name ?? "-"} */}
+                  {/* <h3 className={
+                    cn(
+                    "text-sm font-medium text-foreground",
+                    `line-clamp-2`
+                  )}>
+                    {component.product_name ?? "-"}
+                  </h3> */}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                          <h3 className={cn(
+                            "text-sm font-medium text-foreground",
+                            `line-clamp-2`
+                          )}>
+                            {component.product_name ?? "-"}
+                          </h3>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="max-w-xs">
+                        <p>{component.product_name ?? "-"}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </td>
+
+                <ComponentFallback
+                  headers={headers}
+                  categoryEnum={categorySlugToEnum[kategori]!}
+                  component={component}
+                  isMobile={false}
+                  onClick={handleRedirect}
+                />
+
+                <td className="py-4 px-3 font-semibold" onClick={handleRedirect}>
+                  {component.lowest_price?.toLocaleString("id-ID") ?? "-"}
+                </td>
+                <td className="py-4 px-3">
+                  <Button
+                    variant="default"
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      await onAddComponent(component);
+                    }}
+                    className="w-full text-white sm:w-auto"
+                  >
+                    Tambah
+                  </Button>
+                </td>
+              </tr>
             );
-
-          return (
-            <tr
-              key={component.product_id}
-              className="h-[56px] cursor-pointer transition-transform hover:z-10 hover:scale-[1.01]"
-            >
-              <td className="w-16">
-                <Link href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}>
-                  {component.image_filenames!.length > 0 && (
-                    <Image
-                      src={componentImage(component)}
-                      alt={`Gambar ${component.product_name}`}
-                      width={64}
-                      height={64}
-                      className="aspect-square min-w-[64px]"
-                    />
-                  )}
-                </Link>
-              </td>
-              <td onClick={handleRedirect}>
-                {component.product_name ?? "-"}
-              </td>
-
-              <ComponentFallback
-                headers={headers}
-                categoryEnum={categorySlugToEnum[kategori]!}
-                component={component}
-                isMobile={false}
-                onClick={handleRedirect}
-              />
-
-              <td onClick={handleRedirect}>
-                {component.lowest_price?.toLocaleString("id-ID") ?? "-"}
-              </td>
-              <td className="cursor-default">
-                <Button
-                  variant="default"
-                  onClick={async () => await onAddComponent(component)}
-                  className="text-white"
-                >
-                  Tambah
-                </Button>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
@@ -318,46 +355,60 @@ const MobileTable = ({
   onAddComponent 
 }: TableType) => {
   return (
-    <div className="flex flex-col gap-1 transition-all duration-200 tablet:hidden">
+    <div className="space-y-4 tablet:hidden">
       {data?.map((component) => (
         <div
           key={component.product_id}
-          className="dark:texthover:bg-zinc-700 rounded-xl border bg-white p-2 shadow-lg transition-all hover:border-zinc-300 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:border-zinc-600 dark:hover:bg-zinc-700"
+          className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md transition-all dark:border-gray-700 dark:bg-gray-800"
         >
           <Link
             href={`/produk/${kategori}/${component.slug}`}
-            className="flex flex-row items-center gap-1"
+            className="block p-4"
           >
-            <div className="flex flex-1 flex-row items-center gap-2">
+            <div className="flex items-start gap-4">
               {component.image_filenames!.length > 0 && (
-                <Image
-                  src={componentImage(component)}
-                  alt={`Gambar ${component.product_name}`}
-                  width={80}
-                  height={80}
-                />
+                <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md">
+                  <Image
+                    src={componentImage(component)}
+                    alt={`Gambar ${component.product_name}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                    className="object-cover object-center transition-transform duration-300 hover:scale-105"
+                    // width={80}
+                    // height={80}
+                    // className="h-full w-full object-cover"
+                  />
+                </div>
               )}
-              <div className="flex flex-1 flex-col">
-                <span className="text-lg font-bold leading-none">
+              <div className="flex-1">
+                <h3 
+                // className="text-lg font-bold line-clamp-2"
+                className={cn(
+                              "text-sm font-medium text-foreground",
+                              `line-clamp-2`,
+                              `h-12`
+                            )}>
                   {component.product_name}
-                </span>
-                <span className="mt-2 font-bold">
+                </h3>
+                <p className="mt-2 text-base font-semibold text-gray-900 dark:text-white">
                   Rp {component.lowest_price?.toLocaleString("id-ID") ?? "-"}
-                </span>
+                </p>
+              </div>
+              <div>
+                <Button 
+                  className="text-white" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onAddComponent(component);
+                  }}
+                >
+                  Tambah
+                </Button>
               </div>
             </div>
-            <div>
-
-              {/* Client component Add component */}
-              <Button 
-                className="text-white" 
-                onClick={() => onAddComponent(component)}
-              >
-                Tambah
-              </Button>
-            </div>
           </Link>
-          <div className="grid grid-cols-3 gap-1 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-px bg-gray-200 dark:bg-gray-700 sm:grid-cols-4">
             <ComponentFallback
               headers={headers}
               categoryEnum={categorySlugToEnum[kategori]!}
