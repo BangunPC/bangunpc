@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { Suspense } from "react"
 import { categorySlugToEnum, ComponentCategoryEnum } from "@/lib/db"
 import { KategoriClient } from "./client"

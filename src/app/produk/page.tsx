@@ -1,4 +1,4 @@
-"use client";
+export const runtime = "edge";
 
 import { components } from "@/components/common/navbar";
 import { categoryEnumToSlug } from "@/lib/db";
