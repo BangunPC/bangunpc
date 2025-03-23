@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { cn, componentImage } from "@/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
 import { createBuildSession, getBuildSessionId, insertBuildSessionComponent } from "@/lib/build-session";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 export function KategoriClient({
   componentDetails,
@@ -28,9 +28,15 @@ export function KategoriClient({
   kategori: string
   noTopH: boolean
 }) {
-  const componentCategoryEnum = categorySlugToEnum[kategori]!
-  const [hideSidebar, setHideSidebar] = useState(false)
-  const router = useRouter()
+  const componentCategoryEnum = categorySlugToEnum[kategori]!;
+  const [hideSidebar, setHideSidebar] = useState(false);
+  const router = useRouter();
+  
+  const [searchQuery, setSearchQuery] = useState("");
+  // Filter components based on search query
+  const filteredComponents = componentDetails.filter((component) =>
+    component.product_name?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleInsertOrCreateSession = async (product_id: number) => {
     const buildId = await getBuildSessionId();
@@ -73,7 +79,7 @@ export function KategoriClient({
     >
       {hideSidebar ? <SidebarOpen /> : <SidebarClose />}
     </Button>
-  )
+  );
 
   const mobileSidebarButton = (
     <Button 
@@ -83,7 +89,7 @@ export function KategoriClient({
     >
       {hideSidebar ? "Filter" : "Kembali"}
     </Button>
-  )
+  );
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8">
@@ -151,19 +157,24 @@ export function KategoriClient({
         <main className={`flex-1 ${hideSidebar ? "block" : "hidden"} tablet:block`}>
           <div className="mb-6 flex flex-col tablet:flex-row tablet:items-center tablet:justify-between">
             {desktopSidebarButton}
-            <Header category={componentCategoryEnum} itemCount={componentDetails.length.toString()} />
+            <Header 
+              category={componentCategoryEnum} 
+              itemCount={filteredComponents.length.toString()} 
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+            />
           </div>
           
           <div>
             <MobileTable
-              data={componentDetails}
+              data={filteredComponents}
               headers={categoryEnumToHeader[componentCategoryEnum]}
               kategori={kategori}
               isIframe={noTopH}
               onAddComponent={handleAddComponent}
             />
             <DesktopTable
-              data={componentDetails}
+              data={filteredComponents}
               headers={categoryEnumToHeader[componentCategoryEnum]}
               kategori={kategori}
               isIframe={noTopH}
@@ -173,7 +184,7 @@ export function KategoriClient({
         </main>
       </div>
     </div>
-  )
+  );
 }
 
 const ComponentFallback = ({
@@ -218,17 +229,34 @@ const ComponentFallback = ({
 const Header = ({
   category,
   itemCount,
+  searchQuery,
+  onSearchChange,
 }: {
   category: ComponentCategoryEnum;
   itemCount: string;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
 }) => (
-  <div className="flex flex-col">
-    <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">
-      Pilih {categoryEnumToTitle[category]}
-    </h1>
-    <p className="mt-2 text-base font-medium text-gray-600 dark:text-gray-300 sm:text-lg">
-      Tersedia <span className="font-semibold">{itemCount}</span> produk siap kamu pilih
-    </p>
+  <div className="flex flex-col tablet:flex-row tablet:items-center tablet:justify-between w-full">
+    <div className="flex-1">
+      <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">
+        Pilih {categoryEnumToTitle[category]}
+      </h1>
+      <p className="mt-2 text-base font-medium text-gray-600 dark:text-gray-300 sm:text-lg">
+        Tersedia <span className="font-semibold">{itemCount}</span> produk siap kamu pilih
+      </p>
+    </div>
+
+    {/* Search Input */}
+    <div className="mt-4 tablet:mt-0 tablet:ml-4 w-full tablet:w-auto">
+      <input
+        type="text"
+        placeholder="Cari produk..."
+        value={searchQuery}
+        onChange={(e) => onSearchChange(e.target.value)}
+        className="w-full tablet:w-64 rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+      />
+    </div>
   </div>
 );
 
@@ -254,7 +282,7 @@ const DesktopTable = ({
   return (
     <div className="hidden w-full overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 tablet:block">
       <table className="w-full">
-        <thead className="sticky top-0 z-10 bg-gray-50 dark:bg-gray-800">
+        <thead className="sticky self-start top-0 z-10 bg-gray-50 dark:bg-gray-800">
           <tr>
             {header.map((item, index) => (
               <th key={index} className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
@@ -291,14 +319,6 @@ const DesktopTable = ({
                   </Link>
                 </td>
                 <td className="py-4 px-3 font-medium" onClick={handleRedirect}>
-                  {/* {component.product_name ?? "-"} */}
-                  {/* <h3 className={
-                    cn(
-                    "text-sm font-medium text-foreground",
-                    `line-clamp-2`
-                  )}>
-                    {component.product_name ?? "-"}
-                  </h3> */}
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -356,6 +376,9 @@ const MobileTable = ({
 }: TableType) => {
   return (
     <div className="space-y-4 tablet:hidden">
+      <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 py-2">
+        <h2 className="text-lg font-bold">Produk</h2>
+      </div>
       {data?.map((component) => (
         <div
           key={component.product_id}
@@ -374,20 +397,16 @@ const MobileTable = ({
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                     className="object-cover object-center transition-transform duration-300 hover:scale-105"
-                    // width={80}
-                    // height={80}
-                    // className="h-full w-full object-cover"
                   />
                 </div>
               )}
               <div className="flex-1">
                 <h3 
-                // className="text-lg font-bold line-clamp-2"
                 className={cn(
-                              "text-sm font-medium text-foreground",
-                              `line-clamp-2`,
-                              `h-12`
-                            )}>
+                  "text-sm font-medium text-foreground",
+                  `line-clamp-2`,
+                  `h-12`
+                )}>
                   {component.product_name}
                 </h3>
                 <p className="mt-2 text-base font-semibold text-gray-900 dark:text-white">

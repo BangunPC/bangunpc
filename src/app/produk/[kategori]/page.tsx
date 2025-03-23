@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { categorySlugToEnum, ComponentCategoryEnum, ComponentDetail } from "@/lib/db"
+import { categorySlugToEnum, ComponentCategoryEnum } from "@/lib/db"
 import { KategoriClient } from "./client"
 import { getMotherboard } from "@/lib/dal/component/motherboard"
 import { getCpu } from "@/lib/dal/component/cpu"
