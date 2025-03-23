@@ -3,7 +3,11 @@
  * for Docker builds.
  */
 await import("./src/env.js");
-import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev'
+// import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev'
+
+// if (process.env.NODE_ENV === 'development') {
+//   await setupDevPlatform();
+// }
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
@@ -39,9 +43,5 @@ const nextConfig = {
     ];
   },
 };
-
-if (process.env.NODE_ENV === 'development') {
-  await setupDevPlatform();
-}
 
 export default nextConfig;
