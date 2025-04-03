@@ -52,7 +52,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { ModeToggle } from "../ui/mode-toggle";
 import { FloatingNav } from "../ui/floating-navbar";
 import FormRegister from "../register/from-register";
-import { SearchDialog } from "./search-dialog";
+import { SearchDialog } from "../blog/search-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { FeedbackButton } from "@/components/common/feedback";
 

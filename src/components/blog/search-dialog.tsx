@@ -146,7 +146,7 @@ export function SearchDialog({ ...props }: DialogProps) {
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-sm font-semibold text-gray-900 truncate">
+                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white truncate">
                               {product.name}
                             </h3>
                             <p className="mt-1 text-sm text-gray-500">
