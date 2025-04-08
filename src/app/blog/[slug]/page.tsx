@@ -2,10 +2,10 @@
 
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { use, useEffect, useState } from 'react';
+import { use } from 'react';
 import { blogPosts } from '@/data/blog-posts';
-import { generateTableOfContents } from '@/utils/toc';
-import { TableOfContents } from '@/components/blog/table-of-contents';
+// import { generateTableOfContents } from '@/utils/toc';
+// import { TableOfContents } from '@/components/blog/table-of-contents';
 import { RelatedPosts } from '@/components/blog/related-posts';
 import Link from 'next/link';
 
@@ -16,35 +16,35 @@ export default function BlogPostPage(props: {
 }) {
   const params = use(props.params)
   const post = blogPosts.find((p) => p.slug === params.slug);
-  const [activeSection, setActiveSection] = useState<string>('');
+  // const [activeSection, setActiveSection] = useState<string>('');
 
   if (!post) {
     notFound();
   }
 
-  const toc = generateTableOfContents(post.content);
+  // const toc = generateTableOfContents(post.content);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: '-20% 0px -80% 0px',
-      }
-    );
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting) {
+  //           setActiveSection(entry.target.id);
+  //         }
+  //       });
+  //     },
+  //     {
+  //       rootMargin: '-20% 0px -80% 0px',
+  //     }
+  //   );
 
-    // Observe all section headings
-    document.querySelectorAll('h1, h2, h3').forEach((heading) => {
-      observer.observe(heading);
-    });
+  //   // Observe all section headings
+  //   document.querySelectorAll('h1, h2, h3').forEach((heading) => {
+  //     observer.observe(heading);
+  //   });
 
-    return () => observer.disconnect();
-  }, []);
+  //   return () => observer.disconnect();
+  // }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -64,7 +64,7 @@ export default function BlogPostPage(props: {
               d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
             />
           </svg>
-          <span>All blogs</span>
+          <span>Lihat semua</span>
         </Link>
         <header className="mb-8">
           <div className="flex items-center gap-2 mb-4">
