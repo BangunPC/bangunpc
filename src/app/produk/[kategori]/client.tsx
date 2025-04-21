@@ -92,7 +92,7 @@ export function KategoriClient({
   );
 
   return (
-    <div className="container mx-auto px-4 py-6 md:py-8">
+    <div className="container mt-16 mx-auto px-4 py-6 md:py-8">
       {mobileSidebarButton}
       
       <div className="flex flex-col tablet:flex-row tablet:gap-8">

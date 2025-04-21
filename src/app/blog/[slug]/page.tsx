@@ -47,9 +47,9 @@ export default function BlogPostPage(props: {
   // }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mt-16 mx-auto px-4 py-8">
       <article className="max-w-7xl mx-auto">
-        <Link href="/blog" className="flex items-center gap-2 mb-8 hover:text-primary dark:text-white text-black">
+        <Link href="/blog" className="flex items-center gap-2 mb-8 dark:text-white text-black hover:text-blue-600">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

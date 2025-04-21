@@ -71,9 +71,9 @@ const Footer = () => {
   ];
 
   return (
-    <div className="w-full bg-[#020617] pt-5 text-slate-100 dark:bg-navbar">
+    <div className="w-full bg-black pt-5 text-slate-100">
       <div className="mx-auto grid h-full max-w-screen-desktop gap-5 p-8 tablet:max-w-7xl tablet:grid-cols-3">
-        <div className="flex flex-col items-center gap-5 text-center">
+        <div className="flex flex-col gap-5">
           <NavbarIcon alwaysDark />
           <p className="max-w-[360px] text-sm">
             Platform yang membantumu memilih, membeli, dan merawat komponen

@@ -11,7 +11,7 @@ export default function BlogPage() {
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(blogPosts);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mt-16 mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8">Tech Blog</h1>
       <BlogSearch posts={blogPosts} onFilter={setFilteredPosts} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -19,7 +19,7 @@ export default function BlogPage() {
           <Link
             key={post.id}
             href={`/blog/${post.slug}`}
-            className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            className="group bg-white dark:bg-gray-950 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
             <div className="relative h-48 w-full">
               <Image

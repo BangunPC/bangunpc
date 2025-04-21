@@ -27,7 +27,7 @@ export function RelatedPosts({ currentPost, allPosts }: RelatedPostsProps) {
           <Link
             key={post.id}
             href={`/blog/${post.slug}`}
-            className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            className="group bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
             <div className="relative h-40 w-full">
               <Image

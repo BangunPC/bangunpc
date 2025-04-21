@@ -177,7 +177,7 @@ export function SimulasiClient({
   };
 
   return (
-    <div className="m-auto mt-1 w-full max-w-screen-desktop p-4">
+    <div className="m-auto mt-24 w-full max-w-screen-desktop p-4">
       <header className="flex text-3xl font-semibold mt-4">
         <span className="whitespace-nowrap">
           {buildCode ? "Rakitan PC" : "Simulasi Rakit PC"}

@@ -2,13 +2,15 @@
 
 import { ChevronRight, ChevronLeft, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useScroll, useTransform } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 // import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Carousel from "@/components/common/carousel";
 import CardPc from "@/components/common/card-pc";
 import { SearchCommand } from "@/components/common/search-command";
+import { useRouter } from "next/navigation";
 // import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
@@ -112,93 +114,67 @@ export default function HomePage() {
 // }
 
 function HeroSection() {
+  const ref = useRef(null);
+  const router = useRouter();
+
+  // Parallax effect setup
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+  
+  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+
   return (
     <>
-      <div className="mx-4 flex h-screen w-full flex-col items-center justify-center bg-[#f4f4f4] text-center dark:bg-gray-800 tablet:mx-0">
-        <div className="flex flex-row drop-shadow-xl">
-          <Image
-            src="/images/vector-bintang.svg"
-            alt="vector-bintang"
-            width={36}
-            height={30}
-            className="relative -left-6 top-2 hidden tablet:block"
-          />
-          <Image
-            src="/images/vector-bintang.svg"
-            alt="vector-bintang"
-            width={24}
-            height={18}
-            className="relative -left-20 top-8 hidden tablet:block"
-          />
-          <h1 className="via-52% bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% bg-clip-text text-center text-5xl font-bold leading-tight text-transparent tablet:text-6xl">
-            One-Stop Solution for <br /> Your PC Build Needs
-          </h1>
-          <Image
-            src="/images/vector-bintang.svg"
-            alt="vector-bintang"
-            width={36}
-            height={30}
-            className="relative -right-6 top-8 hidden tablet:block"
-          />
-        </div>
-        <p className="pt-8 text-lg text-gray-500 dark:text-gray-300">
-          Merakit PC menjadi mudah, tanpa ribet, dan profesional <br />
-          Sesuaikan dengan kebutuhan dan budget Anda
-        </p>
-        <div className="flex flex-row gap-4 pt-8">
-          <Link href="/rakit/budget">
-            <Button className="via-52% h-14 w-60 gap-[5px] rounded-2xl bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% text-lg dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3]">
-              <Image
-                src="/images/icon-computer.svg"
-                alt="icon-computer"
-                width={24}
-                height={24}
-                className="mr-2 text-lg"
-              />
-              Ayo Rakit Sekarang
-            </Button>
-          </Link>
-          <Button
-            variant="raw"
-            className="h-14 bg-gradient-to-r from-[#1536FC] from-0% to-[#35AEF2] to-100% bg-clip-text text-lg text-transparent"
+      <section className="relative h-screen overflow-hidden">
+        <motion.div 
+          className="absolute inset-0 bg-[url('/images/hero-background.png')] bg-center bg-no-repeat bg-cover"
+          style={{
+            y: yBg
+            // scale: 1
+          }}
+        />
+        
+        <div className="flex flex-col justify-center items-center h-full px-4 text-center text-white bg-black/45 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-full max-w-5xl px-4" // Added max-width and padding
           >
-            Temukan PC Impianmu
-            <Image
-              src="/images/arrow-down.svg"
-              alt="arrow-down"
-              width={20}
-              height={20}
-              className="ml-2"
-            />
-          </Button>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+              RAKIT PC IMPIANMU DENGAN MUDAH DAN MURAH
+            </h1>
+            <motion.p 
+              className="font-light text-sm sm:text-base md:text-lg mb-8 md:mb-12 mx-auto md:max-w-xl sm:max-w-md px-4" // Added responsive text size and horizontal padding
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              merakit PC menjadi mudah, tanpa ribet, dan profesional sesuai dengan kebutuhan dan budget Anda.
+            </motion.p>
+            <motion.div 
+              className="flex gap-3 sm:gap-4 flex-wrap justify-center"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
+              <button 
+                onClick={() => router.push("/rakit/budget")}
+                className="bg-primary hover:bg-blue-700 active:scale-95 px-4 sm:px-4 py-3 rounded text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform text-sm sm:text-base">
+                Rakit Sekarang
+              </button>
+              <button 
+              onClick={() => router.push("/simulasi")}
+              className="border-white bg-transparent border-2 text-white hover:bg-gray-100 active:scale-95 hover:text-gray-800 px-4 sm:px-4 py-3 rounded font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl transform text-sm sm:text-base">
+                Simulasi Rakit PC
+                {/* <span className="text-3xl">→</span> */}
+              </button>
+            </motion.div>
+          </motion.div>
         </div>
-        <p className="pt-16 text-lg text-gray-500 dark:text-gray-300">
-          Temukan komponen PC di marketplace favoritmu
-        </p>
-        <div className="flex flex-row gap-16 pt-8">
-          <Image
-            src="/images/logo-blibli.svg"
-            alt="logo blibli"
-            width={120}
-            height={120}
-            className="object-contain grayscale"
-          />
-          <Image
-            src="/images/logo-shopee.svg"
-            alt="logo shopee"
-            width={120}
-            height={120}
-            className="translate-y-[2px] scale-105 object-contain grayscale"
-          />
-          <Image
-            src="/images/logo-tokopedia.svg"
-            alt="logo tokopedia"
-            width={120}
-            height={120}
-            className="scale-110 object-contain grayscale"
-          />
-        </div>
-      </div>
+      </section>
     </>
   );
 }
