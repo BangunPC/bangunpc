@@ -96,7 +96,7 @@ export default async function RakitPage(
   }
 
   return (
-    <div className="min-h-screen h-min">
+    <div className="min-h-screen mt-24 h-min">
       <RakitStep step={params.step} />
       <div className="h-4" />
       <div className="m-auto mb-8 w-full max-w-screen-desktop p-4 h-max">

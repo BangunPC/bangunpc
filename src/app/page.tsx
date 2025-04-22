@@ -19,11 +19,11 @@ export default function HomePage() {
     <main className="h-full w-full">
       <HeroSection />
       <CarouselSection />
+      <CariKomponenSection />
       <PacketPersonalComputerSection />
       {/* <RakitSekarangSection /> */}
       {/* <ProdukKomponenSection /> */}
       {/* <PilihLayananSection /> */}
-      <CariKomponenSection />
       {/* <MudahMurahSection /> */}
       <SearchCommand />
     </main>
@@ -279,7 +279,7 @@ function CarouselSection() {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#f4f4f4] pb-10 text-center dark:bg-gray-800">
+    <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#f4f4f4] py-10 text-center dark:bg-gray-800">
       <div className="relative w-full">
         <ChevronLeft
           className="absolute left-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
@@ -371,7 +371,7 @@ function PacketPersonalComputerSection() {
 
   return (
     <>
-      <div className="flex w-full dark:bg-gray-800">
+      <div className="flex pt-8 w-full dark:bg-gray-800">
         <div className="mx-auto flex max-w-7xl flex-row items-center justify-center gap-10">
           <div className="flex w-2/6 flex-col justify-center gap-8">
             <h3 className="text-5xl font-bold">
@@ -548,7 +548,7 @@ function PacketPersonalComputerSection() {
 
 function CariKomponenSection() {
   const dataKomponen = [
-    { title: "Motherboard", img: "/images/image.png", color: "bg-[#549498]" },
+    { title: "Motherboard", img: "/images/produk_motherboard.svg", color: "bg-[#549498]" },
     { title: "CPU", img: "/images/image.png", color: "bg-[#39778E]" },
     { title: "Memory", img: "/images/image.png", color: "bg-[#1F6CBE]" },
     { title: "Storage", img: "/images/image.png", color: "bg-[#6683C2]" },
@@ -557,7 +557,7 @@ function CariKomponenSection() {
   return (
     <>
       <div className="mx-auto my-10 grid max-w-7xl grid-cols-5 gap-4 ">
-        <div className="relative flex h-72 flex-col justify-between overflow-hidden rounded-lg bg-[#0356F7] p-6 text-white">
+        <div className="relative flex h-72 flex-col gap-6 overflow-hidden rounded-lg bg-[#0356F7] p-6 text-white">
           {/* Persegi panjang diagonal */}
           <div className="absolute bottom-[0%] left-[0%] h-[40%] w-[200%] origin-bottom-left -rotate-45 transform bg-[#1536FC]"></div>
 
@@ -567,9 +567,8 @@ function CariKomponenSection() {
             <h2 className="text-3xl font-bold">Komponen</h2>
           </div>
 
-          <p className="relative z-10 mt-4 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <p className="relative z-10 text-sm">
+            Temukan kategori komponen PC yang Anda inginkan. Dari CPU, motherboard, RAM, hingga SSD.
           </p>
         </div>
         <div className="col-span-4 flex justify-center gap-4">

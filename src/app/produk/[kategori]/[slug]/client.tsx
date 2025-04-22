@@ -53,7 +53,7 @@ const KategoriSlugClient = ({
     }
   }, [review_urls]);
   return (
-    <div className="m-auto flex max-w-3xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
+    <div className="m-auto mt-24 flex max-w-3xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
       <div className="flex flex-col gap-2 tablet:flex-row tablet:gap-8">
         <div className="pb-0 tablet:max-w-sm tablet:pb-6">
           <div className="mx-auto aspect-square max-w-sm items-center overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40 dark:border-[#3d434e]">
