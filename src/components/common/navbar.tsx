@@ -317,7 +317,7 @@ export function Navbar() {
         {/* <Button >
         </Button> */}
       </DialogTrigger>
-      <DialogContent className="h-full overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:h-full tablet:max-h-[768px] tablet:max-w-xl tablet:p-8">
+      <DialogContent className="h-fit overflow-auto bg-slate-100 p-4 dark:bg-navbar tablet:max-w-xl tablet:p-8">
         <FormLogin onRegisterClick={() => {
           router.push(
             "?" + createQueryString(searchParams, "register", "true")

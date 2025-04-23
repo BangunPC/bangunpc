@@ -48,15 +48,14 @@ export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => 
 
   return (
     <div className="flex flex-col justify-center gap-4">
-      <div className="flex flex-col items-center mx-auto mb-8 tablet:mb-5 tablet:pt-6 ">
+      <div className="flex flex-col items-center mx-auto tablet:pt-6 ">
         <NavbarIcon />
-        <h1 className="font-medium text-slate-700 ">Masukan Akun Bangun PC Anda</h1>
       </div>
       <form className="my-2" onSubmit={handleLogin}>
         <div className="flex flex-col space-y-5">
           {/* Email */}
           <label htmlFor="email">
-            <p className="pb-2 font-medium text-slate-700">Username / Email</p>
+            <p className="pb-2 font-medium text-slate-100">Username / Email</p>
             <input
               id="email"
               name="email"
@@ -70,7 +69,7 @@ export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => 
           </label>
           {/* Password */}
           <label id="password">
-            <p className="pb-2 font-medium text-slate-700">Password</p>
+            <p className="pb-2 font-medium text-slate-100">Password</p>
             <input
               id="password"
               name="password"
@@ -87,11 +86,11 @@ export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => 
                   id="remember"
                   className="h-4 w-4 border-slate-200"
                 />
-                <span className="font-medium text-slate-700">Remember me</span>
+                <span className="font-medium text-slate-100">Remember me</span>
               </label>
             </div>
             <div>
-              <a href="#" className="font-medium text-indigo-600">
+              <a href="#" className="font-medium text-blue-500">
                 Forgot Password?
               </a>
             </div>
@@ -113,22 +112,22 @@ export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => 
             <div className="flex flex-col gap-4">
               <Button
                 type="submit"
-                className="inline-flex w-full items-center justify-center space-x-2 rounded-md border border-slate-300 bg-primary py-6 text-sm font-medium text-white hover:bg-primary/80 dark:bg-navbar hover:shadow-md"
+                className="inline-flex w-full items-center justify-center space-x-2 rounded-md bg-primary py-6 text-sm font-medium text-white hover:bg-primary/80  hover:shadow-md"
               >
-                <svg
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="mx-2 h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  stroke-width="2"
+                  strokeWidth="2"
                 >
                   <path
                     strokeLinecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
                   />
-                </svg>
+                </svg> */}
                 {loading ? <Spinner /> : "Masuk"}
               </Button>
             </div>
@@ -136,18 +135,19 @@ export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => 
           {/* google account */}
           <div>
             <Button
+            variant="secondary"
             onClick={(e) => {
               e.preventDefault(); // Prevent form submission
               void handleGoogleLogin();
             }}
-            className="flex w-full items-center justify-center space-x-2 rounded-lg border border-slate-200 py-3 text-center text-slate-700 transition duration-150 hover:border-slate-400 hover:text-slate-900 hover:shadow"
+            className="flex w-full items-center justify-center space-x-2 rounded-lg bg-white  py-6 text-center transition duration-150  hover:bg-slate-100 hover:shadow"
             >
               <img
                 src="https://www.svgrepo.com/show/355037/google.svg"
                 className="h-6 w-6"
                 alt="Google Icon"
               />
-              <span className="text-white">Masuk dengan Google</span>
+              <span className="text-black">Masuk dengan Google</span>
             </Button>
           </div>
         </div>
@@ -158,7 +158,7 @@ export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => 
         <a
           href="#"
           onClick={onRegisterClick}
-          className="inline-flex items-center space-x-1 font-medium text-indigo-600"
+          className="inline-flex items-center space-x-1 font-medium text-blue-500"
         >
           <span>Daftar sekarang</span>
           <span>

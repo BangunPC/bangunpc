@@ -205,7 +205,7 @@ const Component = ({
             </header>
             <main className="flex flex-col gap-2">
               {/* <div className="flex items-center gap-2">
-              <Shop className="fill-none stroke-black" width="24" height="24" />
+              <Shop className="fill-none strokeBlack" width="24" height="24" />
               <span className="text-lg">
                 {product_details!.length} penjual dari Tokopedia, Shopee &
                 lainnya
