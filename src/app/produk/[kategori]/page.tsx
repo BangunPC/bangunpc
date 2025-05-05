@@ -40,7 +40,7 @@ async function fetchComponentDetails(categoryEnum: ComponentCategoryEnum, limit:
     case ComponentCategoryEnum.Monitor:
       return getMonitor({}, defaultQuery)
     default:
-      return []
+      return {data: [], total: 0}
   }
 }
 
@@ -73,7 +73,9 @@ export default async function KategoriPage(props: {
   const perPage = props.searchParams?.perPage ? parseInt(props.searchParams.perPage) : 20
   const offset = (page - 1) * perPage
 
-  const { data, total } = await fetchComponentDetails(categoryEnum, perPage, offset)
+  const result = await fetchComponentDetails(categoryEnum, perPage, offset)
+  const data = 'data' in result ? result.data : []
+  const total = 'total' in result ? result.total : 0
 
   return (
     <Suspense fallback={<LoadingComponent />}>
