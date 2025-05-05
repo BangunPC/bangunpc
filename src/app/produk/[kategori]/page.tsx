@@ -13,11 +13,13 @@ import { getCasing } from "@/lib/dal/component/casing"
 import { getMonitor } from "@/lib/dal/component/monitor"
 import LoadingComponent from "@/components/common/loading"
 
-async function fetchComponentDetails(categoryEnum: ComponentCategoryEnum) {
+async function fetchComponentDetails(categoryEnum: ComponentCategoryEnum, limit: number, offset: number) {
   const defaultQuery = {
     query: "",
     min_price: 0,
     max_price: 0,
+    limit,
+    offset,
   }
 
   switch (categoryEnum) {
@@ -59,17 +61,23 @@ type Params = Promise<{
 // }
 export default async function KategoriPage(props: {
   params: Params
+  searchParams?: { page?: string; perPage?: string }
 }) {
   const params = await props.params
   const kategori = params.kategori as string
   const noTopH = params.noTopH ?? false
 
   const categoryEnum = categorySlugToEnum[kategori]!
-  const componentDetails = await fetchComponentDetails(categoryEnum)
+  // Get page and perPage from searchParams or default
+  const page = props.searchParams?.page ? parseInt(props.searchParams.page) : 1
+  const perPage = props.searchParams?.perPage ? parseInt(props.searchParams.perPage) : 20
+  const offset = (page - 1) * perPage
+
+  const componentDetails = await fetchComponentDetails(categoryEnum, perPage, offset)
 
   return (
     <Suspense fallback={<LoadingComponent />}>
-      <KategoriClient componentDetails={componentDetails} kategori={kategori} noTopH={noTopH}/>
+      <KategoriClient className="mt-0" componentDetails={componentDetails} kategori={kategori} noTopH={noTopH} page={page} perPage={perPage}/>
     </Suspense>
   )
 }

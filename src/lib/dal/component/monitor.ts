@@ -34,7 +34,7 @@ export const getMonitor = async (
     });
   }
 
-  await client_query.order("product_name", { ascending: true });
+  // await client_query.order("product_name", { ascending: true });
 
   const { data, error } = await client_query;
   const monitorData = data as ComponentDetail[];

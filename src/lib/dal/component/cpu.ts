@@ -5,29 +5,7 @@ import { CpuCompatibility, CpuFilter } from "./filter";
 
 export const getCpu = async (
   { motherboardId, psuId, gpuId, memoryIds }: CpuCompatibility,
-  {
-    query,
-    base_clock_ghz,
-    base_power_watt,
-    brand_name,
-    code_name,
-    cpu_family_id,
-    cpu_socket_id,
-    efficiency_core,
-    integrated_gpu_id,
-    min_price,
-    max_price,
-    max_clock_ghz,
-    max_memory_channel,
-    max_memory_gb,
-    max_power_watt,
-    model_line,
-    performance_core,
-    product_id,
-    product_name,
-    total_core,
-    total_thread,
-  }: CpuFilter,
+  filter: CpuFilter,
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -42,75 +20,78 @@ export const getCpu = async (
     .from("v_cpus")
     .select("*", { count: "exact" });
 
-  if (min_price) {
-    await client_query.gte("lowest_price", min_price);
+  if (filter.min_price) {
+    await client_query.gte("lowest_price", filter.min_price);
   }
-  if (max_price) {
-    await client_query.lte("lowest_price", max_price);
+  if (filter.max_price) {
+    await client_query.lte("lowest_price", filter.max_price);
   }
 
-  if (base_clock_ghz) {
-    await client_query.eq("base_clock_ghz", base_clock_ghz);
+  if (filter.base_clock_ghz) {
+    await client_query.eq("base_clock_ghz", filter.base_clock_ghz);
   }
-  if (base_power_watt) {
-    await client_query.eq("base_power_watt", base_power_watt);
+  if (filter.base_power_watt) {
+    await client_query.eq("base_power_watt", filter.base_power_watt);
   }
-  if (brand_name) {
-    await client_query.eq("brand_name", brand_name);
+  if (filter.brand_name) {
+    await client_query.eq("brand_name", filter.brand_name);
   }
-  if (code_name) {
-    await client_query.eq("code_name", code_name);
+  if (filter.code_name) {
+    await client_query.eq("code_name", filter.code_name);
   }
-  if (cpu_family_id) {
-    await client_query.eq("cpu_family_id", cpu_family_id);
+  if (filter.cpu_family_id) {
+    await client_query.eq("cpu_family_id", filter.cpu_family_id);
   }
-  if (cpu_socket_id) {
-    await client_query.eq("cpu_socket_id", cpu_socket_id);
+  if (filter.cpu_socket_id) {
+    await client_query.eq("cpu_socket_id", filter.cpu_socket_id);
   }
-  if (efficiency_core) {
-    await client_query.eq("efficiency_core", efficiency_core);
+  if (filter.efficiency_core) {
+    await client_query.eq("efficiency_core", filter.efficiency_core);
   }
-  if (integrated_gpu_id) {
-    await client_query.eq("integrated_gpu_id", integrated_gpu_id);
+  if (filter.integrated_gpu_id) {
+    await client_query.eq("integrated_gpu_id", filter.integrated_gpu_id);
   }
-  if (max_clock_ghz) {
-    await client_query.eq("max_clock_ghz", max_clock_ghz);
+  if (filter.max_clock_ghz) {
+    await client_query.eq("max_clock_ghz", filter.max_clock_ghz);
   }
-  if (max_memory_channel) {
-    await client_query.eq("max_memory_channel", max_memory_channel);
+  if (filter.max_memory_channel) {
+    await client_query.eq("max_memory_channel", filter.max_memory_channel);
   }
-  if (max_memory_gb) {
-    await client_query.eq("max_memory_gb", max_memory_gb);
+  if (filter.max_memory_gb) {
+    await client_query.eq("max_memory_gb", filter.max_memory_gb);
   }
-  if (max_power_watt) {
-    await client_query.eq("max_power_watt", max_power_watt);
+  if (filter.max_power_watt) {
+    await client_query.eq("max_power_watt", filter.max_power_watt);
   }
-  if (model_line) {
-    await client_query.eq("model_line", model_line);
+  if (filter.model_line) {
+    await client_query.eq("model_line", filter.model_line);
   }
-  if (performance_core) {
-    await client_query.eq("performance_core", performance_core);
+  if (filter.performance_core) {
+    await client_query.eq("performance_core", filter.performance_core);
   }
-  if (product_id) {
-    await client_query.eq("product_id", product_id);
+  if (filter.product_id) {
+    await client_query.eq("product_id", filter.product_id);
   }
-  if (product_name) {
-    await client_query.eq("product_name", product_name);
+  if (filter.product_name) {
+    await client_query.eq("product_name", filter.product_name);
   }
-  if (total_core) {
-    await client_query.eq("total_core", total_core);
+  if (filter.total_core) {
+    await client_query.eq("total_core", filter.total_core);
   }
-  if (total_thread) {
-    await client_query.eq("total_thread", total_thread);
+  if (filter.total_thread) {
+    await client_query.eq("total_thread", filter.total_thread);
   }
-  if (query) {
-    await client_query.textSearch("product_name", `'${query}'`, {
+  if (filter.query) {
+    await client_query.textSearch("product_name", `'${filter.query}'`, {
       type: "websearch",
       config: "english",
     });
   }
+  let start = typeof filter.offset === "number" ? filter.offset : 0;
+  let end = typeof filter.limit === "number" ? start + filter.limit - 1 : start + 19;
+  client_query.range(start, end);
 
-  await client_query.order("product_name", { ascending: true });
+  // await client_query.order("product_name", { ascending: true });
 
   // filter end
 

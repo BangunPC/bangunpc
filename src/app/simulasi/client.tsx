@@ -359,7 +359,7 @@ export function SimulasiClient({
           <DialogTrigger asChild>
             <div role="dialog" aria-modal="true" className="hidden"></div>
           </DialogTrigger>
-          <DialogContent className="inset-4 m-auto max-w-fit translate-x-0 translate-y-0 px-0 py-4">
+          <DialogContent className="inset-4 m-auto max-w-fit translate-x-0 translate-y-0 px-0">
             <VisuallyHidden>
               <DialogTitle>Menu</DialogTitle>
             </VisuallyHidden>

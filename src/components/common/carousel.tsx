@@ -20,7 +20,7 @@ const carousel = ({
   return (
     <>
       <div
-        className={`mx-4 mb-6 grid h-fit max-w-7xl grid-cols-1 items-center justify-center gap-12 rounded-xl bg-white px-12 py-8 shadow-xl tablet:mx-0 tablet:grid-cols-2 dark:bg-slate-700 ${className}`}
+        className={`mx-4 mb-6 grid h-fit max-w-7xl grid-cols-1 items-center justify-center gap-12 rounded-xl bg-white px-12 py-8 shadow-xl tablet:mx-0 tablet:grid-cols-2 dark:bg-slate-700 dark:text-white ${className}`}
       >
         <div className="col-span-1 w-full transition-opacity duration-500">
           <Image
@@ -32,10 +32,10 @@ const carousel = ({
           />
         </div>
         <div className="col-span-1 flex w-full flex-col items-center gap-10">
-          <h3 className="text-center text-5xl font-semibold text-black">
+          <h3 className="text-center text-5xl font-semibold text-black dark:text-white">
             {title}
           </h3>
-          <p className="text-lg text-gray-500">{description} </p>
+          <p className="text-base text-gray-500 dark:text-gray-300">{description} </p>
           <Button
             className="w-fit rounded-full bg-white text-lg text-primary outline outline-1 outline-primary"
             variant={"outline"}

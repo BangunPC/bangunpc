@@ -40,6 +40,8 @@ export type CpuFilter = {
   product_name?: string | null
   total_core?: number | null
   total_thread?: number | null
+  limit?: number
+  offset?: number
 }
 
 export const cpuSidebarItems = [
@@ -124,6 +126,8 @@ export type ProductFilter = {
   query?: string | null
   min_price?: number | null
   max_price?: number | null
+  limit?: number
+  offset?: number
 }
 
 export type GpuCompatibility = {

@@ -27,7 +27,7 @@ export const getPsu = async (
     });
   }
 
-  await client_query.order("product_name", { ascending: true });
+  // await client_query.order("product_name", { ascending: true });
 
   // filter end
 
