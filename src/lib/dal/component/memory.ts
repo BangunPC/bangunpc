@@ -4,7 +4,7 @@ import { MemoryCompatibility, ProductFilter } from "./filter";
 
 export const getMemory = async (
   { memories, motherboardId }: MemoryCompatibility,
-  { query, min_price, max_price }: ProductFilter,
+  { query, min_price, max_price, offset, limit }: ProductFilter,
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -32,17 +32,21 @@ export const getMemory = async (
     });
   }
 
+  const start = typeof offset === "number" ? offset : 0;
+  const end = typeof limit === "number" ? start + limit - 1 : start + 19;
+  client_query.range(start, end);
+
   // await client_query.order("product_name", { ascending: true });
 
   // filter end
 
-  const { data: memoryData, error } = await client_query;
+  const { data, count, error } = await client_query;
 
-  if (!memoryData) {
+  if (!data) {
     throw new Error("Memory data is null");
   }
 
-  let filteredData = memoryData;
+  let filteredData = data;
 
   // compatibility start
 
@@ -107,5 +111,5 @@ export const getMemory = async (
     return error;
   }
 
-  return filteredData;
+  return { data: filteredData, total: count ?? 0 };
 };

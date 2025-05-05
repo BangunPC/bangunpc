@@ -33,15 +33,15 @@ export const getMotherboard = async (
     });
   }
 
-  let start = typeof offset === "number" ? offset : 0;
-  let end = typeof limit === "number" ? start + limit - 1 : start + 19;
+  const start = typeof offset === "number" ? offset : 0;
+  const end = typeof limit === "number" ? start + limit - 1 : start + 19;
   client_query.range(start, end);
 
   // await client_query.order("product_name", { ascending: true });
 
   // filter end
 
-  const { data, error } = await client_query;
+  const { data, count, error } = await client_query;
   const motherboardData = data as ComponentDetail[];
 
   if (!motherboardData) {
@@ -132,48 +132,5 @@ export const getMotherboard = async (
 
   // compatibility end
 
-  return filteredData;
+  return { data: filteredData, total: count ?? 0 };
 };
-
-export async function getMotherboardDistinctValues(column: string) {
-  const supabase = await createSupaServerClient();
-  if (!supabase) throw new Error("Supabase client is null");
-
-  // Check if column is numeric by sampling one row
-  const { data: sample } = await supabase
-    .schema("product")
-    .from("v_motherboards")
-    .select(column)
-    .limit(1);
-  if (!sample || sample.length === 0) return [];
-  const isNumber = typeof sample?.[0]?.[column as keyof typeof sample[0]] === "number";
-
-  if (isNumber) {
-    // Get min and max
-    const { data: minData } = await supabase
-      .schema("product")
-      .from("v_motherboards")
-      .select(`${column}`)
-      .order(column, { ascending: true })
-      .limit(1);
-    const { data: maxData } = await supabase
-      .schema("product")
-      .from("v_motherboards")
-      .select(`${column}`)
-      .order(column, { ascending: false })
-      .limit(1);
-    return {
-      min: minData?.[0]?.[column as keyof typeof sample[0]] ?? 0,
-      max: maxData?.[0]?.[column as keyof typeof sample[0]] ?? 0,
-    };
-  } else {
-    // Get distinct values
-    const { data } = await supabase
-      .schema("product")
-      .from("v_motherboards")
-      .select(column)
-      .neq(column, null);
-    const unique = Array.from(new Set((data ?? []).map((row: any) => row[column])));
-    return unique;
-  }
-}

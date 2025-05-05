@@ -73,11 +73,11 @@ export default async function KategoriPage(props: {
   const perPage = props.searchParams?.perPage ? parseInt(props.searchParams.perPage) : 20
   const offset = (page - 1) * perPage
 
-  const componentDetails = await fetchComponentDetails(categoryEnum, perPage, offset)
+  const { data, total } = await fetchComponentDetails(categoryEnum, perPage, offset)
 
   return (
     <Suspense fallback={<LoadingComponent />}>
-      <KategoriClient className="mt-0" componentDetails={componentDetails} kategori={kategori} noTopH={noTopH} page={page} perPage={perPage}/>
+      <KategoriClient className="mt-0" componentDetails={data} kategori={kategori} noTopH={noTopH} page={page} perPage={perPage} total={total}/>
     </Suspense>
   )
 }

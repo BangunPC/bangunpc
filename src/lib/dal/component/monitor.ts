@@ -6,7 +6,7 @@ import { MonitorCompatibility, ProductFilter } from "./filter";
 //! Not Done yet, need to fix
 export const getMonitor = async (
   { gpuId,motherboardId, monitorIds }: MonitorCompatibility,
-  { query, min_price, max_price }: ProductFilter,
+  { query, min_price, max_price, offset, limit }: ProductFilter,
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -34,16 +34,20 @@ export const getMonitor = async (
     });
   }
 
+  const start = typeof offset === "number" ? offset : 0;
+  const end = typeof limit === "number" ? start + limit - 1 : start + 19;
+  client_query.range(start, end);
+
   // await client_query.order("product_name", { ascending: true });
 
-  const { data, error } = await client_query;
+  const { data, count, error } = await client_query;
   const monitorData = data as ComponentDetail[];
 
   if (!monitorData) {
     throw new Error("Motherboard data is null");
   }
 
-  const filteredData = monitorData as ComponentView["v_monitors"][];
+  const filteredData = data as ComponentView["v_monitors"][];
 
   // compatibility start
   // let hdmiSlot = 0
@@ -87,5 +91,5 @@ export const getMonitor = async (
 
   // compatibility end
 
-  return filteredData;
+  return { data: filteredData, total: count ?? 0 };
 };

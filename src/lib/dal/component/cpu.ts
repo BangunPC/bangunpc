@@ -1,6 +1,5 @@
 import { createSupaServerClient } from "@/lib/supabase/server";
 import { ComponentDetail, ComponentView } from "../../db";
-import { createClient } from "../../supabase/client";
 import { CpuCompatibility, CpuFilter } from "./filter";
 
 export const getCpu = async (
@@ -95,7 +94,7 @@ export const getCpu = async (
 
   // filter end
 
-  const { data, error } = await client_query;
+  const { data, count, error } = await client_query;
   const cpuData = data as ComponentDetail[]
 
   if (!cpuData) {
@@ -226,5 +225,5 @@ export const getCpu = async (
 
   // compatibility end
 
-  return filteredData;
+  return { data: filteredData, total: count ?? 0 };
 };

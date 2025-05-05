@@ -3,7 +3,7 @@ import { CasingCompatibility, ProductFilter } from "./filter";
 
 export const getCasing = async (
   { gpuId, motherboardId }: CasingCompatibility,
-  { query, min_price, max_price }: ProductFilter,
+  { query, min_price, max_price, offset, limit }: ProductFilter,
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -32,18 +32,22 @@ export const getCasing = async (
     });
   }
 
+  const start = typeof offset === "number" ? offset : 0;
+  const end = typeof limit === "number" ? start + limit - 1 : start + 19;
+  client_query.range(start, end);
+
   await client_query.order("product_name", { ascending: true });
 
   // filter end
 
-  const { data: memoryData, error } = await client_query;
+  const { data, count, error } = await client_query;
 
-  if (!memoryData) {
+  if (!data) {
     console.log("ERROR! DATA NULL");
     throw new Error("Casing data is null");
   }
 
-  let filteredData = memoryData;
+  let filteredData = data;
 
   // compatibility start
 
@@ -91,5 +95,5 @@ export const getCasing = async (
     return error;
   }
 
-  return filteredData;
+  return { data: filteredData, total: count ?? 0 };
 };

@@ -3,7 +3,7 @@ import { PsuCompatibility, ProductFilter } from "./filter";
 
 export const getPsu = async (
   { cpuId, gpuId, memories, motherboardId, storages }: PsuCompatibility,
-  { query, min_price, max_price }: ProductFilter,
+  { query, min_price, max_price, offset, limit }: ProductFilter,
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -27,17 +27,21 @@ export const getPsu = async (
     });
   }
 
+  const start = typeof offset === "number" ? offset : 0;
+  const end = typeof limit === "number" ? start + limit - 1 : start + 19;
+  client_query.range(start, end);
+
   // await client_query.order("product_name", { ascending: true });
 
   // filter end
 
-  const { data: psuData, error } = await client_query;
+  const { data, count, error } = await client_query;
 
-  if (!psuData) {
+  if (!data) {
     throw new Error("PSU data is null");
   }
 
-  let filteredData = psuData;
+  let filteredData = data;
 
   // compatibility start
 
@@ -169,5 +173,5 @@ export const getPsu = async (
     return error;
   }
 
-  return filteredData;
+  return { data: filteredData, total: count ?? 0 };
 };
