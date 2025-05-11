@@ -134,3 +134,49 @@ export const getMotherboard = async (
 
   return { data: filteredData, total: count ?? 0 };
 };
+
+// export const getMotherboardByName = async (
+//   { name, limit, offset }: { name: string; limit?: number; offset?: number },
+// ) => {
+//   const supabase = await createSupaServerClient()
+  
+//   if (!supabase) {
+//     throw new Error("Supabase client is null")
+//   }
+
+//   // filter start
+//   const client_query = supabase
+//     .schema("product")
+//     .from("v_motherboards")
+//     .select("*", { count: "exact" })
+
+//   if (min_price) {
+//     await client_query.gte("lowest_price", min_price);
+//   }
+//   if (max_price) {
+//     await client_query.lte("lowest_price", max_price);
+//   }
+//   if (query) {
+//     await client_query.textSearch("product_name", `'${query}'`, {
+//       type: "websearch",
+//       config: "english",
+//     });
+//   }
+
+//   const start = typeof offset === "number" ? offset : 0;
+//   const end = typeof limit === "number" ? start + limit - 1 : start + 19;
+//   client_query.range(start, end);
+
+//   // await client_query.order("product_name", { ascending: true });
+
+//   // filter end
+
+//   const { data, count, error } = await client_query;
+  
+//   if (!data) {
+//     throw new Error("Motherboard data is null");
+//   }
+
+//   return { data, total: count ?? 0 };
+// }
+

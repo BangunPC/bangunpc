@@ -132,12 +132,12 @@ const KategoriSlugClient = ({
               </Link>
             </span>
             <div className="flex flex-row gap-2">
-              <Button
+              {/* <Button
                 variant="success"
                 className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
               >
                 Beli Sekarang
-              </Button>
+              </Button> */}
               <Button
                 variant="default"
                 className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
