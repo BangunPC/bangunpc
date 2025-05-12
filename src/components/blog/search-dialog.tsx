@@ -153,7 +153,7 @@ export function SearchDialog({ ...props }: DialogProps) {
                               {product.category_name}
                             </p>
                             {/* Price - visible on mobile only */}
-                            <p className="mt-1 text-sm font-medium text-gray-900 md:hidden">
+                            <p className="mt-1 text-sm font-medium text-white md:hidden">
                               Rp {product.lowest_price?.toLocaleString('id-ID')}
                             </p>
                           </div>
@@ -161,7 +161,7 @@ export function SearchDialog({ ...props }: DialogProps) {
         
                         {/* Price column - visible on md and up */}
                         <div className="hidden md:block w-32 text-right">
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-sm font-medium text-white">
                             Rp {product.lowest_price?.toLocaleString('id-ID')}
                           </p>
                         </div>
