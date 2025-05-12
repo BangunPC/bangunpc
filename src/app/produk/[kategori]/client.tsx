@@ -363,7 +363,7 @@ const DesktopTable = ({
             return (
               <tr
                 key={component.product_id}
-                className="group cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="group cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
               >
                 <td className="py-4 px-3 w-20">
                   <TooltipProvider delayDuration={100}>
@@ -371,31 +371,29 @@ const DesktopTable = ({
                       <TooltipTrigger asChild>
                         <Link href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}>
                           {component.image_filenames!.length > 0 && (
-                            <div className="h-16 w-16 overflow-hidden rounded-md bg-white">
-                              <div className="h-full w-full bg-white flex items-center justify-center">
+                            <div className="h-16 w-16 overflow-hidden rounded-md ">
+                              <div className="h-full w-full flex items-center justify-center bg-white">
                                 <Image
                                   src={componentImage(component)}
                                   alt={`Gambar ${component.product_name}`}
                                   width={64}
                                   height={64}
                                   className="h-full w-full object-contain p-1"
-                                  style={{ background: 'white' }}
                                 />
                               </div>
                             </div>
                           )}
                         </Link>
                       </TooltipTrigger>
-                      <TooltipContent side="right" className="p-0 border-none bg-transparent shadow-none">
-                        <div className="relative w-64 h-64 rounded-md overflow-hidden bg-white">
-                          <div className="absolute inset-0 bg-white flex items-center justify-center">
+                      <TooltipContent side="right" className="p-0 border-none shadow-none ml-6">
+                        <div className="relative w-64 h-64 rounded-md overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center bg-white">
                             <Image
                               src={componentImage(component)}
                               alt={`Preview ${component.product_name}`}
                               width={256}
                               height={256}
                               className="object-contain p-2"
-                              style={{ background: 'white' }}
                             />
                           </div>
                         </div>
