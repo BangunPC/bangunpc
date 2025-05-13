@@ -23,23 +23,27 @@ const validatePerPage = (value: string | undefined) => {
   return options.includes(num) ? num : 20;
 };
 
-const validateSearchQuery = (value: unknown): string => {
-  return String(value ?? '').slice(0, 100);
+const validateSearchQuery = (value: string | undefined): string => {
+  if (value === null || value === undefined) {
+    return '';
+  }
+  
+  return String(value).slice(0, 100);
 };
 
 
 async function fetchComponentDetails(
   categoryEnum: ComponentCategoryEnum, 
-  limit: number, 
-  offset: number, 
+  limit: number = 20, 
+  offset: number = 1, 
   query: string = "",
   minPrice?: number,
   maxPrice?: number
 ) {
   const defaultQuery = {
     product_name: query,
-    min_price: minPrice || 0,
-    max_price: maxPrice || 0,
+    min_price: minPrice ?? 0,
+    max_price: maxPrice ?? 0,
     limit,
     offset,
   }
@@ -66,15 +70,15 @@ async function fetchComponentDetails(
   }
 }
 
-type Params = Promise<{ 
-  isCompatibilityChecked?: boolean
-  kategori: string
-  noTopH: boolean
-}>
+type Params = {
+  isCompatibilityChecked?: boolean;
+  kategori: string;
+  noTopH: boolean;
+};
 
 export default async function KategoriPage(props: {
-  params: Params
-  searchParams?: { page?: string; perPage?: string; q?: string }
+  params: Promise<Params>
+  searchParams?: Promise<{ page?: string; perPage?: string; q?: string }>
 }) {
   const params = await props.params
   const searchParams = await props.searchParams ?? {}

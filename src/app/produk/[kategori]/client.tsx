@@ -93,7 +93,7 @@ export function KategoriClient({
   useEffect(() => {
     const handleUrlChange = () => {
       const params = new URLSearchParams(window.location.search);
-      const newSearch = params.get('q') || '';
+      const newSearch = params.get('q') ?? '';
       // const newPage = Number(params.get('page')) || 1;
       // const newPerPage = Number(params.get('perPage')) || 20;
       const newMinPrice = params.get('minPrice') ? Number(params.get('minPrice')) : undefined;
@@ -215,7 +215,7 @@ export function KategoriClient({
                     </span>
                     <input
                       id="min-price"
-                      value={minPrice || ''}
+                      value={minPrice ?? ''}
                       onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : undefined)}
                       className="h-10 w-full border-0 bg-transparent focus:outline-none dark:text-white"
                       type="number"
@@ -234,7 +234,7 @@ export function KategoriClient({
                     </span>
                     <input
                       id="max-price"
-                      value={maxPrice || ''}
+                      value={maxPrice ?? ''}
                       onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : undefined)}
                       className="h-10 w-full border-0 bg-transparent focus:outline-none dark:text-white"
                       type="number"

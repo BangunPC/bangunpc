@@ -44,7 +44,7 @@ const KategoriSlugClient = ({
       const processedUrls = review_urls?.map((url) => {
         try {
           return `https://www.youtube.com/embed${new URL(url).pathname}`;
-        } catch (error) {
+        } catch {
           return '';
         }
       }).filter(Boolean);
