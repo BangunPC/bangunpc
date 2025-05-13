@@ -63,25 +63,31 @@ export function KategoriClient({
     
     if (debouncedSearchQuery) {
       params.set('q', debouncedSearchQuery);
+      // Always reset to page 1 when search query changes
       params.set('page', '1');
+    } else {
+      // Only keep page if not changing search
+      if (page > 1) {
+        params.set('page', page.toString());
+      }
     }
     
     if (debouncedMinPrice) {
       params.set('minPrice', debouncedMinPrice.toString());
+      params.set('page', '1');
     }
     if (debouncedMaxPrice) {
       params.set('maxPrice', debouncedMaxPrice.toString());
+      params.set('page', '1');
     }
     
-    if (page > 1) {
-      params.set('page', page.toString());
-    }
     if (perPage !== 20) {
       params.set('perPage', perPage.toString());
     }
     
     router.replace(`?${params.toString()}`, { scroll: false });
   }, [debouncedSearchQuery, debouncedMinPrice, debouncedMaxPrice, page, perPage, router]);
+
 
   // Handle browser navigation (back/forward)
   useEffect(() => {
@@ -104,6 +110,7 @@ export function KategoriClient({
 
   // Pagination state
   const totalPages = Math.max(1, Math.ceil(total / perPage));
+  const currentPage = Math.min(page, totalPages); // Ensure page doesn't exceed tota
   const rowsPerPageOptions = [10, 20, 30, 40, 50];
 
   // Handle page change
@@ -292,16 +299,16 @@ export function KategoriClient({
               </div>
               <div className="flex items-center gap-2">
                 <span>Page {page} of {totalPages}</span>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(1)} disabled={page === 1}>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
                   &#171;
                 </Button>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                   &#60;
                 </Button>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
                   &#62;
                 </Button>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(totalPages)} disabled={page === totalPages}>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}>
                   &#187;
                 </Button>
               </div>
