@@ -1,5 +1,3 @@
-// export const runtime = "edge";
-
 import { Suspense } from "react"
 import { categorySlugToEnum, ComponentCategoryEnum } from "@/lib/db"
 import { KategoriClient } from "./client"
@@ -13,11 +11,35 @@ import { getCasing } from "@/lib/dal/component/casing"
 import { getMonitor } from "@/lib/dal/component/monitor"
 import LoadingComponent from "@/components/common/loading"
 
-async function fetchComponentDetails(categoryEnum: ComponentCategoryEnum, limit: number, offset: number) {
+// Secure parameter validation
+const validatePage = (value: string | undefined) => {
+  const num = Number(value);
+  return Number.isInteger(num) && num >= 1 ? num : 1;
+};
+
+const validatePerPage = (value: string | undefined) => {
+  const num = Number(value);
+  const options = [10, 20, 30, 40, 50];
+  return options.includes(num) ? num : 20;
+};
+
+const validateSearchQuery = (value: unknown): string => {
+  return String(value ?? '').slice(0, 100);
+};
+
+
+async function fetchComponentDetails(
+  categoryEnum: ComponentCategoryEnum, 
+  limit: number, 
+  offset: number, 
+  query: string = "",
+  minPrice?: number,
+  maxPrice?: number
+) {
   const defaultQuery = {
-    query: "",
-    min_price: 0,
-    max_price: 0,
+    product_name: query,
+    min_price: minPrice || 0,
+    max_price: maxPrice || 0,
     limit,
     offset,
   }
@@ -49,38 +71,52 @@ type Params = Promise<{
   kategori: string
   noTopH: boolean
 }>
-// type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
- 
-// export async function generateMetadata(props: {
-//   params: Params
-//   searchParams: SearchParams
-// }) {
-//   const params = await props.params
-//   const isCompatibilityChecked = params.isCompatibilityChecked
-//   const noTopH = params.noTopH ?? false
-// }
+
 export default async function KategoriPage(props: {
   params: Params
-  searchParams?: { page?: string; perPage?: string }
+  searchParams?: { page?: string; perPage?: string; q?: string }
 }) {
   const params = await props.params
+  const searchParams = await props.searchParams ?? {}
   const kategori = params.kategori as string
   const noTopH = params.noTopH ?? false
 
-  const categoryEnum = categorySlugToEnum[kategori]!
-  // Get page and perPage from searchParams or default
-  const page = props.searchParams?.page ? parseInt(props.searchParams.page) : 1
-  const perPage = props.searchParams?.perPage ? parseInt(props.searchParams.perPage) : 20
-  const offset = (page - 1) * perPage
+  // Validate all input parameters
+  const page = validatePage(searchParams.page);
+  const perPage = validatePerPage(searchParams.perPage);
+  const query = validateSearchQuery(searchParams.q);
+  // const minPrice = searchParams.minPrice ? Number(searchParams.minPrice) : undefined;
+  // const maxPrice = searchParams.maxPrice ? Number(searchParams.maxPrice) : undefined;
+  
+  const categoryEnum = categorySlugToEnum[kategori]!;
+  const offset = (page - 1) * perPage;
 
-  const result = await fetchComponentDetails(categoryEnum, perPage, offset)
-  const data = 'data' in result ? result.data : []
-  const total = 'total' in result ? result.total : 0
+  const result = await fetchComponentDetails(
+    categoryEnum, 
+    perPage, 
+    offset, 
+    query,
+    // minPrice,
+    // maxPrice
+  );
+
+  const data = 'data' in result ? result.data : [];
+  const total = 'total' in result ? result.total : 0;
 
   return (
     <Suspense fallback={<LoadingComponent />}>
-      <KategoriClient className="mt-0" componentDetails={data} kategori={kategori} noTopH={noTopH} page={page} perPage={perPage} total={total}/>
+      <KategoriClient 
+        className="mt-0" 
+        componentDetails={data} 
+        kategori={kategori} 
+        noTopH={noTopH} 
+        page={page} 
+        perPage={perPage} 
+        total={total}
+        initialSearch={query}
+        // initialMinPrice={minPrice}
+        // initialMaxPrice={maxPrice}
+      />
     </Suspense>
   )
 }
-

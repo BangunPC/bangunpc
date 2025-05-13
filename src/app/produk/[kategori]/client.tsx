@@ -11,8 +11,8 @@ import {
 import { SidebarClose, SidebarOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn, componentImage } from "@/lib/utils";
 import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
@@ -29,6 +29,9 @@ export function KategoriClient({
   page = 1,
   perPage = 20,
   total = 0,
+  initialSearch = '',
+  initialMinPrice,
+  initialMaxPrice,
 }: {
   className?: string
   componentDetails: ComponentDetail[]
@@ -37,36 +40,95 @@ export function KategoriClient({
   page?: number
   perPage?: number
   total?: number
+  initialSearch?: string
+  initialMinPrice?: number
+  initialMaxPrice?: number
 }) {
   const componentCategoryEnum = categorySlugToEnum[kategori]!;
-  const [hideSidebar, setHideSidebar] = useState(false);
   const router = useRouter();
+  // const searchParams = useSearchParams();
   
-  const [searchQuery, setSearchQuery] = useState("");
-  const debouncedSearchQuery = useDebounce(searchQuery, 500); // 300ms delay
+  const [hideSidebar, setHideSidebar] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
+  const [minPrice, setMinPrice] = useState<number | undefined>(initialMinPrice);
+  const [maxPrice, setMaxPrice] = useState<number | undefined>(initialMaxPrice);
+  
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
+  const debouncedMinPrice = useDebounce(minPrice, 500);
+  const debouncedMaxPrice = useDebounce(maxPrice, 500);
 
-  // Remove client-side filtering and pagination
-  // const filteredComponents = componentDetails.filter((component) =>
-  //   component.product_name?.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
-  // );
+  // Combined URL update effect
+  useEffect(() => {
+    const params = new URLSearchParams();
+    
+    if (debouncedSearchQuery) {
+      params.set('q', debouncedSearchQuery);
+      params.set('page', '1');
+    }
+    
+    if (debouncedMinPrice) {
+      params.set('minPrice', debouncedMinPrice.toString());
+    }
+    if (debouncedMaxPrice) {
+      params.set('maxPrice', debouncedMaxPrice.toString());
+    }
+    
+    if (page > 1) {
+      params.set('page', page.toString());
+    }
+    if (perPage !== 20) {
+      params.set('perPage', perPage.toString());
+    }
+    
+    router.replace(`?${params.toString()}`, { scroll: false });
+  }, [debouncedSearchQuery, debouncedMinPrice, debouncedMaxPrice, page, perPage, router]);
 
-  // Pagination state is controlled by props
-  const currentPage = page;
-  const rowsPerPage = perPage;
+  // Handle browser navigation (back/forward)
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const params = new URLSearchParams(window.location.search);
+      const newSearch = params.get('q') || '';
+      // const newPage = Number(params.get('page')) || 1;
+      // const newPerPage = Number(params.get('perPage')) || 20;
+      const newMinPrice = params.get('minPrice') ? Number(params.get('minPrice')) : undefined;
+      const newMaxPrice = params.get('maxPrice') ? Number(params.get('maxPrice')) : undefined;
+
+      if (newSearch !== searchQuery) setSearchQuery(newSearch);
+      if (newMinPrice !== minPrice) setMinPrice(newMinPrice);
+      if (newMaxPrice !== maxPrice) setMaxPrice(newMaxPrice);
+    };
+
+    window.addEventListener('popstate', handleUrlChange);
+    return () => window.removeEventListener('popstate', handleUrlChange);
+  }, [searchQuery, minPrice, maxPrice]);
+
+  // Pagination state
+  const totalPages = Math.max(1, Math.ceil(total / perPage));
   const rowsPerPageOptions = [10, 20, 30, 40, 50];
-  const totalRows = total;
-  const totalPages = Math.max(1, Math.ceil(totalRows / rowsPerPage));
 
   // Handle page change
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
-    router.push(`?page=${newPage}&perPage=${rowsPerPage}`);
+    const params = new URLSearchParams(window.location.search);
+    params.set('page', newPage.toString());
+    router.push(`?${params.toString()}`);
   };
 
   // Handle rows per page change
   const handleRowsPerPageChange = (value: string) => {
     const newPerPage = Number(value);
-    router.push(`?page=1&perPage=${newPerPage}`);
+    const params = new URLSearchParams(window.location.search);
+    params.set('perPage', newPerPage.toString());
+    params.set('page', '1');
+    router.push(`?${params.toString()}`);
+  };
+
+  const handleApplyFilters = () => {
+    const params = new URLSearchParams(window.location.search);
+    if (minPrice) params.set('minPrice', minPrice.toString());
+    if (maxPrice) params.set('maxPrice', maxPrice.toString());
+    params.set('page', '1');
+    router.push(`?${params.toString()}`);
   };
 
   const handleInsertOrCreateSession = async (product_id: number) => {
@@ -146,6 +208,8 @@ export function KategoriClient({
                     </span>
                     <input
                       id="min-price"
+                      value={minPrice || ''}
+                      onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : undefined)}
                       className="h-10 w-full border-0 bg-transparent focus:outline-none dark:text-white"
                       type="number"
                       placeholder="Min Price"
@@ -163,6 +227,8 @@ export function KategoriClient({
                     </span>
                     <input
                       id="max-price"
+                      value={maxPrice || ''}
+                      onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : undefined)}
                       className="h-10 w-full border-0 bg-transparent focus:outline-none dark:text-white"
                       type="number"
                       placeholder="Max Price"
@@ -175,9 +241,7 @@ export function KategoriClient({
             <Button
               variant="default"
               className="mt-4 w-full text-white"
-              onClick={() => {
-                // TODO: Implement filter
-              }}
+              onClick={handleApplyFilters}
             >
               Terapkan Filter
             </Button>
@@ -190,7 +254,7 @@ export function KategoriClient({
             {desktopSidebarButton}
             <Header 
               category={componentCategoryEnum} 
-              itemCount={totalRows.toString()} 
+              itemCount={total.toString()} 
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
             />
@@ -215,7 +279,7 @@ export function KategoriClient({
             <div className="flex flex-col tablet:flex-row tablet:items-center tablet:justify-between mt-4 gap-2">
               <div className="flex items-center gap-2">
                 <span>Per page</span>
-                <Select value={rowsPerPage.toString()} onValueChange={handleRowsPerPageChange}>
+                <Select value={perPage.toString()} onValueChange={handleRowsPerPageChange}>
                   <SelectTrigger className="w-20">
                     <SelectValue />
                   </SelectTrigger>
@@ -227,17 +291,17 @@ export function KategoriClient({
                 </Select>
               </div>
               <div className="flex items-center gap-2">
-                <span>Page {currentPage} of {totalPages}</span>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
+                <span>Page {page} of {totalPages}</span>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(1)} disabled={page === 1}>
                   &#171;
                 </Button>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
                   &#60;
                 </Button>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
                   &#62;
                 </Button>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(totalPages)} disabled={page === totalPages}>
                   &#187;
                 </Button>
               </div>

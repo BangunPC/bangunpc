@@ -6,7 +6,7 @@ import { MotherboardCompatibility, ProductFilter } from "./filter";
 
 export const getMotherboard = async (
   { casingId, cpuId, memories }: MotherboardCompatibility,
-  { query, min_price, max_price, limit, offset }: ProductFilter,
+  { product_name, min_price, max_price, limit, offset }: ProductFilter,
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -26,11 +26,13 @@ export const getMotherboard = async (
   if (max_price) {
     await client_query.lte("lowest_price", max_price);
   }
-  if (query) {
-    await client_query.textSearch("product_name", `'${query}'`, {
-      type: "websearch",
-      config: "english",
-    });
+  if (product_name) {
+    offset = 0;
+    await client_query.ilike("product_name", `%${product_name}%`)
+    // await client_query.textSearch("product_name", `'${product_name}'`, {
+    //   type: "websearch",
+    //   config: "english",
+    // });
   }
 
   const start = typeof offset === "number" ? offset : 0;
@@ -135,48 +137,27 @@ export const getMotherboard = async (
   return { data: filteredData, total: count ?? 0 };
 };
 
-// export const getMotherboardByName = async (
-//   { name, limit, offset }: { name: string; limit?: number; offset?: number },
-// ) => {
+// export async function getProductByNameAndCategory(
+//   productName: string
+// ) {
 //   const supabase = await createSupaServerClient()
   
-//   if (!supabase) {
-//     throw new Error("Supabase client is null")
-//   }
-
-//   // filter start
-//   const client_query = supabase
-//     .schema("product")
-//     .from("v_motherboards")
-//     .select("*", { count: "exact" })
-
-//   if (min_price) {
-//     await client_query.gte("lowest_price", min_price);
-//   }
-//   if (max_price) {
-//     await client_query.lte("lowest_price", max_price);
-//   }
-//   if (query) {
-//     await client_query.textSearch("product_name", `'${query}'`, {
-//       type: "websearch",
-//       config: "english",
-//     });
-//   }
-
-//   const start = typeof offset === "number" ? offset : 0;
-//   const end = typeof limit === "number" ? start + limit - 1 : start + 19;
-//   client_query.range(start, end);
-
-//   // await client_query.order("product_name", { ascending: true });
-
-//   // filter end
-
-//   const { data, count, error } = await client_query;
+//   if(!productName) return []
   
-//   if (!data) {
-//     throw new Error("Motherboard data is null");
-//   }
-
-//   return { data, total: count ?? 0 };
+//   const { data, error: buildError } = await supabase
+//     .schema('product')
+//     .from('v_products')
+//     .select()
+//     // .textSearch('product_name', `'${productName}'`, {
+//     //   type: 'websearch',
+//     //   config: 'english'
+//     // })
+//     .ilike('product_name', `%${productName}%`)
+//     .eq('category', categoryEnumToTitle[category])
+  
+//   if (buildError)
+//       return { data: null, error:buildError.message }
+    
+//   return { data?.v_builds as BuildResponseData, error: null}
 // }
 

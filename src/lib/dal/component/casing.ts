@@ -3,7 +3,7 @@ import { CasingCompatibility, ProductFilter } from "./filter";
 
 export const getCasing = async (
   { gpuId, motherboardId }: CasingCompatibility,
-  { query, min_price, max_price, offset, limit }: ProductFilter,
+  { product_name, min_price, max_price, offset, limit }: ProductFilter,
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -25,11 +25,13 @@ export const getCasing = async (
   if (max_price) {
     await client_query.lte("lowest_price", max_price);
   }
-  if (query) {
-    await client_query.textSearch("product_name", `'${query}'`, {
-      type: "websearch",
-      config: "english",
-    });
+  if (product_name) {
+    offset = 0;
+    await client_query.ilike("product_name", `%${product_name}%`)
+    // await client_query.textSearch("product_name", `'${product_name}'`, {
+    //   type: "websearch",
+    //   config: "english",
+    // });
   }
 
   const start = typeof offset === "number" ? offset : 0;

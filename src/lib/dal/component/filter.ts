@@ -18,7 +18,6 @@ export type CpuCompatibility = {
 }
 
 export type CpuFilter = {
-  query?: string | null
   min_price?: number | null
   max_price?: number | null
   //
@@ -123,7 +122,7 @@ export const cpuSidebarItems = [
 ]
 
 export type ProductFilter = {
-  query?: string | null
+  product_name?: string | null
   min_price?: number | null
   max_price?: number | null
   limit?: number

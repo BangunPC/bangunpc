@@ -72,7 +72,12 @@ export const getCpu = async (
     await client_query.eq("product_id", filter.product_id);
   }
   if (filter.product_name) {
-    await client_query.eq("product_name", filter.product_name);
+    filter.offset = 0;
+    await client_query.ilike("product_name", `%${filter.product_name}%`)
+    // await client_query.textSearch("product_name", `'${product_name}'`, {
+    //   type: "websearch",
+    //   config: "english",
+    // });
   }
   if (filter.total_core) {
     await client_query.eq("total_core", filter.total_core);
@@ -80,12 +85,7 @@ export const getCpu = async (
   if (filter.total_thread) {
     await client_query.eq("total_thread", filter.total_thread);
   }
-  if (filter.query) {
-    await client_query.textSearch("product_name", `'${filter.query}'`, {
-      type: "websearch",
-      config: "english",
-    });
-  }
+
   const start = typeof filter.offset === "number" ? filter.offset : 0;
   const end = typeof filter.limit === "number" ? start + filter.limit - 1 : start + 19;
   client_query.range(start, end);
