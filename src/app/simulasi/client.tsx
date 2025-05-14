@@ -31,6 +31,7 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { BuildResponseData, MultiComponentResponse, SingleComponentResponse } from "@/lib/schema";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { deleteBuildSession, deleteBuildSessionComponent } from "@/lib/build-session";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 // import { deleteBuildSession, deleteBuildSessionComponent } from "@/lib/build-session";
 
 const headers = [
@@ -255,16 +256,46 @@ export function SimulasiClient({
                         {item.components.map((component, index) => (
                           <Link
                             key={index}
-                            className="flex h-[38px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600"
+                            className="flex h-[72px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600 py-4"
                             href={`/produk/${categoryEnumToSlug[item.kategori]}/${component.slug}`}
                           >
-                            <Image
-                              src={productImage(component.product_id, component.image_filename)}
-                              width={32}
-                              height={32}
-                              alt={component.name}
-                            />
-                            <span className="ml-2">{component.name}</span>
+                            <TooltipProvider delayDuration={100}>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Image
+                                    src={productImage(component.product_id, component.image_filename)}
+                                    width={64}
+                                    height={64}
+                                    alt={component.name}
+                                  />
+                                </TooltipTrigger>
+                                <TooltipContent side="right" className="p-0 border-none shadow-none ml-6">
+                                  <div className="relative w-64 h-64 rounded-md overflow-hidden">
+                                    <div className="absolute inset-0 flex items-center justify-center bg-white">
+                                      <Image
+                                        src={productImage(component.product_id, component.image_filename)}
+                                        alt={component.name}
+                                        width={256}
+                                        height={256}
+                                        className="object-contain p-2"
+                                      />
+                                    </div>
+                                  </div>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <span className="ml-4">{component.name}</span>
+                                </TooltipTrigger>
+                                <TooltipContent side="top" className="max-w-xs">
+                                  <p>{component.name ?? "-"}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                            
                           </Link>
                         ))}
                         {item.components.length === 0 ? (

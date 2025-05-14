@@ -11,11 +11,11 @@ const buttonVariants = cva(
       variant: {
         raw: "text-white dark:text-black",
         default:
-          "text-white bg-gradient-to-t dark:bg-gradient-to-b from-primary to-primary/80 border-t-[1px] border-white/40 hover:from-primary/80 hover:to-primary/60",
+          "text-white bg-primary  hover:bg-gradient-to-t hover:from-primary/80 hover:to-primary/60",
         destructive:
-          "text-white bg-gradient-to-t from-red-600 to-red-400 border-t-[1px] border-white/60 hover:bg-gradient-to-t hover:from-red-700 hover:to-red-500",
+          "text-white bg-red-600 border-white/60 hover:bg-gradient-to-t hover:from-red-700 hover:to-red-500",
         success:
-          "text-white bg-gradient-to-t from-green-600 to-green-400 border-t-[1px] border-white/70 hover:bg-gradient-to-t hover:from-green-700 hover:to-green-500",
+          "text-white bg-green-500 border-white/70 hover:bg-gradient-to-t hover:from-green-700 hover:to-green-500",
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:

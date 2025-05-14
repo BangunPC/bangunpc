@@ -38,7 +38,7 @@ export const getCasing = async (
   const end = typeof limit === "number" ? start + limit - 1 : start + 19;
   client_query.range(start, end);
 
-  await client_query.order("product_name", { ascending: true });
+  // await client_query.order("product_name", { ascending: true });
 
   // filter end
 
