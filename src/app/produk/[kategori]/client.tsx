@@ -20,6 +20,7 @@ import { createBuildSession, getBuildSessionId, insertBuildSessionComponent } fr
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useDebounce } from "@/hooks/use-debounce";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+// import { getMotherboard } from "@/lib/dal/component/motherboard";
 
 export function KategoriClient({
   className,
@@ -29,9 +30,9 @@ export function KategoriClient({
   page = 1,
   perPage = 20,
   total = 0,
-  initialSearch = '',
-  initialMinPrice,
-  initialMaxPrice,
+  // initialSearch = '',
+  // initialMinPrice,
+  // initialMaxPrice,
 }: {
   className?: string
   componentDetails: ComponentDetail[]
@@ -46,30 +47,34 @@ export function KategoriClient({
 }) {
   const componentCategoryEnum = categorySlugToEnum[kategori]!;
   const router = useRouter();
-  // const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
   
   const [hideSidebar, setHideSidebar] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [minPrice, setMinPrice] = useState<number | undefined>(initialMinPrice);
-  const [maxPrice, setMaxPrice] = useState<number | undefined>(initialMaxPrice);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') ?? '');
+  const [minPrice, setMinPrice] = useState<number | undefined>(searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined);
+  const [maxPrice, setMaxPrice] = useState<number | undefined>(searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined);
   
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const debouncedMinPrice = useDebounce(minPrice, 500);
   const debouncedMaxPrice = useDebounce(maxPrice, 500);
 
+  const isSimulasi = (searchParams.get('kategori') ?? '' )?.trim()?.length > 0;  
+
   // Combined URL update effect
+  // Modify the URL update effect
   useEffect(() => {
     const params = new URLSearchParams();
     
+    // Preserve iframe parameter if it exists
+    if (isSimulasi) {
+      params.set('kategori', searchParams.get('kategori') ?? '');
+    }
+    
     if (debouncedSearchQuery) {
       params.set('q', debouncedSearchQuery);
-      // Always reset to page 1 when search query changes
       params.set('page', '1');
-    } else {
-      // Only keep page if not changing search
-      if (page > 1) {
-        params.set('page', page.toString());
-      }
+    } else if (page > 1) {
+      params.set('page', page.toString());
     }
     
     if (debouncedMinPrice) {
@@ -85,9 +90,10 @@ export function KategoriClient({
       params.set('perPage', perPage.toString());
     }
     
-    router.replace(`?${params.toString()}`, { scroll: false });
-  }, [debouncedSearchQuery, debouncedMinPrice, debouncedMaxPrice, page, perPage, router]);
-
+    // Use the current pathname to maintain the route
+    const pathname = window.location.pathname;
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [debouncedSearchQuery, debouncedMinPrice, debouncedMaxPrice, page, perPage, router, isSimulasi]);
 
   // Handle browser navigation (back/forward)
   useEffect(() => {
@@ -117,14 +123,27 @@ export function KategoriClient({
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
     const params = new URLSearchParams(window.location.search);
+    
+    // Preserve iframe parameter
+    if (isSimulasi) {
+      params.set('kategori', searchParams.get('kategori') ?? '');
+    }
+    
     params.set('page', newPage.toString());
     router.push(`?${params.toString()}`);
   };
+
 
   // Handle rows per page change
   const handleRowsPerPageChange = (value: string) => {
     const newPerPage = Number(value);
     const params = new URLSearchParams(window.location.search);
+    
+    // Preserve iframe parameter
+    if (isSimulasi) {
+      params.set('kategori', searchParams.get('kategori') ?? '');
+    }
+    
     params.set('perPage', newPerPage.toString());
     params.set('page', '1');
     router.push(`?${params.toString()}`);
@@ -132,12 +151,17 @@ export function KategoriClient({
 
   const handleApplyFilters = () => {
     const params = new URLSearchParams(window.location.search);
+    
+    // Preserve iframe parameter
+    if (isSimulasi) {
+      params.set('kategori', searchParams.get('kategori') ?? '');
+    }
+    
     if (minPrice) params.set('minPrice', minPrice.toString());
     if (maxPrice) params.set('maxPrice', maxPrice.toString());
     params.set('page', '1');
     router.push(`?${params.toString()}`);
   };
-
   const handleInsertOrCreateSession = async (product_id: number) => {
     const buildId = await getBuildSessionId();
   
@@ -149,7 +173,7 @@ export function KategoriClient({
       return result?.error;
     }
   };
-  
+
   const handleAddComponent = async (component: ComponentDetail) => {
     const { product_id } = component;
   
@@ -192,7 +216,7 @@ export function KategoriClient({
   );
 
   return (
-    <div className={cn(className, "modal-style container mt-20 mx-auto px-4 py-6 md:py-8")}>
+    <div className={cn(className, `modal-style container ${isSimulasi ? '' : 'mt-20'} mx-auto px-4 py-6 md:py-8`)}>
       {mobileSidebarButton}
       
       <div className="flex flex-col tablet:flex-row tablet:gap-8">

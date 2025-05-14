@@ -31,7 +31,6 @@ const validateSearchQuery = (value: string | undefined): string => {
   return String(value).slice(0, 100);
 };
 
-
 async function fetchComponentDetails(
   categoryEnum: ComponentCategoryEnum, 
   limit: number = 20, 
@@ -78,7 +77,7 @@ type Params = {
 
 export default async function KategoriPage(props: {
   params: Promise<Params>
-  searchParams?: Promise<{ page?: string; perPage?: string; q?: string }>
+  searchParams?: Promise<{ kategori?: string; page?: string; perPage?: string; q?: string }>
 }) {
   const params = await props.params
   const searchParams = await props.searchParams ?? {}
@@ -88,7 +87,8 @@ export default async function KategoriPage(props: {
   // Validate all input parameters
   const page = validatePage(searchParams.page);
   const perPage = validatePerPage(searchParams.perPage);
-  const query = validateSearchQuery(searchParams.q);
+  const query = validateSearchQuery(searchParams.q); 
+  
   // const minPrice = searchParams.minPrice ? Number(searchParams.minPrice) : undefined;
   // const maxPrice = searchParams.maxPrice ? Number(searchParams.maxPrice) : undefined;
   
@@ -110,7 +110,6 @@ export default async function KategoriPage(props: {
   return (
     <Suspense fallback={<LoadingComponent />}>
       <KategoriClient 
-        className="mt-0" 
         componentDetails={data} 
         kategori={kategori} 
         noTopH={noTopH} 

@@ -123,7 +123,7 @@ export function SimulasiClient({
   };
 
   const closeIframe = () => {
-    router.push("?" + removeQueryString(searchParams, "kategori"));
+    router.replace('/simulasi');
   };
 
   // const { trigger } = useSWRMutation(ApiPaths.insertRakitan, insertRakitan);
