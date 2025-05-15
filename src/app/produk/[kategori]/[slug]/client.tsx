@@ -140,10 +140,10 @@ const KategoriSlugClient = ({
               </Button> */}
               <Button
                 variant="default"
-                className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
+                className="flex items-center justify-center rounded-lg p-2 text-base font-normal text-white tablet:block tablet:w-fit"
                 onClick={() => alert("Coming soon")}
               >
-                + Tambahkan ke Simulasi Rakit PC
+                + Tambahkan ke simulasi
               </Button>
             </div>
             <div className="flex flex-row gap-6">

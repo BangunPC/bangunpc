@@ -244,7 +244,7 @@ export function SimulasiClient({
                     className="h-12 border-b border-zinc-500"
                   >
                     <td className="flex font-bold text-primary">
-                      <div className="mb-auto mt-2 flex flex-row items-center">
+                      <div className="my-4 flex flex-row items-center">
                         <span className="rounded-sm p-1 dark:bg-white">
                           {item.icon}
                         </span>
@@ -263,6 +263,7 @@ export function SimulasiClient({
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <Image
+                                    className="rounded-sm bg-white p-1"
                                     src={productImage(component.product_id, component.image_filename)}
                                     width={64}
                                     height={64}
@@ -321,7 +322,7 @@ export function SimulasiClient({
                       </div>
                     </td>
                     <td>
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-6">
                         {item.components.map((component,index) => (
                           <div key={index} className="flex h-[48px] flex-row items-center">
                             <span className="whitespace-nowrap">
@@ -335,7 +336,7 @@ export function SimulasiClient({
                       </div>
                     </td>
                     <td>
-                      <div className="flex h-full flex-col gap-1">
+                      <div className="flex h-full flex-col gap-6">
                         {item.components.map((component, index) => (
                           <div
                             key={index}
