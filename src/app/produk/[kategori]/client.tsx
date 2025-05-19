@@ -20,6 +20,7 @@ import { createBuildSession, getBuildSessionId, insertBuildSessionComponent } fr
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useDebounce } from "@/hooks/use-debounce";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 // import { getMotherboard } from "@/lib/dal/component/motherboard";
 
 export function KategoriClient({
@@ -53,15 +54,34 @@ export function KategoriClient({
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') ?? '');
   const [minPrice, setMinPrice] = useState<number | undefined>(searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined);
   const [maxPrice, setMaxPrice] = useState<number | undefined>(searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined);
-  
+  const [sortColumn, setSortColumn] = useState<string | null>(searchParams.get('sort') ?? null);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | null>(
+    searchParams.get('direction') as 'asc' | 'desc' | null ?? null
+  );
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const debouncedMinPrice = useDebounce(minPrice, 500);
   const debouncedMaxPrice = useDebounce(maxPrice, 500);
 
   const isSimulasi = (searchParams.get('kategori') ?? '' )?.trim()?.length > 0;  
 
+  const handleSort = (column: string) => {
+    if (sortColumn !== column) {
+      // New field - start with ascending
+      setSortColumn(column);
+      setSortDirection('asc');
+    } else {
+      if (sortDirection === 'asc') {
+        // Switch to descending
+        setSortDirection('desc');
+      } else if (sortDirection === 'desc') {
+        // Remove sorting
+        setSortColumn(null);
+        setSortDirection(null);
+      }
+    }
+  };
+
   // Combined URL update effect
-  // Modify the URL update effect
   useEffect(() => {
     const params = new URLSearchParams();
     
@@ -89,30 +109,40 @@ export function KategoriClient({
     if (perPage !== 20) {
       params.set('perPage', perPage.toString());
     }
+
+    if (sortColumn) {
+      params.set('sort', sortColumn);
+
+      if (sortDirection) {
+        params.set('direction', sortDirection);
+      }
+    }
     
     // Use the current pathname to maintain the route
     const pathname = window.location.pathname;
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [debouncedSearchQuery, debouncedMinPrice, debouncedMaxPrice, page, perPage, router, isSimulasi]);
+  }, [debouncedSearchQuery, debouncedMinPrice, debouncedMaxPrice, page, perPage, router, isSimulasi, sortColumn, sortDirection]);
 
   // Handle browser navigation (back/forward)
   useEffect(() => {
     const handleUrlChange = () => {
       const params = new URLSearchParams(window.location.search);
       const newSearch = params.get('q') ?? '';
-      // const newPage = Number(params.get('page')) || 1;
-      // const newPerPage = Number(params.get('perPage')) || 20;
       const newMinPrice = params.get('minPrice') ? Number(params.get('minPrice')) : undefined;
       const newMaxPrice = params.get('maxPrice') ? Number(params.get('maxPrice')) : undefined;
+      const newSortColumn = params.get('sortBy') ?? '';
+      const newSortDirection = (params.get('sortDir') as 'asc' | 'desc') ?? 'asc';
 
       if (newSearch !== searchQuery) setSearchQuery(newSearch);
       if (newMinPrice !== minPrice) setMinPrice(newMinPrice);
       if (newMaxPrice !== maxPrice) setMaxPrice(newMaxPrice);
+      if (newSortColumn !== sortColumn) setSortColumn(newSortColumn);
+      if (newSortDirection !== sortDirection) setSortDirection(newSortDirection);
     };
 
     window.addEventListener('popstate', handleUrlChange);
     return () => window.removeEventListener('popstate', handleUrlChange);
-  }, [searchQuery, minPrice, maxPrice]);
+  }, [searchQuery, minPrice, maxPrice, sortColumn, sortDirection]);
 
   // Pagination state
   const totalPages = Math.max(1, Math.ceil(total / perPage));
@@ -298,6 +328,7 @@ export function KategoriClient({
               kategori={kategori}
               isIframe={noTopH}
               onAddComponent={handleAddComponent}
+              onSort={handleSort}
             />
             <DesktopTable
               data={componentDetails}
@@ -305,6 +336,7 @@ export function KategoriClient({
               kategori={kategori}
               isIframe={noTopH}
               onAddComponent={handleAddComponent}
+              onSort={handleSort}
             />
             {/* Pagination Controls */}
             <div className="flex flex-col tablet:flex-row tablet:items-center tablet:justify-between mt-4 gap-2">
@@ -424,6 +456,7 @@ type TableType = {
   isIframe: boolean;
   onAddComponent: (component: ComponentDetail) => Promise<void>;
   onSuccess?: () => void;
+  onSort?: (column: string) => void;
 };
 
 const DesktopTable = ({
@@ -431,21 +464,61 @@ const DesktopTable = ({
   headers = [],
   kategori,
   isIframe,
-  onAddComponent
+  onAddComponent,
+  onSort
 }: TableType) => {
-  const header = ["", "Nama Produk", ...headers, "Harga (Rp)", ""];
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const sortField = searchParams.get('sort');
+  const sortDirection = searchParams.get('direction') as 'asc' | 'desc' | null;
+
+  // Define which fields correspond to which header columns
+  const headerFields = ['', 'product_name', ...categoryEnumToKey[categorySlugToEnum[kategori]!], 'lowest_price', ''];
+
+  // const getSortIcon = (column: string) => {
+  //   if (sortColumn !== column) return <ArrowUpDown className="ml-2 h-4 w-4" />;
+  //   return sortDirection === 'asc' ? 
+  //     <ArrowUp className="ml-2 h-4 w-4" /> : 
+  //     <ArrowDown className="ml-2 h-4 w-4" />;
+  // };
+
+  const SortIndicator = ({ direction }: { direction: 'asc' | 'desc' | null }) => {
+  return (
+    <span className="ml-1 inline-flex flex-col items-center">
+      <span className={`h-2 ${direction === 'asc' ? 'text-primary' : 'text-gray-300'}`}><ArrowUp className="ml-2 h-3 w-3" /></span>
+      <span className={`h-2 ${direction === 'desc' ? 'text-primary' : 'text-gray-300'}`}><ArrowDown className="ml-2 h-3 w-3" /></span>
+    </span>
+  );
+};
 
   return (
     <div className="hidden w-full overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 tablet:block">
       <table className="w-full">
         <thead className="sticky self-start top-0 z-10 bg-gray-50 dark:bg-gray-800">
           <tr>
-            {header.map((item, index) => (
-              <th key={index} className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {item}
-              </th>
-            ))}
+            {['', 'Nama Produk', ...headers, 'Harga (Rp)', ''].map((item, index) => {
+              const field = headerFields[index];
+              const isSortable = field && field !== '';
+              const isActive = sortField === field;
+              
+              return (
+                <th 
+                  key={index} 
+                  className={cn(
+                    "px-3 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400",
+                    isSortable && "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                  )}
+                  onClick={() => isSortable && onSort && onSort(field)}
+                >
+                  <div className="flex items-center">
+                    {item}
+                    {isSortable && (
+                      <SortIndicator direction={isActive ? sortDirection : null} />
+                    )}
+                  </div>
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
@@ -550,12 +623,70 @@ const MobileTable = ({
   data, 
   headers, 
   kategori, 
-  onAddComponent 
+  onAddComponent,
+  onSort
 }: TableType) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const sortField = searchParams.get('sort');
+  const sortDirection = searchParams.get('direction') as 'asc' | 'desc' | null;
+  const headerFields = categoryEnumToKey[categorySlugToEnum[kategori]!];
+
+  const getSortIndicator = (field: string) => {
+    if (sortField !== field) return null;
+    return (
+      <span className="ml-1">
+        {sortDirection === 'asc' ? '↑' : '↓'}
+      </span>
+    );
+  };
+
   return (
     <div className="space-y-4 tablet:hidden">
       <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 py-2">
-        <h2 className="text-lg font-bold">Produk</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg font-bold">Produk</h2>
+          <Select 
+            value={sortField || ''}
+            onValueChange={(value) => {
+              if (value === sortField) {
+                if (sortDirection === 'asc') {
+                  onSort && onSort(value);
+                } else if (sortDirection === 'desc') {
+                  onSort && onSort(value);
+                }
+              } else {
+                onSort && onSort(value);
+              }
+            }}
+          >
+            <SelectTrigger className="w-40">
+              <div className="flex items-center">
+                <SelectValue placeholder="Urutkan" />
+                {sortField && getSortIndicator(sortField)}
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="product_name">
+                <div className="flex items-center">
+                  Nama {getSortIndicator('product_name')}
+                </div>
+              </SelectItem>
+              {headerFields.map((field, index) => (
+                <SelectItem key={field} value={field}>
+                  <div className="flex items-center">
+                    {headers[index]} {getSortIndicator(field)}
+                  </div>
+                </SelectItem>
+              ))}
+              <SelectItem value="lowest_price">
+                <div className="flex items-center">
+                  Harga {getSortIndicator('lowest_price')}
+                </div>
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       {data?.map((component) => (
         <div
