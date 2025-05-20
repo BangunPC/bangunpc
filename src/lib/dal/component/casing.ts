@@ -1,9 +1,11 @@
 import { createSupaServerClient } from "@/lib/supabase/server";
 import { CasingCompatibility, ProductFilter } from "./filter";
+import { ComponentCategoryEnum, isValidComponentSortType } from "@/lib/db";
 
 export const getCasing = async (
   { gpuId, motherboardId }: CasingCompatibility,
   { product_name, min_price, max_price, offset, limit }: ProductFilter,
+  { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -32,6 +34,18 @@ export const getCasing = async (
     //   type: "websearch",
     //   config: "english",
     // });
+  }
+
+  if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Casing) && sortDirection) {   
+    switch (sortDirection) {
+      case "asc":
+        client_query.order(sort, { ascending: true });
+        break;
+      case "desc":
+        client_query.order(sort, { ascending: false });
+        break;
+      default:
+    }
   }
 
   const start = typeof offset === "number" ? offset : 0;

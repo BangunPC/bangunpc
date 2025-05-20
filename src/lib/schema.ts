@@ -3209,6 +3209,11 @@ export type Database = {
   }
 }
 
+// export type StringKeys<T> = {
+//   [K in keyof T]: T[K] extends string | null ? K : never;
+// }[keyof T];
+// export type ProductViewColumn<K extends keyof Database["product"]["Views"]> = Database["product"]["Views"][K]['Row']
+
 type PublicSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<

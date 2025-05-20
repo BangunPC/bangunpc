@@ -26,34 +26,6 @@ export enum ComponentCategoryEnum {
 }
 
 export type MultiComponentCategoryEnum = ComponentCategoryEnum.Memory | ComponentCategoryEnum.Storage | ComponentCategoryEnum.Monitor;
-
-export function isMultiComponentCategoryEnum(componentCategoryEnum: ComponentCategoryEnum | undefined): componentCategoryEnum is MultiComponentCategoryEnum {
-  return (
-    componentCategoryEnum === ComponentCategoryEnum.Memory || 
-    componentCategoryEnum === ComponentCategoryEnum.Storage || 
-    componentCategoryEnum === ComponentCategoryEnum.Monitor
-  );
-}
-
-export function multiComponentCategoryEnumToTable(componentCategoryEnum: MultiComponentCategoryEnum) {
-  let targetTable: PCBuildTables
-
-    switch (componentCategoryEnum) {
-      case ComponentCategoryEnum.Memory:
-        targetTable = 'build_memories'
-        break;
-
-      case ComponentCategoryEnum.Storage:
-        targetTable = 'build_internal_storages'
-        break;
-
-      case ComponentCategoryEnum.Monitor:
-       targetTable = 'build_monitors'
-       break;
-    }
-  return targetTable
-}
-
 export type PCBuildTables = keyof Database["pc_build"]["Tables"]
 export type SingleComponentUpdate = Database["pc_build"]["Tables"]["builds"]["Update"];
 export type ComponentPayload = {
@@ -85,8 +57,8 @@ export const cpuHeaderMapping = {
 };
 
 export const gpuHeaderMapping = {
-  boost_clock_mhz: "Boost Clock (MHz)",
   brand_name: "Brand Name",
+  boost_clock_mhz: "Boost Clock (MHz)",
   base_clock_mhz: "Core Clock (MHz)",
   length_mm: "Length (mm)",
   tdp_watt: "TDP (Watt)",
@@ -94,8 +66,8 @@ export const gpuHeaderMapping = {
 };
 
 export const memoryHeaderMapping = {
-  amount: "Amount",
   brand_name: "Brand Name",
+  amount: "Amount",
   capacity_gb: "Capacity (GB)",
   frequency_mhz: "Frequency (MHz)",
   memory_type: "Memory Type",
@@ -203,4 +175,40 @@ export type ComponentDetailMap = {
   [ComponentCategoryEnum.ExternalDrive]: undefined
   [ComponentCategoryEnum.Cooler]: undefined;
   [ComponentCategoryEnum.CaseFan]: undefined;
+}
+
+
+
+// Functions
+export function isMultiComponentCategoryEnum(componentCategoryEnum: ComponentCategoryEnum | undefined): componentCategoryEnum is MultiComponentCategoryEnum {
+  return (
+    componentCategoryEnum === ComponentCategoryEnum.Memory || 
+    componentCategoryEnum === ComponentCategoryEnum.Storage || 
+    componentCategoryEnum === ComponentCategoryEnum.Monitor
+  );
+}
+
+export function multiComponentCategoryEnumToTable(componentCategoryEnum: MultiComponentCategoryEnum) {
+  let targetTable: PCBuildTables
+
+    switch (componentCategoryEnum) {
+      case ComponentCategoryEnum.Memory:
+        targetTable = 'build_memories'
+        break;
+
+      case ComponentCategoryEnum.Storage:
+        targetTable = 'build_internal_storages'
+        break;
+
+      case ComponentCategoryEnum.Monitor:
+       targetTable = 'build_monitors'
+       break;
+    }
+  return targetTable
+}
+
+export function isValidComponentSortType(sort: string, categoryEnum: ComponentCategoryEnum): boolean {
+  const headerColumns = ['product_name', ...categoryEnumToKey[categoryEnum], 'lowest_price'];
+
+  return headerColumns.includes(sort)
 }

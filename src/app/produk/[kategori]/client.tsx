@@ -216,7 +216,7 @@ export function KategoriClient({
       const error = await handleInsertOrCreateSession(product_id);
   
       if (!error) {
-        router.push("/simulasi");
+        router.replace('/simulasi')
       } else {
         console.error("Error occurred:", error);
       }
@@ -459,6 +459,15 @@ type TableType = {
   onSort?: (column: string) => void;
 };
 
+const SortIndicator = ({ direction }: { direction: 'asc' | 'desc' | null }) => {
+    return (
+      <span className="ml-1 inline-flex flex-col items-center">
+        <span className={`h-2 ${direction === 'asc' ? 'text-primary' : 'text-gray-300'}`}><ArrowUp className="ml-2 h-3 w-3" /></span>
+        <span className={`h-2 ${direction === 'desc' ? 'text-primary' : 'text-gray-300'}`}><ArrowDown className="ml-2 h-3 w-3" /></span>
+      </span>
+    );
+  };
+
 const DesktopTable = ({
   data,
   headers = [],
@@ -481,15 +490,6 @@ const DesktopTable = ({
   //     <ArrowUp className="ml-2 h-4 w-4" /> : 
   //     <ArrowDown className="ml-2 h-4 w-4" />;
   // };
-
-  const SortIndicator = ({ direction }: { direction: 'asc' | 'desc' | null }) => {
-  return (
-    <span className="ml-1 inline-flex flex-col items-center">
-      <span className={`h-2 ${direction === 'asc' ? 'text-primary' : 'text-gray-300'}`}><ArrowUp className="ml-2 h-3 w-3" /></span>
-      <span className={`h-2 ${direction === 'desc' ? 'text-primary' : 'text-gray-300'}`}><ArrowDown className="ml-2 h-3 w-3" /></span>
-    </span>
-  );
-};
 
   return (
     <div className="hidden w-full overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 tablet:block">
@@ -626,7 +626,6 @@ const MobileTable = ({
   onAddComponent,
   onSort
 }: TableType) => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const sortField = searchParams.get('sort');
   const sortDirection = searchParams.get('direction') as 'asc' | 'desc' | null;
@@ -647,16 +646,16 @@ const MobileTable = ({
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-bold">Produk</h2>
           <Select 
-            value={sortField || ''}
+            value={sortField ?? ''}
             onValueChange={(value) => {
               if (value === sortField) {
                 if (sortDirection === 'asc') {
-                  onSort && onSort(value);
+                  return onSort && onSort(value);
                 } else if (sortDirection === 'desc') {
-                  onSort && onSort(value);
+                  return onSort && onSort(value);
                 }
               } else {
-                onSort && onSort(value);
+                return onSort && onSort(value);
               }
             }}
           >

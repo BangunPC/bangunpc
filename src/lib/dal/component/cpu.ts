@@ -1,10 +1,11 @@
 import { createSupaServerClient } from "@/lib/supabase/server";
-import { ComponentDetail, ComponentView } from "../../db";
+import { ComponentCategoryEnum, ComponentDetail, ComponentView, isValidComponentSortType } from "../../db";
 import { CpuCompatibility, CpuFilter } from "./filter";
 
 export const getCpu = async (
   { motherboardId, psuId, gpuId, memoryIds }: CpuCompatibility,
   filter: CpuFilter,
+  { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -84,6 +85,18 @@ export const getCpu = async (
   }
   if (filter.total_thread) {
     await client_query.eq("total_thread", filter.total_thread);
+  }
+
+  if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.CPU) && sortDirection) {   
+    switch (sortDirection) {
+      case "asc":
+        client_query.order(sort, { ascending: true });
+        break;
+      case "desc":
+        client_query.order(sort, { ascending: false });
+        break;
+      default:
+    }
   }
 
   const start = typeof filter.offset === "number" ? filter.offset : 0;

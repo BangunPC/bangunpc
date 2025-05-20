@@ -1,12 +1,13 @@
 'use server'
 
 import { createSupaServerClient } from "@/lib/supabase/server";
-import { ComponentDetail, ComponentView } from "../../db";
+import { ComponentCategoryEnum, ComponentDetail, ComponentView, isValidComponentSortType } from "../../db";
 import { MotherboardCompatibility, ProductFilter } from "./filter";
 
 export const getMotherboard = async (
   { casingId, cpuId, memories }: MotherboardCompatibility,
   { product_name, min_price, max_price, limit, offset }: ProductFilter,
+  { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -33,6 +34,18 @@ export const getMotherboard = async (
     //   type: "websearch",
     //   config: "english",
     // });
+  }
+  
+  if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Motherboard) && sortDirection) {   
+    switch (sortDirection) {
+      case "asc":
+        client_query.order(sort, { ascending: true });
+        break;
+      case "desc":
+        client_query.order(sort, { ascending: false });
+        break;
+      default:
+    }
   }
 
   const start = typeof offset === "number" ? offset : 0;

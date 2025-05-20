@@ -1,9 +1,11 @@
 import { createSupaServerClient } from "@/lib/supabase/server";
 import { MemoryCompatibility, ProductFilter } from "./filter";
+import { ComponentCategoryEnum, isValidComponentSortType } from "@/lib/db";
 
 export const getMemory = async (
   { memories, motherboardId }: MemoryCompatibility,
   { product_name, min_price, max_price, offset, limit }: ProductFilter,
+  { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -32,6 +34,18 @@ export const getMemory = async (
     //   config: "english",
     // });
   }
+
+  if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Memory) && sortDirection) {   
+      switch (sortDirection) {
+        case "asc":
+          client_query.order(sort, { ascending: true });
+          break;
+        case "desc":
+          client_query.order(sort, { ascending: false });
+          break;
+        default:
+      }
+    }
 
   const start = typeof offset === "number" ? offset : 0;
   const end = typeof limit === "number" ? start + limit - 1 : start + 19;

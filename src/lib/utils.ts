@@ -67,3 +67,23 @@ export const productImage = function (product_id: number, filename: string) {
 export const pcImage = function (pc_id: number, filename: string) {
   return `${supabaseUrl}${storagePcImageurl}${pc_id}/${filename}`;
 };
+
+// Secure parameter validation
+export const validatePage = (value: string | undefined) => {
+  const num = Number(value);
+  return Number.isInteger(num) && num >= 1 ? num : 1;
+};
+
+export const validatePerPage = (value: string | undefined) => {
+  const num = Number(value);
+  const options = [10, 20, 30, 40, 50];
+  return options.includes(num) ? num : 20;
+};
+
+export const validateStringQuery = (value: string | undefined): string => {
+  if (value === null || value === undefined) {
+    return '';
+  }
+  
+  return String(value).slice(0, 100);
+};

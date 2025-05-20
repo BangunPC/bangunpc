@@ -1,9 +1,11 @@
 import { createSupaServerClient } from "@/lib/supabase/server";
 import { StorageCompatibility, ProductFilter } from "./filter";
+import { ComponentCategoryEnum, isValidComponentSortType } from "@/lib/db";
 
 export const getStorage = async (
   { motherboardId, storages }: StorageCompatibility,
   { product_name, min_price, max_price, offset, limit }: ProductFilter,
+  { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
 
@@ -31,6 +33,18 @@ export const getStorage = async (
     //   type: "websearch",
     //   config: "english",
     // });
+  }
+
+  if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Storage) && sortDirection) {   
+    switch (sortDirection) {
+      case "asc":
+        client_query.order(sort, { ascending: true });
+        break;
+      case "desc":
+        client_query.order(sort, { ascending: false });
+        break;
+      default:
+    }
   }
 
   const start = typeof offset === "number" ? offset : 0;
