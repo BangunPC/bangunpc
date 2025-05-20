@@ -21,6 +21,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { useDebounce } from "@/hooks/use-debounce";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { useMobile } from "@/hooks/use-mobile";
 // import { getMotherboard } from "@/lib/dal/component/motherboard";
 
 export function KategoriClient({
@@ -245,6 +246,8 @@ export function KategoriClient({
     </Button>
   );
 
+  const isMobile = useMobile()
+
   return (
     <div className={cn(className, `modal-style container ${isSimulasi ? '' : 'mt-20'} mx-auto px-4 py-6 md:py-8`)}>
       {mobileSidebarButton}
@@ -322,14 +325,16 @@ export function KategoriClient({
           </div>
           
           <div>
-            <MobileTable
-              data={componentDetails}
-              headers={categoryEnumToHeader[componentCategoryEnum]}
-              kategori={kategori}
-              isIframe={noTopH}
-              onAddComponent={handleAddComponent}
-              onSort={handleSort}
-            />
+            {isMobile && (
+              <MobileTable
+                data={componentDetails}
+                headers={categoryEnumToHeader[componentCategoryEnum]}
+                kategori={kategori}
+                isIframe={noTopH}
+                onAddComponent={handleAddComponent}
+                onSort={handleSort}
+              />
+            )}
             <DesktopTable
               data={componentDetails}
               headers={categoryEnumToHeader[componentCategoryEnum]}
@@ -480,9 +485,10 @@ const DesktopTable = ({
   const searchParams = useSearchParams();
   const sortField = searchParams.get('sort');
   const sortDirection = searchParams.get('direction') as 'asc' | 'desc' | null;
+  const headerKeys = categoryEnumToKey[categorySlugToEnum[kategori]! ] ?? [];
 
   // Define which fields correspond to which header columns
-  const headerFields = ['', 'product_name', ...categoryEnumToKey[categorySlugToEnum[kategori]!], 'lowest_price', ''];
+  const headerFields = ['', 'product_name', ...headerKeys, 'lowest_price', ''];
 
   // const getSortIcon = (column: string) => {
   //   if (sortColumn !== column) return <ArrowUpDown className="ml-2 h-4 w-4" />;
@@ -629,7 +635,7 @@ const MobileTable = ({
   const searchParams = useSearchParams();
   const sortField = searchParams.get('sort');
   const sortDirection = searchParams.get('direction') as 'asc' | 'desc' | null;
-  const headerFields = categoryEnumToKey[categorySlugToEnum[kategori]!];
+  const headerFields = categoryEnumToKey[categorySlugToEnum[kategori]!] ?? [];
 
   const getSortIndicator = (field: string) => {
     if (sortField !== field) return null;
