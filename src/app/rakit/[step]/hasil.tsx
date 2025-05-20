@@ -47,9 +47,7 @@ export default function HasilSection({
           Kami sudah menyusun PC berdasarkan budget dan kebutuhan aktivitasmu.
         </span>
       </div>
-
       <div className="h-8" />
-
       {data && (
         <div className="m-auto grid w-fit grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-3 tablet:grid-cols-3 desktop:grid-cols-4">
           {data.map((item: any) => (
@@ -59,7 +57,7 @@ export default function HasilSection({
               key={item.build_id}
               className={`m-auto flex h-full max-w-[243px] cursor-pointer flex-col overflow-clip rounded-lg border-2 border-background/50 bg-white shadow-bm hover:border-primary/30
             dark:bg-black`}
-            >
+              >
               <div className="flex aspect-square items-center justify-center bg-[#EAE7EE] dark:bg-[#201C27]">
                 <Image
                   src={pcImage(item.build_id!, item.image_filenames![0]!)}
@@ -97,11 +95,9 @@ export default function HasilSection({
           ))}
         </div>
       )}
-
       <div className="h-8" />
-
       <div className="flex items-center justify-center gap-4">
-        <Link prefetch={false} href="#">
+        <Link prefetch={false} href="#" >
           <Button variant="ghost">
             <ChevronLeft />
           </Button>
@@ -109,7 +105,7 @@ export default function HasilSection({
         {Array.from(
           { length: Math.max(1, Math.ceil(component.count! / 3)) },
           (_, index) => (
-            <Link prefetch={false} href="#" key={index}>
+            <Link prefetch={false} href="#" key={index} >
               <Button
                 variant="ghost"
                 className={
@@ -123,19 +119,15 @@ export default function HasilSection({
             </Link>
           ),
         )}
-        <Link prefetch={false} href="#">
+        <Link prefetch={false} href="#" >
           <Button variant="ghost">
             <ChevronRight />
           </Button>
         </Link>
       </div>
-
       <div className="h-4" />
-
       <div className="flex justify-start">
-        <Link prefetch={false} href={`/rakit/rencana${getDest()}`} 
-        
-        >
+        <Link prefetch={false} href={`/rakit/rencana${getDest()}`} >
           <Button className="justify-center font-semibold">
             <ArrowLeft className="mr-2 inline-block" />
             Kembali

@@ -465,7 +465,7 @@ function PacketPersonalComputerSection() {
 //               panduan dan dukungan yang dibutuhkan. Bersama kami, wujudkan
 //               impian PC Anda!
 //             </p>
-//             <Link href="?produk=true"  legacyBehavior replace scroll={false}>
+//             <Link href="?produk=true"   replace scroll={false}>
 //               <Button className="m-auto mt-0 w-fit gap-2 bg-black p-5 hover:bg-zinc-900 tablet:m-0 tablet:mt-6">
 //                 <Image
 //                   src="/images/icon-cart.svg"

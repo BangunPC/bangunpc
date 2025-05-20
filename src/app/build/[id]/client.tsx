@@ -298,8 +298,7 @@ const Component = ({
                                   href={`/produk/${
                                     categoryEnumToSlug[item.category]
                                   }/${component.slug}`}
-                                  
-                                >
+                                  >
                                   <Image
                                     src={productImage(
                                       component.product_id!,
@@ -455,7 +454,6 @@ const Component = ({
           </AccordionItem>
         </Accordion>
       </div>
-
       <div className="sticky bottom-0 z-10 flex min-h-[80px] items-center justify-between overflow-x-auto overflow-y-hidden bg-white px-4 py-2 shadow-tm dark:bg-navbar">
         <div className="flex items-center gap-2">
           {imageUrls[0] && (
@@ -484,7 +482,7 @@ const Component = ({
               Beli Sekarang
             </Button>
           </a>
-          {/* <Link href={`/simulasi/${data.build_id}`}  legacyBehavior>
+          {/* <Link href={`/simulasi/${data.build_id}`}  >
             <Button
               variant="default"
               className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"

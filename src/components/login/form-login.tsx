@@ -109,7 +109,7 @@ export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => 
             </>
           ) : (
             // Button Login (masuk)
-            <div className="flex flex-col gap-4">
+            (<div className="flex flex-col gap-4">
               <Button
                 type="submit"
                 className="inline-flex w-full items-center justify-center space-x-2 rounded-md bg-primary py-6 text-sm font-medium text-white hover:bg-primary/80  hover:shadow-md"
@@ -130,7 +130,7 @@ export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => 
                 </svg> */}
                 {loading ? <Spinner /> : "Masuk"}
               </Button>
-            </div>
+            </div>)
           )}
           {/* google account */}
           <div>

@@ -48,9 +48,7 @@ export default function BudgetSection() {
           Kami akan sesuaikan konfigurasi PC yang pas dengan budgetmu
         </span>
       </div>
-
       <div className="h-8" />
-
       <RadioGroup
         onValueChange={(value) => {
           setBudget(value);
@@ -96,13 +94,11 @@ export default function BudgetSection() {
         autoFocus
         className="m-auto w-32 pr-3"
       />
-
       <div className="flex justify-end">
         <Link
           prefetch={true}
           href={`/rakit/rencana${getDest(budget.toString())}`}
-          
-        >
+          >
           <Button
             className="mt-4 justify-center font-semibold"
             disabled={!budget}

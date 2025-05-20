@@ -9,7 +9,7 @@ export async function middleware(req: NextRequest) {
   // Check if the request is for the specific path 
   if (req.nextUrl.pathname.startsWith('/simulasi')) { 
     // Apply the specific middleware and get the response 
-    response = await simulasiMiddleware(req) || response 
+    response = (await simulasiMiddleware(req)) || response 
   }
   
   return response || NextResponse.next()

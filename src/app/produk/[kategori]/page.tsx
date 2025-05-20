@@ -22,7 +22,7 @@ export default async function KategoriPage(props: {
   }>
 }) {
   const params = await props.params
-  const searchParams = await props.searchParams ?? {}
+  const searchParams = (await props.searchParams) ?? {}
   const kategori = params.kategori as string
   const noTopH = params.noTopH ?? false
 

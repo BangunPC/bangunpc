@@ -99,7 +99,7 @@ export function SearchDialog({ ...props }: DialogProps) {
       case 'internal storage':
         return 'storage'
       default:
-        return categoryName.toLowerCase().replace(/\s+/g, '-')
+        return categoryName.toLowerCase().replace(/\s+/g, '-');
     }
   }
 

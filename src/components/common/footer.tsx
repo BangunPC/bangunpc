@@ -88,8 +88,7 @@ const Footer = () => {
                   className="flex items-center justify-center"
                   target="_blank"
                   rel="noopener noreferrer"
-                  
-                >
+                  >
                   <Button
                     variant="outline"
                     size="icon"

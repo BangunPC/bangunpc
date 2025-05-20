@@ -38,25 +38,12 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import Divider from "../ui/divider";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import { NavbarIcon } from "../icon/navbar-icon";
-import NavbarMobileToggle from "../icon/navbar-mobile-toggle";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { ModeToggle } from "../ui/mode-toggle";
 import { FloatingNav } from "../ui/floating-navbar";
 import FormRegister from "../register/from-register";
 import { SearchDialog } from "../blog/search-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { FeedbackButton } from "@/components/common/feedback";
 import { Input } from "../ui/input";
 
 export const components = [
@@ -272,24 +259,24 @@ export function Navbar() {
           </div>
           <Divider className="my-1" />
           
-          <Link href="/profile" className="w-full justify-start">
+          <Link href="/profile" className="w-full justify-start" >
             <Button variant="ghost" className="w-full justify-start">
               <Settings2 size={18} className="mr-2" /> Pengaturan Akun
             </Button>
           </Link>
 
-          <Link href="/wishlist" className="w-full justify-start">
+          <Link href="/wishlist" className="w-full justify-start" >
             <Button variant="ghost" className="w-full justify-start">
               <Heart size={18} className="mr-2" /> Wishlist
             </Button>
           </Link>
-          <Link href="/rakitanku" className="w-full justify-start">
+          <Link href="/rakitanku" className="w-full justify-start" >
             <Button variant="ghost" className="w-full justify-start">
               <MonitorSmartphone size={18} className="mr-2" /> Rakitan-ku
             </Button>
           </Link>
           <Divider className="my-1" />
-          <Link href="/signout" className="w-full justify-start">
+          <Link href="/signout" className="w-full justify-start" >
             <Button variant="ghost" className="w-full justify-start">
               <LogOut size={18} className="mr-2" /> Keluar
             </Button>
@@ -360,7 +347,7 @@ export function Navbar() {
   return (
     <FloatingNav className="gap-4 tablet:gap-16">
       <div className="flex w-full gap-24 items-center justify-between tablet:w-auto">
-        <Link href="/" className="h-9 [&>svg]:size-full">
+        <Link href="/" className="h-9 [&>svg]:size-full" >
           <NavbarIcon />
         </Link>
         
@@ -413,7 +400,7 @@ export function Navbar() {
                         Peripherals
                       </span>
                       {peripherals.map((item) => (
-                        <Link key={item.name} href={item.href}>
+                        <Link key={item.name} href={item.href} >
                           <Button
                             variant="ghost"
                             className="w-full justify-start"
@@ -426,7 +413,7 @@ export function Navbar() {
                         Accessories / Lainnya
                       </span>
                       {accessories.map((item) => (
-                        <Link key={item.name} href={item.href}>
+                        <Link key={item.name} href={item.href} >
                           <Button
                             variant="ghost"
                             className="w-full justify-start"
@@ -442,7 +429,7 @@ export function Navbar() {
                           <Link
                             key={item.name}
                             href={`/produk/${categoryEnumToSlug[item.enum]}`}
-                          >
+                            >
                             <Button
                               variant="outline"
                               className="flex h-[156px] w-[147px] flex-col"
@@ -496,16 +483,15 @@ export function Navbar() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/blog" legacyBehavior>
                 <NavigationMenuLink
+                href="/blog"
                   className={cn(
                     navigationMenuTriggerStyle(),
                     "bg-transparent cursor-pointer",
                   )}
-                >
+                  >
                   Blog
                 </NavigationMenuLink>
-              </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -533,7 +519,6 @@ export function Navbar() {
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </Button>
       </div>
-
       {/* Mobile Menu Content */}
       <div
         className={cn(

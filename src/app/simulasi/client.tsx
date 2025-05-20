@@ -258,7 +258,7 @@ export function SimulasiClient({
                             key={index}
                             className="flex h-[72px] cursor-pointer flex-row items-center rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-600 py-4"
                             href={`/produk/${categoryEnumToSlug[item.kategori]}/${component.slug}`}
-                          >
+                            >
                             <TooltipProvider delayDuration={100}>
                               <Tooltip>
                                 <TooltipTrigger asChild>

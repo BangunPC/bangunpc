@@ -125,7 +125,7 @@ const KategoriSlugClient = ({
             )}
             <span>
               Kategori:{" "}
-              <Link className="text-primary" href={"/produk/" + type}>
+              <Link className="text-primary" href={"/produk/" + type} >
                 <span className="text-base hover:underline">
                   {categoryEnumToTitle[category]}
                 </span>
@@ -192,7 +192,6 @@ const KategoriSlugClient = ({
           </main>
         </div>
       </div>
-
       <Accordion type="single" collapsible defaultValue="product-details">
         <AccordionItem value="product-details">
           <AccordionTrigger>
@@ -231,9 +230,7 @@ const KategoriSlugClient = ({
                         <MapPin />
                         {detail.seller_city}
                       </div>
-                      <Link href={detail.url} 
-                      
-                      >
+                      <Link href={detail.url} >
                         <Button className="bg-green-600 text-center">
                           Beli Sekarang
                         </Button>
@@ -301,8 +298,7 @@ const KategoriSlugClient = ({
                           {detail.product_detail_description ?? "-"}
                         </td>
                         <td className="flex justify-end rounded-e-lg bg-slate-200 p-2 pr-8 dark:bg-slate-800">
-                          <Link href={detail.url} target="_blank"
-                          >
+                          <Link href={detail.url} target="_blank" >
                             <Button variant="success" className="text-center text-white">
                               Beli
                             </Button>
@@ -317,7 +313,6 @@ const KategoriSlugClient = ({
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
       <Accordion type="single" collapsible defaultValue="spec-details">
         <AccordionItem value="spec-details">
         <div className="relative">

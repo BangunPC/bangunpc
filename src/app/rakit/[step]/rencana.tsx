@@ -55,9 +55,7 @@ export default function RencanaSection({
           Kami akan menyusun PC yang sesuai dengan kebutuhan aktivitasmu.
         </span>
       </div>
-
       <div className="h-8" />
-
       <div className="m-auto grid max-w-screen-tablet grid-cols-2 gap-2 tablet:grid-cols-3">
         {rencanaData?.map((item, index) => (
           <Label
@@ -91,13 +89,11 @@ export default function RencanaSection({
           </Label>
         ))}
       </div>
-
       <div className="flex justify-between">
         <Link
           prefetch={false}
           href={`/rakit/budget${getDest(multiSelect)}`}
-          
-        >
+          >
           <Button className="mt-4 justify-center font-semibold">
             <ArrowLeft className="mr-2 inline-block" />
             Kembali
@@ -107,8 +103,7 @@ export default function RencanaSection({
         <Link
           prefetch={false}
           href={`/rakit/hasil${getDest(multiSelect)}`}
-          
-        >
+          >
           <Button
             className="mt-4 justify-center font-semibold"
             disabled={!multiSelect.length}

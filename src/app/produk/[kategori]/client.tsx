@@ -537,7 +537,9 @@ const DesktopTable = ({
                   <TooltipProvider delayDuration={100}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Link href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}>
+                        <Link
+                          href={`/produk/${kategori}/${component.slug}${isIframe ? "?iframe=true" : ""}`}
+                          >
                           {component.image_filenames!.length > 0 && (
                             <div className="h-16 w-16 overflow-hidden rounded-md ">
                               <div className="h-full w-full flex items-center justify-center bg-white">
@@ -586,7 +588,6 @@ const DesktopTable = ({
                     </Tooltip>
                   </TooltipProvider>
                 </td>
-
                 <ComponentFallback
                   headers={headers}
                   categoryEnum={categorySlugToEnum[kategori]!}
@@ -594,7 +595,6 @@ const DesktopTable = ({
                   isMobile={false}
                   onClick={handleRedirect}
                 />
-
                 <td className="py-4 px-3 font-semibold" onClick={handleRedirect}>
                   {component.lowest_price?.toLocaleString("id-ID") ?? "-"}
                 </td>
@@ -695,7 +695,7 @@ const MobileTable = ({
           <Link
             href={`/produk/${kategori}/${component.slug}`}
             className="block p-4"
-          >
+            >
             <div className="flex items-start gap-4">
               {component.image_filenames!.length > 0 && (
                 <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md">
