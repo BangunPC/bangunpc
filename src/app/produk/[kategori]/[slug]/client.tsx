@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { categoryEnumToTitle, ComponentCategoryEnum } from "@/lib/db";
+import { isUrl } from "@/lib/utils";
 
 // TODO: fix colors
 
@@ -345,20 +346,59 @@ const KategoriSlugClient = ({
               </thead>
               <tbody>
                 {componentInfo?.map((info: any, index) => (
-                  <tr
-                    key={"componentinfo-" + index}
-                    className="border-b last:border-none"
-                  >
-                    <td className="whitespace-nowrap border-r p-4">
-                      {info.title}
-                    </td>
-                    <td className="w-full p-4 font-semibold">
-                      {info.value && typeof info.value === "object"
-                        ? JSON.stringify(info.value)
-                        : info.value ?? "-"}
-                    </td>
-                  </tr>
+  <tr
+    key={"componentinfo-" + index}
+    className="border-b last:border-none"
+  >
+    <td className="whitespace-nowrap border-r p-4">
+      {info.title}
+    </td>
+    <td className="w-full p-4 font-semibold">
+      {(() => {
+        if (!info.value && info.value !== 0 && info.value !== false) return "N/A";
+        
+        // Handle array case
+        if (Array.isArray(info.value)) {
+          return info.value.map((item: any, i: number) => (
+            <div key={i}>
+              {typeof item === 'string' && isUrl(item) 
+                ? <Link className="text-blue-500" href={item}>{item}</Link> 
+                : item}
+              <br />
+            </div>
+          ));
+        }
+        
+        // Handle object case
+        if (typeof info.value === 'object') {
+          return JSON.stringify(info.value);
+        }
+        
+        // Handle string case
+        if (typeof info.value === 'string') {
+          // Check for URL
+          if (isUrl(info.value)) {
+            return <Link className="text-blue-500" href={info.value}>{info.value}</Link>;
+          }
+          
+          // Check for newlines in string
+          if (info.value.includes('\n')) {
+            return (
+              <div className="whitespace-pre-line">
+                {info.value.split('\n').map((line: string, i: number) => (
+                  <div key={i}>{line}</div>
                 ))}
+              </div>
+            );
+          }
+        }
+        
+        // Default case (numbers, booleans, etc)
+        return info.value.toString();
+      })()}
+    </td>
+  </tr>
+))}
               </tbody>
             </table>
           </AccordionContent>

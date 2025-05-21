@@ -86,15 +86,21 @@ export const v_motherboards = [
 
 export const v_power_supplies = [
   ["brand_name", "Brand Name"],
-  ["cpu_connector", "CPU Connector"],
+  ["model", "Model"],
+  ["wattage", "Wattage (watt)"],
+  ["warranty", "Warranty (Year/s)"],
   ["efficiency_rating", "Efficiency Rating"],
+  ["80_plus_verification", "80 Plus Verification"],
   ["form_factor", "Form Factor"],
   ["modularity", "Modularity"],
-  ["peripherals_connector", "Peripherals Connector"],
   ["protection", "Protection"],
-  ["rgb_connector", "RGB Connector"],
-  ["vga_connector", "VGA Connector"],
-  ["wattage", "Wattage"],
+  ["cable_type", "Cable Type"],
+  ["atx_24_pin_connector", "ATX 24 Pin Connector (Motheboard)"],
+  ["eps_8_pin_connector", "EPS 8 Pin Connector (CPU)"],
+  ["eps_4+4_pin_connector", "EPS 4+4 Pin Connector (CPU)"],
+  ["sata_connector", "SATA Connector (Storage)"],
+  ["molex_connector", "Molex Connector (Peripheral)"],
+  ["pcie_connector_list", "PCIE Connector List"],
 ];
 
 export const v_internal_storages = [
