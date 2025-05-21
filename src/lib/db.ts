@@ -85,7 +85,6 @@ export const psuHeaderMapping = {
   brand_name: "Brand Name",
   efficiency_rating: "Efficiency Rating",
   form_factor: "Form Factor",
-  height_mm: "Height (mm)",
   modularity: "Modularity",
   wattage: "Wattage",
 };

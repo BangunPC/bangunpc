@@ -83,18 +83,18 @@ export const components = [
       />
     ),
   },
-  {
-    name: "CPU Cooler",
-    enum: ComponentCategoryEnum.Cooler,
-    icon: (
-      <Image
-        width={120}
-        height={120}
-        src="/images/produk_cpu_coolers.svg"
-        alt="produk_cpu_cooler"
-      />
-    ),
-  },
+  // {
+  //   name: "CPU Cooler",
+  //   enum: ComponentCategoryEnum.Cooler,
+  //   icon: (
+  //     <Image
+  //       width={120}
+  //       height={120}
+  //       src="/images/produk_cpu_coolers.svg"
+  //       alt="produk_cpu_cooler"
+  //     />
+  //   ),
+  // },
   {
     name: "Video Card / GPU",
     enum: ComponentCategoryEnum.GPU,
@@ -395,7 +395,7 @@ export function Navbar() {
                     Kategori Lain
                   </Button>
                   <div className="flex w-full flex-row gap-2">
-                    <div className="hidden flex-col rounded-lg bg-white p-2 shadow-bm dark:bg-black tablet:flex">
+                    {/* <div className="hidden flex-col rounded-lg bg-white p-2 shadow-bm dark:bg-black tablet:flex">
                       <span className="bold mb-2 border-b border-b-white">
                         Peripherals
                       </span>
@@ -422,7 +422,7 @@ export function Navbar() {
                           </Button>
                         </Link>
                       ))}
-                    </div>
+                    </div> */}
                     <div className="w-full rounded-lg bg-white p-4 shadow-bm dark:bg-black tablet:w-[526px] tablet:grid-cols-3 tablet:tablet:grid-rows-3 tablet:p-8">
                       <div className="m-auto grid w-fit grid-cols-2 gap-3 tablet:grid-cols-3 tablet:tablet:grid-rows-3">
                         {components.map((item) => (
