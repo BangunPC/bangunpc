@@ -254,7 +254,7 @@ export function KategoriClient({
       
       <div className="flex flex-col tablet:flex-row tablet:gap-8">
         {/* Sidebar */}
-        <aside className={`${hideSidebar ? "hidden" : "block"} w-full tablet:max-w-xs desktop:block`}>
+        {/* <aside className={`${hideSidebar ? "hidden" : "block"} w-full tablet:max-w-xs desktop:block`}>
           <CatalogueSidebar 
             price={100000}
             totalComponents={2} 
@@ -310,7 +310,7 @@ export function KategoriClient({
               Terapkan Filter
             </Button>
           </CatalogueSidebar>
-        </aside>
+        </aside> */}
         
         {/* Main Content */}
         <main className={`flex-1 ${hideSidebar ? "block" : "hidden"} tablet:block`}>
