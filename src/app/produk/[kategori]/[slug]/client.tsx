@@ -362,7 +362,9 @@ const KategoriSlugClient = ({
           return info.value.map((item: any, i: number) => (
             <div key={i}>
               {typeof item === 'string' && isUrl(item) 
-                ? <Link className="text-blue-500" href={item}>{item}</Link> 
+                ? <Link 
+                  target="_blank"
+                  className="text-blue-500" href={item}>{item}</Link> 
                 : item}
               <br />
             </div>
@@ -378,7 +380,8 @@ const KategoriSlugClient = ({
         if (typeof info.value === 'string') {
           // Check for URL
           if (isUrl(info.value)) {
-            return <Link className="text-blue-500" href={info.value}>{info.value}</Link>;
+            return <Link 
+              target="_blank"className="text-blue-500" href={info.value}>{info.value}</Link>;
           }
           
           // Check for newlines in string
