@@ -2770,6 +2770,9 @@ export type Database = {
           slug: string | null
           spec_url: string | null
           wattage: number | null
+          cybenetics_verification: string | null
+          cybenetics_efficiency_rating: string | null
+          cybenetics_noise_rating: string | null
         }
         Relationships: []
       }
