@@ -15,12 +15,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn, componentImage } from "@/lib/utils";
-import { CatalogueSidebar, SidebarSection } from "./catalogue-sidebar";
 import { createBuildSession, getBuildSessionId, insertBuildSessionComponent } from "@/lib/build-session";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useDebounce } from "@/hooks/use-debounce";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import {  ArrowUp, ArrowDown } from "lucide-react";
 import { useMobile } from "@/hooks/use-mobile";
 // import { getMotherboard } from "@/lib/dal/component/motherboard";
 
@@ -554,7 +553,7 @@ const DesktopTable = ({
                                   alt={`Gambar ${component.product_name}`}
                                   width={64}
                                   height={64}
-                                  className="h-full w-full object-contain p-1"
+                                  className="h-full w-full object-contain"
                                 />
                               </div>
                             </div>
@@ -569,7 +568,7 @@ const DesktopTable = ({
                               alt={`Preview ${component.product_name}`}
                               width={256}
                               height={256}
-                              className="object-contain p-2"
+                              className="object-contain"
                             />
                           </div>
                         </div>
