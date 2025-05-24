@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { categoryEnumToTitle, ComponentCategoryEnum } from "@/lib/db";
 import { isUrl } from "@/lib/utils";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 // TODO: fix colors
 
@@ -54,7 +55,7 @@ const KategoriSlugClient = ({
     }
   }, [review_urls]);
   return (
-    <div className="m-auto mt-24 flex max-w-3xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
+    <div className="m-auto mt-24 flex max-w-4xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
       <div className="flex flex-col gap-2 tablet:flex-row tablet:gap-8">
         <div className="pb-0 tablet:max-w-sm tablet:pb-6">
           <div className="mx-auto aspect-square max-w-sm items-center overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40 dark:border-[#3d434e]">
@@ -82,7 +83,7 @@ const KategoriSlugClient = ({
                   id="compimg"
                   src={imageUrls[0]}
                   alt={`Gambar ${name}`}
-                  className="object-fill"
+                  className="object-fill bg-white"
                   width={360}
                   height={360}
                 ></img>
@@ -90,7 +91,7 @@ const KategoriSlugClient = ({
             </div>
           </div>
 
-          <div className="my-4 grid auto-rows-fr grid-cols-4 justify-center gap-1 tablet:grid-cols-5">
+          {/* <div className="my-4 grid auto-rows-fr grid-cols-4 justify-center gap-1 tablet:grid-cols-5">
             {imageUrls.map((url: string | undefined) => (
               <img
                 onClick={() => {
@@ -109,9 +110,45 @@ const KategoriSlugClient = ({
                 height={240}
               ></img>
             ))}
-          </div>
+          </div> */}
+          <Carousel className="w-full max-w-sm my-4">
+            <CarouselContent className="-ml-1">
+              {imageUrls.map((url: string | undefined) => (
+                <CarouselItem key={url} className="pl-1 md:basis-1/2 lg:basis-1/5">
+                  <img
+                    onClick={() => {
+                      const compimg = document.getElementById(
+                        "compimg",
+                      ) as HTMLImageElement | null;
+                      if (compimg && url) {
+                        compimg.src = url;
+                      }
+                    }}
+                    src={url}
+                    alt={`Gambar ${name}`}
+                    className="aspect-square object-fill bg-white rounded-md border border-[#1C1F24] border-opacity-40  hover:cursor-pointer hover:bg-slate-200 dark:border-[#3d434e]"
+                    width={240}
+                    height={240}
+                  ></img>
+                </CarouselItem>
+            ))}
+              {/* {Array.from({ length: 5 }).map((_, index) => (
+                <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1">
+                    <Card>
+                      <CardContent className="flex aspect-square items-center justify-center p-6">
+                        <span className="text-2xl font-semibold">{index + 1}</span>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))} */}
+            </CarouselContent>
+            <CarouselPrevious variant='secondary'/>
+            <CarouselNext variant='secondary'/>
+          </Carousel>
         </div>
-        <div className="m-auto flex w-full flex-col gap-2 pt-0 tablet:m-0 tablet:max-w-4xl tablet:pt-6">
+        <div className="m-auto flex flex-col gap-2 pt-0 tablet:m-0 tablet:max-w-4xl">
           <header>
             <h1 className="text-4xl tablet:font-bold">{name}</h1>
           </header>
