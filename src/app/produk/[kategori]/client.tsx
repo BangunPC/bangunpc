@@ -180,23 +180,22 @@ export function KategoriClient({
     router.push(`?${params.toString()}`);
   };
 
-  const handleApplyFilters = () => {
-    const params = new URLSearchParams(window.location.search);
+  // const handleApplyFilters = () => {
+  //   const params = new URLSearchParams(window.location.search);
     
-    // Preserve iframe parameter
-    if (isSimulasi) {
-      params.set('kategori', searchParams.get('kategori') ?? '');
-    }
+  //   // Preserve iframe parameter
+  //   if (isSimulasi) {
+  //     params.set('kategori', searchParams.get('kategori') ?? '');
+  //   }
     
-    if (minPrice) params.set('minPrice', minPrice.toString());
-    if (maxPrice) params.set('maxPrice', maxPrice.toString());
-    params.set('page', '1');
-    router.push(`?${params.toString()}`);
-  };
+  //   if (minPrice) params.set('minPrice', minPrice.toString());
+  //   if (maxPrice) params.set('maxPrice', maxPrice.toString());
+  //   params.set('page', '1');
+  //   router.push(`?${params.toString()}`);
+  // };
 
   const handleAddComponent = async (product_id: number | null) => {
     if (!product_id) {
-      console.error("Product ID is missing");
       return;
     } 
   

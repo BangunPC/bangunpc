@@ -108,15 +108,11 @@ export const v_power_supplies = [
 
 export const v_internal_storages = [
   ["brand_name", "Brand Name"],
+  ["type", "Type"],
   ["capacity_gb", "Capacity (GB)"],
-  ["description", "Description"],
   ["form_factor", "Form Factor"],
   ["interface", "Interface"],
-  ["lowest_price", "Lowest Price"],
-  ["product_id", "Product ID"],
-  ["product_name", "Product Name"],
   ["read_speed_mbs", "Read Speed (MB/s)"],
-  ["type", "Type"],
   ["write_speed_mbs", "Write Speed (MB/s)"],
 ];
 export const v_monitors = [

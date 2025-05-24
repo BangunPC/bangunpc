@@ -62,7 +62,6 @@ const KategoriSlugClient = ({
 
   const handleAddComponent = async (product_id: number | null) => {
       if (!product_id) {
-        console.error("Product ID is missing");
         return;
       } 
     
