@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { categoryEnumToTitle, ComponentCategoryEnum } from "@/lib/db";
 import { isUrl } from "@/lib/utils";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { toast } from "sonner";
 
 // TODO: fix colors
 
@@ -148,13 +149,13 @@ const KategoriSlugClient = ({
             <CarouselNext variant='secondary'/>
           </Carousel>
         </div>
-        <div className="m-auto flex flex-col gap-2 pt-0 tablet:m-0 tablet:max-w-4xl">
+        <div className="flex flex-col gap-2 pt-0 ml-6">
           <header>
             <h1 className="text-4xl tablet:font-bold">{name}</h1>
           </header>
           <main className="flex flex-col gap-2">
             {lowest_price && (
-              <span className="">
+              <span className="flex items-center gap-2 text-lg font-semibold">
                 <span className="text-4xl font-bold text-primary">
                   Rp {lowest_price}
                 </span>
@@ -164,7 +165,7 @@ const KategoriSlugClient = ({
             <span>
               Kategori:{" "}
               <Link className="text-primary" href={"/produk/" + type} >
-                <span className="text-base hover:underline">
+                <span className="text-lg font-semibold">
                   {categoryEnumToTitle[category]}
                 </span>
               </Link>
@@ -178,45 +179,54 @@ const KategoriSlugClient = ({
               </Button> */}
               <Button
                 variant="default"
-                className="flex items-center justify-center rounded-lg p-2 text-base font-normal text-white tablet:block tablet:w-fit"
-                onClick={() => alert("Coming soon")}
+                className="flex items-center justify-center rounded-lg p-2 px-4 text-base font-normal text-white hover:bg-primary/80 tablet:block tablet:w-fit"
+                onClick={
+                  () => alert("Coming soon")}
               >
-                + Tambahkan ke simulasi
+                + Tambah ke simulasi
               </Button>
             </div>
-            <div className="flex flex-row gap-6">
-              <Button
-                variant="ghost"
-                className="flex items-center gap-2 font-semibold"
+            <div className="flex flex-row gap-6 mt-4">
+              <div
+                className="flex gap-2 font-semibold hover:cursor-pointer"
                 onClick={() => alert("Coming Soon")}
               >
                 <Heart className="fill-none " width="24" height="24" />
-                <span className="text-lg">Tambah ke wishlist</span>
-              </Button>
-              <Button
-                variant="ghost"
-                className="flex items-center gap-2 font-semibold"
+                <span className="text-lg">Wishlist</span>
+              </div>
+              <div
+                className="flex items-center gap-2 font-semibold hover:cursor-pointer"
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href).then(
                     () => {
-                      alert("Link copied to clipboard");
+                      toast("Link berhasil disalin", {
+                        icon: "📋",
+                        position: "top-center",
+                        description: "Anda dapat membagikan link ini ke teman Anda.",
+                        duration: 4000,
+                      })
                     },
                     (err) => {
-                      console.error("Failed to copy link:", err);
+                      toast.error("Gagal menyalin link", {
+                        icon: "❌",
+                        position: "top-center",
+                        description: "Terjadi kesalahan saat menyalin link.",
+                        duration: 4000,
+                      })
                     },
                   );
                 }}
               >
                 <Send className="fill-none" width="24" height="24" />
                 <span className="text-lg">Bagikan</span>
-              </Button>
+              </div>
             </div>
             <Accordion type="single" collapsible defaultValue="product-details">
               <AccordionItem value="product-details">
                 <AccordionTrigger className="w-full text-3xl font-semibold">
                   Tentang Produk
                 </AccordionTrigger>
-                <AccordionContent className="mt-4 gap-2 leading-[120%]">
+                <AccordionContent className="mt-4 gap-2 leading-[120%] text-base">
                   {/* @ts-expect-error */}
                   {data.description.split("\n").map((line, index) => (
                     <React.Fragment key={index}>
@@ -353,7 +363,7 @@ const KategoriSlugClient = ({
       </Accordion>
       <Accordion type="single" collapsible defaultValue="spec-details">
         <AccordionItem value="spec-details">
-        <div className="relative">
+        <div className="relative mb-4">
           <AccordionTrigger className="flex w-full justify-start text-3xl font-semibold">
             Spesifikasi
             <span className="mr-auto" />
