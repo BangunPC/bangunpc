@@ -429,7 +429,7 @@ const Header = ({
         Pilih {categoryEnumToTitle[category]}
       </h1>
       <p className="mt-2 text-base font-medium text-gray-600 dark:text-gray-300 sm:text-lg">
-        Tersedia <span className="font-semibold">{itemCount}</span> produk siap kamu pilih
+        Tersedia <span className="font-semibold">{itemCount}</span> produk yang bisa Anda pilih
       </p>
     </div>
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { Banknote, Save, Trash, Undo2 } from "lucide-react";
+import { Banknote, Save, Trash2, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -38,7 +38,7 @@ const headers = [
   "Kategori",
   "Komponen yang dipilih", 
   "Harga",
-  "Aksi",
+  "",
 ];
 
 interface SimulasiClientProps {
@@ -86,7 +86,7 @@ export function SimulasiClient({
     {
       kategori: ComponentCategoryEnum.Memory,
       icon: <KategoriRam width="27" height="27" />,
-      title: "Memory",
+      title: "Memory (RAM)",
       components: buildData?.memories ?? [],
       iframe: `/produk/memory`,
     },
@@ -236,20 +236,17 @@ export function SimulasiClient({
             </thead>
             <tbody>
               {components.map((item, index) => {
-                const bottomSpace = (item.title === "Memory" ||
+                const bottomSpace = (item.title === "Memory (RAM)" ||
                   item.title === "Storage") && <div className="h-[38px]" />;
                 return (
                   <tr
                     key={index}
                     className="h-12 border-b border-zinc-500"
                   >
-                    <td className="flex font-bold dark:text-blue-500">
-                      <div className="my-4 flex flex-row items-center">
-                        <span className="rounded-sm dark:bg-white">
-                          {item.icon}
-                        </span>
+                    <td className="font-bold text-sky-500">
+                      <Link href={'/produk/' + categoryEnumToSlug[item.kategori]}className="my-4 flex flex-row items-center">
                         <span className="ml-2">{item.title}</span>
-                      </div>
+                      </Link>
                     </td>
                     <td>
                       <div className="flex flex-col gap-2">
@@ -270,7 +267,7 @@ export function SimulasiClient({
                                     alt={component.name}
                                   />
                                 </TooltipTrigger>
-                                <TooltipContent side="right" className="p-0 border-none shadow-none ml-6">
+                                <TooltipContent side="right" className="p-0 border-none shadow-none">
                                   <div className="relative w-64 h-64 rounded-md overflow-hidden">
                                     <div className="absolute inset-0 flex items-center justify-center bg-white">
                                       <Image
@@ -289,7 +286,7 @@ export function SimulasiClient({
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <span className="ml-4 font-normal text-lg">{component.name}</span>
+                                    <span className="ml-4 font-semibold  text-base">{component.name}</span>
                                 </TooltipTrigger>
                                 <TooltipContent side="top" className="max-w-xs">
                                   <p>{component.name ?? "-"}</p>
@@ -308,7 +305,7 @@ export function SimulasiClient({
                           </Button>
                         ) : (
                           <>
-                            {(item.title === "Memory" || item.title === "Storage") && (
+                            {(item.title === "Memory (RAM)" || item.title === "Storage") && (
                               <Button
                                 variant="outline"
                                 className="w-fit text-base my-2 bg-slate-100 text-black hover:bg-zinc-200 hover:text-black"
@@ -325,7 +322,7 @@ export function SimulasiClient({
                       <div className="flex flex-col gap-6">
                         {item.components.map((component,index) => (
                           <div key={index} className="flex h-[48px] flex-row items-center">
-                            <span className="whitespace-nowrap font-normal text-lg">
+                            <span className="whitespace-nowrap font-normal text-base">
                               {component.price
                                 ? `Rp ${component.price.toLocaleString("id-ID")}`
                                 : "-"}
@@ -343,9 +340,9 @@ export function SimulasiClient({
                             className="flex flex-row items-center gap-1 my-2"
                           >
                             <AlertDialog>
-                              <AlertDialogTrigger variant="destructive" className="h-10 items-center text-white">
-                                <Trash size={16} className="mr-2 inline-block" />
-                                Hapus
+                              <AlertDialogTrigger variant="ghost" className="h-10 items-center">
+                                <Trash2 size={16} 
+                                color="red" className="inline-block" />
                               </AlertDialogTrigger>
                               <AlertDialogContent>
                                 <AlertDialogHeader>
