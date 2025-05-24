@@ -439,3 +439,15 @@ export async function deleteBuildSession() {
   cookieStore.delete(BUILD_SESSION_COOKIE_NAME)
   return true
 }
+
+export const insertOrCreateSession = async (componentCategoryEnum: ComponentCategoryEnum,  product_id: number) => {
+  const buildId = await getBuildSessionId();
+
+  if (buildId) {
+    const result = await insertBuildSessionComponent(componentCategoryEnum, { product_id });
+    return result?.error;
+  } else {
+    const result = await createBuildSession(componentCategoryEnum, { product_id });
+    return result?.error;
+  }
+};

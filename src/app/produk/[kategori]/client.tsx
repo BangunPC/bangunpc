@@ -15,12 +15,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn, componentImage } from "@/lib/utils";
-import { createBuildSession, getBuildSessionId, insertBuildSessionComponent } from "@/lib/build-session";
+import { createBuildSession, getBuildSessionId, insertOrCreateSession, insertBuildSessionComponent } from "@/lib/build-session";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useDebounce } from "@/hooks/use-debounce";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {  ArrowUp, ArrowDown } from "lucide-react";
 import { useMobile } from "@/hooks/use-mobile";
+import { toast } from "sonner";
 // import { getMotherboard } from "@/lib/dal/component/motherboard";
 
 export function KategoriClient({
@@ -192,31 +193,24 @@ export function KategoriClient({
     params.set('page', '1');
     router.push(`?${params.toString()}`);
   };
-  const handleInsertOrCreateSession = async (product_id: number) => {
-    const buildId = await getBuildSessionId();
-  
-    if (buildId) {
-      const result = await insertBuildSessionComponent(componentCategoryEnum, { product_id });
-      return result?.error;
-    } else {
-      const result = await createBuildSession(componentCategoryEnum, { product_id });
-      return result?.error;
-    }
-  };
 
-  const handleAddComponent = async (component: ComponentDetail) => {
-    const { product_id } = component;
-  
+  const handleAddComponent = async (product_id: number | null) => {
     if (!product_id) {
       console.error("Product ID is missing");
       return;
-    }
+    } 
   
     try {
-      const error = await handleInsertOrCreateSession(product_id);
+      const error = await insertOrCreateSession(componentCategoryEnum, product_id);
   
       if (!error) {
         router.replace('/simulasi')
+
+        toast.success(`Berhasil menambahkan ${kategori} baru ke simulasi`, {
+            icon: "✅",
+            position: "top-right",
+            duration: 4000,
+          });
       } else {
         console.error("Error occurred:", error);
       }
@@ -458,7 +452,7 @@ type TableType = {
   headers: string[];
   kategori: string;
   isIframe: boolean;
-  onAddComponent: (component: ComponentDetail) => Promise<void>;
+  onAddComponent: (product_id: number| null) => Promise<void>;
   onSuccess?: () => void;
   onSort?: (column: string) => void;
 };
@@ -608,7 +602,7 @@ const DesktopTable = ({
                     variant="default"
                     onClick={async (e) => {
                       e.stopPropagation();
-                      await onAddComponent(component);
+                      await onAddComponent(component.product_id);
                     }}
                     className="w-full text-white sm:w-auto"
                   >
@@ -732,7 +726,7 @@ const MobileTable = ({
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    onAddComponent(component);
+                    onAddComponent(component.product_id);
                   }}
                 >
                   Tambah

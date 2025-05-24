@@ -15,6 +15,8 @@ import { categoryEnumToTitle, ComponentCategoryEnum } from "@/lib/db";
 import { isUrl } from "@/lib/utils";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { toast } from "sonner";
+import { insertOrCreateSession } from "@/lib/build-session";
+import { useRouter } from "next/navigation";
 
 // TODO: fix colors
 
@@ -41,6 +43,8 @@ const KategoriSlugClient = ({
   spec_url: string | undefined;
   review_urls: string[] | undefined;
 }) => {
+  const router = useRouter();
+
   const [urls, setUrls] = useState<string[]>([]);
   useEffect(() => {
     if(review_urls) {
@@ -55,6 +59,31 @@ const KategoriSlugClient = ({
       setUrls(processedUrls);
     }
   }, [review_urls]);
+
+  const handleAddComponent = async (product_id: number | null) => {
+      if (!product_id) {
+        console.error("Product ID is missing");
+        return;
+      } 
+    
+      try {
+        const error = await insertOrCreateSession(category, product_id);
+    
+        if (!error) {
+          router.replace('/simulasi')
+
+          toast.success(`Berhasil menambahkan ${categoryEnumToTitle[category]} baru ke simulasi`, {
+            icon: "✅",
+            position: "top-right",
+            duration: 4000,
+          });
+        } else {
+          console.error("Error occurred:", error);
+        }
+      } catch (error) {
+        console.error("An unexpected error occurred:", error);
+      }
+    };
   return (
     <div className="m-auto mt-24 flex max-w-4xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
       <div className="flex flex-col md:flex-row">
@@ -144,7 +173,7 @@ const KategoriSlugClient = ({
               <Button
                 variant="default"
                 className="flex items-center justify-center rounded-lg p-2 px-4 text-base font-normal text-white hover:bg-primary/80"
-                onClick={() => alert("Coming soon")}
+                onClick={() => handleAddComponent(data.product_id)}
               >
                 + Tambah ke simulasi
               </Button>
@@ -443,3 +472,4 @@ const KategoriSlugClient = ({
 };
 
 export default KategoriSlugClient;
+
