@@ -57,13 +57,13 @@ const KategoriSlugClient = ({
   }, [review_urls]);
   return (
     <div className="m-auto mt-24 flex max-w-4xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
-      <div className="flex flex-col gap-2 tablet:flex-row tablet:gap-8">
-        <div className="pb-0 tablet:max-w-sm tablet:pb-6">
-          <div className="mx-auto aspect-square max-w-sm items-center overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40 dark:border-[#3d434e]">
+      <div className="flex flex-col md:flex-row">
+        {/* Image Section - Left Side */}
+        <div className="w-full md:w-1/2 lg:w-2/5">
+          <div className="aspect-square max-w-sm overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40 dark:border-[#3d434e]">
             <div
               className="flex h-full w-full items-center justify-center"
               onMouseMove={(event: React.MouseEvent<HTMLDivElement>) => {
-                // zoom the image at mouse position
                 const rect = event.currentTarget.getBoundingClientRect();
                 const translate = {
                   x: event.clientX - rect.x - rect.width / 2,
@@ -91,31 +91,10 @@ const KategoriSlugClient = ({
               )}
             </div>
           </div>
-
-          {/* <div className="my-4 grid auto-rows-fr grid-cols-4 justify-center gap-1 tablet:grid-cols-5">
-            {imageUrls.map((url: string | undefined) => (
-              <img
-                onClick={() => {
-                  const compimg = document.getElementById(
-                    "compimg",
-                  ) as HTMLImageElement | null;
-                  if (compimg && url) {
-                    compimg.src = url;
-                  }
-                }}
-                key={url}
-                src={url}
-                alt={`Gambar ${name}`}
-                className="aspect-square rounded-md border border-[#1C1F24] border-opacity-40 object-scale-down hover:cursor-pointer hover:bg-zinc-200 dark:border-[#3d434e] dark:hover:bg-zinc-800"
-                width={240}
-                height={240}
-              ></img>
-            ))}
-          </div> */}
           <Carousel className="w-full max-w-sm my-4">
             <CarouselContent className="-ml-1">
               {imageUrls.map((url: string | undefined) => (
-                <CarouselItem key={url} className="pl-1 md:basis-1/2 lg:basis-1/5">
+                <CarouselItem key={url} className="pl-1 md:basis-1/5 lg:basis-1/5">
                   <img
                     onClick={() => {
                       const compimg = document.getElementById(
@@ -127,33 +106,24 @@ const KategoriSlugClient = ({
                     }}
                     src={url}
                     alt={`Gambar ${name}`}
-                    className="aspect-square object-fill bg-white rounded-md border border-[#1C1F24] border-opacity-40  hover:cursor-pointer hover:bg-slate-200 dark:border-[#3d434e]"
+                    className="aspect-square object-fill bg-white rounded-md border border-[#1C1F24] border-opacity-40 hover:cursor-pointer hover:bg-slate-200 dark:border-[#3d434e]"
                     width={240}
                     height={240}
                   ></img>
                 </CarouselItem>
-            ))}
-              {/* {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
-                    <Card>
-                      <CardContent className="flex aspect-square items-center justify-center p-6">
-                        <span className="text-2xl font-semibold">{index + 1}</span>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))} */}
+              ))}
             </CarouselContent>
             <CarouselPrevious variant='secondary'/>
             <CarouselNext variant='secondary'/>
           </Carousel>
         </div>
-        <div className="flex flex-col gap-2 pt-0 ml-6">
+
+        {/* Product Info Section - Right Side */}
+        <div className="w-full md:w-1/2 lg:w-3/5">
           <header>
-            <h1 className="text-4xl tablet:font-bold">{name}</h1>
+            <h1 className="text-4xl font-bold">{name}</h1>
           </header>
-          <main className="flex flex-col gap-2">
+          <main className="flex flex-col gap-4 mt-4">
             {lowest_price && (
               <span className="flex items-center gap-2 text-lg font-semibold">
                 <span className="text-4xl font-bold text-primary">
@@ -164,24 +134,17 @@ const KategoriSlugClient = ({
             )}
             <span>
               Kategori:{" "}
-              <Link className="text-primary" href={"/produk/" + type} >
+              <Link className="text-primary" href={"/produk/" + type}>
                 <span className="text-lg font-semibold">
                   {categoryEnumToTitle[category]}
                 </span>
               </Link>
             </span>
             <div className="flex flex-row gap-2">
-              {/* <Button
-                variant="success"
-                className="flex justify-center rounded-lg px-2 py-2 text-sm font-normal text-white tablet:block tablet:w-fit"
-              >
-                Beli Sekarang
-              </Button> */}
               <Button
                 variant="default"
-                className="flex items-center justify-center rounded-lg p-2 px-4 text-base font-normal text-white hover:bg-primary/80 tablet:block tablet:w-fit"
-                onClick={
-                  () => alert("Coming soon")}
+                className="flex items-center justify-center rounded-lg p-2 px-4 text-base font-normal text-white hover:bg-primary/80"
+                onClick={() => alert("Coming soon")}
               >
                 + Tambah ke simulasi
               </Button>
@@ -191,7 +154,7 @@ const KategoriSlugClient = ({
                 className="flex gap-2 font-semibold hover:cursor-pointer"
                 onClick={() => alert("Coming Soon")}
               >
-                <Heart className="fill-none " width="24" height="24" />
+                <Heart className="fill-none" width="24" height="24" />
                 <span className="text-lg">Wishlist</span>
               </div>
               <div
