@@ -19,6 +19,10 @@ import { insertOrCreateSession } from "@/lib/build-session";
 import { useRouter } from "next/navigation";
 
 // TODO: fix colors
+export type ComponentInfo = {
+    title: string | undefined;
+    value: string | number | boolean | string[] | null | undefined;
+}[] | undefined
 
 const KategoriSlugClient = ({
   name,
@@ -29,26 +33,22 @@ const KategoriSlugClient = ({
   lowest_price,
   type,
   category,
-  spec_url,
-  review_urls,
 }: {
   name: string;
   data: any;
   product_details: any;
   imageUrls: string[];
-  componentInfo: any[];
+  componentInfo: ComponentInfo;
   lowest_price: string | undefined
   type: string;
   category: ComponentCategoryEnum;
-  spec_url: string | undefined;
-  review_urls: string[] | undefined;
 }) => {
   const router = useRouter();
 
   const [urls, setUrls] = useState<string[]>([]);
   useEffect(() => {
-    if(review_urls) {
-      const processedUrls = review_urls?.map((url) => {
+    if(data.review_urls) {
+      const processedUrls = data.review_urls?.map((url: string) => {
         try {
           return `https://www.youtube.com/embed${new URL(url).pathname}`;
         } catch {
@@ -58,7 +58,7 @@ const KategoriSlugClient = ({
       
       setUrls(processedUrls);
     }
-  }, [review_urls]);
+  }, [data.review_urls]);
 
   const handleAddComponent = async (product_id: number | null) => {
       if (!product_id) {
@@ -360,9 +360,9 @@ const KategoriSlugClient = ({
             <span className="mr-auto" />
           </AccordionTrigger>
           
-          {spec_url && (
+          {data.spec_url && (
             <Link
-              href={spec_url}
+              href={data.spec_url}
               target="_blank"
               rel="noopener noreferrer"
               className="absolute left-[140px] top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-md border border-neutral-400
@@ -384,68 +384,68 @@ const KategoriSlugClient = ({
               </thead>
               <tbody>
                 {componentInfo?.map((info: any, index) => (
-  <tr
-    key={"componentinfo-" + index}
-    className="border-b last:border-none"
-  >
-    <td className="whitespace-nowrap border-r p-4">
-      {info.title}
-    </td>
-    <td className="w-full p-4 font-semibold">
-      {(() => {
-        if (!info.value && info.value !== 0 && info.value !== false) return "N/A";
-        
-        // Handle array case
-        if (Array.isArray(info.value)) {
-          return info.value.map((item: any, i: number) => (
-            <div key={i}>
-              {typeof item === 'string' && isUrl(item) 
-                ? <Link 
-                  target="_blank"
-                  className="text-blue-500" href={item}>{item}</Link> 
-                : item}
-              <br />
-            </div>
-          ));
-        }
-        
-        // Handle object case
-        if (typeof info.value === 'object') {
-          return JSON.stringify(info.value);
-        }
-        
-        // Handle string case
-        if (typeof info.value === 'string') {
-          // Check for URL
-          if (isUrl(info.value)) {
-            return <Link 
-              target="_blank"className="text-blue-500" href={info.value}>{info.value}</Link>;
-          }
-          
-          // Check for newlines in string
-          if (info.value.includes('\n')) {
-            return (
-              <div className="whitespace-pre-line">
-                {info.value.split('\n').map((line: string, i: number) => (
-                  <div key={i}>{line}</div>
+                  <tr
+                    key={"componentinfo-" + index}
+                    className="border-b last:border-none"
+                  >
+                    <td className="whitespace-nowrap border-r p-4">
+                      {info.title}
+                    </td>
+                    <td className="w-full p-4 font-semibold">
+                      {(() => {
+                        if (!info.value && info.value !== 0 && info.value !== false) return "N/A";
+                        
+                        // Handle array case
+                        if (Array.isArray(info.value)) {
+                          return info.value.map((item: any, i: number) => (
+                            <div key={i}>
+                              {typeof item === 'string' && isUrl(item) 
+                                ? <Link 
+                                  target="_blank"
+                                  className="text-blue-500" href={item}>{item}</Link> 
+                                : item}
+                              <br />
+                            </div>
+                          ));
+                        }
+                        
+                        // Handle object case
+                        if (typeof info.value === 'object') {
+                          return JSON.stringify(info.value);
+                        }
+                        
+                        // Handle string case
+                        if (typeof info.value === 'string') {
+                          // Check for URL
+                          if (isUrl(info.value)) {
+                            return <Link 
+                              target="_blank"className="text-blue-500" href={info.value}>{info.value}</Link>;
+                          }
+                          
+                          // Check for newlines in string
+                          if (info.value.includes('\n')) {
+                            return (
+                              <div className="whitespace-pre-line">
+                                {info.value.split('\n').map((line: string, i: number) => (
+                                  <div key={i}>{line}</div>
+                                ))}
+                              </div>
+                            );
+                          }
+                        }
+                        
+                        // Default case (numbers, booleans, etc)
+                        return info.value.toString();
+                      })()}
+                    </td>
+                  </tr>
                 ))}
-              </div>
-            );
-          }
-        }
-        
-        // Default case (numbers, booleans, etc)
-        return info.value.toString();
-      })()}
-    </td>
-  </tr>
-))}
               </tbody>
             </table>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      {(review_urls?.length ?? -1) > 0 && (
+      {(data.review_urls?.length ?? -1) > 0 && (
         <Accordion type="single" collapsible defaultValue="item-1">
           <AccordionItem value="item-1">
             <AccordionTrigger className="text-3xl font-semibold">

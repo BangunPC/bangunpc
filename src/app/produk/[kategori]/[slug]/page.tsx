@@ -78,8 +78,6 @@ export default async function Page(
       lowest_price={lowest_price}
       type={kategori}
       category={categoryEnum}
-      spec_url={componentDetail?.spec_url!}
-      review_urls={componentDetail?.review_urls!}
     />
   );
 }
