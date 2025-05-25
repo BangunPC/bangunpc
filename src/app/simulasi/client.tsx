@@ -233,12 +233,12 @@ export function SimulasiClient({
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Tidak</AlertDialogCancel>
                       <AlertDialogAction 
                         variant="destructive"
                         onClick={handleClear}>
                         Yakin
                     </AlertDialogAction>
+                      <AlertDialogCancel>Tidak</AlertDialogCancel>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -382,12 +382,12 @@ export function SimulasiClient({
                                   </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
-                                  <AlertDialogCancel>Tidak</AlertDialogCancel>
                                   <AlertDialogAction 
                                     variant="destructive"
                                     onClick={() => handleRemoveComponent(component, item.kategori)}>
                                     Yakin
                                   </AlertDialogAction>
+                                  <AlertDialogCancel>Tidak</AlertDialogCancel>
                                 </AlertDialogFooter>
                               </AlertDialogContent>
                             </AlertDialog>
