@@ -32,6 +32,7 @@ export function KategoriClient({
   page = 1,
   perPage = 20,
   total = 0,
+  compatibilityCheck,
   // initialSearch = '',
   // initialMinPrice,
   // initialMaxPrice,
@@ -46,6 +47,7 @@ export function KategoriClient({
   initialSearch?: string
   initialMinPrice?: number
   initialMaxPrice?: number
+  compatibilityCheck?: boolean
 }) {
   const componentCategoryEnum = categorySlugToEnum[kategori]!;
   const router = useRouter();
@@ -440,7 +442,7 @@ const Header = ({
         placeholder="Cari produk..."
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
-        className="w-full tablet:w-64 rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+        className="w-full tablet:w-64 rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
       />
     </div>
   </div>
