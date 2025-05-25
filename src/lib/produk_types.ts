@@ -31,7 +31,7 @@ export const v_cpus = [
   ["total_thread", "Thread", ""],
   ["base_clock_ghz", "Base Clock", "GHz"],
   ["max_clock_ghz", "Max Clock", "GHz"],
-  ["base_power_watt", "Base Power", "GHz"],
+  ["base_power_watt", "Base Power", "watt"],
   ["max_power_watt", "Max Power", "watt"],
   ["max_memory_channel", "Max Memory Channel", ""],
   ["max_memory_gb", "Max Memory Size", "GB"],
