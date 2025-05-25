@@ -2504,6 +2504,7 @@ export type Database = {
       v_cpus: {
         Row: {
           base_clock_ghz: number | null
+          product_name: string | null
           base_power_watt: number | null
           brand_name: string | null
           code_name: string | null
@@ -2527,12 +2528,12 @@ export type Database = {
           pcie_generation: number | null
           performance_core: number | null
           product_id: number | null
-          product_name: string | null
           review_urls: string[] | null
           slug: string | null
           spec_url: string | null
           total_core: number | null
           total_thread: number | null
+          size_nm: string | null
         }
         Relationships: [
           {

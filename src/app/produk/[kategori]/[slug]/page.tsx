@@ -43,11 +43,23 @@ export default async function Page(
     productImage(componentDetail!.product_id!, image),
   );
 
-  const componentInfo = v_spec[kategori!]?.flatMap((v) => ({
-    title: v[1],
-    // @ts-expect-error
-    value: componentDetail[v[0]],
-  }));
+  const componentInfo = v_spec[kategori!]?.flatMap((v) => {
+    const specValue = v[0] !== undefined ? componentDetail[v[0] as keyof typeof componentDetail] : undefined;
+
+    let value 
+    
+    if (typeof specValue === 'number' && v[2] !== undefined) {
+      // If specValue is a number and v[2] is defined, append the unit
+      value = `${specValue} ${v[2]} `;
+    } else {
+      value = specValue;
+    }
+
+    return {
+      title: v[1],
+      value
+    };
+  });
 
   let lowest_price = undefined;
   if ((productDetails?.length ?? -1) > 0)

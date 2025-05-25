@@ -245,7 +245,7 @@ export function SimulasiClient({
                   >
                     <td className="font-bold text-sky-500">
                       <Link href={'/produk/' + categoryEnumToSlug[item.kategori]}className="my-4 flex flex-row items-center">
-                        <span className="ml-2">{item.title}</span>
+                        {item.title}
                       </Link>
                     </td>
                     <td>
