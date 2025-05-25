@@ -44,7 +44,7 @@ export const v_gpus = [
   ["brand_name", "Brand Name", ""],
   ["bus_interface", "Bus Interface", ""],
   ["chipset", "Chipset", ""],
-  ["core_count", "Core Count", ""],
+  ["core_count", "Core", ""],
   ["gpu_memory_type", "GPU Memory Type", ""],
   ["height_mm", "Height", "mm"],
   ["length_mm", "Length", "mm"],
@@ -69,19 +69,18 @@ export const v_memories = [
 ];
 
 export const v_motherboards = [
-  ["back_pannel_ports", "Back Panel Ports", ""],
   ["brand_name", "Brand Name", ""],
   ["chipset", "Chipset", ""],
   ["cpu_socket", "CPU Socket", ""],
-  ["cpu_socket_support", "CPU Socket Support", ""],
   ["form_factor", "Form Factor", ""],
-  ["memory_channel_count", "Memory Channel Count", ""],
+  ["back_pannel_ports", "Back Panel Ports", ""],
+  ["memory_channel_count", "Memory Channel", ""],
   ["memory_frequency_mhz", "Memory Frequency", "MHz"],
   ["max_memory_gb", "Max Memory", "GB"],
   ["memory_slot", "Memory Slot", ""],
   ["memory_type", "Memory Type", ""],
-  ["pcie_m2_slot", "PCIE M2 Slot", ""],
-  ["pcie_slots", "PCIE Slots", ""],
+  ["pcie_m2_slot", "PCIe M.2 NVME Slot", ""],
+  ["pcie_slots", "PCIe Slot", ""],
   ["sata3_slot", "SATA3 Slot", ""],
   ["wifi_network", "WiFi Network", ""],
 ];
@@ -105,7 +104,7 @@ export const v_power_supplies = [
   ["eps_4+4_pin_connector", "EPS 4+4 Pin Connector (CPU)", ""],
   ["sata_connector", "SATA Connector (Storage)", ""],
   ["molex_connector", "Molex Connector (Peripheral)", ""],
-  ["pcie_connector_list", "PCIE Connector List", ""],
+  ["pcie_connector_list", "PCIe Connector List", ""],
 ];
 
 export const v_internal_storages = [
