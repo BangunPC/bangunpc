@@ -428,7 +428,7 @@ const KategoriSlugClient = ({
                           // Check for newlines in string
                           if (info.value.includes('\n')) {
                             return (
-                              <div className="whitespace-pre-line bg-slate-800/50 p-2 rounded">
+                              <div className="whitespace-pre-line bg-slate-800/50 rounded">
                                 {info.value.split('\n').map((line: string, i: number) => (
                                   <div key={i}>{line || <br />}</div>
                                 ))}
