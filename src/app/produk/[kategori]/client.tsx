@@ -15,14 +15,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn, componentImage } from "@/lib/utils";
-import { createBuildSession, getBuildSessionId, insertOrCreateSession, insertBuildSessionComponent } from "@/lib/build-session";
+import { insertOrCreateSession } from "@/lib/build-session";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useDebounce } from "@/hooks/use-debounce";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {  ArrowUp, ArrowDown } from "lucide-react";
 import { useMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
-// import { getMotherboard } from "@/lib/dal/component/motherboard";
 
 export function KategoriClient({
   className,
@@ -396,7 +395,7 @@ const ComponentFallback = ({
         {keys.map((key, index) => (
           <div key={index} className="flex flex-col p-2">
             <div className="mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">{headers[index]}</div>
-            <div className="font-medium">{component[key] ?? "-"}</div>
+            <div className="font-medium">{component[key] ?? "N/A"}</div>
           </div>
         ))}
       </>
@@ -406,8 +405,8 @@ const ComponentFallback = ({
   return (
     <>
       {keys.map((key) => (
-        <td key={key} onClick={onClick} className="py-4 px-3">
-          {component[key] ?? "-"}
+        <td key={key} onClick={onClick} className={`py-4 px-3 ${component[key] ? '' : 'text-slate-500'}`}>
+          {component[key] ?? "N/A"}
         </td>
       ))}
     </>

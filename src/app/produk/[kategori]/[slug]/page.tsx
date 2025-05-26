@@ -1,7 +1,7 @@
 export const runtime = "edge";
 
 import { categorySlugToEnum } from "@/lib/db";
-import { v_spec } from "@/lib/produk_types";
+import { formatComponentSpec, v_spec } from "@/lib/produk_types";
 import { productImage } from "@/lib/utils";
 import KategoriSlugClient from "./client";
 import { getComponentProductDetail } from "@/lib/dal/product-detail"
@@ -33,33 +33,15 @@ export default async function Page(
 ) {
   const { slug, kategori } = await params;
   const categoryEnum = categorySlugToEnum[kategori]!;
-
-  //   const router = useRouter();
   const component = await getComponentProductDetail(slug, categoryEnum);
-
   const { componentDetail, productDetails } = component
-
   const imageUrls = componentDetail!.image_filenames!.map((image: string) =>
     productImage(componentDetail!.product_id!, image),
   );
 
-  const componentInfo = v_spec[kategori!]?.flatMap((v) => {
-    const specValue = v[0] !== undefined ? componentDetail[v[0] as keyof typeof componentDetail] : undefined;
-
-    let value 
-    
-    if (typeof specValue === 'number' && v[2] !== undefined) {
-      // If specValue is a number and v[2] is defined, append the unit
-      value = `${specValue} ${v[2]} `;
-    } else {
-      value = specValue;
-    }
-
-    return {
-      title: v[1],
-      value
-    };
-  });
+  const componentInfo = formatComponentSpec(
+    categoryEnum,
+    componentDetail)
 
   let lowest_price = undefined;
   if ((productDetails?.length ?? -1) > 0)

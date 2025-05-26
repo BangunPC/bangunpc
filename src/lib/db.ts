@@ -49,10 +49,12 @@ export const casingHeaderMapping = {
 };
 
 export const cpuHeaderMapping = {
+  cpu_socket: "Socket",
   total_core: "Total Core",
   base_clock_ghz: "Base Clock (GHz)",
   max_clock_ghz: "Max Clock (GHz)",
-  base_power_watt: "Base Power (Watt)",
+  l3_cache_mb: "L3 Cache (MB)",
+  base_power_watt: "TDP (Watt)",
   integrated_gpu: "Integrated GPU",
 };
 

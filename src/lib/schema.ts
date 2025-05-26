@@ -2525,7 +2525,7 @@ export type Database = {
           max_power_watt: number | null
           memory_type_supports: string[] | null
           model_line: string | null
-          pcie_generation: number | null
+          pcie_generation: string | null
           performance_core: number | null
           product_id: number | null
           review_urls: string[] | null
@@ -2534,6 +2534,10 @@ export type Database = {
           total_core: number | null
           total_thread: number | null
           size_nm: string | null
+          l1_cache_kb: number | null
+          l2_cache_mb: number | null
+          l3_cache_mb: number | null
+          max_temperature_celcius: number | null
         }
         Relationships: [
           {

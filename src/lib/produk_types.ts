@@ -1,3 +1,5 @@
+import { categoryEnumToSlug, categoryEnumToView, ComponentCategoryEnum } from "./db";
+
 export const v_casings = [
   ["brand_name", "Brand Name", ""],
   ["casing_type", "Casing Type", ""],
@@ -6,16 +8,16 @@ export const v_casings = [
   ["dust_cover", "Dust Cover", ""],
   ["expansion_slot", "Expansion Slot", ""],
   ["fan_slots", "Fan Slots", ""],
-  ["height_mm", "Height", "mm"],
+  ["height_mm", "Height", " mm"],
   ["io_port", "IO Port", ""],
-  ["length_mm", "Length", "mm"],
-  ["max_cpu_cooler_length_mm", "Max CPU Cooler Length (mm)", "mm"],
-  ["max_gpu_length_mm", "Max GPU Length (mm)", "mm"],
-  ["max_psu_length_mm", "Max PSU Length (mm)", "mm"],
+  ["length_mm", "Length", " mm"],
+  ["max_cpu_cooler_length_mm", "Maximum CPU Cooler Length", " mm"],
+  ["max_gpu_length_mm", "Maximum GPU Length", " mm"],
+  ["max_psu_length_mm", "Maximum PSU Length", " mm"],
   ["mobo_supports", "Mobo Supports", ""],
   ["side_panel", "Side Panel", ""],
-  ["weight_kg", "Weight (Kg)", ""],
-  ["width_mm", "Width", "mm"],
+  ["weight_kg", "Weight", " KG"],
+  ["width_mm", "Width", " mm"],
 ];
 
 export const v_cpus = [
@@ -24,42 +26,47 @@ export const v_cpus = [
   ["code_name", "Code Name", ""],
   ["cpu_socket", "CPU Socket", ""],
   ["integrated_gpu", "Integrated GPU", ""],
-  ["size_nm", "Size", "nm"],
-  ["pcie_generation", "PCIe Generation", ""],
+  ["size_nm", "Size", " nm"],
+  ["pcie_generation", "PCI Express® Version", ""],
   ["performance_core", "Performance Core", ""],
   ["efficiency_core", "Efficiency Core", ""],
-  ["total_thread", "Thread", ""],
-  ["base_clock_ghz", "Base Clock", "GHz"],
-  ["max_clock_ghz", "Max Clock", "GHz"],
-  ["base_power_watt", "Base Power", "watt"],
-  ["max_power_watt", "Max Power", "watt"],
-  ["max_memory_channel", "Max Memory Channel", ""],
-  ["max_memory_gb", "Max Memory Size", "GB"],
+  ["total_core", "Total Core", ""],
+  ["total_thread", "Total Thread", ""],
+  ["base_clock_ghz", "Base Clock", " GHz"],
+  ["max_clock_ghz", "Maximum Clock", " GHz"],
+  ["base_power_watt", "Base Power (TDP)", " watt"],
+  ["max_power_watt", "Maximum Power", " watt"],
+  ["max_temperature_celcius", "Maximum Operating Temperature", "°C"],
+  ["l1_cache_kb", "L1 Cache", " KB"],
+  ["l2_cache_mb", "L2 Cache", " MB"],
+  ["l3_cache_mb", "L3 Cache", " MB"],
+  ["max_memory_channel", "Maximum Memory Channel", ""],
+  ["max_memory_gb", "Maximum Memory Size", " GB"],
   ["memory_type_supports", "Memory Type Supports", ""],
 ];
 
 export const v_gpus = [
-  ["base_clock_mhz", "Base Clock", "MHz"],
-  ["boost_clock_mhz", "Boost Clock", "MHz"],
+  ["base_clock_mhz", "Base Clock", " MHz"],
+  ["boost_clock_mhz", "Boost Clock", " MHz"],
   ["brand_name", "Brand Name", ""],
   ["bus_interface", "Bus Interface", ""],
   ["chipset", "Chipset", ""],
   ["core_count", "Core", ""],
   ["gpu_memory_type", "GPU Memory Type", ""],
-  ["height_mm", "Height", "mm"],
-  ["length_mm", "Length", "mm"],
+  ["width_mm", "Width", " mm"],
+  ["height_mm", "Height", " mm"],
+  ["length_mm", "Length", " mm"],
   ["memory_bus_bit", "Memory Bus Bit", ""],
-  ["min_psu_watt", "Min PSU", "watt"],
-  ["tdp_watt", "TDP", "watt"],
-  ["vram_gb", "VRAM", "GB"],
-  ["width_mm", "Width", "mm"],
+  ["min_psu_watt", "Minimal Power Supply Requirement", " watt"],
+  ["tdp_watt", "TDP", " watt"],
+  ["vram_gb", "VRAM", " GB"],
 ];
 
 export const v_memories = [
   ["amount", "Amount", ""],
   ["brand_name", "Brand Name", ""],
-  ["capacity_gb", "Capacity", "GB"],
-  ["frequency_mhz", "Frequency", "MHz"],
+  ["capacity_gb", "Capacity", " GB"],
+  ["frequency_mhz", "Frequency", " MHz"],
   ["has_ecc", "Has ECC", ""],
   ["has_heatsink", "Has Heatsink", ""],
   ["has_rgb", "Has RGB", ""],
@@ -75,8 +82,8 @@ export const v_motherboards = [
   ["form_factor", "Form Factor", ""],
   ["back_pannel_ports", "Back Panel Ports", ""],
   ["memory_channel_count", "Memory Channel", ""],
-  ["memory_frequency_mhz", "Memory Frequency", "MHz"],
-  ["max_memory_gb", "Max Memory", "GB"],
+  ["memory_frequency_mhz", "Memory Frequency", " MHz"],
+  ["max_memory_gb", "Maximum Memory", " GB"],
   ["memory_slot", "Memory Slot", ""],
   ["memory_type", "Memory Type", ""],
   ["pcie_m2_slot", "PCIe M.2 NVME Slot", ""],
@@ -88,8 +95,8 @@ export const v_motherboards = [
 export const v_power_supplies = [
   ["brand_name", "Brand Name", ""],
   ["model", "Model", ""],
-  ["wattage", "Wattage", "watt"],
-  ["warranty", "Warranty", "year/s"],
+  ["wattage", "Wattage", " watt"],
+  ["warranty", "Warranty", " year/s"],
   ["80_plus_verification", "80 Plus Verification", ""],
   ["efficiency_rating", "80 Plus Efficiency Rating", ""],
   ["cybenetics_verification", "Cybenetics Verification", ""],
@@ -110,11 +117,11 @@ export const v_power_supplies = [
 export const v_internal_storages = [
   ["brand_name", "Brand Name", ""],
   ["type", "Type", ""],
-  ["capacity_gb", "Capacity", "GB"],
+  ["capacity_gb", "Capacity", " GB"],
   ["form_factor", "Form Factor", ""],
   ["interface", "Interface", ""],
-  ["read_speed_mbs", "Read Speed", "MB/s"],
-  ["write_speed_mbs", "Write Speed", "MB/s"],
+  ["read_speed_mbs", "Read Speed", " MB/s"],
+  ["write_speed_mbs", "Write Speed", " MB/s"],
 ];
 export const v_monitors = [
   ["brand_name", "Brand Name", ""],
@@ -123,12 +130,12 @@ export const v_monitors = [
   ["aspect_ratio", "Aspect Ratio", ""],
   ["size_inch", "Size", "inch"],
   ["srgb_percentage", "Srgb", "%"],
-  ["refresh_rate_hz", "Refresh Rate", "Hz"],
-  ["brightness_nits", "Brightness", "nits"],
+  ["refresh_rate_hz", "Refresh Rate", " Hz"],
+  ["brightness_nits", "Brightness", " nits"],
   ["has_speaker", "Built-in Speaker", ""],
   ["inputs", "Input Port", ""],
-  ["vesa_mount_mm", "Vesa Mount", "mm"],
-  ["warranty_years", "Warranty", "year/s"],
+  ["vesa_mount_mm", "Vesa Mount", " mm"],
+  ["warranty_years", "Warranty", " year/s"],
   ["spesial_features", "Special Feature", ""],
 ];
 
@@ -156,3 +163,25 @@ export const v_spec: Record<string, string[][] | undefined> = {
   casing: v_casings,
   casefan: undefined,
 };
+
+
+export const formatComponentSpec = (categoryEnum: ComponentCategoryEnum, component: any) => {
+  return v_spec[categoryEnumToSlug[categoryEnum]]?.flatMap((v) => {
+    const specValue = v[0] !== undefined ? component[v[0] as keyof typeof component] : undefined;
+
+    let value 
+    
+    if (typeof specValue === 'number' && v[2] !== undefined) {
+      // If specValue is a number and v[2] is defined, append the unit
+      value = `${specValue}${v[2]} `;
+    } else {
+      value = specValue;
+    }
+
+    return {
+      title: v[1],
+      value
+    };
+  });
+}
+  
