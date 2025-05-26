@@ -1,4 +1,6 @@
-import { categoryEnumToSlug, categoryEnumToView, ComponentCategoryEnum } from "./db";
+import { categoryEnumToSlug, ComponentCategoryEnum } from "./db";
+
+const storage_unit = ['TB', 'GB', 'MB', 'KB', 'B'];
 
 export const v_casings = [
   ["brand_name", "Brand Name", ""],
@@ -25,6 +27,7 @@ export const v_cpus = [
   ["model_line", "Model Line", ""],
   ["code_name", "Code Name", ""],
   ["cpu_socket", "CPU Socket", ""],
+  ["release_date", "Release Date", ""],
   ["integrated_gpu", "Integrated GPU", ""],
   ["size_nm", "Size", " nm"],
   ["pcie_generation", "PCI Express® Version", ""],
@@ -37,11 +40,11 @@ export const v_cpus = [
   ["base_power_watt", "Base Power (TDP)", " watt"],
   ["max_power_watt", "Maximum Power", " watt"],
   ["max_temperature_celcius", "Maximum Operating Temperature", "°C"],
-  ["l1_cache_kb", "L1 Cache", " KB"],
-  ["l2_cache_mb", "L2 Cache", " MB"],
-  ["l3_cache_mb", "L3 Cache", " MB"],
+  ["l1_cache_kb", "L1 Cache", ` ${storage_unit[3]}`],
+  ["l2_cache_mb", "L2 Cache", ` ${storage_unit[2]}`],
+  ["l3_cache_mb", "L3 Cache", ` ${storage_unit[2]}`],
   ["max_memory_channel", "Maximum Memory Channel", ""],
-  ["max_memory_gb", "Maximum Memory Size", " GB"],
+  ["max_memory_gb", "Maximum Memory Size", ` ${storage_unit[1]}`],
   ["memory_type_supports", "Memory Type Supports", ""],
 ];
 
@@ -59,13 +62,13 @@ export const v_gpus = [
   ["memory_bus_bit", "Memory Bus Bit", ""],
   ["min_psu_watt", "Minimal Power Supply Requirement", " watt"],
   ["tdp_watt", "TDP", " watt"],
-  ["vram_gb", "VRAM", " GB"],
+  ["vram_gb", "VRAM", ` ${storage_unit[1]}`],
 ];
 
 export const v_memories = [
   ["amount", "Amount", ""],
   ["brand_name", "Brand Name", ""],
-  ["capacity_gb", "Capacity", " GB"],
+  ["capacity_gb", "Capacity", ` ${storage_unit[1]}`],
   ["frequency_mhz", "Frequency", " MHz"],
   ["has_ecc", "Has ECC", ""],
   ["has_heatsink", "Has Heatsink", ""],
@@ -83,7 +86,7 @@ export const v_motherboards = [
   ["back_pannel_ports", "Back Panel Ports", ""],
   ["memory_channel_count", "Memory Channel", ""],
   ["memory_frequency_mhz", "Memory Frequency", " MHz"],
-  ["max_memory_gb", "Maximum Memory", " GB"],
+  ["max_memory_gb", "Maximum Memory", ` ${storage_unit[1]}`],
   ["memory_slot", "Memory Slot", ""],
   ["memory_type", "Memory Type", ""],
   ["pcie_m2_slot", "PCIe M.2 NVME Slot", ""],
@@ -117,7 +120,7 @@ export const v_power_supplies = [
 export const v_internal_storages = [
   ["brand_name", "Brand Name", ""],
   ["type", "Type", ""],
-  ["capacity_gb", "Capacity", " GB"],
+  ["capacity_gb", "Capacity", ` ${storage_unit[1]}`],
   ["form_factor", "Form Factor", ""],
   ["interface", "Interface", ""],
   ["read_speed_mbs", "Read Speed", " MB/s"],
@@ -169,11 +172,25 @@ export const formatComponentSpec = (categoryEnum: ComponentCategoryEnum, compone
   return v_spec[categoryEnumToSlug[categoryEnum]]?.flatMap((v) => {
     const specValue = v[0] !== undefined ? component[v[0] as keyof typeof component] : undefined;
 
-    let value 
+    let value;
     
     if (typeof specValue === 'number' && v[2] !== undefined) {
-      // If specValue is a number and v[2] is defined, append the unit
-      value = `${specValue}${v[2]} `;
+      const currentUnit = v[2].trim();
+      const currentIndex = storage_unit.indexOf(currentUnit);
+      
+      // Check if the number has exactly 3 decimal places
+      const decimalPart = specValue.toString().split('.')[1];
+      const hasThreeDecimals = decimalPart?.length === 3;
+      
+      if (currentIndex !== -1 && hasThreeDecimals && currentIndex < storage_unit.length - 1) {
+        // Convert to next smaller unit (multiply by 1000)
+        const convertedValue = specValue * 1000;
+        const nextUnit = storage_unit[currentIndex + 1];
+        value = `${convertedValue} ${nextUnit}`;
+      } else {
+        // Keep original value and unit
+        value = `${specValue}${v[2]}`;
+      }
     } else {
       value = specValue;
     }
@@ -184,4 +201,3 @@ export const formatComponentSpec = (categoryEnum: ComponentCategoryEnum, compone
     };
   });
 }
-  

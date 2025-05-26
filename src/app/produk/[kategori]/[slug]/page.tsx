@@ -1,7 +1,7 @@
 export const runtime = "edge";
 
 import { categorySlugToEnum } from "@/lib/db";
-import { formatComponentSpec, v_spec } from "@/lib/produk_types";
+import { formatComponentSpec } from "@/lib/produk_types";
 import { productImage } from "@/lib/utils";
 import KategoriSlugClient from "./client";
 import { getComponentProductDetail } from "@/lib/dal/product-detail"
