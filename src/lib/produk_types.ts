@@ -24,8 +24,9 @@ export const v_casings = [
 
 export const v_cpus = [
   ["brand_name", "Brand Name", ""],
-  ["model_line", "Model Line", ""],
+  ["series_name", "Series", ""],
   ["code_name", "Code Name", ""],
+  ["architecture_name", "Architecture", ""],
   ["cpu_socket", "CPU Socket", ""],
   ["release_date", "Release Date", ""],
   ["integrated_gpu", "Integrated GPU", ""],
