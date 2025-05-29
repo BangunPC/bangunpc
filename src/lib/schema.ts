@@ -2508,6 +2508,8 @@ export type Database = {
           base_power_watt: number | null
           brand_name: string | null
           code_name: string | null
+          series_name: string | null
+          architecture_name: string | null
           cpu_family_id: number | null
           cpu_id: number | null
           cpu_socket: string | null
@@ -2524,7 +2526,6 @@ export type Database = {
           max_memory_gb: number | null
           max_power_watt: number | null
           memory_type_supports: string[] | null
-          model_line: string | null
           pcie_generation: string | null
           performance_core: number | null
           product_id: number | null
