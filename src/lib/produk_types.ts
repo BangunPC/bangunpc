@@ -184,7 +184,7 @@ export const formatComponentSpec = (categoryEnum: ComponentCategoryEnum, compone
   
   // If it's storage and the type is SSD, concatenate with SSD-specific specs
   if (specKey === 'storage' && component.type === 'SSD') {
-    specs = [...(specs || []), ...(v_internal_storages_ssd || [])];
+    specs = [...(specs ?? []), ...(v_internal_storages_ssd ?? [])];
   }
 
   return specs?.flatMap((v) => {
