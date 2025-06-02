@@ -31,7 +31,7 @@ export const v_cpus = [
   ["release_date", "Release Date", ""],
   ["integrated_gpu", "Integrated GPU", ""],
   ["size_nm", "Size", " nm"],
-  ["pcie_generation", "PCI Express® Version", ""],
+  ["pcie_generation", "PCI Express® Version", ""],   
   ["performance_core", "Performance Core", ""],
   ["efficiency_core", "Efficiency Core", ""],
   ["total_core", "Total Core", ""],
@@ -127,6 +127,16 @@ export const v_internal_storages = [
   ["read_speed_mbs", "Read Speed", " MB/s"],
   ["write_speed_mbs", "Write Speed", " MB/s"],
 ];
+export const v_internal_storages_ssd = [
+  ['ssd_tier_url', 'SSD Tier List', ''],
+  ['ssd_tbw', 'TBW (Tera Byte Written)', ` ${storage_unit[0]}`],
+  ['ssd_nand_type', 'NAND Type', ''],
+  ['ssd_nand_brand', 'NAND Brand', ''],
+  ['has_ssd_dram', 'Has DRAM', ''],
+  ['has_ssd_hmb', 'Has HMB', ''],
+  ['ssd_controller', 'Controller', ''],
+]
+
 export const v_monitors = [
   ["brand_name", "Brand Name", ""],
   ["panel_type", "Panel Type", ""],
