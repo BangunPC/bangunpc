@@ -178,9 +178,16 @@ export const v_spec: Record<string, string[][] | undefined> = {
   casefan: undefined,
 };
 
-
 export const formatComponentSpec = (categoryEnum: ComponentCategoryEnum, component: any) => {
-  return v_spec[categoryEnumToSlug[categoryEnum]]?.flatMap((v) => {
+  const specKey = categoryEnumToSlug[categoryEnum];
+  let specs = v_spec[specKey];
+  
+  // If it's storage and the type is SSD, concatenate with SSD-specific specs
+  if (specKey === 'storage' && component.type === 'SSD') {
+    specs = [...(specs || []), ...(v_internal_storages_ssd || [])];
+  }
+
+  return specs?.flatMap((v) => {
     const specValue = v[0] !== undefined ? component[v[0] as keyof typeof component] : undefined;
 
     let value;
@@ -202,6 +209,9 @@ export const formatComponentSpec = (categoryEnum: ComponentCategoryEnum, compone
         // Keep original value and unit
         value = `${specValue}${v[2]}`;
       }
+    } else if (typeof specValue === 'boolean') {
+      // Convert boolean to Yes/No
+      value = specValue ? 'Yes' : 'No';
     } else {
       value = specValue;
     }
