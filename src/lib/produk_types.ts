@@ -196,17 +196,29 @@ export const formatComponentSpec = (categoryEnum: ComponentCategoryEnum, compone
       const currentUnit = v[2].trim();
       const currentIndex = storage_unit.indexOf(currentUnit);
       
-      // Check if the number has exactly 3 decimal places
-      const decimalPart = specValue.toString().split('.')[1];
-      const hasThreeDecimals = decimalPart?.length === 3;
-      
-      if (currentIndex !== -1 && hasThreeDecimals && currentIndex < storage_unit.length - 1) {
-        // Convert to next smaller unit (multiply by 1000)
-        const convertedValue = specValue * 1000;
-        const nextUnit = storage_unit[currentIndex + 1];
-        value = `${convertedValue} ${nextUnit}`;
+      if (currentIndex !== -1) {
+        // Check if we should convert to smaller unit (has exactly 3 decimal places)
+        const decimalPart = specValue.toString().split('.')[1];
+        const hasThreeDecimals = decimalPart?.length === 3;
+        
+        if (hasThreeDecimals && currentIndex < storage_unit.length - 1) {
+          // Convert to next smaller unit (multiply by 1000)
+          const convertedValue = specValue * 1000;
+          const nextUnit = storage_unit[currentIndex + 1];
+          value = `${convertedValue} ${nextUnit}`;
+        } 
+        // Check if we should convert to bigger unit (≥1000 and divisible by 1000)
+        else if (specValue >= 1000 && specValue % 1000 === 0 && currentIndex > 0) {
+          // Convert to next bigger unit (divide by 1000)
+          const convertedValue = specValue / 1000;
+          const prevUnit = storage_unit[currentIndex - 1];
+          value = `${convertedValue} ${prevUnit}`;
+        } else {
+          // Keep original value and unit
+          value = `${specValue}${v[2]}`;
+        }
       } else {
-        // Keep original value and unit
+        // Unit not found in storage_unit array, use as-is
         value = `${specValue}${v[2]}`;
       }
     } else if (typeof specValue === 'boolean') {
