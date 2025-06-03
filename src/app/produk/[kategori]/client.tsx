@@ -12,7 +12,7 @@ import { SidebarClose, SidebarOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn, componentImage } from "@/lib/utils";
 import { insertOrCreateSession } from "@/lib/build-session";
@@ -424,10 +424,24 @@ const Header = ({
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }) => {
-  const [compatibilityCheck, setCompatibilityCheck] = useLocalStorage(
-    "compatibilityCheck",
-    true
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  // const [compatibilityCheck, setCompatibilityCheck] = useLocalStorage(
+  //   "compatibilityCheck",
+  //   true
+  // );
+
+  // Initialize state from URL (default: true)
+  const [isCompatibilityChecked, setIsCompatibilityChecked] = useState(
+    searchParams.get("c") !== "0" // c=0 → false, else true
   );
+
+  // Update URL when state changes
+  useEffect(() => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set("c", isCompatibilityChecked ? "1" : "0");
+    router.replace(`?${newParams.toString()}`, { scroll: false });
+  }, [isCompatibilityChecked, searchParams, router]);
 
   return (
     <div className="flex flex-col tablet:flex-row tablet:items-center tablet:justify-between w-full">
@@ -438,19 +452,17 @@ const Header = ({
         {/* <p className="mt-2 text-base font-medium text-gray-600 dark:text-gray-300 sm:text-lg">
           Tersedia <span className="font-semibold">{itemCount}</span> produk yang bisa Anda pilih
         </p> */}
-        <div className="flex mt-4 items-center gap-4">
+        <div className="flex items-center gap-4">
           <Switch
-            checked={compatibilityCheck}
-            onCheckedChange={(checked: boolean) => {
-              setCompatibilityCheck(checked);
-            }}
+            checked={isCompatibilityChecked}
+            onCheckedChange={(checked) => setIsCompatibilityChecked(checked)}
             id="compatibility-check-toggle"
           />
           <label htmlFor="compatibility-check-toggle" className="text-base font-medium cursor-pointer select-none">
             Cek Kompatibilitas
           </label>
           <span className="text-xs text-zinc-500 ml-2">
-            {compatibilityCheck ? "Hanya tampilkan komponen yang kompatibel" : "Tampilkan semua komponen"}
+            {isCompatibilityChecked ? "Hanya tampilkan komponen yang kompatibel" : "Tampilkan semua komponen"}
           </span>
         </div>
       </div>
