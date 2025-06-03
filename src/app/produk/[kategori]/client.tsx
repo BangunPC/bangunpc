@@ -585,7 +585,7 @@ const DesktopTable = ({
                               alt={`Preview ${component.product_name}`}
                               width={256}
                               height={256}
-                              className="object-contain"
+                              className="h-full w-full object-contain"
                             />
                           </div>
                         </div>

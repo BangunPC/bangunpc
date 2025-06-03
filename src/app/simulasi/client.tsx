@@ -301,23 +301,34 @@ export function SimulasiClient({
                             <TooltipProvider delayDuration={100}>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <Image
-                                    className="rounded-sm bg-white object-contain"
-                                    src={productImage(component.product_id, component.image_filename)}
-                                    width={64}
-                                    height={64}
-                                    alt={component.name}
-                                  />
+                                  <div
+                                    >
+                                    {component.image_filename!.length > 0 && (
+                                      <div className="h-16 w-16 overflow-hidden rounded-md ">
+                                        <div className="h-full w-full flex items-center justify-center bg-white">
+                                          <Image
+                                            src={productImage(component.product_id, component.image_filename)}
+                                            alt={`Gambar ${component.name}`}
+                                            width={64}
+                                            height={64}
+                                            className="h-full w-full object-contain"
+                                          />
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
                                 </TooltipTrigger>
-                                <TooltipContent side="right" className="p-0 border-none shadow-none bg-transparent ml-6">
-                                  <div className="relative w-64 h-64 rounded-md overflow-hidden bg-white">
-                                    <Image
-                                      src={productImage(component.product_id, component.image_filename)}
-                                      alt={component.name}
-                                      width={256}
-                                      height={256}
-                                      className="object-contain p-2"
-                                    />
+                                <TooltipContent side="right" className="p-0 border-none shadow-none ml-6">
+                                  <div className="relative w-64 h-64 rounded-md overflow-hidden">
+                                    <div className="absolute inset-0 flex items-center justify-center bg-white">
+                                      <Image
+                                        src={productImage(component.product_id, component.image_filename)}
+                                        alt={`Preview ${component.name}`}
+                                        width={256}
+                                        height={256}
+                                        className="h-full w-full object-contain"
+                                      />
+                                    </div>
                                   </div>
                                 </TooltipContent>
                               </Tooltip>
