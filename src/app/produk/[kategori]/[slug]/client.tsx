@@ -86,65 +86,74 @@ const KategoriSlugClient = ({
   return (
     <div className="m-auto mt-24 flex max-w-4xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
       <div className="flex flex-col md:flex-row">
-          {/* Image Section - Left Side - Now Sticky */}
-          <div className="w-full md:w-1/2 lg:w-2/5 md:sticky md:top-4 md:self-start">
-            <div className="aspect-square max-w-sm overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40 dark:border-[#3d434e]">
+        {/* Image Section - Left Side - Now Sticky */}
+        <div className="w-full md:w-1/2 lg:w-2/5 md:sticky md:top-4 md:self-start">
+          {/* Main Image Container - Protected with zoom effect */}
+          <div className="aspect-square max-w-sm overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40 dark:border-[#3d434e]">
+            <div
+              className="relative h-full w-full"
+              onContextMenu={(e) => e.preventDefault()}
+            >
+              {/* Zoomable image container */}
               <div
-                className="flex h-full w-full items-center justify-center"
-                onMouseMove={(event: React.MouseEvent<HTMLDivElement>) => {
-                  const rect = event.currentTarget.getBoundingClientRect();
-                  const translate = {
-                    x: event.clientX - rect.x - rect.width / 2,
-                    y: event.clientY - rect.y - rect.height / 2,
-                  };
-                  const child = event.currentTarget
-                    .firstChild as HTMLImageElement;
-                  child.style.transform = `translate(${-translate.x}px, ${-translate.y}px) scale(2)`;
-                }}
-                onMouseLeave={(event: React.MouseEvent<HTMLDivElement>) => {
-                  const child = event.currentTarget
-                    .firstChild as HTMLImageElement;
-                  child.style.transform = ``;
-                }}
+                className="h-full w-full bg-no-repeat bg-center bg-contain bg-white"
+                style={{ backgroundImage: `url(${imageUrls[0]})` }}
+                id="mainImageZoom"
               >
-                {imageUrls[0] && (
-                  <img
-                    id="compimg"
-                    src={imageUrls[0]}
-                    alt={`Gambar ${name}`}
-                    className="object-fill bg-white"
-                    width={360}
-                    height={360}
-                  ></img>
-                )}
+                {/* Interactive zoom overlay */}
+                <div
+                  className="absolute inset-0"
+                  onMouseMove={(e) => {
+                    const container = e.currentTarget.parentElement;
+                    if (container) {
+                      const rect = container.getBoundingClientRect();
+                      const x = (e.clientX - rect.left) / rect.width * 100;
+                      const y = (e.clientY - rect.top) / rect.height * 100;
+                      container.style.backgroundPosition = `${x}% ${y}%`;
+                      container.style.backgroundSize = '200%';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const container = e.currentTarget.parentElement;
+                    if (container) {
+                      container.style.backgroundPosition = 'center';
+                      container.style.backgroundSize = 'contain';
+                    }
+                  }}
+                  style={{ pointerEvents: 'auto', cursor: 'zoom-in' }}
+                ></div>
               </div>
             </div>
-            <Carousel className="w-full max-w-sm my-4">
-              <CarouselContent className="-ml-1">
-                {imageUrls.map((url: string | undefined) => (
-                  <CarouselItem key={url} className="pl-1 md:basis-1/5 lg:basis-1/5">
-                    <img
-                      onClick={() => {
-                        const compimg = document.getElementById(
-                          "compimg",
-                        ) as HTMLImageElement | null;
-                        if (compimg && url) {
-                          compimg.src = url;
-                        }
-                      }}
-                      src={url}
-                      alt={`Gambar ${name}`}
-                      className="aspect-square object-fill bg-white rounded-md border border-[#1C1F24] border-opacity-40 hover:cursor-pointer hover:bg-slate-200 dark:border-[#3d434e]"
-                      width={240}
-                      height={240}
-                    ></img>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious variant='secondary'/>
-              <CarouselNext variant='secondary'/>
-            </Carousel>
           </div>
+
+          {/* Thumbnail Carousel - Fully clickable */}
+          <Carousel className="w-full max-w-sm my-4">
+            <CarouselContent className="-ml-1">
+              {imageUrls.map((url: string | undefined) => (
+                <CarouselItem key={url} className="pl-1 md:basis-1/5 lg:basis-1/5"
+                onContextMenu={(e) => e.preventDefault()}>
+                  <div 
+                    className="relative aspect-square hover:cursor-pointer hover:opacity-70 transition-opacity duration-200"
+                    onClick={() => {
+                      const mainImage = document.getElementById("mainImageZoom");
+                      if (mainImage && url) {
+                        mainImage.style.backgroundImage = `url(${url})`;
+                      }
+                    }}
+                  >
+                    {/* Thumbnail as protected background image */}
+                    <div 
+                      className="w-full h-full bg-no-repeat bg-center bg-cover bg-white rounded-md"
+                      style={{ backgroundImage: `url(${url})` }}
+                    ></div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious variant='secondary'/>
+            <CarouselNext variant='secondary'/>
+          </Carousel>
+        </div>
 
 
         {/* Product Info Section - Right Side */}
