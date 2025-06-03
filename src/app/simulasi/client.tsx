@@ -1,6 +1,6 @@
 "use client"
 
-import { Banknote, Save, Trash2, Undo2 } from "lucide-react";
+import { Save, Trash2, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -182,7 +182,7 @@ export function SimulasiClient({
 
   const [isCompatible, setIsCompatible] = useState<boolean>(true)
   return (
-    <div className="m-auto mt-24 w-full max-w-screen-desktop p-4">
+    <div className="m-auto mt-24 w-full container p-4">
       <header className="flex flex-col gap-2 mb-6">
         <span className="text-4xl font-bold tracking-tight text-white">
           {buildCode ? "Rakitan PC" : "Simulasi Rakit PC"}
@@ -261,60 +261,63 @@ export function SimulasiClient({
           )}
         </div>
       </header>
-      <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-6">
-        <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
-          <table className="w-full">
-            <thead className="h-12 border-b border-white text-left text-lg mb-6">
+      <main className="m-auto flex w-full flex-col gap-6">
+        <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar border border-sky-200 dark:border-sky-700">
+          <table className="w-full table-auto border-collapse">
+            <thead className="h-12 border-b border-zinc-300 dark:border-zinc-300 text-left text-lg">
               <tr>
                 {headers.map((item) => (
-                  <th key={item}>{item}</th>
+                  <th key={item} className="px-4 py-3 font-semibold">{item}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {components.map((item, index) => {
-                const bottomSpace = (item.title === "Memory (RAM)" ||
-                  item.title === "Storage") && <div className="h-[38px]" />;
+                const isLastRow = index === components.length - 1;
+                const needsBottomSpace = (item.title === "Memory (RAM)" || item.title === "Storage");
+                
                 return (
                   <tr
                     key={index}
-                    className="h-12 border-b border-zinc-500"
+                    className={`h-12 ${!isLastRow ? "border-b border-zinc-200 dark:border-zinc-700" : ""}`}
                   >
-                    <td className="font-bold text-sky-500">
-                      <Link href={'/produk/' + categoryEnumToSlug[item.kategori]}className="my-4 flex flex-row items-center">
+                    <td className="pl-4 py-3 font-bold text-sky-500">
+                      <Link 
+                        href={'/produk/' + categoryEnumToSlug[item.kategori]}
+                        className="flex flex-row items-center hover:underline"
+                      >
                         {item.title}
                       </Link>
                     </td>
-                    <td>
+                    
+                    <td className="px-4 py-3">
                       <div className="flex flex-col gap-2">
                         {item.components.map((component, index) => (
                           <Link
                             key={index}
-                            className="flex h-[72px] cursor-pointer flex-row items-center rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-600 py-4"
+                            className="flex h-[72px] cursor-pointer flex-row items-center rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 p-2 transition-colors"
                             href={`/produk/${categoryEnumToSlug[item.kategori]}/${component.slug}`}
-                            >
+                          >
                             <TooltipProvider delayDuration={100}>
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <Image
-                                    className="rounded-sm bg-white"
+                                    className="rounded-sm bg-white object-contain"
                                     src={productImage(component.product_id, component.image_filename)}
                                     width={64}
                                     height={64}
                                     alt={component.name}
                                   />
                                 </TooltipTrigger>
-                                <TooltipContent side="right" className="p-0 border-none shadow-none">
-                                  <div className="relative w-64 h-64 rounded-md overflow-hidden">
-                                    <div className="absolute inset-0 flex items-center justify-center bg-white">
-                                      <Image
-                                        src={productImage(component.product_id, component.image_filename)}
-                                        alt={component.name}
-                                        width={256}
-                                        height={256}
-                                        className="object-contain p-2"
-                                      />
-                                    </div>
+                                <TooltipContent side="right" className="p-0 border-none shadow-none bg-transparent ml-6">
+                                  <div className="relative w-64 h-64 rounded-md overflow-hidden bg-white">
+                                    <Image
+                                      src={productImage(component.product_id, component.image_filename)}
+                                      alt={component.name}
+                                      width={256}
+                                      height={256}
+                                      className="object-contain p-2"
+                                    />
                                   </div>
                                 </TooltipContent>
                               </Tooltip>
@@ -323,42 +326,43 @@ export function SimulasiClient({
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <span className="ml-4 font-semibold  text-base">{component.name}</span>
+                                  <span className="ml-4 font-semibold text-base line-clamp-2">
+                                    {component.name}
+                                  </span>
                                 </TooltipTrigger>
                                 <TooltipContent side="top" className="max-w-xs">
                                   <p>{component.name ?? "-"}</p>
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
-                            
                           </Link>
                         ))}
+                        
                         {item.components.length === 0 ? (
                           <Button
-                            className="w-fit text-base h-10 text-white my-2 hover:bg-blue-500"
+                            className="w-fit h-10 text-white my-2 hover:bg-blue-500 px-4"
                             onClick={() => handleAddComponent(item)}
                           >
                             + Pilih {item.title}
                           </Button>
                         ) : (
-                          <>
-                            {(item.title === "Memory (RAM)" || item.title === "Storage") && (
-                              <Button
-                                variant="outline"
-                                className="w-fit text-base my-2 bg-slate-100 text-black hover:bg-zinc-200 hover:text-black"
-                                onClick={() => handleAddComponent(item)}
-                              >
-                                + {item.title}
-                              </Button>
-                            )}
-                          </>
+                          (item.title === "Memory (RAM)" || item.title === "Storage") && (
+                            <Button
+                              variant="outline"
+                              className="w-fit h-10 my-2 bg-white dark:bg-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-700 px-4"
+                              onClick={() => handleAddComponent(item)}
+                            >
+                              + Tambah {item.title}
+                            </Button>
+                          )
                         )}
                       </div>
                     </td>
-                    <td>
-                      <div className="flex flex-col gap-6">
-                        {item.components.map((component,index) => (
-                          <div key={index} className="flex h-[48px] flex-row items-center">
+                    
+                    <td className="px-4 py-3">
+                      <div className="flex flex-col gap-4">
+                        {item.components.map((component, index) => (
+                          <div key={index} className="flex h-[48px] items-center">
                             <span className="whitespace-nowrap font-normal text-base">
                               {component.price
                                 ? `Rp ${component.price.toLocaleString("id-ID")}`
@@ -366,19 +370,17 @@ export function SimulasiClient({
                             </span>
                           </div>
                         ))}
-                        {bottomSpace}
+                        {needsBottomSpace && <div className="h-4" />}
                       </div>
                     </td>
-                    <td>
-                      <div className="flex h-full flex-col gap-6">
+                    
+                    <td className="px-4 py-3">
+                      <div className="flex flex-col gap-4">
                         {item.components.map((component, index) => (
-                          <div
-                            key={index}
-                            className="flex flex-row items-center gap-1 my-2"
-                          >
+                          <div key={index} className="flex items-center h-[48px]">
                             <AlertDialog>
                               <AlertDialogTrigger variant="ghost" className="h-10 items-center">
-                                <Trash2 size={16} 
+                                <Trash2 size={18} 
                                 color="red" className="inline-block" />
                               </AlertDialogTrigger>
                               <AlertDialogContent>
@@ -391,7 +393,8 @@ export function SimulasiClient({
                                 <AlertDialogFooter>
                                   <AlertDialogAction 
                                     variant="destructive"
-                                    onClick={() => handleRemoveComponent(component, item.kategori)}>
+                                    onClick={() => handleRemoveComponent(component, item.kategori)}
+                                  >
                                     Yakin
                                   </AlertDialogAction>
                                   <AlertDialogCancel>Tidak</AlertDialogCancel>
@@ -400,7 +403,7 @@ export function SimulasiClient({
                             </AlertDialog>
                           </div>
                         ))}
-                        {bottomSpace}
+                        {needsBottomSpace && <div className="h-4" />}
                       </div>
                     </td>
                   </tr>
