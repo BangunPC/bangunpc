@@ -40,7 +40,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <div className={`${inter.variable} bg-background text-foreground flex flex-col min-h-1.2-screen dark:bg-gray-900`}>
-              <Suspense>
+              <Suspense fallback={null}>
                 <Navbar />
               </Suspense>
               <div className="flex-grow">

@@ -452,7 +452,7 @@ const Header = ({
         {/* <p className="mt-2 text-base font-medium text-gray-600 dark:text-gray-300 sm:text-lg">
           Tersedia <span className="font-semibold">{itemCount}</span> produk yang bisa Anda pilih
         </p> */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 mt-4">
           <Switch
             checked={isCompatibilityChecked}
             onCheckedChange={(checked) => setIsCompatibilityChecked(checked)}

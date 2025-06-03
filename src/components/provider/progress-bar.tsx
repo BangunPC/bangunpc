@@ -2,22 +2,26 @@
 "use client";
 
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function ProgressBarProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ProgressBarProvider({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <>
       {children}
-      <ProgressBar
-        height="2px"
-        color="rgb(21 54 252)"
-        options={{ showSpinner: false }}
-        shallowRouting
-      />
+      {mounted && (
+        <ProgressBar
+          height="2px"
+          color="rgb(21 54 252)"
+          options={{ showSpinner: false }}
+          shallowRouting
+        />
+      )}
     </>
   );
 }
