@@ -58,20 +58,11 @@ export function SimulasiClient({
   const searchParams = useSearchParams()!;
 
   const [kategori, setKategori] = useState<string | null>(null);
-  const [compatibilityCheck, setCompatibilityCheck] = useState(true);
 
   useEffect(() => {
     setKategori(searchParams.get("kategori"));
   }, [searchParams]);
 
-  // Optionally persist compatibilityCheck in localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem("compatibilityCheck");
-    if (stored !== null) setCompatibilityCheck(stored === "true");
-  }, []);
-  useEffect(() => {
-    localStorage.setItem("compatibilityCheck", compatibilityCheck.toString());
-  }, [compatibilityCheck]);
 
   const components = [
     {
@@ -189,72 +180,88 @@ export function SimulasiClient({
     }
   };
 
+  const [isCompatible, setIsCompatible] = useState<boolean>(true)
   return (
     <div className="m-auto mt-24 w-full max-w-screen-desktop p-4">
-      <header className="flex flex-col gap-2 items-start mb-6">
-        <span className="text-4xl font-bold tracking-tight text-white ">
+      <header className="flex flex-col gap-2 mb-6">
+        <span className="text-4xl font-bold tracking-tight text-white">
           {buildCode ? "Rakitan PC" : "Simulasi Rakit PC"}
-        </span>
-        {/* <span className="text-base text-zinc-600 dark:text-zinc-300 max-w-2xl">
-          Simulasikan rakitan PC Anda dengan memilih komponen satu per satu. Aktifkan pengecekan kompatibilitas untuk memastikan semua komponen cocok satu sama lain.
-        </span> */}
-      </header>
-      <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-6">
-        <div className="flex justify-between">
-          <div className="flex items-center gap-4">
-            <Switch
-              checked={compatibilityCheck}
-              onCheckedChange={(checked: boolean) => {
-                setCompatibilityCheck(checked)
-              }}
-              id="compatibility-check-toggle"
-            />
-            <label htmlFor="compatibility-check-toggle" className="text-base font-medium cursor-pointer select-none">
-              Cek Kompatibilitas
-            </label>
-            <span className="text-xs text-zinc-500 ml-2">{compatibilityCheck ? "Hanya tampilkan komponen yang kompatibel" : "Tampilkan semua komponen"}</span>
+        </span> 
+        <div className="flex justify-between mt-2">
+          <div className="flex items-center gap-4 w-full mr-6">
+            <span className={`text-base font-medium select-none px-3 py-2 rounded-md ${
+              components.every((c) => c.components.length === 0)
+                ? 'bg-blue-900/30 text-blue-400'
+                : isCompatible 
+                  ? 'bg-emerald-900/30 text-emerald-400' 
+                  : 'bg-rose-900/30 text-rose-400'
+            }`}>
+              {components.every((c) => c.components.length === 0) ? (
+                <>
+                  <span className="font-bold">ℹ️ </span>
+                  <span>Belum ada komponen yang dipilih</span>
+                </>
+              ) : isCompatible ? (
+                <>
+                  <span className="font-bold">✅ </span>
+                  <span>Semua komponen kompatibel</span>
+                </>
+              ) : (
+                <>
+                  <span className="font-bold">❌ </span>
+                  <span>Terdapat masalah kompatibilitas, cek </span>
+                  <Link 
+                    href="/simulasi/kompatibilitas"
+                    className="text-rose-400 font-bold hover:underline"
+                  >
+                    di sini
+                  </Link>
+                </>
+              )}
+            </span>
           </div>
           {!buildCode && (
-            <div className="flex justify-end gap-4 mb-2">
-                <AlertDialog>
-                  <AlertDialogTrigger  
-                    disabled={components.every((c) => c.components.length === 0)}
-                    variant="destructive" 
-                    className="items-center text-white text-base"
-                  >
-                    <Undo2 className="mr-2 inline-block" />
-                    Reset Pilihan
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Semua komponen yang telah Anda pilih akan dihapus
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogAction 
-                        variant="destructive"
-                        onClick={handleClear}>
-                        Yakin
+            <div className="flex justify-end gap-4">
+              <AlertDialog>
+                <AlertDialogTrigger  
+                  disabled={components.every((c) => c.components.length === 0)}
+                  variant="destructive" 
+                  className="items-center text-white text-base"
+                >
+                  <Undo2 className="mr-2 inline-block" />
+                  Reset Pilihan
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Semua komponen yang telah Anda pilih akan dihapus
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogAction 
+                      variant="destructive"
+                      onClick={handleClear}>
+                      Yakin
                     </AlertDialogAction>
-                      <AlertDialogCancel>Tidak</AlertDialogCancel>
+                    <AlertDialogCancel>Tidak</AlertDialogCancel>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
-                
+              
               <ManageListModal
-              onSaveNew={handleSaveNew}
-              onSaveReplace={(build_id) => {
-                // TODO: update
-                console.log(`build_id: ${build_id}`);
-              }}
-              disabled={components.every((c) => c.components.length === 0)}
-              defaultId={buildCode}
+                onSaveNew={handleSaveNew}
+                onSaveReplace={(build_id) => {
+                  // TODO: update
+                }}
+                disabled={components.every((c) => c.components.length === 0)}
+                defaultId={buildCode}
               />
             </div>
           )}
         </div>
+      </header>
+      <main className="m-auto flex w-full max-w-screen-desktop flex-col gap-6">
         <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar">
           <table className="w-full">
             <thead className="h-12 border-b border-white text-left text-lg mb-6">
@@ -424,7 +431,7 @@ export function SimulasiClient({
             <ScrollArea className="-z-10 w-full px-4">
               { kategori && categorySlugToEnum[kategori] && (
                 React.isValidElement(children)
-                  ? React.cloneElement(children as React.ReactElement<any>, { compatibilityCheck })
+                  ? React.cloneElement(children as React.ReactElement<any>)
                   : children
               ) }
             </ScrollArea>
