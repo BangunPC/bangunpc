@@ -116,7 +116,7 @@ export function transformMultiComponentResponse(inputData: MultiComponentRespons
 
     inputData.forEach(item => {
         const productId = item.product_id;
-        const currentCount = productCountMap.get(productId) || 0;
+        const currentCount = productCountMap.get(productId) ?? 0;
         productCountMap.set(productId, currentCount + 1);
     });
 

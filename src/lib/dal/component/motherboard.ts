@@ -165,7 +165,7 @@ export const getMotherboard = async (
     filteredData = filteredData.filter((motherboard) => {
       // Count kits of each type
       const kitCounts = new Map<number, number>();
-      memoryIds.forEach(id => kitCounts.set(id, (kitCounts.get(id) || 0) + 1));
+      memoryIds.forEach(id => kitCounts.set(id, (kitCounts.get(id) ?? 0) + 1));
 
       // Calculate totals
       let totalSticks = 0;
@@ -173,12 +173,12 @@ export const getMotherboard = async (
       let maxFrequency = 0;
 
       memoryData.forEach(memory => {
-        const kits = kitCounts.get(memory.product_id ?? 0) || 0;
-        const sticks = kits * (memory.amount || 1);
+        const kits = kitCounts.get(memory.product_id ?? 0) ?? 0;
+        const sticks = kits * (memory.amount ?? 1);
         
         totalSticks += sticks;
-        totalMemoryGb += (memory.capacity_gb || 0) * sticks;
-        maxFrequency = Math.max(maxFrequency, memory.frequency_mhz || 0);
+        totalMemoryGb += (memory.capacity_gb ?? 0) * sticks;
+        maxFrequency = Math.max(maxFrequency, memory.frequency_mhz ?? 0);
       });
 
       return (
