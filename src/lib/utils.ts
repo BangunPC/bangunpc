@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge";
+import { MultiComponentResponse } from "./schema";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -74,6 +75,11 @@ export const validatePage = (value: string | undefined) => {
   return Number.isInteger(num) && num >= 1 ? num : 1;
 };
 
+// export const validateNumber = (value: string | undefined) => {
+//   const num = Number(value);
+//   return Number.isInteger(num) && num >= 1 ? num : 1;
+// };
+
 export const validatePerPage = (value: string | undefined) => {
   const num = Number(value);
   const options = [10, 20, 30, 40, 50];
@@ -95,4 +101,27 @@ export function isUrl(str: string): boolean {
   } catch {
     return false;
   }
+}
+
+export function transformMultiComponentResponse(inputData: MultiComponentResponse | null | undefined): {
+    id: number;
+    amount: number;
+}[] {
+    // Return empty array if input is null/undefined or not an array
+    if (!inputData || !Array.isArray(inputData)) {
+        return [];
+    }
+
+    const productCountMap = new Map<number, number>();
+
+    inputData.forEach(item => {
+        const productId = item.product_id;
+        const currentCount = productCountMap.get(productId) || 0;
+        productCountMap.set(productId, currentCount + 1);
+    });
+
+    return Array.from(productCountMap.entries()).map(([id, amount]) => ({
+        id,
+        amount,
+    }));
 }

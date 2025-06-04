@@ -29,6 +29,7 @@ type SearchParams = {
   q?: string 
   sort?: string;
   direction?: string;
+  c: string;
 };
 
 export default async function SimulasiPage(
@@ -42,6 +43,9 @@ export default async function SimulasiPage(
   const buildSessionId = await getBuildSessionId()
   const kategori = searchParams.kategori ?? '' as string
   const noTopH = params.noTopH ?? false
+  const isCompatibilityChecked = searchParams.c !== '0';
+  console.log(`isCompatibilityChecked: ${isCompatibilityChecked}`);
+  
 
   // Validate all input parameters
   const page = validatePage(searchParams.page);
@@ -63,7 +67,8 @@ export default async function SimulasiPage(
     offset, 
     query,
     sort,
-    sortDirection
+    isCompatibilityChecked,
+    sortDirection,
     // minPrice,
     // maxPrice
   );

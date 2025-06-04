@@ -22,16 +22,16 @@ export type MultiComponentResponse = SingleComponentResponse & {
 }
   
 export type BuildResponseData = {
-  cpu: SingleComponentResponse
-  gpu: SingleComponentResponse
-  motherboard: SingleComponentResponse
-  power_supply: SingleComponentResponse
-  casing: SingleComponentResponse
-  cpu_cooler: SingleComponentResponse
-  internal_storages: MultiComponentResponse[]
-  memories: MultiComponentResponse[]
-  monitors: MultiComponentResponse[]
-  total_price: number
+  cpu?: SingleComponentResponse
+  gpu?: SingleComponentResponse
+  motherboard?: SingleComponentResponse
+  power_supply?: SingleComponentResponse
+  casing?: SingleComponentResponse
+  cpu_cooler?: SingleComponentResponse
+  internal_storages?: MultiComponentResponse[]
+  memories?: MultiComponentResponse[]
+  monitors?: MultiComponentResponse[]
+  total_price?: number
 }
 
 export type Database = {

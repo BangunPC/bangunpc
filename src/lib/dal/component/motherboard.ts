@@ -5,7 +5,7 @@ import { ComponentCategoryEnum, ComponentDetail, ComponentView, isValidComponent
 import { MotherboardCompatibility, ProductFilter } from "./filter";
 
 export const getMotherboard = async (
-  { casingId, cpuId, memories }: MotherboardCompatibility,
+  { casingId, cpuId, memoryIds }: MotherboardCompatibility,
   { product_name, min_price, max_price, limit, offset }: ProductFilter,
   { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
@@ -98,47 +98,96 @@ export const getMotherboard = async (
     );
   }
 
-  if (memories && memories.length > 0) {
+  // if (memories && memories.length > 0) {
+  //   const { data: memoryData } = await supabase
+  //     .schema("product")
+  //     .from("v_memories")
+  //     .select("product_id, memory_type, capacity_gb, frequency_mhz")
+  //     .in(
+  //       "product_id",
+  //       memories.map((memory) => memory.id),
+  //     );
+
+  //   if (!memoryData) {
+  //     throw new Error("Memory data is null");
+  //   }
+    
+  //   if (memoryData && memoryData.length > 0) {
+  //     filteredData = filteredData.filter((motherboard) => {
+  //       const memoryCount = memories.reduce(
+  //         (total, memory) => total + memory.amount,
+  //         0,
+  //       );
+
+  //       const totalMemoryGb = memoryData.reduce((total, memory) => {
+  //         return (
+  //           total +
+  //           (memory.capacity_gb ?? 0) *
+  //             (memories.find(
+  //               (inputMemory) => inputMemory.id === memory.product_id,
+  //             )?.amount ?? 0)
+  //         );
+  //       }, 0);
+
+  //       return (
+  //         (motherboard.memory_type ?? "_") ===
+  //           (memoryData[0]?.memory_type ?? "") &&
+  //         (motherboard.memory_slot ?? 0) >= memoryCount &&
+  //         (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
+  //         (motherboard.memory_frequency_mhz ?? 0) >=
+  //           (memoryData[0]?.frequency_mhz ?? -1)
+  //       );
+  //     });
+  //   }
+  // }
+
+  if (memoryIds && memoryIds.length > 0) {
+    const uniqueMemoryIds = [...new Set(memoryIds)];
+    
     const { data: memoryData } = await supabase
       .schema("product")
       .from("v_memories")
-      .select("product_id, memory_type, capacity_gb, frequency_mhz")
-      .in(
-        "product_id",
-        memories.map((memory) => memory.id),
-      );
+      .select("product_id, memory_type, capacity_gb, frequency_mhz, amount")
+      .in("product_id", uniqueMemoryIds);
 
-    if (!memoryData) {
-      throw new Error("Memory data is null");
+    if (!memoryData || memoryData.length === 0) {
+      throw new Error("Memory data not found");
     }
+
+    // Verify all memory modules have the same type
+    const firstMemoryType = memoryData[0]?.memory_type;
+    const allSameType = memoryData.every(m => m.memory_type === firstMemoryType);
     
-    if (memoryData && memoryData.length > 0) {
-      filteredData = filteredData.filter((motherboard) => {
-        const memoryCount = memories.reduce(
-          (total, memory) => total + memory.amount,
-          0,
-        );
-
-        const totalMemoryGb = memoryData.reduce((total, memory) => {
-          return (
-            total +
-            (memory.capacity_gb ?? 0) *
-              (memories.find(
-                (inputMemory) => inputMemory.id === memory.product_id,
-              )?.amount ?? 0)
-          );
-        }, 0);
-
-        return (
-          (motherboard.memory_type ?? "_") ===
-            (memoryData[0]?.memory_type ?? "") &&
-          (motherboard.memory_slot ?? 0) >= memoryCount &&
-          (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
-          (motherboard.memory_frequency_mhz ?? 0) >=
-            (memoryData[0]?.frequency_mhz ?? -1)
-        );
-      });
+    if (!allSameType) {
+      return { data: [], total: 0, error: "All memory must be of the same type" };
     }
+
+    filteredData = filteredData.filter((motherboard) => {
+      // Count kits of each type
+      const kitCounts = new Map<number, number>();
+      memoryIds.forEach(id => kitCounts.set(id, (kitCounts.get(id) || 0) + 1));
+
+      // Calculate totals
+      let totalSticks = 0;
+      let totalMemoryGb = 0;
+      let maxFrequency = 0;
+
+      memoryData.forEach(memory => {
+        const kits = kitCounts.get(memory.product_id ?? 0) || 0;
+        const sticks = kits * (memory.amount || 1);
+        
+        totalSticks += sticks;
+        totalMemoryGb += (memory.capacity_gb || 0) * sticks;
+        maxFrequency = Math.max(maxFrequency, memory.frequency_mhz || 0);
+      });
+
+      return (
+        (motherboard.memory_type ?? "") === firstMemoryType &&
+        (motherboard.memory_slot ?? 0) >= totalSticks &&
+        (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
+        (motherboard.memory_frequency_mhz ?? 0) >= maxFrequency
+      );
+    });
   }
 
   if (error) {

@@ -1,3 +1,4 @@
+import { getBuildSessionData } from "@/lib/build-session";
 import { ComponentCategoryEnum } from "../../db";
 import { getCasing } from "./casing";
 import { getCpu } from "./cpu";
@@ -14,6 +15,7 @@ export async function fetchProducts(
   offset: number = 1, 
   query?: string,
   sort?: string,
+  isCompatibilityChecked?: boolean,
   sortDirection?: string,
   minPrice?: number,
   maxPrice?: number
@@ -26,9 +28,36 @@ export async function fetchProducts(
     offset,
   }
 
+  let simulasiData = null
+  if (isCompatibilityChecked) {
+    simulasiData = (await getBuildSessionData())?.data;
+  }
   switch (categoryEnum) {
     case ComponentCategoryEnum.Motherboard:
-      return getMotherboard({}, productFilter, { sort, sortDirection });   
+      let motherboardCompatibility = {};
+      if (isCompatibilityChecked && simulasiData) {
+        // If compatibility is checked, we need to get the motherboard compatibility data from the session
+        // Step 1: Count occurrences of each product_id
+        // const productCountMap = new Map<number, number>();
+
+        // simulasiData.memories.forEach(item => {
+        //     const currentCount = productCountMap.get(item.product_id) || 0;
+        //     productCountMap.set(item.product_id, currentCount + 1);
+        // });
+
+        // // Step 2: Convert to desired format
+        // const memories = Array.from(productCountMap.entries()).map(([id, amount]) => ({
+        //     id,
+        //     amount
+        // }));
+
+        motherboardCompatibility = {
+          casingId: simulasiData.casing?.product_id,
+          cpuId: simulasiData.cpu?.product_id,
+          memoryIds: simulasiData.memories?.map(item => item.product_id),
+        };
+      }
+      return getMotherboard(motherboardCompatibility, productFilter, { sort, sortDirection });   
     case ComponentCategoryEnum.CPU:
       return getCpu({}, productFilter, { sort, sortDirection })
     case ComponentCategoryEnum.GPU:

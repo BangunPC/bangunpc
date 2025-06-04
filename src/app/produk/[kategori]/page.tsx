@@ -15,6 +15,7 @@ export default async function KategoriPage(props: {
   params: Promise<Params>
   searchParams?: Promise<{ 
     q?: string;
+    c?: string;
     page?: string; 
     perPage?: string;
     sort?: string;
@@ -32,6 +33,7 @@ export default async function KategoriPage(props: {
   const query = validateStringQuery(searchParams.q); 
   const sort = validateStringQuery(searchParams.sort); 
   const sortDirection = validateStringQuery(searchParams.direction); 
+  const isCompatibilityChecked = searchParams.c !== '0';
   
   // const minPrice = searchParams.minPrice ? Number(searchParams.minPrice) : undefined;
   // const maxPrice = searchParams.maxPrice ? Number(searchParams.maxPrice) : undefined;
@@ -45,6 +47,7 @@ export default async function KategoriPage(props: {
     offset, 
     query,
     sort,
+    isCompatibilityChecked,
     sortDirection
     // minPrice,
     // maxPrice
