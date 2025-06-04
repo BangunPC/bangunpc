@@ -55,6 +55,7 @@ export default async function KategoriPage(props: {
 
   const data = 'data' in result ? result.data : [];
   const total = 'total' in result ? result.total : 0;
+  const errorMessage = 'errorMessage' in result ? result.errorMessage : undefined;
 
   return (
     <Suspense fallback={<LoadingComponent />}>
@@ -62,6 +63,7 @@ export default async function KategoriPage(props: {
         componentDetails={data} 
         kategori={kategori} 
         noTopH={noTopH} 
+        errorMessage={errorMessage}
         page={page} 
         perPage={perPage} 
         total={total}

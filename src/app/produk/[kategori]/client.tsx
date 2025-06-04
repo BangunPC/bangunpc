@@ -12,7 +12,7 @@ import { SidebarClose, SidebarOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn, componentImage } from "@/lib/utils";
 import { insertOrCreateSession } from "@/lib/build-session";
@@ -23,13 +23,13 @@ import {  ArrowUp, ArrowDown } from "lucide-react";
 import { useMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
 import Switch from "@/components/ui/switch";
-import { useLocalStorage } from "@/hooks/use-local-storage";
 
 export function KategoriClient({
   className,
   componentDetails,
   kategori,
   noTopH,
+  errorMessage,
   page = 1,
   perPage = 20,
   total = 0,
@@ -41,6 +41,7 @@ export function KategoriClient({
   componentDetails: ComponentDetail[]
   kategori: string
   noTopH: boolean
+  errorMessage?: string
   page?: number
   perPage?: number
   total?: number
@@ -312,6 +313,7 @@ export function KategoriClient({
             <Header 
               category={componentCategoryEnum} 
               itemCount={total.toString()} 
+              errorMessage={errorMessage}
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
             />
@@ -417,11 +419,13 @@ const Header = ({
   category,
   itemCount,
   searchQuery,
+  errorMessage,
   onSearchChange,
 }: {
   category: ComponentCategoryEnum;
   itemCount: string;
   searchQuery: string;
+  errorMessage?: string;
   onSearchChange: (query: string) => void;
 }) => {
   const router = useRouter();
@@ -444,28 +448,39 @@ const Header = ({
   }, [isCompatibilityChecked, searchParams, router]);
 
   return (
-    <div className="flex flex-col tablet:flex-row tablet:items-center tablet:justify-between w-full">
-      <div className="flex-1">
+  <div className="flex flex-col tablet:flex-row tablet:items-center tablet:justify-between w-full">
+    <div className="flex flex-col gap-4">
+      <div>
         <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">
           Pilih {categoryEnumToTitle[category]}
         </h1>
-        {/* <p className="mt-2 text-base font-medium text-gray-600 dark:text-gray-300 sm:text-lg">
+        <p className="mt-2 text-base text-gray-600 dark:text-gray-300 sm:text-lg">
           Tersedia <span className="font-semibold">{itemCount}</span> produk yang bisa Anda pilih
-        </p> */}
-        <div className="flex items-center gap-4 mt-4">
-          <Switch
-            checked={isCompatibilityChecked}
-            onCheckedChange={(checked) => setIsCompatibilityChecked(checked)}
-            id="compatibility-check-toggle"
-          />
-          <label htmlFor="compatibility-check-toggle" className="text-base font-medium cursor-pointer select-none">
-            Cek Kompatibilitas
-          </label>
-          <span className="text-xs text-zinc-500 ml-2">
-            {isCompatibilityChecked ? "Hanya tampilkan komponen yang kompatibel" : "Tampilkan semua komponen"}
-          </span>
-        </div>
+        </p>
       </div>
+      <div className="flex items-center gap-4">
+        <Switch
+          checked={isCompatibilityChecked}
+          onCheckedChange={(checked) => setIsCompatibilityChecked(checked)}
+          id="compatibility-check-toggle"
+        />
+        <label htmlFor="compatibility-check-toggle" className="text-base font-medium cursor-pointer select-none">
+          Cek Kompatibilitas
+        </label>
+        <span className="text-xs text-zinc-500 ml-2">
+          {isCompatibilityChecked ? "Hanya tampilkan komponen yang kompatibel" : "Tampilkan semua komponen"}
+        </span>
+      </div>
+      { (isCompatibilityChecked && errorMessage) && (
+        <div className="text-base text-red-500">
+          <span className="font-semibold">Peringatan: </span> 
+          <span>{errorMessage}, cek di halaman </span>
+          <Link href="/simulasi" className="text-red-500 underline">
+              simulasi
+          </Link>
+        </div>
+      )}
+    </div>
     {/* Search Input */}
     <div className="mt-4 tablet:mt-0 tablet:ml-4 w-full tablet:w-auto">
       <input

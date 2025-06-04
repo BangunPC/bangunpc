@@ -10,6 +10,7 @@ export const getMotherboard = async (
   { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
+  let errorMessage
 
   if (!supabase) {
     throw new Error("Supabase client is null")
@@ -77,7 +78,7 @@ export const getMotherboard = async (
       .single();
 
     if (!casingData) {
-      throw new Error("Casing data is null");
+      errorMessage = "data casing tidak ditemukan";
     }
 
     filteredData = filteredData.filter((motherboard) =>
@@ -159,35 +160,37 @@ export const getMotherboard = async (
     const allSameType = memoryData.every(m => m.memory_type === firstMemoryType);
     
     if (!allSameType) {
-      return { data: [], total: 0, error: "All memory must be of the same type" };
+      filteredData = [];
+      errorMessage = "Semua memori yang dipilih harus memiliki tipe yang sama";
+    } else {
+      filteredData = filteredData.filter((motherboard) => {
+        // Count kits of each type
+        const kitCounts = new Map<number, number>();
+        memoryIds.forEach(id => kitCounts.set(id, (kitCounts.get(id) ?? 0) + 1));
+  
+        // Calculate totals
+        let totalSticks = 0;
+        let totalMemoryGb = 0;
+        let maxFrequency = 0;
+  
+        memoryData.forEach(memory => {
+          const kits = kitCounts.get(memory.product_id ?? 0) ?? 0;
+          const sticks = kits * (memory.amount ?? 1);
+          
+          totalSticks += sticks;
+          totalMemoryGb += (memory.capacity_gb ?? 0) * sticks;
+          maxFrequency = Math.max(maxFrequency, memory.frequency_mhz ?? 0);
+        });
+  
+        return (
+          (motherboard.memory_type ?? "") === firstMemoryType &&
+          (motherboard.memory_slot ?? 0) >= totalSticks &&
+          (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
+          (motherboard.memory_frequency_mhz ?? 0) >= maxFrequency
+        );
+      });
     }
 
-    filteredData = filteredData.filter((motherboard) => {
-      // Count kits of each type
-      const kitCounts = new Map<number, number>();
-      memoryIds.forEach(id => kitCounts.set(id, (kitCounts.get(id) ?? 0) + 1));
-
-      // Calculate totals
-      let totalSticks = 0;
-      let totalMemoryGb = 0;
-      let maxFrequency = 0;
-
-      memoryData.forEach(memory => {
-        const kits = kitCounts.get(memory.product_id ?? 0) ?? 0;
-        const sticks = kits * (memory.amount ?? 1);
-        
-        totalSticks += sticks;
-        totalMemoryGb += (memory.capacity_gb ?? 0) * sticks;
-        maxFrequency = Math.max(maxFrequency, memory.frequency_mhz ?? 0);
-      });
-
-      return (
-        (motherboard.memory_type ?? "") === firstMemoryType &&
-        (motherboard.memory_slot ?? 0) >= totalSticks &&
-        (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
-        (motherboard.memory_frequency_mhz ?? 0) >= maxFrequency
-      );
-    });
   }
 
   if (error) {
@@ -196,7 +199,8 @@ export const getMotherboard = async (
 
   // compatibility end
 
-  return { data: filteredData, total: count ?? 0 };
+  return { data: filteredData, total: count ?? 0, errorMessage
+: errorMessage};
 };
 
 // export async function getProductByNameAndCategory(

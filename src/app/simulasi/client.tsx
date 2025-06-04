@@ -174,8 +174,6 @@ export function SimulasiClient({
 
       if (!responseError)
         router.refresh()
-      else
-        console.log(responseError);
         
     }
   };

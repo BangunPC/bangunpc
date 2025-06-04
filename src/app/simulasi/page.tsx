@@ -44,9 +44,7 @@ export default async function SimulasiPage(
   const kategori = searchParams.kategori ?? '' as string
   const noTopH = params.noTopH ?? false
   const isCompatibilityChecked = searchParams.c !== '0';
-  console.log(`isCompatibilityChecked: ${isCompatibilityChecked}`);
   
-
   // Validate all input parameters
   const page = validatePage(searchParams.page);
   const perPage = validatePerPage(searchParams.perPage);
@@ -75,6 +73,7 @@ export default async function SimulasiPage(
   
   const data = 'data' in result ? result.data : [];
   const total = 'total' in result ? result.total : 0;
+  const errorMessage = 'errorMessage' in result ? result.errorMessage : undefined;
 
   if(buildSessionId) {
     const simulasiData = await getBuildSessionData();
@@ -89,6 +88,7 @@ export default async function SimulasiPage(
             componentDetails={data} 
             kategori={kategori} 
             noTopH={noTopH} 
+            errorMessage={errorMessage}
             page={page} 
             perPage={perPage} 
             total={total}
@@ -106,7 +106,8 @@ export default async function SimulasiPage(
           <KategoriClient 
             componentDetails={data} 
             kategori={kategori} 
-            noTopH={noTopH} 
+            noTopH={noTopH}
+            errorMessage={errorMessage} 
             page={page} 
             perPage={perPage} 
             total={total}
