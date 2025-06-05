@@ -508,13 +508,13 @@ type TableType = {
 };
 
 const SortIndicator = ({ direction }: { direction: 'asc' | 'desc' | null }) => {
-    return (
-      <span className="ml-1 inline-flex flex-col items-center">
-        <span className={`h-2 ${direction === 'asc' ? 'text-primary' : 'text-gray-300'}`}><ArrowUp className="ml-2 h-3 w-3" /></span>
-        <span className={`h-2 ${direction === 'desc' ? 'text-primary' : 'text-gray-300'}`}><ArrowDown className="ml-2 h-3 w-3" /></span>
-      </span>
-    );
-  };
+  return (
+    <span className="ml-1 inline-flex flex-col items-center">
+      <span className={`h-2 ${direction === 'asc' ? 'text-primary' : 'text-gray-300'}`}><ArrowUp className="ml-2 h-3 w-3" /></span>
+      <span className={`h-2 ${direction === 'desc' ? 'text-primary' : 'text-gray-300'}`}><ArrowDown className="ml-2 h-3 w-3" /></span>
+    </span>
+  );
+};
 
 const DesktopTable = ({
   data,

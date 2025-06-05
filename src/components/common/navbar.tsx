@@ -455,7 +455,7 @@ export function Navbar() {
                     href="/simulasi"
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      "w-full justify-start bg-transparent",
+                      "w-full justify-start bg-transparent text-base",
                     )}
                   >
                     Simulasi Rakit PC
@@ -465,7 +465,7 @@ export function Navbar() {
                     target="_blank"
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      "w-full justify-start bg-transparent",
+                      "w-full justify-start bg-transparent text-base",
                     )}
                   >
                     Jasa Rakit PC
@@ -474,7 +474,7 @@ export function Navbar() {
                     href="/rakit/budget"
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      "w-full justify-start bg-transparent",
+                      "w-full justify-start bg-transparent text-base",
                     )}
                   >
                     Rekomendasi Rakitan
