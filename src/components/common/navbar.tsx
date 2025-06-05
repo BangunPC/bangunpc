@@ -375,10 +375,10 @@ export function Navbar() {
                   <NavigationMenuLink
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      "bg-transparent",
+                      "bg-transparent text-base",
                     )}
                   >
-                    Produk
+                    Komponen
                   </NavigationMenuLink>
                 </DialogTrigger>
                 <DialogContent className="h-full overflow-auto p-2 tablet:max-h-[642px] tablet:max-w-fit tablet:p-4">
@@ -446,7 +446,7 @@ export function Navbar() {
               </Dialog>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className={"bg-transparent"}>
+              <NavigationMenuTrigger className={"bg-transparent text-base"}>
                 Rakit PC
               </NavigationMenuTrigger>
               <NavigationMenuContent>
@@ -487,7 +487,7 @@ export function Navbar() {
                 href="/blog"
                   className={cn(
                     navigationMenuTriggerStyle(),
-                    "bg-transparent cursor-pointer",
+                    "bg-transparent cursor-pointer text-base",
                   )}
                   >
                   Blog

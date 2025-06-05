@@ -455,7 +455,7 @@ const Header = ({
           Pilih {categoryEnumToTitle[category]}
         </h1>
         <p className="mt-2 text-base text-gray-600 dark:text-gray-300 sm:text-lg">
-          Tersedia <span className="font-semibold">{itemCount}</span> produk yang bisa Anda pilih
+          Tersedia <span className="font-semibold">{itemCount}</span> komponen yang bisa Anda pilih
         </p>
       </div>
       <div className="flex items-center gap-4">
@@ -545,7 +545,7 @@ const DesktopTable = ({
       <table className="w-full">
         <thead className="sticky self-start top-0 z-10 bg-gray-50 dark:bg-gray-800">
           <tr>
-            {['', 'Nama Produk', ...headers, 'Harga (Rp)', ''].map((item, index) => {
+            {['', 'Nama Komponen', ...headers, 'Harga (Rp)', ''].map((item, index) => {
               const field = headerFields[index];
               const isSortable = field && field !== '';
               const isActive = sortField === field;
