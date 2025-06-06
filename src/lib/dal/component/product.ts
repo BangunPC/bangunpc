@@ -57,9 +57,20 @@ export async function fetchProducts(
           memoryIds: simulasiData.memories?.map(item => item.product_id),
         };
       }
+
       return getMotherboard(motherboardCompatibility, productFilter, { sort, sortDirection });   
     case ComponentCategoryEnum.CPU:
-      return getCpu({}, productFilter, { sort, sortDirection })
+      let cpuCompatibility = {};
+      if (isCompatibilityChecked && simulasiData) {
+        cpuCompatibility = {
+          motherboardId: simulasiData.motherboard?.product_id,
+          gpuId: simulasiData.gpu?.product_id,
+          psuId: simulasiData.power_supply?.product_id,
+          memoryIds: simulasiData.memories?.map(item => item.product_id),
+        };
+      }
+      
+      return getCpu(cpuCompatibility, productFilter, { sort, sortDirection })
     case ComponentCategoryEnum.GPU:
       return getGpu({}, productFilter, { sort, sortDirection })
     case ComponentCategoryEnum.Memory:

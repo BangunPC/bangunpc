@@ -8,7 +8,8 @@ export const getCpu = async (
   { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
-
+  let errorMessage
+  
   if (!supabase) {
     throw new Error("Supabase client is null");
   }
@@ -199,11 +200,12 @@ export const getCpu = async (
         .eq("product_id", memoryId)
         .single()
 
-      if (error) 
-        console.error(`Error fetching data for memoryId ${memoryId}:`, error);
-      else
+      if (!error) 
         memoryData.push(data);
     }    
+
+    console.log(memoryData);
+    
     
     if (!memoryData || error !== null || memoryData.length === 0) {
       return filteredData;
@@ -212,8 +214,8 @@ export const getCpu = async (
     // All selected memory's type should be same 
     const firstMemoryType = memoryData[0]?.memory_type;
     if (memoryData.some((memory) => memory.memory_type !== firstMemoryType)) {
-      alert("Memory type mismatch");
       filteredData = [];
+      errorMessage = "Semua memori yang dipilih harus memiliki tipe yang sama"
     } else {
       const totalMemorySizeGB = memoryData.reduce((total, memory) => {
           return total + (memory.capacity_gb ?? 0) * (memory.amount ?? 0)
@@ -238,5 +240,5 @@ export const getCpu = async (
 
   // compatibility end
 
-  return { data: filteredData, total: count ?? 0 };
+  return { data: filteredData, total: count ?? 0, errorMessage };
 };
