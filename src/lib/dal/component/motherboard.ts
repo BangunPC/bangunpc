@@ -36,6 +36,85 @@ export const getMotherboard = async (
     //   config: "english",
     // });
   }
+
+  // compatibility start
+
+  if (casingId) {
+    const { data: casingData } = await supabase
+      .schema("product")
+      .from("v_casings")
+      .select("mobo_supports")
+      .eq("product_id", casingId)
+      .limit(1)
+      .single();
+
+    if (!casingData) {
+      errorMessage = "Data casing tidak ditemukan";
+    }
+
+    await client_query.filter('form_factor', 'in', `(${casingData?.mobo_supports?.join(',')})`);
+  }
+
+  if (cpuId) {
+    const { data: cpuData } = await supabase
+      .schema("product")
+      .from("v_cpus")
+      .select("cpu_socket_id")
+      .eq("product_id", cpuId)
+      .limit(1)
+      .single();
+    
+    if (cpuData?.cpu_socket_id !== undefined && cpuData?.cpu_socket_id !== null) {
+      await client_query.eq("cpu_socket_id", cpuData.cpu_socket_id);
+    }
+  }
+
+  if (memoryIds && memoryIds.length > 0) {
+    const uniqueMemoryIds = [...new Set(memoryIds)];
+    
+    // 1. Fetch memory data
+    const { data: memoryData } = await supabase
+      .schema("product")
+      .from("v_memories")
+      .select("product_id, memory_type, capacity_gb, frequency_mhz, amount")
+      .in("product_id", uniqueMemoryIds);
+
+    if (memoryData && memoryData.length !== 0) {
+      // 2. Check memory type consistency
+      const firstMemoryType = memoryData[0]?.memory_type;
+      const allSameType = memoryData.every(m => m.memory_type === firstMemoryType);
+      
+      if (!allSameType) {
+        errorMessage = "Semua memori yang dipilih harus memiliki tipe yang sama";
+        return { data: [], total: 0, errorMessage };
+      } else {
+        // 3. Calculate memory requirements
+        const kitCounts = new Map<number, number>();
+        memoryIds.forEach(id => kitCounts.set(id, (kitCounts.get(id) ?? 0) + 1));
+  
+        let totalSticks = 0;
+        let totalMemoryGb = 0;
+        let maxFrequency = 0;
+  
+        memoryData.forEach(memory => {
+          const kits = kitCounts.get(memory.product_id ?? 0) ?? 0;
+          const sticks = kits * (memory.amount ?? 1);
+          
+          totalSticks += sticks;
+          totalMemoryGb += (memory.capacity_gb ?? 0) * sticks;
+          maxFrequency = Math.max(maxFrequency, memory.frequency_mhz ?? 0);
+        });
+  
+        // 4. Filter motherboards in a single query
+        if (firstMemoryType !== undefined && firstMemoryType !== null) {
+          client_query.eq("memory_type", firstMemoryType)
+            .gte("memory_slot", totalSticks)
+            .gte("max_memory_gb", totalMemoryGb)
+            .gte("memory_frequency_mhz", maxFrequency);
+        } 
+      }
+    }
+  }
   
   if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Motherboard) && sortDirection) {   
     switch (sortDirection) {
@@ -58,143 +137,17 @@ export const getMotherboard = async (
   // filter end
 
   const { data, count, error } = await client_query;
-  const motherboardData = data as ComponentDetail[];
+  const motherboardData = data as ComponentDetail[]; 
 
   if (!motherboardData) {
-    throw new Error("Motherboard data is null");
+    errorMessage = "Data motherboard tidak ditemukan";
+    return { data: [], total: 0, errorMessage };
   }
 
   let filteredData = motherboardData as ComponentView["v_motherboards"][];
 
-  // compatibility start
-
-  if (casingId) {
-    const { data: casingData } = await supabase
-      .schema("product")
-      .from("v_casings")
-      .select("mobo_supports")
-      .eq("product_id", casingId)
-      .limit(1)
-      .single();
-
-    if (!casingData) {
-      errorMessage = "data casing tidak ditemukan";
-    }
-
-    filteredData = filteredData.filter((motherboard) =>
-      casingData?.mobo_supports?.includes(motherboard.form_factor ?? ""),
-    );
-  }
-
-  if (cpuId) {
-    const { data: cpuData } = await supabase
-      .schema("product")
-      .from("v_cpus")
-      .select("cpu_socket_id")
-      .eq("product_id", cpuId)
-      .limit(1)
-      .single();
-    filteredData = filteredData.filter(
-      (motherboard) => motherboard.cpu_socket_id === cpuData?.cpu_socket_id,
-    );
-  }
-
-  // if (memories && memories.length > 0) {
-  //   const { data: memoryData } = await supabase
-  //     .schema("product")
-  //     .from("v_memories")
-  //     .select("product_id, memory_type, capacity_gb, frequency_mhz")
-  //     .in(
-  //       "product_id",
-  //       memories.map((memory) => memory.id),
-  //     );
-
-  //   if (!memoryData) {
-  //     throw new Error("Memory data is null");
-  //   }
-    
-  //   if (memoryData && memoryData.length > 0) {
-  //     filteredData = filteredData.filter((motherboard) => {
-  //       const memoryCount = memories.reduce(
-  //         (total, memory) => total + memory.amount,
-  //         0,
-  //       );
-
-  //       const totalMemoryGb = memoryData.reduce((total, memory) => {
-  //         return (
-  //           total +
-  //           (memory.capacity_gb ?? 0) *
-  //             (memories.find(
-  //               (inputMemory) => inputMemory.id === memory.product_id,
-  //             )?.amount ?? 0)
-  //         );
-  //       }, 0);
-
-  //       return (
-  //         (motherboard.memory_type ?? "_") ===
-  //           (memoryData[0]?.memory_type ?? "") &&
-  //         (motherboard.memory_slot ?? 0) >= memoryCount &&
-  //         (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
-  //         (motherboard.memory_frequency_mhz ?? 0) >=
-  //           (memoryData[0]?.frequency_mhz ?? -1)
-  //       );
-  //     });
-  //   }
-  // }
-
-  if (memoryIds && memoryIds.length > 0) {
-    const uniqueMemoryIds = [...new Set(memoryIds)];
-    
-    const { data: memoryData } = await supabase
-      .schema("product")
-      .from("v_memories")
-      .select("product_id, memory_type, capacity_gb, frequency_mhz, amount")
-      .in("product_id", uniqueMemoryIds);
-
-    if (!memoryData || memoryData.length === 0) {
-      throw new Error("Memory data not found");
-    }
-
-    // Verify all memory modules have the same type
-    const firstMemoryType = memoryData[0]?.memory_type;
-    const allSameType = memoryData.every(m => m.memory_type === firstMemoryType);
-    
-    if (!allSameType) {
-      filteredData = [];
-      errorMessage = "Semua memori yang dipilih harus memiliki tipe yang sama";
-    } else {
-      filteredData = filteredData.filter((motherboard) => {
-        // Count kits of each type
-        const kitCounts = new Map<number, number>();
-        memoryIds.forEach(id => kitCounts.set(id, (kitCounts.get(id) ?? 0) + 1));
-  
-        // Calculate totals
-        let totalSticks = 0;
-        let totalMemoryGb = 0;
-        let maxFrequency = 0;
-  
-        memoryData.forEach(memory => {
-          const kits = kitCounts.get(memory.product_id ?? 0) ?? 0;
-          const sticks = kits * (memory.amount ?? 1);
-          
-          totalSticks += sticks;
-          totalMemoryGb += (memory.capacity_gb ?? 0) * sticks;
-          maxFrequency = Math.max(maxFrequency, memory.frequency_mhz ?? 0);
-        });
-  
-        return (
-          (motherboard.memory_type ?? "") === firstMemoryType &&
-          (motherboard.memory_slot ?? 0) >= totalSticks &&
-          (motherboard.max_memory_gb ?? 0) >= totalMemoryGb &&
-          (motherboard.memory_frequency_mhz ?? 0) >= maxFrequency
-        );
-      });
-    }
-
-  }
-
   if (error) {
-    throw error;
+    errorMessage = error.message;
   }
 
   // compatibility end
@@ -202,28 +155,3 @@ export const getMotherboard = async (
   return { data: filteredData, total: count ?? 0, errorMessage
 : errorMessage};
 };
-
-// export async function getProductByNameAndCategory(
-//   productName: string
-// ) {
-//   const supabase = await createSupaServerClient()
-  
-//   if(!productName) return []
-  
-//   const { data, error: buildError } = await supabase
-//     .schema('product')
-//     .from('v_products')
-//     .select()
-//     // .textSearch('product_name', `'${productName}'`, {
-//     //   type: 'websearch',
-//     //   config: 'english'
-//     // })
-//     .ilike('product_name', `%${productName}%`)
-//     .eq('category', categoryEnumToTitle[category])
-  
-//   if (buildError)
-//       return { data: null, error:buildError.message }
-    
-//   return { data?.v_builds as BuildResponseData, error: null}
-// }
-
