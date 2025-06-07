@@ -1,7 +1,6 @@
 "use client"
 
 import { Save, Trash2, Undo2 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { FC, useEffect, useState } from "react";
@@ -23,18 +22,13 @@ import {
 } from "@/lib/db";
 import { createQueryString, productImage } from "@/lib/utils";
 import { RadioGroup } from "@/components/ui/radio-group";
-// import { Label } from "@/components/ui/label";
 import Divider from "@/components/ui/divider";
-// import { Input } from "@/components/ui/input";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { BuildResponseData, MultiComponentResponse, SingleComponentResponse } from "@/lib/schema";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { deleteBuildSession, deleteBuildSessionComponent } from "@/lib/build-session";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Switch } from "@/components/ui/switch";
-import { toast } from "sonner";
-// import { deleteBuildSession, deleteBuildSessionComponent } from "@/lib/build-session";
 
 const headers = [
   "Kategori",

@@ -95,6 +95,10 @@ const updateURLParams = useCallback(() => {
     params.set('kategori', searchParams.get('kategori') ?? '');
   }
 
+  if(searchParams.get('produk')) {
+    params.set('produk', searchParams.get('produk') ?? '');
+  }
+
   // Search query
   if (debouncedSearchQuery) {
     params.set('q', debouncedSearchQuery);
@@ -502,7 +506,7 @@ const Header = ({
         placeholder="Cari produk..."
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
-        className="w-full tablet:w-64 rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+        className="w-full tablet:w-64 rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:border-gray-600 dark:text-white bg-navbar dark:focus:ring-sky-500"
       />
     </div>
   </div>
@@ -547,13 +551,6 @@ const DesktopTable = ({
   // Define which fields correspond to which header columns
   const headerFields = ['', 'product_name', ...headerKeys, 'lowest_price', ''];
 
-  // const getSortIcon = (column: string) => {
-  //   if (sortColumn !== column) return <ArrowUpDown className="ml-2 h-4 w-4" />;
-  //   return sortDirection === 'asc' ? 
-  //     <ArrowUp className="ml-2 h-4 w-4" /> : 
-  //     <ArrowDown className="ml-2 h-4 w-4" />;
-  // };
-
   return (
     <div className="hidden w-full overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 tablet:block">
       <table className="w-full">
@@ -584,7 +581,7 @@ const DesktopTable = ({
             })}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
+        <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-navbar">
           {data?.map((component) => {
             const handleRedirect = () =>
               router.push(
@@ -594,7 +591,7 @@ const DesktopTable = ({
             return (
               <tr
                 key={component.product_id}
-                className="group cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="group cursor-pointer hover:bg-gray-50 dark:hover:bg-navbar/0"
               >
                 <td className="py-4 px-3 w-20">
                   <TooltipProvider delayDuration={100}>
