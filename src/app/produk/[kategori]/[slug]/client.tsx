@@ -353,96 +353,98 @@ const KategoriSlugClient = ({
       </Accordion>
       <Accordion type="single" collapsible defaultValue="spec-details">
         <AccordionItem value="spec-details">
-        <div className="relative mb-4">
-          <AccordionTrigger className="flex w-full justify-start text-3xl font-semibold">
-            Spesifikasi
-            <span className="mr-auto" />
-          </AccordionTrigger>
-          
-          {data.spec_url && (
-            <Link
-              href={data.spec_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute left-[140px] top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-md border border-neutral-400
-              dark:border-white bg-transparent px-3 py-1.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-300 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none dark:text-neutral-50 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 ml-8 mr-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              Buka Spesifikasi Resmi
-            </Link>
-          )}
-        </div>
+          <div className="relative mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-0">
+            <AccordionTrigger className="flex w-full sm:w-auto justify-start text-2xl sm:text-3xl font-semibold">
+              Spesifikasi
+              <span className="mr-auto" />
+            </AccordionTrigger>
+            
+            {data.spec_url && (
+              <Link
+                href={data.spec_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sm:absolute sm:left-[140px] sm:top-1/2 sm:-translate-y-1/2 inline-flex items-center justify-center rounded-md border border-neutral-400
+                dark:border-white bg-transparent px-3 py-1.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-300 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none dark:text-neutral-50 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 sm:ml-8 mr-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Buka Spesifikasi Resmi
+              </Link>
+            )}
+          </div>
 
           <AccordionContent>
-            <table className="flex flex-col rounded-lg border bg-slate-200 drop-shadow-sm dark:bg-slate-800">
-              <thead className="hidden">
-                <tr>
-                  <td />
-                  <td />
-                </tr>
-              </thead>
-              <tbody>
-                {componentInfo?.map((info: any, index) => (
-                  <tr
-                    key={"componentinfo-" + index}
-                    className="border-b last:border-none border-slate-700 hover:bg-slate-800/50 transition-colors"
-                  >
-                    <td className="whitespace-nowrap border-r border-slate-700 p-4 text-slate-300">
-                      {info.title}
-                    </td>
-                    <td className="w-full p-4 text-slate-100">
-                      {(() => {
-                        if (!info.value && info.value !== 0 && info.value !== false) return <span className="text-slate-500">N/A</span>;
-                        
-                        // Handle array case
-                        if (Array.isArray(info.value)) {
-                          return info.value.map((item: any, i: number) => (
-                            <div key={i} className="mb-1 last:mb-0">
-                              {typeof item === 'string' && isUrl(item) 
-                                ? <Link 
-                                  target="_blank"
-                                  className="text-blue-400 hover:text-blue-300 underline underline-offset-2" 
-                                  href={item}>{item}</Link> 
-                                : item}
-                            </div>
-                          ));
-                        }
-                        
-                        // Handle object case
-                        if (typeof info.value === 'object') {
-                          return <pre className="text-sm bg-slate-800/50 p-2 rounded overflow-x-auto">{JSON.stringify(info.value, null, 2)}</pre>;
-                        }
-                        
-                        // Handle string case
-                        if (typeof info.value === 'string') {
-                          // Check for URL
-                          if (isUrl(info.value)) {
-                            return <Link 
-                              target="_blank"
-                              className="text-blue-400 hover:text-blue-300 underline underline-offset-2" 
-                              href={info.value}>{info.value}</Link>;
+            <div className="overflow-x-auto">
+              <table className="w-full rounded-lg border bg-slate-200 drop-shadow-sm dark:bg-slate-800">
+                <thead className="hidden">
+                  <tr>
+                    <td />
+                    <td />
+                  </tr>
+                </thead>
+                <tbody>
+                  {componentInfo?.map((info: any, index) => (
+                    <tr
+                      key={"componentinfo-" + index}
+                      className="border-b last:border-none border-slate-700 hover:bg-slate-800/50 transition-colors"
+                    >
+                      <td className="whitespace-nowrap border-r border-slate-700 p-3 sm:p-4 text-slate-300 text-sm sm:text-base">
+                        {info.title}
+                      </td>
+                      <td className="w-full p-3 sm:p-4 text-slate-100 text-sm sm:text-base">
+                        {(() => {
+                          if (!info.value && info.value !== 0 && info.value !== false) return <span className="text-slate-500">N/A</span>;
+                          
+                          // Handle array case
+                          if (Array.isArray(info.value)) {
+                            return info.value.map((item: any, i: number) => (
+                              <div key={i} className="mb-1 last:mb-0">
+                                {typeof item === 'string' && isUrl(item) 
+                                  ? <Link 
+                                    target="_blank"
+                                    className="text-blue-400 hover:text-blue-300 underline underline-offset-2 break-all" 
+                                    href={item}>{item}</Link> 
+                                  : item}
+                              </div>
+                            ));
                           }
                           
-                          // Check for newlines in string
-                          if (info.value.includes('\n')) {
-                            return (
-                              <div className="whitespace-pre-line bg-slate-800/50 rounded">
-                                {info.value.split('\n').map((line: string, i: number) => (
-                                  <div key={i}>{line || <br />}</div>
-                                ))}
-                              </div>
-                            );
+                          // Handle object case
+                          if (typeof info.value === 'object') {
+                            return <pre className="text-xs sm:text-sm bg-slate-800/50 p-2 rounded overflow-x-auto">{JSON.stringify(info.value, null, 2)}</pre>;
                           }
-                        }
-                        
-                        // Default case (numbers, booleans, etc)
-                        return <span>{info.value.toString()}</span>;
-                      })()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                          
+                          // Handle string case
+                          if (typeof info.value === 'string') {
+                            // Check for URL
+                            if (isUrl(info.value)) {
+                              return <Link 
+                                target="_blank"
+                                className="text-blue-400 hover:text-blue-300 underline underline-offset-2 break-all" 
+                                href={info.value}>{info.value}</Link>;
+                            }
+                            
+                            // Check for newlines in string
+                            if (info.value.includes('\n')) {
+                              return (
+                                <div className="whitespace-pre-line bg-slate-800/50 rounded">
+                                  {info.value.split('\n').map((line: string, i: number) => (
+                                    <div key={i}>{line || <br />}</div>
+                                  ))}
+                                </div>
+                              );
+                            }
+                          }
+                          
+                          // Default case (numbers, booleans, etc)
+                          return <span className="break-all">{info.value.toString()}</span>;
+                        })()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
