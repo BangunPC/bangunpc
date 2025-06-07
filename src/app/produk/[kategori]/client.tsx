@@ -12,7 +12,7 @@ import { SidebarClose, SidebarOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn, componentImage } from "@/lib/utils";
 import { insertOrCreateSession } from "@/lib/build-session";
@@ -50,175 +50,191 @@ export function KategoriClient({
   initialMaxPrice?: number
 }) {
   const componentCategoryEnum = categorySlugToEnum[kategori]!;
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  
-  const [hideSidebar, setHideSidebar] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') ?? '');
-  const [minPrice, setMinPrice] = useState<number | undefined>(searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined);
-  const [maxPrice, setMaxPrice] = useState<number | undefined>(searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined);
-  const [sortColumn, setSortColumn] = useState<string | null>(searchParams.get('sort') ?? null);
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | null>(
-    searchParams.get('direction') as 'asc' | 'desc' | null ?? null
-  );
-  const debouncedSearchQuery = useDebounce(searchQuery, 500);
-  const debouncedMinPrice = useDebounce(minPrice, 500);
-  const debouncedMaxPrice = useDebounce(maxPrice, 500);
+const router = useRouter();
+const searchParams = useSearchParams();
 
-  const isSimulasi = (searchParams.get('kategori') ?? '' )?.trim()?.length > 0;  
+// State initialization with URL params
+const [hideSidebar, setHideSidebar] = useState(false);
+const [searchQuery, setSearchQuery] = useState(searchParams.get('q') ?? '');
+const [minPrice, setMinPrice] = useState<number | undefined>(
+  searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined
+);
+const [maxPrice, setMaxPrice] = useState<number | undefined>(
+  searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined
+);
+const [sortColumn, setSortColumn] = useState<string | null>(searchParams.get('sort') ?? null);
+const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | null>(
+  searchParams.get('direction') as 'asc' | 'desc' | null ?? null
+);
 
-  const handleSort = (column: string) => {
-    if (sortColumn !== column) {
-      // New field - start with ascending
-      setSortColumn(column);
-      setSortDirection('asc');
-    } else {
-      if (sortDirection === 'asc') {
-        // Switch to descending
-        setSortDirection('desc');
-      } else if (sortDirection === 'desc') {
-        // Remove sorting
-        setSortColumn(null);
-        setSortDirection(null);
-      }
+// Debounced values for search and filters
+const debouncedSearchQuery = useDebounce(searchQuery, 500);
+const debouncedMinPrice = useDebounce(minPrice, 500);
+const debouncedMaxPrice = useDebounce(maxPrice, 500);
+
+const isSimulasi = (searchParams.get('kategori') ?? '')?.trim()?.length > 0;
+
+// Compatibility filter
+const [isCompatibilityChecked, setIsCompatibilityChecked] = useState(
+  searchParams.get("c") !== "0"
+);
+
+// Pagination
+const totalPages = Math.max(1, Math.ceil(total / perPage));
+const currentPage = Math.min(page, totalPages);
+const rowsPerPageOptions = [10, 20, 30, 40, 50];
+
+/**
+ * Updates the URL with current state values
+ */
+const updateURLParams = useCallback(() => {
+  const params = new URLSearchParams();
+
+  // Preserve kategori if in simulasi mode
+  if (isSimulasi) {
+    params.set('kategori', searchParams.get('kategori') ?? '');
+  }
+
+  // Search query
+  if (debouncedSearchQuery) {
+    params.set('q', debouncedSearchQuery);
+  }
+
+  // Price filters
+  if (debouncedMinPrice !== undefined) {
+    params.set('minPrice', debouncedMinPrice.toString());
+  }
+  if (debouncedMaxPrice !== undefined) {
+    params.set('maxPrice', debouncedMaxPrice.toString());
+  }
+
+  // Pagination
+  if (page > 1) {
+    params.set('page', page.toString());
+  }
+  if (perPage !== 20) {
+    params.set('perPage', perPage.toString());
+  }
+
+  // Sorting
+  if (sortColumn) {
+    params.set('sort', sortColumn);
+    if (sortDirection) {
+      params.set('direction', sortDirection);
     }
-  };
+  }
 
-  // Combined URL update effect
-  useEffect(() => {
-    const params = new URLSearchParams();
-    
-    // Preserve iframe parameter if it exists
-    if (isSimulasi) {
-      params.set('kategori', searchParams.get('kategori') ?? '');
-    }
-    
-    if (debouncedSearchQuery) {
-      params.set('q', debouncedSearchQuery);
-      params.set('page', '1');
-    } else if (page > 1) {
-      params.set('page', page.toString());
-    }
-    
-    if (debouncedMinPrice) {
-      params.set('minPrice', debouncedMinPrice.toString());
-      params.set('page', '1');
-    }
-    if (debouncedMaxPrice) {
-      params.set('maxPrice', debouncedMaxPrice.toString());
-      params.set('page', '1');
-    }
-    
-    if (perPage !== 20) {
-      params.set('perPage', perPage.toString());
-    }
+  // Compatibility
+  params.set('c', isCompatibilityChecked ? '1' : '0');
 
-    if (sortColumn) {
-      params.set('sort', sortColumn);
-
-      if (sortDirection) {
-        params.set('direction', sortDirection);
-      }
-    }
-    
-    // Use the current pathname to maintain the route
-    const pathname = window.location.pathname;
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [debouncedSearchQuery, debouncedMinPrice, debouncedMaxPrice, page, perPage, router, isSimulasi, sortColumn, sortDirection]);
-
-  // Handle browser navigation (back/forward)
-  useEffect(() => {
-    const handleUrlChange = () => {
-      const params = new URLSearchParams(window.location.search);
-      const newSearch = params.get('q') ?? '';
-      const newMinPrice = params.get('minPrice') ? Number(params.get('minPrice')) : undefined;
-      const newMaxPrice = params.get('maxPrice') ? Number(params.get('maxPrice')) : undefined;
-      const newSortColumn = params.get('sortBy') ?? '';
-      const newSortDirection = (params.get('sortDir') as 'asc' | 'desc') ?? 'asc';
-
-      if (newSearch !== searchQuery) setSearchQuery(newSearch);
-      if (newMinPrice !== minPrice) setMinPrice(newMinPrice);
-      if (newMaxPrice !== maxPrice) setMaxPrice(newMaxPrice);
-      if (newSortColumn !== sortColumn) setSortColumn(newSortColumn);
-      if (newSortDirection !== sortDirection) setSortDirection(newSortDirection);
-    };
-
-    window.addEventListener('popstate', handleUrlChange);
-    return () => window.removeEventListener('popstate', handleUrlChange);
-  }, [searchQuery, minPrice, maxPrice, sortColumn, sortDirection]);
-
-  // Pagination state
-  const totalPages = Math.max(1, Math.ceil(total / perPage));
-  const currentPage = Math.min(page, totalPages); // Ensure page doesn't exceed tota
-  const rowsPerPageOptions = [10, 20, 30, 40, 50];
-
-  // Handle page change
-  const handlePageChange = (newPage: number) => {
-    if (newPage < 1 || newPage > totalPages) return;
-    const params = new URLSearchParams(window.location.search);
-    
-    // Preserve iframe parameter
-    if (isSimulasi) {
-      params.set('kategori', searchParams.get('kategori') ?? '');
-    }
-    
-    params.set('page', newPage.toString());
-    router.push(`?${params.toString()}`);
-  };
-
-
-  // Handle rows per page change
-  const handleRowsPerPageChange = (value: string) => {
-    const newPerPage = Number(value);
-    const params = new URLSearchParams(window.location.search);
-    
-    // Preserve iframe parameter
-    if (isSimulasi) {
-      params.set('kategori', searchParams.get('kategori') ?? '');
-    }
-    
-    params.set('perPage', newPerPage.toString());
+  // Reset to first page when filters change (except pagination)
+  if (debouncedSearchQuery || debouncedMinPrice !== undefined || debouncedMaxPrice !== undefined) {
     params.set('page', '1');
-    router.push(`?${params.toString()}`);
+  }
+
+  // Prevent page number exceeding total pages
+  if (page > totalPages) {
+    params.set('page', '1');
+  }
+
+  router.replace(`${window.location.pathname}?${params.toString()}`, { scroll: false });
+}, [
+  debouncedSearchQuery,
+  debouncedMinPrice,
+  debouncedMaxPrice,
+  page,
+  perPage,
+  isCompatibilityChecked,
+  sortColumn,
+  sortDirection,
+  isSimulasi,
+  router,
+  searchParams,
+  totalPages
+]);
+
+// Update URL when state changes
+useEffect(() => {
+  updateURLParams();
+}, [updateURLParams]);
+
+/**
+ * Handles browser navigation (back/forward)
+ */
+useEffect(() => {
+  const handleUrlChange = () => {
+    const params = new URLSearchParams(window.location.search);
+    
+    setSearchQuery(params.get('q') ?? '');
+    setMinPrice(params.get('minPrice') ? Number(params.get('minPrice')) : undefined);
+    setMaxPrice(params.get('maxPrice') ? Number(params.get('maxPrice')) : undefined);
+    setSortColumn(params.get('sort') ?? null);
+    setSortDirection((params.get('direction') as 'asc' | 'desc' | null) ?? null);
+    setIsCompatibilityChecked(params.get('c') !== '0');
   };
 
-  // const handleApplyFilters = () => {
-  //   const params = new URLSearchParams(window.location.search);
-    
-  //   // Preserve iframe parameter
-  //   if (isSimulasi) {
-  //     params.set('kategori', searchParams.get('kategori') ?? '');
-  //   }
-    
-  //   if (minPrice) params.set('minPrice', minPrice.toString());
-  //   if (maxPrice) params.set('maxPrice', maxPrice.toString());
-  //   params.set('page', '1');
-  //   router.push(`?${params.toString()}`);
-  // };
+  window.addEventListener('popstate', handleUrlChange);
+  return () => window.removeEventListener('popstate', handleUrlChange);
+}, []);
 
-  const handleAddComponent = async (product_id: number | null) => {
-    if (!product_id) {
-      return;
-    } 
-  
-    try {
-      const error = await insertOrCreateSession(componentCategoryEnum, product_id);
-  
-      if (!error) {
-        router.replace('/simulasi')
+const handleCompatibilityToggle = useCallback(() => {
+  setIsCompatibilityChecked(prev => !prev);
+}, []);
 
-        toast.success(`Berhasil menambahkan ${kategori} baru ke simulasi`, {
-            icon: "✅",
-            position: "top-right",
-            duration: 4000,
-          });
-      } else {
-        console.error("Error occurred:", error);
-      }
-    } catch (error) {
-      console.error("An unexpected error occurred:", error);
+const handleSort = useCallback((column: string) => {
+  setSortColumn(prevColumn => {
+    if (prevColumn !== column) {
+      // New field - start with ascending
+      setSortDirection('asc');
+      return column;
+    } else {
+      // Toggle direction or remove sorting
+      setSortDirection(prevDirection => {
+        if (prevDirection === 'asc') return 'desc';
+        if (prevDirection === 'desc') return null;
+        return 'asc';
+      });
+      return prevColumn;
     }
-  };
+  });
+}, []);
+
+const handlePageChange = useCallback((newPage: number) => {
+  if (newPage < 1 || newPage > totalPages) return;
+  router.push(`?${new URLSearchParams({
+    ...Object.fromEntries(searchParams.entries()),
+    page: newPage.toString()
+  }).toString()}`);
+}, [router, searchParams, totalPages]);
+
+const handleRowsPerPageChange = useCallback((value: string) => {
+  const newPerPage = Number(value);
+  const params = new URLSearchParams(searchParams.toString());
+  
+  params.set('perPage', newPerPage.toString());
+  params.set('page', '1');
+  router.push(`?${params.toString()}`);
+}, [router, searchParams]);
+
+const handleAddComponent = useCallback(async (product_id: number | null) => {
+  if (!product_id) return;
+
+  try {
+    const error = await insertOrCreateSession(componentCategoryEnum, product_id);
+    
+    if (!error) {
+      router.replace('/simulasi');
+      toast.success(`Berhasil menambahkan ${kategori} baru ke simulasi`, {
+        icon: "✅",
+        position: "top-right",
+        duration: 4000,
+      });
+    }
+  } catch (error) {
+    console.error("Error adding component:", error);
+    toast.error("Gagal menambahkan komponen");
+  }
+}, [componentCategoryEnum, kategori, router]);
 
   const desktopSidebarButton = (
     <Button
@@ -316,6 +332,8 @@ export function KategoriClient({
               errorMessage={errorMessage}
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
+              isCompatibilityChecked={isCompatibilityChecked}
+              setIsCompatibilityChecked={handleCompatibilityToggle}
             />
           </div>
           
@@ -421,32 +439,19 @@ const Header = ({
   searchQuery,
   errorMessage,
   onSearchChange,
+  isCompatibilityChecked = true,
+  setIsCompatibilityChecked,
 }: {
   category: ComponentCategoryEnum;
   itemCount: string;
   searchQuery: string;
   errorMessage?: string;
   onSearchChange: (query: string) => void;
+  isCompatibilityChecked?: boolean;
+  setIsCompatibilityChecked: (checked: boolean) => void;
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // const [compatibilityCheck, setCompatibilityCheck] = useLocalStorage(
-  //   "compatibilityCheck",
-  //   true
-  // );
-
-  // Initialize state from URL (default: true)
-  const [isCompatibilityChecked, setIsCompatibilityChecked] = useState(
-    searchParams.get("c") !== "0" // c=0 → false, else true
-  );
-
-  // Update URL when state changes
-  useEffect(() => {
-    const newParams = new URLSearchParams(searchParams.toString());
-    newParams.set("c", isCompatibilityChecked ? "1" : "0");
-    router.replace(`?${newParams.toString()}`, { scroll: false });
-  }, [isCompatibilityChecked, searchParams, router]);
-
   return (
   <div className="flex flex-col tablet:flex-row tablet:items-center tablet:justify-between w-full">
     <div className="flex flex-col gap-4">
@@ -461,7 +466,16 @@ const Header = ({
       <div className="flex items-center gap-4">
         <Switch
           checked={isCompatibilityChecked}
-          onCheckedChange={(checked) => setIsCompatibilityChecked(checked)}
+          onCheckedChange={
+            (checked) => {
+              // TODO: BELUM BENER, HARUSNYA PINDAH KE PAGE 1
+              const newParams = new URLSearchParams(searchParams.toString());
+              
+              newParams.set("page", "1"); // Reset to first page on toggle              
+              console.log(searchParams.toString());
+              router.replace(`?${newParams.toString()}`, { scroll: false });
+              setIsCompatibilityChecked(checked)
+            }}
           id="compatibility-check-toggle"
         />
         <label htmlFor="compatibility-check-toggle" className="text-base font-medium cursor-pointer select-none">
