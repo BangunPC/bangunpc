@@ -591,7 +591,7 @@ const DesktopTable = ({
             return (
               <tr
                 key={component.product_id}
-                className="group cursor-pointer hover:bg-gray-50 dark:hover:bg-navbar/0"
+                className="group cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
               >
                 <td className="py-4 px-3 w-20">
                   <TooltipProvider delayDuration={100}>

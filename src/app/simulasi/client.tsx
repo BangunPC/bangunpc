@@ -254,7 +254,7 @@ export function SimulasiClient({
         </div>
       </header>
       <main className="m-auto flex w-full flex-col gap-6">
-        <div className="rounded-xl bg-white p-4 shadow-bm shadow-black/5 dark:bg-navbar border border-sky-200 dark:border-sky-700">
+        <div className="rounded-xl p-4 shadow-bm shadow-black/5 bg-navbar border border-gray-700">
           <table className="w-full table-auto border-collapse">
             <thead className="h-12 border-b border-zinc-300 dark:border-zinc-300 text-left text-lg">
               <tr>
@@ -413,7 +413,7 @@ export function SimulasiClient({
           </table>
         </div>
         <div className="sticky bottom-4 right-4 ml-auto w-fit z-20">
-          <div className="flex items-center rounded-xl bg-white p-4 text-xl font-bold shadow-bm shadow-black/5 dark:bg-navbar border border-sky-200 dark:border-sky-700">
+          <div className="flex items-center rounded-xl p-4 text-xl font-bold shadow-bm shadow-black/5 bg-navbar border border-gray-700">
             {/* <Banknote width="28" height="28" className="mr-2 inline-block text-green-600" /> */}
             Total: <span className="ml-2 text-sky-500">Rp {buildData?.total_price?.toLocaleString("id-ID") ?? "0"}</span>
           </div>
@@ -427,7 +427,7 @@ export function SimulasiClient({
           <DialogTrigger asChild>
             <div role="dialog" aria-modal="true" className="hidden"></div>
           </DialogTrigger>
-          <DialogContent className="inset-4 m-auto max-w-fit translate-x-0 translate-y-0 px-0">
+          <DialogContent className="bg-gray-900 inset-4 m-auto max-w-fit translate-x-0 translate-y-0 px-0">
             <VisuallyHidden>
               <DialogTitle>Menu</DialogTitle>
             </VisuallyHidden>
