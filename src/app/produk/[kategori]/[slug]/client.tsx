@@ -84,12 +84,12 @@ const KategoriSlugClient = ({
       }
     };
   return (
-    <div className="m-auto mt-24 flex max-w-4xl flex-col gap-4 p-6 tablet:max-w-screen-desktop">
+    <div className="m-auto mt-24 flex max-w-4xl flex-col gap-4 p-4 tablet:p-6 tablet:max-w-screen-desktop">
       <div className="flex flex-col md:flex-row">
         {/* Image Section - Left Side - Now Sticky */}
         <div className="w-full md:w-1/2 lg:w-2/5 md:sticky md:top-4 md:self-start">
           {/* Main Image Container - Protected with zoom effect */}
-          <div className="aspect-square max-w-sm overflow-hidden rounded-md border border-[#1C1F24] border-opacity-40 dark:border-[#3d434e]">
+          <div className="aspect-square max-w-sm overflow-hidden rounded-md border border-zinc-700">
             <div
               className="relative h-full w-full"
               onContextMenu={(e) => e.preventDefault()}
@@ -130,7 +130,7 @@ const KategoriSlugClient = ({
           <Carousel className="w-full max-w-sm my-4">
             <CarouselContent className="-ml-1">
               {imageUrls.map((url: string | undefined) => (
-                <CarouselItem key={url} className="pl-1 md:basis-1/5 lg:basis-1/5"
+                <CarouselItem key={url} className="pl-1 basis-1/5"
                 onContextMenu={(e) => e.preventDefault()}>
                   <div 
                     className="relative aspect-square hover:cursor-pointer hover:opacity-70 transition-opacity duration-200"
@@ -150,8 +150,8 @@ const KategoriSlugClient = ({
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious variant='secondary'/>
-            <CarouselNext variant='secondary'/>
+            <CarouselPrevious variant='secondary' />
+            <CarouselNext variant='secondary' />
           </Carousel>
         </div>
 
@@ -159,21 +159,21 @@ const KategoriSlugClient = ({
         {/* Product Info Section - Right Side */}
         <div className="w-full md:w-1/2 lg:w-3/5">
           <header>
-            <h1 className="text-4xl font-bold">{name}</h1>
+            <h1 className="text-2xl tablet:text-4xl font-bold">{name}</h1>
           </header>
           <main className="flex flex-col gap-4 mt-4">
             {lowest_price && (
-              <span className="flex items-center gap-2 text-lg font-semibold">
-                <span className="text-4xl font-bold text-primary">
+              <span className="flex items-center gap-2 text-base tablet:text-lg font-semibold">
+                <span className="text-2xl tablet:text-4xl font-bold text-primary">
                   Rp {lowest_price}
                 </span>
                 <span> (Harga Termurah)</span>
               </span>
             )}
-            <span>
+            <span className="text-sm tablet:text-base">
               Kategori:{" "}
               <Link className="text-primary" href={"/produk/" + type}>
-                <span className="text-lg font-semibold">
+                <span className="text-base tablet:text-lg font-semibold">
                   {categoryEnumToTitle[category]}
                 </span>
               </Link>
@@ -181,7 +181,7 @@ const KategoriSlugClient = ({
             <div className="flex flex-row gap-2">
               <Button
                 variant="default"
-                className="flex items-center justify-center rounded-lg p-2 px-4 text-base font-normal text-white hover:bg-primary/80"
+                className="flex items-center justify-center rounded-lg p-2 px-4 text-sm tablet:text-base font-normal text-white hover:bg-primary/80"
                 onClick={() => handleAddComponent(data.product_id)}
               >
                 + Tambah ke simulasi
@@ -192,8 +192,8 @@ const KategoriSlugClient = ({
                 className="flex gap-2 font-semibold hover:cursor-pointer"
                 onClick={() => alert("Coming Soon")}
               >
-                <Heart className="fill-none" width="24" height="24" />
-                <span className="text-lg">Wishlist</span>
+                <Heart className="fill-none" width="20" height="20" />
+                <span className="text-base tablet:text-lg">Wishlist</span>
               </div>
               <div
                 className="flex items-center gap-2 font-semibold hover:cursor-pointer"
@@ -218,16 +218,16 @@ const KategoriSlugClient = ({
                   );
                 }}
               >
-                <Send className="fill-none" width="24" height="24" />
-                <span className="text-lg">Bagikan</span>
+                <Send className="fill-none" width="20" height="20" />
+                <span className="text-base tablet:text-lg">Bagikan</span>
               </div>
             </div>
             <Accordion type="single" collapsible defaultValue="product-details">
               <AccordionItem value="product-details">
-                <AccordionTrigger className="w-full text-3xl font-semibold">
+                <AccordionTrigger className="w-full text-2xl tablet:text-3xl font-semibold">
                   Tentang Produk
                 </AccordionTrigger>
-                <AccordionContent className="mt-4 gap-2 leading-[120%] text-base">
+                <AccordionContent className="mt-4 gap-2 leading-[120%] text-sm tablet:text-base">
                   {/* @ts-expect-error */}
                   {data.description.split("\n").map((line, index) => (
                     <React.Fragment key={index}>
@@ -244,13 +244,13 @@ const KategoriSlugClient = ({
       <Accordion type="single" collapsible defaultValue="product-details">
         <AccordionItem value="product-details">
           <AccordionTrigger>
-            <div id="compare" className="text-3xl font-semibold">
+            <div id="compare" className="text-2xl tablet:text-3xl font-semibold">
               Bandingkan Produk
             </div>
           </AccordionTrigger>
           <AccordionContent className="mt-4 gap-2 leading-[120%]">
             {(product_details?.length ?? 0) == 0 ? (
-              <span className="text-lg font-semibold">
+              <span className="text-base tablet:text-lg font-semibold">
                 Belum ada link produk
               </span>
             ) : (
@@ -259,20 +259,9 @@ const KategoriSlugClient = ({
                   {product_details?.map((detail: any) => (
                     <div
                       key={detail.product_detail_id}
-                      className="
-                      flex
-                      flex-col
-                      gap-2
-                      rounded-xl
-                      border
-                      bg-slate-200 p-2
-                      text-black
-                      shadow-lg
-                      transition-all
-                      dark:bg-slate-800
-                      "
+                      className="flex flex-col gap-2 rounded-xl border border-zinc-700 bg-zinc-800 p-2 text-white shadow-lg transition-all"
                     >
-                      <span className="text-xl font-semibold">
+                      <span className="text-lg tablet:text-xl font-semibold">
                         Rp{detail.price.toLocaleString("id-ID")}
                       </span>
                       <div className="flex flex-row gap-1">
@@ -305,7 +294,7 @@ const KategoriSlugClient = ({
                     <tr className="h-4" />
                     {product_details?.map((detail: any) => (
                       <tr key={detail.product_detail_id} className="drop-shadow-sm">
-                        <td className="rounded-s-lg bg-slate-200 p-2 pl-8 dark:bg-slate-800">
+                        <td className="rounded-s-lg bg-zinc-800 p-2 pl-8">
                             {detail.marketplace_name === "Tokopedia" && (
                               <Image
                                 src="/images/logo-tokopedia.svg"
@@ -331,22 +320,22 @@ const KategoriSlugClient = ({
                               />
                             )}
                           </td>
-                        <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                        <td className="bg-zinc-800 p-2">
                           {detail.seller_name}
                         </td>
-                        <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                        <td className="bg-zinc-800 p-2">
                           {detail.seller_city}
                         </td>
-                        <td className="bg-slate-200 p-2 font-semibold dark:bg-slate-800">
+                        <td className="bg-zinc-800 p-2 font-semibold">
                           Rp {detail.price.toLocaleString("id-ID")}
                         </td>
-                        <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                        <td className="bg-zinc-800 p-2">
                           {detail.stock}
                         </td>
-                        <td className="bg-slate-200 p-2 dark:bg-slate-800">
+                        <td className="bg-zinc-800 p-2">
                           {detail.product_detail_description ?? "-"}
                         </td>
-                        <td className="flex justify-end rounded-e-lg bg-slate-200 p-2 pr-8 dark:bg-slate-800">
+                        <td className="flex justify-end rounded-e-lg bg-zinc-800 p-2 pr-8">
                           <Link href={detail.url} target="_blank" >
                             <Button variant="success" className="text-center text-white">
                               Beli
