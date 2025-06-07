@@ -264,7 +264,7 @@ const handleAddComponent = useCallback(async (product_id: number | null) => {
 
   return (
     <div className={cn(className, `modal-style container ${isSimulasi ? '' : 'mt-20'} mx-auto px-4 py-6 md:py-8`)}>
-      {mobileSidebarButton}
+      {/* {mobileSidebarButton} */}
       
       <div className="flex flex-col tablet:flex-row tablet:gap-8">
         {/* Sidebar */}
@@ -327,7 +327,7 @@ const handleAddComponent = useCallback(async (product_id: number | null) => {
         </aside> */}
         
         {/* Main Content */}
-        <main className={`flex-1 ${hideSidebar ? "block" : "hidden"} tablet:block`}>
+        <main className={`flex-1 block tablet:block`}>
           <div className="mb-6 flex flex-col tablet:flex-row tablet:items-center tablet:justify-between">
             {desktopSidebarButton}
             <Header 
@@ -757,13 +757,15 @@ const MobileTable = ({
             >
             <div className="flex items-start gap-4">
               {component.image_filenames!.length > 0 && (
-                <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md">
-                  <Image
-                    src={componentImage(component)}
-                    alt={`Gambar ${component.product_name}`}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                    className="object-cover object-center transition-transform duration-300 hover:scale-105"
+                <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-white">
+                  <div 
+                    className="w-full h-full bg-no-repeat bg-center bg-contain"
+                    style={{
+                      backgroundImage: `url(${componentImage(component)})`,
+                      backgroundSize: 'contain',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat'
+                    }}
                   />
                 </div>
               )}

@@ -279,17 +279,17 @@ function CarouselSection() {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#f4f4f4] py-10 text-center dark:bg-gray-800">
+    <div className="relative flex flex-col items-center justify-center overflow-hidden bg-gray-800 py-10 text-center">
       <div className="relative w-full">
         <ChevronLeft
-          className="absolute left-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
+          className="absolute left-2 top-1/2 z-10 h-8 w-8 -translate-y-1/2 cursor-pointer rounded-full bg-slate-700 p-2 drop-shadow-lg tablet:left-4 tablet:h-12 tablet:w-12"
           onClick={goToPrev}
         />
         <ChevronRight
-          className="absolute right-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
+          className="absolute right-2 top-1/2 z-10 h-8 w-8 -translate-y-1/2 cursor-pointer rounded-full bg-slate-700 p-2 drop-shadow-lg tablet:right-4 tablet:h-12 tablet:w-12"
           onClick={goToNext}
         />
-        <div className=" w-full overflow-hidden">
+        <div className="w-full overflow-hidden">
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -297,7 +297,7 @@ function CarouselSection() {
             {carousel.map((item, index) => (
               <div
                 key={index}
-                className="dark flex w-full flex-shrink-0 items-center justify-center"
+                className="flex w-full flex-shrink-0 items-center justify-center"
               >
                 <Carousel
                   images={item.src}
@@ -315,7 +315,7 @@ function CarouselSection() {
           <Button
             key={index}
             className={`h-2 w-2 rounded-full transition-colors duration-300 ${
-              index === currentIndex ? "w-7 bg-primary dark:bg-slate-700" : "bg-gray-300"
+              index === currentIndex ? "w-7 bg-slate-700" : "bg-gray-300"
             }`}
             onClick={() => goToIndex(index)}
           />
@@ -372,41 +372,41 @@ function PacketPersonalComputerSection() {
   return (
     <>
       <div className="flex pt-8 w-full dark:bg-gray-800">
-        <div className="mx-auto flex max-w-7xl flex-row items-center justify-center gap-10">
-          <div className="flex w-2/6 flex-col justify-center gap-8">
-            <h3 className="text-5xl font-bold">
+        <div className="mx-auto flex flex-col tablet:flex-row items-center justify-center gap-6 tablet:gap-10 px-4 tablet:px-0">
+          <div className="flex w-full tablet:w-2/6 flex-col justify-center gap-4 tablet:gap-8">
+            <h3 className="text-3xl tablet:text-5xl font-bold">
               Pilih paketan rakit PC yang cocok buat kamu
             </h3>
-            <p className="text-md text-gray-500">
+            <p className="text-sm tablet:text-md text-gray-500">
               Kami menyediakan berbagai rekomendasi rakitan PC yang
               dikategorisasi berdasarkan kebutuhan dan rentang budget untuk
               memudahkan Anda dalam merakit PC impian
             </p>
-            <Button className="via-52% text-md w-fit gap-2 bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3] ">
-              <ShoppingCart className="h-6 w-6 " />
+            <Button className="via-52% text-sm tablet:text-md w-fit gap-2 bg-gradient-to-r from-[#1637FD] from-0% via-[#2579F8] to-[#3480F3] to-100% dark:bg-gradient-to-r dark:from-[#1637FD] dark:via-[#2579F8] dark:to-[#3480F3] ">
+              <ShoppingCart className="h-5 w-5 tablet:h-6 tablet:w-6" />
               Lihat paket PC lainnya
             </Button>
           </div>
-          <div className="relative flex w-4/6 items-center">
+          <div className="relative flex w-full tablet:w-4/6 items-center">
             <Button
               onClick={prevSlide}
-              className="absolute -left-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
+              className="absolute -left-2 tablet:-left-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-5 w-5 tablet:h-6 tablet:w-6" />
             </Button>
             <Button
               onClick={nextSlide}
-              className="absolute -right-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
+              className="absolute -right-2 tablet:-right-10 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 drop-shadow-lg dark:bg-slate-700"
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-5 w-5 tablet:h-6 tablet:w-6" />
             </Button>
 
-            <div className="flex flex-col items-center">
-              <div className="flex flex-row gap-4">
+            <div className="flex flex-col items-center w-full">
+              <div className="flex flex-col tablet:flex-row gap-4 w-full">
                 {cardPc.map((item, index) => (
                   <div
                     key={index}
-                    className="flex w-fit flex-col rounded-lg bg-white  p-4 drop-shadow-md dark:border-white/20 dark:bg-slate-700"
+                    className="flex w-full tablet:w-fit flex-col rounded-lg bg-white p-3 tablet:p-4 drop-shadow-md dark:border-white/20 dark:bg-slate-700"
                   >
                     <CardPc
                       src={item.src}
@@ -420,7 +420,7 @@ function PacketPersonalComputerSection() {
                   </div>
                 ))}
               </div>
-              <div className="mb-10 mt-4 flex space-x-2">
+              <div className="mb-6 tablet:mb-10 mt-4 flex space-x-2">
                 {cardPc.map((_, index) => (
                   <Button
                     key={index}
@@ -552,36 +552,33 @@ function CariKomponenSection() {
     { title: "CPU", img: "/images/image.png", color: "bg-[#39778E]" },
     { title: "Memory", img: "/images/image.png", color: "bg-[#1F6CBE]" },
     { title: "Storage", img: "/images/image.png", color: "bg-[#6683C2]" },
-    // { title: "GPU", img: "/images/image.png" },
   ];
   return (
     <>
-      <div className="mx-auto my-10 grid max-w-7xl grid-cols-5 gap-4 ">
-        <div className="relative flex h-72 flex-col gap-6 overflow-hidden rounded-lg bg-[#0356F7] p-6 text-white">
-          {/* Persegi panjang diagonal */}
+      <div className="mx-auto my-6 tablet:my-10 grid grid-cols-1 tablet:grid-cols-5 gap-4 px-4 tablet:px-0 max-w-7xl">
+        <div className="relative flex h-48 tablet:h-72 flex-col gap-4 tablet:gap-6 overflow-hidden rounded-lg bg-[#0356F7] p-4 tablet:p-6 text-white">
           <div className="absolute bottom-[0%] left-[0%] h-[40%] w-[200%] origin-bottom-left -rotate-45 transform bg-[#1536FC]"></div>
 
-          {/* Konten */}
           <div className="relative z-10">
-            <h2 className="mb-2 text-3xl font-bold">Cari</h2>
-            <h2 className="text-3xl font-bold">Komponen</h2>
+            <h2 className="mb-1 tablet:mb-2 text-2xl tablet:text-3xl font-bold">Cari</h2>
+            <h2 className="text-2xl tablet:text-3xl font-bold">Komponen</h2>
           </div>
 
-          <p className="relative z-10 text-sm">
+          <p className="relative z-10 text-xs tablet:text-sm">
             Temukan kategori komponen PC yang Anda inginkan. Dari CPU, motherboard, RAM, hingga SSD.
           </p>
         </div>
-        <div className="col-span-4 flex justify-center gap-4">
+        <div className="col-span-1 tablet:col-span-4 grid grid-cols-2 tablet:grid-cols-4 gap-4">
           {dataKomponen.map((item, index) => (
-            <div key={index} className={`h-72 rounded-md p-2 ${item.color}`}>
-              <h5 className="pt-2 text-center text-2xl font-semibold text-white">
+            <div key={index} className={`h-48 tablet:h-72 rounded-md p-2 ${item.color}`}>
+              <h5 className="pt-2 text-center text-lg tablet:text-2xl font-semibold text-white">
                 {item.title}
               </h5>
-              <p className=" text-center text-sm text-white underline">
+              <p className="text-center text-xs tablet:text-sm text-white underline">
                 Lihat Selengkapnya
-                <ChevronRight className="ml-2 inline-block h-3 w-3" />
+                <ChevronRight className="ml-1 tablet:ml-2 inline-block h-2 w-2 tablet:h-3 tablet:w-3" />
               </p>
-              <Image src={item.img} alt={item.title} width={200} height={200} />
+              <Image src={item.img} alt={item.title} width={200} height={200} className="w-full h-auto" />
             </div>
           ))}
         </div>

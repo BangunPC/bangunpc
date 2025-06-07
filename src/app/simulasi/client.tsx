@@ -254,12 +254,12 @@ export function SimulasiClient({
         </div>
       </header>
       <main className="m-auto flex w-full flex-col gap-6">
-        <div className="rounded-xl p-4 shadow-bm shadow-black/5 bg-navbar border border-gray-700">
-          <table className="w-full table-auto border-collapse">
-            <thead className="h-12 border-b border-zinc-300 dark:border-zinc-300 text-left text-lg">
+        <div className="rounded-xl p-2 tablet:p-4 shadow-bm shadow-black/5 bg-navbar border border-gray-700 overflow-x-auto">
+          <table className="w-full min-w-[800px] table-auto border-collapse">
+            <thead className="h-12 border-b border-zinc-300 text-left text-base tablet:text-lg">
               <tr>
                 {headers.map((item) => (
-                  <th key={item} className="px-4 py-3 font-semibold">{item}</th>
+                  <th key={item} className="px-2 tablet:px-4 py-3 font-semibold">{item}</th>
                 ))}
               </tr>
             </thead>
@@ -271,9 +271,9 @@ export function SimulasiClient({
                 return (
                   <tr
                     key={index}
-                    className={`h-12 ${!isLastRow ? "border-b border-zinc-200 dark:border-zinc-700" : ""}`}
+                    className={`h-12 ${!isLastRow ? "border-b border-zinc-700" : ""}`}
                   >
-                    <td className="pl-4 py-3 font-bold text-sky-500">
+                    <td className="pl-2 tablet:pl-4 py-3 font-bold text-sky-500">
                       <Link 
                         href={'/produk/' + categoryEnumToSlug[item.kategori]}
                         className="flex flex-row items-center hover:underline"
@@ -282,12 +282,12 @@ export function SimulasiClient({
                       </Link>
                     </td>
                     
-                    <td className="px-4 py-3">
+                    <td className="px-2 tablet:px-4 py-3">
                       <div className="flex flex-col gap-2">
                         {item.components.map((component, index) => (
                           <Link
                             key={index}
-                            className="flex h-[72px] cursor-pointer flex-row items-center rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 p-2 transition-colors"
+                            className="flex h-[72px] cursor-pointer flex-row items-center rounded-md hover:bg-zinc-700 p-2 transition-colors"
                             href={`/produk/${categoryEnumToSlug[item.kategori]}/${component.slug}`}
                           >
                             <TooltipProvider delayDuration={100}>
@@ -296,7 +296,7 @@ export function SimulasiClient({
                                   <div>
                                     {component.image_filename!.length > 0 && (
                                       <div 
-                                        className="h-16 w-16 overflow-hidden rounded-md bg-no-repeat bg-center bg-contain bg-white"
+                                        className="h-10 w-10 tablet:h-16 tablet:w-16 overflow-hidden rounded-md bg-no-repeat bg-center bg-contain bg-white"
                                         style={{
                                           backgroundImage: `url(${productImage(component.product_id, component.image_filename)})`,
                                           pointerEvents: 'none'
@@ -307,7 +307,7 @@ export function SimulasiClient({
                                 </TooltipTrigger>
                                 <TooltipContent side="right" className="p-0 border-none shadow-none ml-6">
                                   <div 
-                                    className="relative w-64 h-64 rounded-md overflow-hidden"
+                                    className="relative w-32 h-32 tablet:w-64 tablet:h-64 rounded-md overflow-hidden"
                                     onContextMenu={(e) => e.preventDefault()}
                                   >
                                     <div
@@ -326,12 +326,12 @@ export function SimulasiClient({
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <span className="ml-4 font-semibold text-base line-clamp-2">
+                                  <span className="ml-2 tablet:ml-4 font-semibold text-sm tablet:text-base line-clamp-2">
                                     {component.name}
                                   </span>
                                 </TooltipTrigger>
-                                <TooltipContent side="top" className="max-w-xs">
-                                  <p>{component.name ?? "-"}</p>
+                                <TooltipContent side="top" className="max-w-[200px] tablet:max-w-xs">
+                                  <p className="text-sm tablet:text-base">{component.name ?? "-"}</p>
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
@@ -340,7 +340,7 @@ export function SimulasiClient({
                         
                         {item.components.length === 0 ? (
                           <Button
-                            className="w-fit h-10 text-white my-2 hover:bg-blue-500 px-4"
+                            className="w-fit h-8 tablet:h-10 text-white my-2 hover:bg-blue-500 px-3 tablet:px-4 text-sm tablet:text-base"
                             onClick={() => handleAddComponent(item)}
                           >
                             + Pilih {item.title}
@@ -349,7 +349,7 @@ export function SimulasiClient({
                           (item.title === "Memory (RAM)" || item.title === "Storage") && (
                             <Button
                               variant="outline"
-                              className="w-fit h-10 my-2 bg-white dark:bg-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-700 px-4"
+                              className="w-fit h-8 tablet:h-10 my-2 bg-zinc-800 text-white hover:bg-zinc-700 px-3 tablet:px-4 text-sm tablet:text-base"
                               onClick={() => handleAddComponent(item)}
                             >
                               + Tambah {item.title}
@@ -359,11 +359,11 @@ export function SimulasiClient({
                       </div>
                     </td>
                     
-                    <td className="px-4 py-3">
+                    <td className="px-2 tablet:px-4 py-3">
                       <div className="flex flex-col gap-4">
                         {item.components.map((component, index) => (
                           <div key={index} className="flex h-[48px] items-center">
-                            <span className="whitespace-nowrap font-normal text-base">
+                            <span className="whitespace-nowrap font-normal text-sm tablet:text-base">
                               {component.price
                                 ? `Rp ${component.price.toLocaleString("id-ID")}`
                                 : "-"}
@@ -374,13 +374,13 @@ export function SimulasiClient({
                       </div>
                     </td>
                     
-                    <td className="px-4 py-3">
+                    <td className="px-2 tablet:px-4 py-3">
                       <div className="flex flex-col gap-4">
                         {item.components.map((component, index) => (
                           <div key={index} className="flex items-center h-[48px]">
                             <AlertDialog>
-                              <AlertDialogTrigger variant="ghost" className="h-10 items-center">
-                                <Trash2 size={18} 
+                              <AlertDialogTrigger variant="ghost" className="h-8 tablet:h-10 items-center">
+                                <Trash2 size={16} 
                                 color="red" className="inline-block" />
                               </AlertDialogTrigger>
                               <AlertDialogContent>
@@ -413,8 +413,7 @@ export function SimulasiClient({
           </table>
         </div>
         <div className="sticky bottom-4 right-4 ml-auto w-fit z-20">
-          <div className="flex items-center rounded-xl p-4 text-xl font-bold shadow-bm shadow-black/5 bg-navbar border border-gray-700">
-            {/* <Banknote width="28" height="28" className="mr-2 inline-block text-green-600" /> */}
+          <div className="flex items-center rounded-xl p-3 tablet:p-4 text-lg tablet:text-xl font-bold shadow-bm shadow-black/5 bg-navbar border border-gray-700">
             Total: <span className="ml-2 text-sky-500">Rp {buildData?.total_price?.toLocaleString("id-ID") ?? "0"}</span>
           </div>
         </div>

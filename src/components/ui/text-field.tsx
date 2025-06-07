@@ -13,7 +13,7 @@ const TextField = ({ label, placeholder, type }: paramsProps) => {
         {label}
       </label>
       <input
-        className="h-10 w-full rounded-lg bg-[#F9FAFB] p-3 text-sm outline-none dark:bg-secondary"
+        className="h-10 w-full rounded-lg bg-secondary p-3 text-sm outline-none"
         placeholder={placeholder}
         type={type}
       />

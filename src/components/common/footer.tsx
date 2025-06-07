@@ -72,7 +72,7 @@ const Footer = () => {
 
   return (
     <div className="w-full bg-black pt-5 text-slate-100">
-      <div className="mx-auto grid h-full max-w-screen-desktop gap-5 p-8 tablet:max-w-7xl tablet:grid-cols-3">
+      <div className="mx-auto grid h-full max-w-screen-desktop gap-5 p-4 tablet:max-w-7xl tablet:grid-cols-3 tablet:p-8">
         <div className="flex flex-col gap-5">
           <NavbarIcon alwaysDark />
           <p className="max-w-[360px] text-sm">
@@ -88,11 +88,11 @@ const Footer = () => {
                   className="flex items-center justify-center"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >
+                >
                   <Button
                     variant="outline"
                     size="icon"
-                    className="dark m-0 rounded-full bg-zinc-700 p-2 hover:border-zinc-400 hover:bg-zinc-600"
+                    className="m-0 rounded-full bg-zinc-700 p-2 hover:border-zinc-400 hover:bg-zinc-600"
                   >
                     <Image
                       src={item.logo}
@@ -111,7 +111,7 @@ const Footer = () => {
           <ul className="flex flex-col">
             {services.map((item) => {
               return (
-                <Link key={item.name} href={item.url} >
+                <Link key={item.name} href={item.url}>
                   <Button variant="ghost" className="m-0 w-full justify-start">
                     <li>{item.name}</li>
                   </Button>
