@@ -15,6 +15,7 @@ import { z } from "zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { submitFeedback } from "@/lib/dal/feedback"
+import { Turnstile } from "@marsidev/react-turnstile"
 
 interface FeedbackButtonProps {
   buttonText?: string
@@ -73,6 +74,7 @@ interface FeedbackFormProps {
 
 function FeedbackForm({ onSubmitSuccess, className = "" }: FeedbackFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState("");
 
   // Form definition
   const form = useForm<FeedbackFormValues>({
@@ -99,7 +101,9 @@ function FeedbackForm({ onSubmitSuccess, className = "" }: FeedbackFormProps) {
   
         // Show a success message with toast
         toast("Feedback Terkirim", {
+          position: "top-right",
           description: "Terima kasih untuk masukan yang Anda berikan 😊",
+          duration: 5000,
         })
   
         // Call the success callback if provided
@@ -127,7 +131,7 @@ function FeedbackForm({ onSubmitSuccess, className = "" }: FeedbackFormProps) {
             <FormItem>
               <FormControl>
                 <Textarea
-                  placeholder="Masukan Anda membantu kami meningkatkan layanan kami"
+                  placeholder="Masukan yang Anda berikan akan membantu untuk meningkatkan kualitas website Bangun PC"
                   className="min-h-[120px] resize-none"
                   {...field}
                 />
@@ -137,12 +141,31 @@ function FeedbackForm({ onSubmitSuccess, className = "" }: FeedbackFormProps) {
           )}
         />
 
-        <Button 
-          variant='raw'
-          type="submit" 
-          className="bg-primary hover:bg-primary/80 w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Sedang mengirim..." : "Kirim Feedback"}
-        </Button>
+        {captchaToken.length == 0 ? (
+          <>
+            <Turnstile
+              siteKey="0x4AAAAAAAcTY5MLJfC_A1SN"
+              onSuccess={(token) => {
+                setCaptchaToken(token);
+              }}
+              aria-label="Cloudlare Captcha"
+              className="m-auto w-full"
+            />
+          </>
+        ) : (
+          // Button Login (masuk)
+          (
+          <div className="flex flex-col gap-4">
+            <Button 
+              variant='raw'
+              type="submit" 
+              className="bg-primary hover:bg-primary/80 w-full" disabled={isSubmitting}>
+              {/* {loading ? <Spinner /> : "Kirim Feedback"} */}
+              {isSubmitting ? "Sedang mengirim..." : "Kirim Feedback"}
+            </Button>
+          </div>
+          )
+        )}
       </form>
     </Form>
   )

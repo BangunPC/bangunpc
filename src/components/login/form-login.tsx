@@ -9,8 +9,8 @@ import { Turnstile } from "@marsidev/react-turnstile";
 
 export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => void }) {
   const [captchaToken, setCaptchaToken] = useState("");
-  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -114,20 +114,6 @@ export default function FormLogin({ onRegisterClick }: { onRegisterClick: () => 
                 type="submit"
                 className="inline-flex w-full items-center justify-center space-x-2 rounded-md bg-primary py-6 text-sm font-medium text-white hover:bg-primary/80  hover:shadow-md"
               >
-                {/* <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mx-2 h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                  />
-                </svg> */}
                 {loading ? <Spinner /> : "Masuk"}
               </Button>
             </div>)
