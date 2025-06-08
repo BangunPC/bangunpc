@@ -163,14 +163,15 @@ function HeroSection() {
               <button 
                 onClick={() => router.push("/rakit/budget")}
                 className="bg-primary hover:bg-blue-700 active:scale-95 px-4 sm:px-4 py-3 rounded text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform text-sm sm:text-base">
-                Rakit Sekarang
+                {/* Rakit Sekarang */}
+                Simulasi Rakit PC
               </button>
-              <button 
+              {/* <button 
               onClick={() => router.push("/simulasi")}
               className="border-white bg-transparent border-2 text-white hover:bg-gray-100 active:scale-95 hover:text-gray-800 px-4 sm:px-4 py-3 rounded font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl transform text-sm sm:text-base">
                 Simulasi Rakit PC
-                {/* <span className="text-3xl">→</span> */}
-              </button>
+                {/* <span className="text-3xl">→</span> 
+              </button> */}
             </motion.div>
           </motion.div>
         </div>
