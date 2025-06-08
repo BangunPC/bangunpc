@@ -10,6 +10,7 @@ import { Navbar } from "@/components/common/navbar";
 import ProgressBarProvider from "@/components/provider/progress-bar";
 import Footer from "@/components/common/footer";
 import { Toaster } from "@/components/ui/sonner";
+import { FeedbackButton } from "@/components/common/feedback";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,6 +49,14 @@ export default function RootLayout({
                 {children}
               </div>
               <Footer />
+              // Vertical feedback button
+              <div className="fixed right-4 bottom-24 z-50 flex flex-col items-center">
+                <FeedbackButton
+                  buttonVariant="outline"
+                  buttonSize="default"
+                  buttonText="Feedback"
+                />
+              </div>
             </div>
             <Toaster />
           </ThemeProvider>

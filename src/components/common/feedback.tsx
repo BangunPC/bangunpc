@@ -2,20 +2,17 @@
 
 import { useState } from "react"
 import { MessageSquare } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
-import { useMobile } from "@/hooks/use-mobile"
 import { z } from "zod"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { submitFeedback } from "@/lib/dal/feedback"
 
@@ -27,58 +24,39 @@ interface FeedbackButtonProps {
 }
 
 export function FeedbackButton({
-  // buttonText = "",
+  buttonText = "Feedback",
   buttonVariant = "outline",
-  buttonSize = "icon",
-  iconOnly = false,
 }: FeedbackButtonProps) {
-  const isMobile = useMobile()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-  // Handle successful form submission
   const handleSubmitSuccess = () => {
     setIsDialogOpen(false)
-    setIsDropdownOpen(false)
   }
 
-  // Mobile version (Dialog)
-  if (isMobile || iconOnly) {
-    return (
-      <>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button variant={buttonVariant} size="icon" className="rounded-full">
-              <MessageSquare className="h-5 w-5" />
-              {/* <span className="sr-only">{buttonText}</span> */}
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <FeedbackForm onSubmitSuccess={handleSubmitSuccess} />
-          </DialogContent>
-        </Dialog>
-      </>
-    )
-  }
-
-  // Desktop version (Dropdown)
   return (
-    <>
-      <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-        <DropdownMenuTrigger asChild>
-          <Button variant={buttonVariant} size={buttonSize}>
-            <MessageSquare className="h-4 w-4" />
-            {/* <span>{buttonText}</span> */}
+    <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50">
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogTrigger asChild>
+          <Button 
+            variant={buttonVariant} 
+            size="icon" 
+            className="flex flex-col items-center justify-center h-auto p-3 gap-3 rounded-l-lg rounded-r-none border-l border-t border-b border-gray-700 bg-gray-800 hover:bg-gray-700 shadow-lg"
+          >
+            <span className="text-sm [writing-mode:vertical-rl] rotate-180 mr-1">
+              {buttonText}
+            </span>
+            <MessageSquare 
+              className="h-5 w-5 -rotate-90" 
+            />
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" className="w-[400px] p-4 mt-2">
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
           <FeedbackForm onSubmitSuccess={handleSubmitSuccess} />
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }
-
 // Form schema using zod
 const formSchema = z.object({
   message: z.string().min(1, {
@@ -162,7 +140,7 @@ function FeedbackForm({ onSubmitSuccess, className = "" }: FeedbackFormProps) {
         <Button 
           variant='raw'
           type="submit" 
-          className="dark:bg-white dark:hover:bg-slate-100 bg-black hover:bg-slate-900 w-full" disabled={isSubmitting}>
+          className="bg-primary hover:bg-primary/80 w-full" disabled={isSubmitting}>
           {isSubmitting ? "Sedang mengirim..." : "Kirim Feedback"}
         </Button>
       </form>
