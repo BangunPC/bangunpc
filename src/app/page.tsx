@@ -11,13 +11,12 @@ import Carousel from "@/components/common/carousel";
 import CardPc from "@/components/common/card-pc";
 import { SearchCommand } from "@/components/common/search-command";
 import { useRouter } from "next/navigation";
-import { Arrow } from "@radix-ui/react-popover";
 // import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
 export default function HomePage() {
   return (
-    <main className="h-full w-full">
+    <main className="h-full w-full overflow-x-hidden bg-background dark:bg-gray-900">
       <HeroSection />
       <CarouselSection />
       <CariKomponenSection />
