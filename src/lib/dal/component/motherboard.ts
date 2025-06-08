@@ -144,7 +144,7 @@ export const getMotherboard = async (
     return { data: [], total: 0, errorMessage };
   }
 
-  let filteredData = motherboardData as ComponentView["v_motherboards"][];
+  const filteredData = motherboardData as ComponentView["v_motherboards"][];
 
   if (error) {
     errorMessage = error.message;

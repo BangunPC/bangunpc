@@ -49,7 +49,6 @@ export default function RootLayout({
                 {children}
               </div>
               <Footer />
-              // Vertical feedback button
               <div className="fixed right-4 bottom-24 z-50 flex flex-col items-center">
                 <FeedbackButton
                   buttonVariant="outline"
