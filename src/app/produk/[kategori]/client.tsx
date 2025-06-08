@@ -49,7 +49,7 @@ export function KategoriClient({
   initialMinPrice?: number
   initialMaxPrice?: number
 }) {
-  const componentCategoryEnum = categorySlugToEnum[kategori]!;
+const componentCategoryEnum = categorySlugToEnum[kategori]!;
 const router = useRouter();
 const searchParams = useSearchParams();
 
@@ -88,28 +88,26 @@ const rowsPerPageOptions = [10, 20, 30, 40, 50];
  * Updates the URL with current state values
  */
 const updateURLParams = useCallback(() => {
-  const params = new URLSearchParams();
-
-  // Preserve kategori if in simulasi mode
-  if (isSimulasi) {
-    params.set('kategori', searchParams.get('kategori') ?? '');
-  }
-
-  if(searchParams.get('produk')) {
-    params.set('produk', searchParams.get('produk') ?? '');
-  }
-
+  const params = new URLSearchParams(window.location.search);
+  
   // Search query
   if (debouncedSearchQuery) {
     params.set('q', debouncedSearchQuery);
+  } else {
+    params.delete('q');
   }
 
   // Price filters
   if (debouncedMinPrice !== undefined) {
     params.set('minPrice', debouncedMinPrice.toString());
+  } else {
+    params.delete('minPrice');
   }
+
   if (debouncedMaxPrice !== undefined) {
     params.set('maxPrice', debouncedMaxPrice.toString());
+  } else {
+    params.delete('maxPrice');
   }
 
   // Pagination
@@ -235,7 +233,6 @@ const handleAddComponent = useCallback(async (product_id: number | null) => {
       });
     }
   } catch (error) {
-    console.error("Error adding component:", error);
     toast.error("Gagal menambahkan komponen");
   }
 }, [componentCategoryEnum, kategori, router]);
@@ -472,12 +469,6 @@ const Header = ({
           checked={isCompatibilityChecked}
           onCheckedChange={
             (checked) => {
-              // TODO: BELUM BENER, HARUSNYA PINDAH KE PAGE 1
-              const newParams = new URLSearchParams(searchParams.toString());
-              
-              newParams.set("page", "1"); // Reset to first page on toggle              
-              console.log(searchParams.toString());
-              router.replace(`?${newParams.toString()}`, { scroll: false });
               setIsCompatibilityChecked(checked)
             }}
           id="compatibility-check-toggle"
