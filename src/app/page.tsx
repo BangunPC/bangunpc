@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, ChevronLeft, ShoppingCart } from "lucide-react";
+import { ChevronRight, ChevronLeft, ShoppingCart, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useScroll, useTransform } from "framer-motion";
@@ -11,6 +11,7 @@ import Carousel from "@/components/common/carousel";
 import CardPc from "@/components/common/card-pc";
 import { SearchCommand } from "@/components/common/search-command";
 import { useRouter } from "next/navigation";
+import { Arrow } from "@radix-ui/react-popover";
 // import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 // import { motion } from "framer-motion";
 
@@ -136,7 +137,7 @@ function HeroSection() {
           }}
         />
         
-        <div className="flex flex-col justify-center items-center h-full px-4 text-center text-white bg-black/45 relative z-10">
+        <div className="flex flex-col justify-center items-center h-full px-4 pb-16 text-center text-white bg-black/45 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -160,18 +161,18 @@ function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
             >
-              <button 
+              {/* <button 
                 onClick={() => router.push("/rakit/budget")}
                 className="bg-primary hover:bg-blue-700 active:scale-95 px-4 sm:px-4 py-3 rounded text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform text-sm sm:text-base">
-                {/* Rakit Sekarang */}
+                Rakit Sekarang 
                 Simulasi Rakit PC
-              </button>
-              {/* <button 
+              </button> */}
+              <button 
               onClick={() => router.push("/simulasi")}
               className="border-white bg-transparent border-2 text-white hover:bg-gray-100 active:scale-95 hover:text-gray-800 px-4 sm:px-4 py-3 rounded font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl transform text-sm sm:text-base">
-                Simulasi Rakit PC
-                {/* <span className="text-3xl">→</span> 
-              </button> */}
+                Simulasi Rakit PC 
+                <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6" />
+              </button>
             </motion.div>
           </motion.div>
         </div>
