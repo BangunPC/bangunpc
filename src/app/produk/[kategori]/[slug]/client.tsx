@@ -353,25 +353,25 @@ const KategoriSlugClient = ({
       </Accordion>
       <Accordion type="single" collapsible defaultValue="spec-details">
         <AccordionItem value="spec-details">
-          <div className="relative mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-0">
-            <AccordionTrigger className="flex w-full sm:w-auto justify-start text-2xl sm:text-3xl font-semibold">
-              Spesifikasi
-              <span className="mr-auto" />
-            </AccordionTrigger>
-            
-            {data.spec_url && (
-              <Link
-                href={data.spec_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="sm:absolute sm:left-[140px] sm:top-1/2 sm:-translate-y-1/2 inline-flex items-center justify-center rounded-md border border-neutral-400
-                dark:border-white bg-transparent px-3 py-1.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-300 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none dark:text-neutral-50 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 sm:ml-8 mr-auto"
-                onClick={(e) => e.stopPropagation()}
-              >
-                Buka Spesifikasi Resmi
-              </Link>
-            )}
-          </div>
+          <div className="relative mb-4">
+          <AccordionTrigger className="flex w-full justify-start text-3xl font-semibold">
+            Spesifikasi
+            <span className="mr-auto" />
+          </AccordionTrigger>
+          
+          {data.spec_url && (
+            <Link
+              href={data.spec_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute left-[140px] top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-md border border-neutral-400
+              dark:border-white bg-transparent px-3 py-1.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-300 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none dark:text-neutral-50 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 ml-8 mr-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Buka Spesifikasi Resmi
+            </Link>
+          )}
+        </div>
 
           <AccordionContent>
             <div className="overflow-x-auto">
