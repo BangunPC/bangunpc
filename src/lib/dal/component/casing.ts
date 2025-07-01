@@ -8,6 +8,7 @@ export const getCasing = async (
   { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
+  let errorMessage;
 
   if (!supabase) {
     console.log("ERROR!");
@@ -36,6 +37,44 @@ export const getCasing = async (
     // });
   }
 
+  // compatibility start
+
+  if (motherboardId) {
+    const { data: motherboardData, error } = await supabase
+      .schema("product")
+      .from("v_motherboards")
+      .select("form_factor")
+      .eq("product_id", motherboardId)
+      .limit(1)
+      .single();
+    
+    if (error) {
+      errorMessage = "Data motherboard tidak ditemukan";
+    } else if (motherboardData.form_factor) {
+      // Apply filter directly in the query
+      await client_query.contains("mobo_supports", [motherboardData.form_factor]);
+    }
+  }
+
+  if (gpuId) {
+    const { data: gpuData, error } = await supabase
+      .schema("product")
+      .from("v_gpus")
+      .select("length_mm")
+      .eq("product_id", gpuId)
+      .limit(1)
+      .single();
+    
+    if (error) {
+      errorMessage = "Data GPU tidak ditemukan";
+    } else if (gpuData.length_mm) {
+      // Apply filter directly in the query
+      await client_query.gte("max_gpu_length_mm", gpuData.length_mm);
+    }
+  }
+
+  // compatibility end
+
   if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Casing) && sortDirection) {   
     switch (sortDirection) {
       case "asc":
@@ -52,64 +91,18 @@ export const getCasing = async (
   const end = typeof limit === "number" ? start + limit - 1 : start + 19;
   client_query.range(start, end);
 
-  // await client_query.order("product_name", { ascending: true });
-
   // filter end
 
   const { data, count, error } = await client_query;
 
   if (!data) {
-    console.log("ERROR! DATA NULL");
-    throw new Error("Casing data is null");
+    errorMessage = "Data casing tidak ditemukan";
+    return { data: [], total: 0, errorMessage };
   }
 
-  let filteredData = data;
-
-  // compatibility start
-
-  if (motherboardId) {
-    const { data: motherboardData, error } = await supabase
-      .schema("product")
-      .from("v_motherboards")
-      .select("form_factor")
-      .eq("product_id", motherboardId)
-      .limit(1)
-      .single();
-    if (error) {
-      console.log("ERROR! MOTHERBOARD");
-      throw error;
-    }
-    filteredData = filteredData.filter((item) =>
-      item.mobo_supports?.includes(motherboardData.form_factor!),
-    );
-  }
-
-  // TODO(produk): multiple gpu
-  // if (gpus && gpus.length > 0) {
-  //   const { data: gpuData, error } = await client
-  //     .schema("product")
-  //     .from("v_gpus")
-  //     .select("length_mm")
-  //     .in(
-  //       "product_id",
-  //       gpus.map((gpu) => gpu.id),
-  //     )
-  //     .limit(1)
-  //     .single();
-  //   if (error) {
-  //     console.log(`ERROR! GPU`);
-  //     throw error;
-  //   }
-  //   filteredData = filteredData.filter(
-  //     (item) => item.max_gpu_length_mm! >= gpuData.length_mm!,
-  //   );
+  // if (error) {
+  //   errorMessage = error;
   // }
 
-  // compatibility end
-
-  if (error) {
-    return error;
-  }
-
-  return { data: filteredData, total: count ?? 0 };
+  return { data, total: count ?? 0, errorMessage };
 };

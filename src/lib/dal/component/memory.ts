@@ -8,6 +8,7 @@ export const getMemory = async (
   { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
+  let errorMessage;
 
   if (!supabase) {
     throw new Error("Supabase client is null");
@@ -29,39 +30,7 @@ export const getMemory = async (
   if (product_name) {
     offset = 0;
     await client_query.ilike("product_name", `%${product_name}%`)
-    // await client_query.textSearch("product_name", `'${product_name}'`, {
-    //   type: "websearch",
-    //   config: "english",
-    // });
   }
-
-  if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Memory) && sortDirection) {   
-      switch (sortDirection) {
-        case "asc":
-          client_query.order(sort, { ascending: true });
-          break;
-        case "desc":
-          client_query.order(sort, { ascending: false });
-          break;
-        default:
-      }
-    }
-
-  const start = typeof offset === "number" ? offset : 0;
-  const end = typeof limit === "number" ? start + limit - 1 : start + 19;
-  client_query.range(start, end);
-
-  // await client_query.order("product_name", { ascending: true });
-
-  // filter end
-
-  const { data, count, error } = await client_query;
-
-  if (!data) {
-    throw new Error("Memory data is null");
-  }
-
-  let filteredData = data;
 
   // compatibility start
 
@@ -74,57 +43,80 @@ export const getMemory = async (
       .eq("product_id", motherboardId)
       .limit(1)
       .single();
+    
     if (error) {
-      throw error;
-    }
-
-    // Filter by mobo form factor
-    filteredData = filteredData.filter((item) => {
-      return (
-        item.memory_type === motherboardData.memory_type &&
-        (item.frequency_mhz ?? -1) <=
-          (motherboardData?.memory_frequency_mhz ?? 0)
-      );
-    });
-
-    // TODO(produk): account for quantity, not amount
-    if (memories) {
-      // Fetching memory required data
-      const { data: memoryData, error } = await supabase
-        .schema("product")
-        .from("v_memories")
-        .select("memory_type, capacity_gb, amount")
-        .in(
-          "product_id",
-          memories.map((memory) => memory.id),
-        );
-      if (error) {
-        throw error;
+      errorMessage = "Data motherboard tidak ditemukan";
+    } else {
+      // Apply filters directly in the query
+      if (motherboardData.memory_type) {
+        await client_query.eq("memory_type", motherboardData.memory_type);
+      }
+      
+      if (motherboardData.memory_frequency_mhz) {
+        await client_query.lte("frequency_mhz", motherboardData.memory_frequency_mhz);
       }
 
-      const totalMemorySize = memoryData.reduce((accumulator, memory) => {
-        if (memory.capacity_gb !== null && memory.amount !== null) {
-          return accumulator + memory.capacity_gb * memory.amount;
-        }
-        return accumulator;
-      }, 0);
-      const memoryCount = memories.length;
+      if (memories) {
+        // Fetching memory required data
+        const { data: memoryData, error: memoryError } = await supabase
+          .schema("product")
+          .from("v_memories")
+          .select("memory_type, capacity_gb, amount")
+          .in(
+            "product_id",
+            memories.map((memory) => memory.id),
+          );
+        
+        if (memoryError) {
+          errorMessage = "Data memory tidak ditemukan";
+        } else {
+          const totalMemorySize = memoryData.reduce((accumulator, memory) => {
+            if (memory.capacity_gb !== null && memory.amount !== null) {
+              return accumulator + memory.capacity_gb * memory.amount;
+            }
+            return accumulator;
+          }, 0);
+          const memoryCount = memories.length;
 
-      filteredData = filteredData.filter((item) => {
-        return (
-          motherboardData.memory_type === item.memory_type &&
-          motherboardData.memory_slot! >= memoryCount &&
-          motherboardData.max_memory_gb! >= totalMemorySize
-        );
-      });
+          // Apply additional filters based on existing memories
+          if (memoryData && memoryData.length > 0 && memoryData[0]?.memory_type) {
+            await client_query.eq("memory_type", memoryData[0].memory_type);
+          }
+        }
+      }
     }
   }
 
   // compatibility end
 
-  if (error) {
-    return error;
+  if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Memory) && sortDirection) {   
+    switch (sortDirection) {
+      case "asc":
+        client_query.order(sort, { ascending: true });
+        break;
+      case "desc":
+        client_query.order(sort, { ascending: false });
+        break;
+      default:
+    }
   }
 
-  return { data: filteredData, total: count ?? 0 };
+  const start = typeof offset === "number" ? offset : 0;
+  const end = typeof limit === "number" ? start + limit - 1 : start + 19;
+  client_query.range(start, end);
+
+  // filter end
+
+  const { data, count, error } = await client_query;
+
+  if (!data) {
+    errorMessage = "Data memory tidak ditemukan";
+    return { data: [], total: 0, errorMessage };
+  }
+
+  if (error) {
+    errorMessage = error;
+  }
+
+  return { data, total: count ?? 0, errorMessage };
 };

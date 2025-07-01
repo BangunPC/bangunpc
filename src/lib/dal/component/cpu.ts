@@ -15,7 +15,6 @@ export const getCpu = async (
   }
 
   // filter start
-
   const client_query = supabase
     .schema("product")
     .from("v_cpus")
@@ -76,10 +75,6 @@ export const getCpu = async (
   if (filter.product_name) {
     filter.offset = 0;
     await client_query.ilike("product_name", `%${filter.product_name}%`)
-    // await client_query.textSearch("product_name", `'${product_name}'`, {
-    //   type: "websearch",
-    //   config: "english",
-    // });
   }
   if (filter.total_core) {
     await client_query.eq("total_core", filter.total_core);
@@ -88,6 +83,94 @@ export const getCpu = async (
     await client_query.eq("total_thread", filter.total_thread);
   }
 
+  // compatibility start
+  if (motherboardId) {
+    const { data: motherboardData } = await supabase
+      .schema("product")
+      .from("v_motherboards")
+      .select('cpu_socket_id')
+      .eq("product_id", motherboardId)
+      .limit(1)
+      .single();
+
+    if (!motherboardData) {
+      errorMessage = "Data motherboard tidak ditemukan";
+    } else if (motherboardData.cpu_socket_id !== undefined && motherboardData.cpu_socket_id !== null) {
+      await client_query.eq("cpu_socket_id", motherboardData.cpu_socket_id);
+    }
+  }
+
+  if (psuId) {
+    const { data: psuData } = await supabase
+      .schema("product")
+      .from("v_power_supplies")
+      .select('wattage')
+      .eq("product_id", psuId)
+      .single();
+
+    if (!psuData) {
+      errorMessage = "Data PSU tidak ditemukan";
+    } else {
+      let psuWatt = psuData?.wattage;
+      if (psuWatt == null) {
+        errorMessage = "Data wattage PSU tidak ditemukan";
+      } else {
+        let gpuPowerWatt = 0;
+        if(gpuId) {
+          const { data: gpuData } = await supabase
+          .schema("product")
+          .from("v_gpus")
+          .select('tdp_watt, min_psu_watt')
+          .eq("product_id", gpuId)
+          .single();
+
+          if (gpuData) {
+            gpuPowerWatt = gpuData.tdp_watt ?? 0;
+            psuWatt = gpuData.min_psu_watt ?? psuWatt;
+          }
+        }
+
+        // Suppose the psu efficiency is 80%, 
+        // 120% extra watt of component power
+        // 50 watt for other component
+        const availablePowerWatt = psuWatt * 0.8 - gpuPowerWatt * 1.2 + 50
+
+        await client_query.lt("max_power_watt", psuWatt);
+        await client_query.lt("max_power_watt", availablePowerWatt / 1.2);
+      }
+    }
+  }
+
+  if (memoryIds && memoryIds.length > 0) {
+    const uniqueMemoryIds = [...new Set(memoryIds)];
+    
+    // 1. Fetch memory data
+    const { data: memoryData } = await supabase
+      .schema("product")
+      .from("v_memories")
+      .select("product_id, memory_type, capacity_gb, amount")
+      .in("product_id", uniqueMemoryIds);
+
+    if (memoryData && memoryData.length !== 0) {
+      // 2. Check memory type consistency
+      const firstMemoryType = memoryData[0]?.memory_type;
+      const allSameType = memoryData.every(m => m.memory_type === firstMemoryType);
+      
+      if (!allSameType) {
+        errorMessage = "Semua memori yang dipilih harus memiliki tipe yang sama";
+        return { data: [], total: 0, errorMessage };
+      } else {
+        // 3. Calculate total memory size
+        const totalMemorySizeGB = memoryData.reduce((total, memory) => {
+          return total + (memory.capacity_gb ?? 0) * (memory.amount ?? 1)
+        }, 0);
+
+        // 4. Filter CPUs by memory requirements
+        await client_query.gte("max_memory_gb", totalMemorySizeGB);
+      }
+    }
+  }
+  
   if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.CPU) && sortDirection) {   
     switch (sortDirection) {
       case "asc":
@@ -104,141 +187,21 @@ export const getCpu = async (
   const end = typeof filter.limit === "number" ? start + filter.limit - 1 : start + 19;
   client_query.range(start, end);
 
-  // await client_query.order("product_name", { ascending: true });
-
   // filter end
 
   const { data, count, error } = await client_query;
   const cpuData = data as ComponentDetail[]
 
   if (!cpuData) {
-    throw new Error("CPU data is null");
+    errorMessage = "Data CPU tidak ditemukan";
+    return { data: [], total: 0, errorMessage };
   }
 
-  let filteredData = cpuData as ComponentView["v_cpus"][];
+  const filteredData = cpuData as ComponentView["v_cpus"][];
 
-  // compatibility start
-  if (motherboardId) {
-    const { data: motherboardData } = await supabase
-      .schema("product")
-      .from("v_motherboards")
-      .select('cpu_socket_id')
-      .eq("product_id", motherboardId);
-
-    if (!motherboardData) {
-      throw new Error("Motherboard data is null");
-    }
-
-    const cpuSocketId = motherboardData[0]?.cpu_socket_id;
-    if (cpuSocketId == null) {
-      throw new Error("CPU socket ID is null");
-    }
-    filteredData = filteredData.filter(
-      (cpu) => cpu.cpu_socket_id == cpuSocketId,
-    );
-  }
-
-  if (psuId) {
-    const { data: psuData } = await supabase
-      .schema("product")
-      .from("v_power_supplies")
-      .select('wattage')
-      .eq("product_id", psuId)
-      .single();
-
-    if (!psuData) {
-      throw new Error("PSU data is null");
-    }
-
-    let psuWatt = psuData?.wattage;
-    if (psuWatt == null) {
-      throw new Error("PSU wattage is null");
-    }
-
-    let gpuPowerWatt = 0;
-    if(gpuId) {
-      const { data: gpuData } = await supabase
-      .schema("product")
-      .from("v_gpus")
-      .select('tdp_watt, min_psu_watt')
-      .eq("product_id", psuId)
-      .single();
-
-      if (!gpuData) {
-        throw new Error("PSU data is null");
-      }
-
-      gpuPowerWatt = gpuData.tdp_watt!;
-      psuWatt = gpuData.min_psu_watt!;
-    }
-
-    // Suppose the psu efficiency is 80%, 
-    // 120% extra watt of component power
-    // 50 watt for other component
-    const availablePowerWatt = psuWatt * 0.8 - gpuPowerWatt * 1.2 + 50
-
-    filteredData = filteredData.filter((cpu) => 
-      (cpu.max_power_watt! < psuWatt) &&
-      (cpu.max_power_watt! * 1.2 < availablePowerWatt)
-    );
-  }
-
-  if (memoryIds) {
-    interface MemoryData {
-      product_id: number | null;
-      memory_type: "DDR3" | "DDR4" | "DDR5" | null;
-      capacity_gb: number | null;
-      amount: number | null;
-    }
-    const memoryData: MemoryData[] = []    
-
-    for (const memoryId of memoryIds) {
-      const { data, error } = await supabase
-        .schema("product")
-        .from("v_memories")
-        .select("product_id, memory_type, capacity_gb, amount")
-        .eq("product_id", memoryId)
-        .single()
-
-      if (!error) 
-        memoryData.push(data);
-    }    
-
-    console.log(memoryData);
-    
-    
-    if (!memoryData || error !== null || memoryData.length === 0) {
-      return filteredData;
-    }
-
-    // All selected memory's type should be same 
-    const firstMemoryType = memoryData[0]?.memory_type;
-    if (memoryData.some((memory) => memory.memory_type !== firstMemoryType)) {
-      filteredData = [];
-      errorMessage = "Semua memori yang dipilih harus memiliki tipe yang sama"
-    } else {
-      const totalMemorySizeGB = memoryData.reduce((total, memory) => {
-          return total + (memory.capacity_gb ?? 0) * (memory.amount ?? 0)
-      }, 0);
-
-      filteredData = filteredData.filter((cpu) => (cpu.max_memory_gb ?? 0) >= totalMemorySizeGB);
-
-      // const totalMemory = memoryData.reduce((total, memory) => {
-      //   return total + (memory.amount ?? 0); //* inputMemory.amount
-      //   //? For temporary, not use amount when selecting component, id only
-      //   // const inputMemory = memories.find(
-      //   //   (inputMemory) => inputMemory.id === memory.product_id,
-      //   // ) ?? { amount: 0 };
-      // }, 0);
-      
-    }
-  }
-  
   if (error) {
-    throw error;
+    errorMessage = error.message;
   }
-
-  // compatibility end
 
   return { data: filteredData, total: count ?? 0, errorMessage };
 };

@@ -4,11 +4,12 @@ import { MonitorCompatibility, ProductFilter } from "./filter";
 
 //! Not Done yet, need to fix
 export const getMonitor = async (
-  { gpuId,motherboardId, monitorIds }: MonitorCompatibility,
+  { gpuId, motherboardId, monitorIds }: MonitorCompatibility,
   { product_name, min_price, max_price, offset, limit }: ProductFilter,
   { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
+  let errorMessage;
 
   if (!supabase) {
     throw new Error("Supabase client is null");
@@ -30,11 +31,35 @@ export const getMonitor = async (
   if (product_name) {
     offset = 0;
     await client_query.ilike("product_name", `%${product_name}%`)
-    // await client_query.textSearch("product_name", `'${product_name}'`, {
-    //   type: "websearch",
-    //   config: "english",
-    // });
   }
+
+  // compatibility start
+
+  if (gpuId) {
+    const { data: gpuData, error } = await supabase
+      .schema("product")
+      .from("v_gpus")
+      .select("display_output")
+      .eq("product_id", gpuId)
+      .limit(1)
+      .single();
+    
+    if (error) {
+      errorMessage = "Data GPU tidak ditemukan";
+    } else if (gpuData?.display_output) {
+      // Apply filter directly in the query
+      // This is a simplified approach - may need adjustment based on how display_output and inputs are stored
+      for (const output of gpuData.display_output) {
+        await client_query.contains("inputs", [output]);
+        break; // Just use the first output for now as a simple implementation
+      }
+    }
+  }
+
+  // Implement motherboard compatibility if needed
+  // if (motherboardId) { ... }
+
+  // compatibility end
 
   if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Monitor) && sortDirection) {   
     switch (sortDirection) {
@@ -52,58 +77,18 @@ export const getMonitor = async (
   const end = typeof limit === "number" ? start + limit - 1 : start + 19;
   client_query.range(start, end);
 
-  // await client_query.order("product_name", { ascending: true });
+  // filter end
 
   const { data, count, error } = await client_query;
-  const monitorData = data as ComponentDetail[];
 
-  if (!monitorData) {
-    throw new Error("Motherboard data is null");
+  if (!data) {
+    errorMessage = "Data monitor tidak ditemukan";
+    return { data: [], total: 0, errorMessage };
   }
-
-  const filteredData = data as ComponentView["v_monitors"][];
-
-  // compatibility start
-  // let hdmiSlot = 0
-  // let vgaSlot = 0
-  // let displayPortSlot = 0
-
-  // if (gpuId) {
-  //   const { data: gpuData } = await client
-  //     .schema("product")
-  //     .from("v_gpus")
-  //     .select("display_output")
-  //     .eq("product_id", gpuId)
-  //     .limit(1)
-  //     .single();
-
-  //   if (!gpuData) {
-  //     throw new Error("GPU data is null");
-  //   }
-
-  //   filteredData = filteredData.filter((monitor) =>
-  //     gpuData?.display_output?.includes(monitor.inputs ?? ""),
-  //   );
-  // }
-
-  // if (motherboardId) {
-  //   const { data: moboData } = await client
-  //     .schema("product")
-  //     .from("v_motherboards")
-  //     .select("")
-  //     .eq("product_id", motherboardId)
-  //     .limit(1)
-  //     .single();
-  //   // filteredData = filteredData.filter(
-  //   //   (motherboard) => motherboard.cpu_socket_id === moboData?.cpu_socket_id,
-  //   // );
-  // }
 
   if (error) {
-    throw error;
+    errorMessage = error;
   }
 
-  // compatibility end
-
-  return { data: filteredData, total: count ?? 0 };
+  return { data, total: count ?? 0, errorMessage };
 };

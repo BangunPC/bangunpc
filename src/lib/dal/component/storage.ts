@@ -8,6 +8,7 @@ export const getStorage = async (
   { sort, sortDirection }: { sort?: string; sortDirection?: string }
 ) => {
   const supabase = await createSupaServerClient()
+  let errorMessage;
 
   if (!supabase) {
     throw new Error("Supabase client is null");
@@ -29,11 +30,61 @@ export const getStorage = async (
   if (product_name) {
     offset = 0;
     await client_query.ilike("product_name", `%${product_name}%`)
-    // await client_query.textSearch("product_name", `'${product_name}'`, {
-    //   type: "websearch",
-    //   config: "english",
-    // });
   }
+
+  // compatibility start
+
+  if (motherboardId) {
+    const { data: motherboardData, error } = await supabase
+      .schema("product")
+      .from("v_motherboards")
+      .select("sata3_slot, pcie_m2_slot")
+      .eq("product_id", motherboardId)
+      .limit(1)
+      .single();
+    
+    if (error) {
+      errorMessage = "Data motherboard tidak ditemukan";
+    } else {
+      // If motherboard has no M.2 slots, filter out M.2 NVMe drives
+      if (motherboardData.pcie_m2_slot === 0) {
+        await client_query.not("form_factor", "eq", "M.2 NVME");
+      }
+
+      if (storages && storages.length > 0) {
+        const { data: storageData, error: storageError } = await supabase
+          .schema("product")
+          .from("v_internal_storages")
+          .select("form_factor")
+          .in(
+            "product_id",
+            storages.map((storage) => storage.id),
+          );
+        
+        if (storageError) {
+          errorMessage = "Data storage tidak ditemukan";
+        } else {
+          const totalNvme = storageData.filter(
+            (item) => item.form_factor?.toUpperCase() === "M.2 NVME",
+          ).length;
+          const totalSata = storageData.filter(
+            (item) => item.form_factor?.toUpperCase() !== "M.2 NVME",
+          ).length;
+
+          // Apply filters based on available slots
+          if (totalNvme >= motherboardData.pcie_m2_slot!) {
+            await client_query.not("form_factor", "eq", "M.2 NVME");
+          }
+          
+          if (totalSata >= motherboardData.sata3_slot!) {
+            await client_query.eq("form_factor", "M.2 NVME");
+          }
+        }
+      }
+    }
+  }
+
+  // compatibility end
 
   if(sort && isValidComponentSortType(sort, ComponentCategoryEnum.Storage) && sortDirection) {   
     switch (sortDirection) {
@@ -51,83 +102,18 @@ export const getStorage = async (
   const end = typeof limit === "number" ? start + limit - 1 : start + 19;
   client_query.range(start, end);
 
-  // await client_query.order("product_name", { ascending: true });
-
   // filter end
 
   const { data, count, error } = await client_query;
 
   if (!data) {
-    throw new Error("Internal Storage data is null");
+    errorMessage = "Data storage tidak ditemukan";
+    return { data: [], total: 0, errorMessage };
   }
-
-  let filteredData = data;
-
-  // compatibility start
-
-  if (motherboardId) {
-    console.log(`Filtering storage by motherboard id: ${motherboardId}`);
-    const { data: motherboardData, error } = await supabase
-      .schema("product")
-      .from("v_motherboards")
-      .select("sata3_slot, pcie_m2_slot")
-      .eq("product_id", motherboardId)
-      .limit(1)
-      .single();
-    if (error) {
-      console.error(error);
-      throw error;
-    }
-
-    console.log("Motherboard data:", motherboardData);
-
-    filteredData = filteredData.filter((item) => {
-      console.log(`Filtering storage by form factor: ${item.form_factor}`);
-      if (motherboardData.pcie_m2_slot === 0)
-        return item.form_factor?.toUpperCase() !== "M.2 NVME";
-      else return item;
-    });
-
-    if (storages && storages.length > 0) {
-      console.log(
-        `Filtering storage by storages: ${storages.map((storage) => storage.id).join(", ")}`,
-      );
-      const { data: storageData, error } = await supabase
-        .schema("product")
-        .from("v_internal_storages")
-        .select("form_factor")
-        .in(
-          "product_id",
-          storages.map((storage) => storage.id),
-        );
-
-      if (error) {
-        console.error(error);
-        throw error;
-      }
-
-      const totalNvme = storageData.filter(
-        (item) => item.form_factor?.toUpperCase() === "M.2 NVME",
-      ).length;
-      const totalSata = storageData.filter(
-        (item) => item.form_factor?.toUpperCase() !== "M.2 NVME",
-      ).length;
-
-      console.log(`Total SATA: ${totalSata}, Total NVMe: ${totalNvme}`);
-
-      filteredData = filteredData.filter((item) => {
-        if (item.form_factor?.toUpperCase() === "M.2 NVME")
-          return totalNvme < motherboardData.pcie_m2_slot!;
-        return totalSata < motherboardData.sata3_slot!;
-      });
-    }
-  }
-
-  // compatibility end
 
   if (error) {
-    return error;
+    errorMessage = error;
   }
 
-  return { data: filteredData, total: count ?? 0 };
+  return { data, total: count ?? 0, errorMessage };
 };

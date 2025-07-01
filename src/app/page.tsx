@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   return (
-    <main className="h-full w-full overflow-x-hidden bg-background dark:bg-gray-900">
+    <main className="h-full w-full overflow-x-hidden bg-background dark:bg-gray-900 ">
       <HeroSection />
       <CarouselSection />
       <CariKomponenSection />
