@@ -128,13 +128,13 @@ function HeroSection() {
   return (
     <>
       <section className="relative h-screen overflow-hidden">
-        <motion.div 
-          className="absolute inset-0 bg-[url('/images/hero-background.png')] bg-center bg-no-repeat bg-cover"
-          style={{
-            y: yBg
-            // scale: 1
-          }}
-        />
+       <motion.div 
+        className="absolute inset-0 bg-center bg-no-repeat bg-cover"
+        style={{
+          y: yBg,
+          backgroundImage: `url('/images/hero-background.webp')`
+        }}
+      />
         
         <div className="flex flex-col justify-center items-center h-full px-4 pb-16 text-center text-white bg-black/45 relative z-10">
           <motion.div
