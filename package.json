@@ -101,7 +101,7 @@
     "path-to-regexp": "^6.3.0",
     "pathe": "^2.0.3",
     "pend": "^1.2.0",
-    "picomatch": "^4.0.2",
+    "picomatch": "^4.0.4",
     "promisepipe": "^3.0.0",
     "raw-body": "^2.4.1",
     "react": "19.1.0",
