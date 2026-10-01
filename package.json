@@ -125,7 +125,7 @@
     "tree-kill": "^1.2.2",
     "ufo": "^1.5.4",
     "uid-promise": "^1.0.0",
-    "undici": "^5.29.0",
+    "undici": "^6.28.1",
     "unenv": "^2.0.0-rc.15",
     "universalify": "^2.0.1",
     "unpipe": "^1.0.0",
